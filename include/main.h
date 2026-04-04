@@ -14,50 +14,77 @@
 
 #ifndef _PROS_MAIN_H_
 #define _PROS_MAIN_H_
-
-/**
- * If defined, some commonly used enums will have preprocessor macros which give
- * a shorter, more convenient naming pattern. If this isn't desired, simply
- * comment the following line out.
- *
- * For instance, E_CONTROLLER_MASTER has a shorter name: CONTROLLER_MASTER.
- * E_CONTROLLER_MASTER is pedantically correct within the PROS styleguide, but
- * not convenient for most student programmers.
- */
 #define PROS_USE_SIMPLE_NAMES
 
-/**
- * If defined, C++ literals will be available for use. All literals are in the
- * pros::literals namespace.
- *
- * For instance, you can do `4_mtr = 50` to set motor 4's target velocity to 50
- */
-#define PROS_USE_LITERALS
+#include "api.h" // IWYU pragma: keep
+#include "lemlib/api.hpp" // IWYU pragma: keep
 
-#include "api.h"
+#ifdef __cplusplus
+#include <math.h> // IWYU pragma: keep
+#include <stdio.h> // IWYU pragma: keep
+#include <stdlib.h> // IWYU pragma: keep
+#include <string.h> // IWYU pragma: keep
+#include <iostream> // IWYU pragma: keep
+#include <cmath> // IWYU pragma: keep
+#include <string> // IWYU pragma: keep
+#include <vector> // IWYU pragma: keep
+#endif
+
 
 /**
- * You should add more #includes here
+ * Custom includes go here
  */
-//#include "okapi/api.hpp"
+// #include "auton.hpp" // IWYU pragma: keep
+#include "driver.hpp" // IWYU pragma: keep
+#include "extras.hpp" // IWYU pragma: keep
+// #include "lemlib-helpers.hpp" // IWYU pragma: keep
+
+extern const bool skillsSlow;
+extern const bool autoForDriver;
 
 /**
- * If you find doing pros::Motor() to be tedious and you'd prefer just to do
- * Motor, you can use the namespace with the following commented out line.
- *
- * IMPORTANT: Only the okapi or pros namespace may be used, not both
- * concurrently! The okapi namespace will export all symbols inside the pros
- * namespace.
+ * Robot configuration
  */
-// using namespace pros;
-// using namespace pros::literals;
-// using namespace okapi;
+extern pros::Controller master;
+extern pros::MotorGroup left_mg;
+extern pros::MotorGroup right_mg;
+extern pros::Rotation horizontal_rotation;
+extern pros::Rotation vertical_rotation;
+extern pros::Imu imu_1;
+extern pros::Imu imu_2;
+extern pros::MotorGroup bottom;
+extern pros::Motor top;
+extern pros::Optical optical_top;
+extern pros::Distance distance_left;
+extern pros::Distance distance_right;
+extern pros::Distance distance_front;
+
+extern pros::adi::Pneumatics loader;
+extern pros::adi::Pneumatics wing;
+extern pros::adi::Pneumatics hood;
+extern pros::adi::Pneumatics mid_descore;
+extern pros::adi::Pneumatics odom_lift;
+extern pros::adi::Pneumatics intake_raise;
+
+// extern lemlib::Chassis drive;
+
+#define waitUntilCondition(condition)    \
+  do {                          \
+    pros::delay(5);             \
+  } while (!(condition))
+
+template <typename Func>
+void waitUntilFunction(Func condition) {
+  while (!condition()) pros::delay(5);
+}
+
 
 /**
  * Prototypes for the competition control tasks are redefined here to ensure
  * that they can be called from user code (i.e. calling autonomous from a
  * button press in opcontrol() for testing purposes).
  */
+using namespace pros;
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -69,12 +96,4 @@ void opcontrol(void);
 #ifdef __cplusplus
 }
 #endif
-
-#ifdef __cplusplus
-/**
- * You can add C++-only headers here
- */
-//#include <iostream>
-#endif
-
 #endif  // _PROS_MAIN_H_
