@@ -85,7 +85,7 @@ void calibrate_all() {
     horizontal_rotation.reset_position();
     vertical_rotation.reset_position();
     chassis.calibrate();
-    imu_1.set_heading(0);
+    // imu_1.set_heading(0);
 }
 
 void auton_selector() {
