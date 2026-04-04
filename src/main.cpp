@@ -221,33 +221,33 @@ void initialize() {
     master.clear();
     imu_1.set_data_rate(5);
     // // imu_2.set_data_rate(5);
-    // horizontal_rotation.set_data_rate(5);
-    // vertical_rotation.set_data_rate(5);
-    // left_mg.set_brake_mode_all(MotorBrake::coast);
-    // right_mg.set_brake_mode_all(MotorBrake::coast);
-    // bottom.set_brake_mode(MotorBrake::brake);
-    // top.set_brake_mode(MotorBrake::brake);
-    // optical_top.set_integration_time(5);
-    // optical_top.set_led_pwm(0);
+    horizontal_rotation.set_data_rate(5);
+    vertical_rotation.set_data_rate(5);
+    left_mg.set_brake_mode_all(MotorBrake::coast);
+    right_mg.set_brake_mode_all(MotorBrake::coast);
+    bottom.set_brake_mode(MotorBrake::brake);
+    top.set_brake_mode(MotorBrake::brake);
+    optical_top.set_integration_time(5);
+    optical_top.set_led_pwm(0);
 
     // skills things
     // odom_lift.extend();
     // calibrate_all();
     printf("init \n");
 
-    // pros::Task selector(auton_selector);
+    pros::Task selector(auton_selector);
     pros::Task bypass(wait_for_bypass);
 }
 
 void competition_initialize() {
     printf("comp start \n");
     comp_started = true;
-    // printing = true;
+    printing = true;
     selecting = false;
 
-    // pros::lcd::print(0, "Calibrating...");
+    pros::lcd::print(0, "Calibrating...");
     calibrate_all();
-    // pros::Task logger(print_info);
+    pros::Task logger(print_info);
 }
 
 void autonomous() {
@@ -256,8 +256,8 @@ void autonomous() {
     left_mg.set_brake_mode_all(MotorBrake::brake);
     right_mg.set_brake_mode_all(MotorBrake::brake);
     master.clear();
-    // printing = true;
-    // pros::Task logger(print_info);
+    printing = true;
+    pros::Task logger(print_info);
 
     // auton_skills();
     /**
@@ -320,11 +320,11 @@ void opcontrol() {
 
     left_mg.set_brake_mode_all(MotorBrake::coast);
     right_mg.set_brake_mode_all(MotorBrake::coast);
-    // bottom.set_brake_mode_all(MotorBrake::brake);
-    // top.set_brake_mode_all(MotorBrake::brake);
-    // odom_lift.extend();
-    // optical_top.set_led_pwm(0);
-    //master.clear();
+    bottom.set_brake_mode_all(MotorBrake::brake);
+    top.set_brake_mode_all(MotorBrake::brake);
+    odom_lift.extend();
+    optical_top.set_led_pwm(0);
+    master.clear();
 
     pros::Task d_drivetrain_control     (DrivetrainControl);
     pros::Task d_intake_control         (IntakeControl);
@@ -333,13 +333,13 @@ void opcontrol() {
     pros::Task d_mid_descore_control    (MidDescoreControl);
     pros::Task d_intake_raise_control   (IntakeRaiseControl);
 
-    // printing = false;
-    // pros::lcd::shutdown();
-    // delay(50);
-    // pros::lcd::initialize();
-    // delay(250);
-    // printing = true;
-    // pros::Task logger(print_info);
+    printing = false;
+    pros::lcd::shutdown();
+    delay(50);
+    pros::lcd::initialize();
+    delay(250);
+    printing = true;
+    pros::Task logger(print_info);
 
     while (true) { pros::delay(50); }
 }
