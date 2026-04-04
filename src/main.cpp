@@ -283,7 +283,7 @@ void autonomous() {
         left_mg.brake();
         right_mg.brake();
     }
-    /**/
+    **/
     comp_started = true;
 }
 
