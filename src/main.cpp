@@ -413,11 +413,11 @@ void opcontrol() {
     //master.clear();
 
     pros::Task d_drivetrain_control     (DrivetrainControl);
-    // pros::Task d_intake_control         (IntakeControl);
-    // pros::Task d_loader_control         (LoaderControl);
-    // pros::Task d_descore_wing_control   (DescoreWingControl);
-    // pros::Task d_mid_descore_control    (MidDescoreControl);
-    // pros::Task d_intake_raise_control   (IntakeRaiseControl);
+    pros::Task d_intake_control         (IntakeControl);
+    pros::Task d_loader_control         (LoaderControl);
+    pros::Task d_descore_wing_control   (DescoreWingControl);
+    pros::Task d_mid_descore_control    (MidDescoreControl);
+    pros::Task d_intake_raise_control   (IntakeRaiseControl);
 
     // printing = false;
     // pros::lcd::shutdown();
