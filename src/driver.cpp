@@ -27,127 +27,127 @@ void DrivetrainControl() {
     }
 }
 
-int lastPressed = 0;
-void IntakeControl() {
-    while (true) {
-        if (master.get_digital_new_press(INTAKE_TO_STORAGE)) lastPressed = 1;
-        else if (master.get_digital_new_press(INTAKE_TO_HIGH_GOAL)) lastPressed = 2;
-        else if (master.get_digital_new_press(INTAKE_TO_MID_GOAL)) lastPressed = 3;
-        else if (master.get_digital_new_press(INTAKE_TO_LOW_GOAL)) lastPressed = 4;
+// int lastPressed = 0;
+// void IntakeControl() {
+//     while (true) {
+//         if (master.get_digital_new_press(INTAKE_TO_STORAGE)) lastPressed = 1;
+//         else if (master.get_digital_new_press(INTAKE_TO_HIGH_GOAL)) lastPressed = 2;
+//         else if (master.get_digital_new_press(INTAKE_TO_MID_GOAL)) lastPressed = 3;
+//         else if (master.get_digital_new_press(INTAKE_TO_LOW_GOAL)) lastPressed = 4;
 
-        if (master.get_digital(INTAKE_TO_MID_GOAL)) {
-            hood.retract();
-            if (skillsSlow) {
-                top.move(-40);
-                bottom.move(40);
-            } else {
-                bottom.move(127);
-                top.move(-127);
-            }
-        } else if (master.get_digital(INTAKE_TO_HIGH_GOAL)) {
-            hood.extend();
-            bottom.move(127);
-            top.move(127);
-        } else if (master.get_digital(INTAKE_TO_STORAGE)) {
-            hood.retract();
-            bottom.move(127);
-            top.move(127);
-        } else if (master.get_digital(INTAKE_TO_LOW_GOAL)) {
-            hood.retract();
-            if (skillsSlow) {
-                bottom.move(-75);
-                top.brake();
-            } else {
-                bottom.move(-127);
-                top.move(-127);
-            }
-        } else if (master.get_digital_new_press(INTAKE_TO_SLOW_LOW_GOAL) && skillsSlow) {   // slow low goal macro
-            // driving = false;
-            // chassis.setPose(0, 0, 0);
-            // chassis.driveForDistance(-3.7, 600);
-            // driving = true;
+//         if (master.get_digital(INTAKE_TO_MID_GOAL)) {
+//             hood.retract();
+//             if (skillsSlow) {
+//                 top.move(-40);
+//                 bottom.move(40);
+//             } else {
+//                 bottom.move(127);
+//                 top.move(-127);
+//             }
+//         } else if (master.get_digital(INTAKE_TO_HIGH_GOAL)) {
+//             hood.extend();
+//             bottom.move(127);
+//             top.move(127);
+//         } else if (master.get_digital(INTAKE_TO_STORAGE)) {
+//             hood.retract();
+//             bottom.move(127);
+//             top.move(127);
+//         } else if (master.get_digital(INTAKE_TO_LOW_GOAL)) {
+//             hood.retract();
+//             if (skillsSlow) {
+//                 bottom.move(-75);
+//                 top.brake();
+//             } else {
+//                 bottom.move(-127);
+//                 top.move(-127);
+//             }
+//         } else if (master.get_digital_new_press(INTAKE_TO_SLOW_LOW_GOAL) && skillsSlow) {   // slow low goal macro
+//             // driving = false;
+//             // chassis.setPose(0, 0, 0);
+//             // chassis.driveForDistance(-3.7, 600);
+//             // driving = true;
 
-            // first fast score
-            intake_raise.extend();
-            hood.retract();
-            bottom.move(-70);
-            top.move(-40);
-            delay(600);
+//             // first fast score
+//             intake_raise.extend();
+//             hood.retract();
+//             bottom.move(-70);
+//             top.move(-40);
+//             delay(600);
 
-            // medium score
-            bottom.move(-55);
-            top.brake();
-            delay(850);
+//             // medium score
+//             bottom.move(-55);
+//             top.brake();
+//             delay(850);
 
-            // slow score end
-            bottom.move(-35);
-            top.brake();
-            delay(700);
-        } else if (master.get_digital_new_press(INTAKE_TO_SLOW_MID_GOAL) && skillsSlow) {   // slow mid goal macro
-            hood.retract();
+//             // slow score end
+//             bottom.move(-35);
+//             top.brake();
+//             delay(700);
+//         } else if (master.get_digital_new_press(INTAKE_TO_SLOW_MID_GOAL) && skillsSlow) {   // slow mid goal macro
+//             hood.retract();
 
-            bottom.move(-127);
-            top.move(-30);
-            delay(130);
-            bottom.brake();
-            delay(100);
+//             bottom.move(-127);
+//             top.move(-30);
+//             delay(130);
+//             bottom.brake();
+//             delay(100);
 
-            // first fast score
-            bottom.move(60);
-            top.move(-55);
-            delay(700);
+//             // first fast score
+//             bottom.move(60);
+//             top.move(-55);
+//             delay(700);
 
-            // slow score
-            bottom.move(50);
-            top.move(-35);
-            delay(2000);
+//             // slow score
+//             bottom.move(50);
+//             top.move(-35);
+//             delay(2000);
 
-            // slowest score
-            bottom.move(30);
-            top.move(-18);
-            delay(800);
-        } else {
-            //hood.retract();
-            bottom.brake();
-            top.brake();
-            lastPressed = 0;
-        }
-        delay(15);
-    }
-}
+//             // slowest score
+//             bottom.move(30);
+//             top.move(-18);
+//             delay(800);
+//         } else {
+//             //hood.retract();
+//             bottom.brake();
+//             top.brake();
+//             lastPressed = 0;
+//         }
+//         delay(15);
+//     }
+// }
 
-void LoaderControl() {
-    while (true) {
-        waitUntilCondition(!LOADER_TOGGLE);
-        waitUntilCondition(LOADER_TOGGLE);
-        loader.toggle();
-        delay(15);
-    }
-}
+// void LoaderControl() {
+//     while (true) {
+//         waitUntilCondition(!LOADER_TOGGLE);
+//         waitUntilCondition(LOADER_TOGGLE);
+//         loader.toggle();
+//         delay(15);
+//     }
+// }
 
-void MidDescoreControl() {
-    while (true) {
-        waitUntilCondition(!DESCORE_MID_TOGGLE);
-        waitUntilCondition(DESCORE_MID_TOGGLE);
-        mid_descore.toggle();
-        delay(15);
-    }
-}
+// void MidDescoreControl() {
+//     while (true) {
+//         waitUntilCondition(!DESCORE_MID_TOGGLE);
+//         waitUntilCondition(DESCORE_MID_TOGGLE);
+//         mid_descore.toggle();
+//         delay(15);
+//     }
+// }
 
-void DescoreWingControl() {
-    while (true) {
-        waitUntilCondition(!DESCORE_WING_TOGGLE);
-        waitUntilCondition(DESCORE_WING_TOGGLE);
-        wing.toggle();
-        delay(15);
-    }
-}
+// void DescoreWingControl() {
+//     while (true) {
+//         waitUntilCondition(!DESCORE_WING_TOGGLE);
+//         waitUntilCondition(DESCORE_WING_TOGGLE);
+//         wing.toggle();
+//         delay(15);
+//     }
+// }
 
-void IntakeRaiseControl() {
-    while (true) {
-        waitUntilCondition(!INTAKE_RAISE_TOGGLE);
-        waitUntilCondition(INTAKE_RAISE_TOGGLE);
-        intake_raise.toggle();
-        delay(15);
-    }
-}
+// void IntakeRaiseControl() {
+//     while (true) {
+//         waitUntilCondition(!INTAKE_RAISE_TOGGLE);
+//         waitUntilCondition(INTAKE_RAISE_TOGGLE);
+//         intake_raise.toggle();
+//         delay(15);
+//     }
+// }
