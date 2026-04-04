@@ -38,7 +38,7 @@
 #include "auton.hpp" // IWYU pragma: keep
 #include "driver.hpp" // IWYU pragma: keep
 #include "extras.hpp" // IWYU pragma: keep
-// #include "lemlib-helpers.hpp" // IWYU pragma: keep
+#include "lemlib-helpers.hpp" // IWYU pragma: keep
 
 extern const bool skillsSlow;
 extern const bool autoForDriver;
@@ -51,7 +51,7 @@ extern pros::MotorGroup left_mg;
 extern pros::MotorGroup right_mg;
 extern pros::Rotation horizontal_rotation;
 extern pros::Rotation vertical_rotation;
-extern pros::Imu imu_1;
+extern CustomImu imu_1;
 extern pros::Imu imu_2;
 extern pros::MotorGroup bottom;
 extern pros::Motor top;

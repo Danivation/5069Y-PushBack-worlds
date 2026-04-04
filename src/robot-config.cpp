@@ -12,10 +12,10 @@ pros::MotorGroup right_mg({-18, 19, 20}, pros::MotorGears::blue);
 pros::MotorGroup bottom({9, 8}, pros::MotorGears::blue);
 pros::Motor top(1, pros::MotorGears::rpm_200);
 
-pros::Imu imu_1(15);
+CustomImu imu_1(15, 360.0f/356.6f);
 pros::Imu imu_2(22); // unused
 pros::Rotation vertical_rotation(-17);
-pros::Rotation horizontal_rotation(-14);
+pros::Rotation horizontal_rotation(14);
 
 pros::Optical optical_top(22); // unused
 pros::Distance distance_front(3);
@@ -42,7 +42,7 @@ lemlib::Drivetrain drivetrain(&left_mg, // left motor group
                               2 // horizontal drift is 2 (for now)
 );
 
-lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_rotation, lemlib::Omniwheel::NEW_2, -3.5);
+lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_rotation, lemlib::Omniwheel::NEW_2, -2.4);
 // vertical tracking wheel
 lemlib::TrackingWheel vertical_tracking_wheel(&vertical_rotation, lemlib::Omniwheel::NEW_2, -0.5);
 
