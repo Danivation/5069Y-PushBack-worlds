@@ -41,6 +41,7 @@
  */
 #include "pros/apix.h" // IWYU pragma: keep
 #include "lemlib/api.hpp" // IWYU pragma: keep
+#include "danielib/danielib.hpp" // IWYU pragma: keep
 
 /**
  * Standard library #includes go here
@@ -89,7 +90,7 @@ extern pros::adi::Pneumatics mid_descore;
 extern pros::adi::Pneumatics odom_lift;
 extern pros::adi::Pneumatics intake_raise;
 
-extern lemlib::Chassis drive;
+// extern lemlib::Chassis drive;
 // extern danielib::Drivetrain chassis;
 // extern danielib::Beam left_beam;
 // extern danielib::Beam right_beam;
