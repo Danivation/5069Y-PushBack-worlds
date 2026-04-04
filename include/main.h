@@ -18,6 +18,7 @@
 
 #include "api.h" // IWYU pragma: keep
 #include "lemlib/api.hpp" // IWYU pragma: keep
+#include "danielib/danielib.hpp" // IWYU pragma: keep
 
 #ifdef __cplusplus
 #include <math.h> // IWYU pragma: keep
@@ -34,7 +35,7 @@
 /**
  * Custom includes go here
  */
-// #include "auton.hpp" // IWYU pragma: keep
+#include "auton.hpp" // IWYU pragma: keep
 #include "driver.hpp" // IWYU pragma: keep
 #include "extras.hpp" // IWYU pragma: keep
 // #include "lemlib-helpers.hpp" // IWYU pragma: keep
@@ -66,7 +67,7 @@ extern pros::adi::Pneumatics mid_descore;
 extern pros::adi::Pneumatics odom_lift;
 extern pros::adi::Pneumatics intake_raise;
 
-// extern lemlib::Chassis drive;
+extern lemlib::Chassis chassis;
 
 #define waitUntilCondition(condition)    \
   do {                          \

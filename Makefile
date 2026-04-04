@@ -31,8 +31,8 @@ LIBNAME:=lib5069Yworlds
 VERSION:=1.0.0
 
 # files to always include in the hot package (leave out of cold library)
-EXCLUDE_SRC_FROM_LIB = $(SRCDIR)/main.cpp $(SRCDIR)/auton.cpp $(SRCDIR)/driver.cpp
-# $(SRCDIR)/lemlib-helpers.cpp $(SRCDIR)/robot-config.cpp
+EXCLUDE_SRC_FROM_LIB = $(SRCDIR)/main.cpp $(SRCDIR)/auton.cpp $(SRCDIR)/driver.cpp $(SRCDIR)/robot-config.cpp
+# $(SRCDIR)/lemlib-helpers.cpp
 
 # header files that get distributed with the package, includes all within include/libname
 TEMPLATE_FILES=$(INCDIR)/$(LIBNAME)/**/*.h $(INCDIR)/$(LIBNAME)/**/*.hpp

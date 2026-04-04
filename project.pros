@@ -47,6 +47,30 @@
                 "user_files": [],
                 "version": "0.5.6"
             },
+            "danielib": {
+                "location": "C:\\Users\\danie\\AppData\\Roaming\\PROS\\templates\\danielib@8.3.0",
+                "metadata": {
+                    "origin": "local"
+                },
+                "name": "danielib",
+                "py/object": "pros.conductor.templates.local_template.LocalTemplate",
+                "supported_kernels": "^4.2.1",
+                "system_files": [
+                    "include\\danielib\\utils.hpp",
+                    "include\\danielib\\drivetrain.hpp",
+                    "include\\danielib\\mcl.hpp",
+                    "include\\danielib\\pose.hpp",
+                    "include\\danielib\\danielib.hpp",
+                    "include\\danielib\\timer.hpp",
+                    "firmware\\danielib.a",
+                    "include\\danielib\\sensors.hpp",
+                    "include\\danielib\\pid.hpp",
+                    "include\\danielib\\exit.hpp"
+                ],
+                "target": "v5",
+                "user_files": [],
+                "version": "8.3.0"
+            },
             "kernel": {
                 "location": "C:\\Users\\danie\\AppData\\Roaming\\PROS\\templates\\kernel@4.2.1",
                 "metadata": {

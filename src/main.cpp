@@ -1,90 +1,6 @@
 #include "main.h" // IWYU pragma: keep
 
 /* ---------------------------------------------------------------------------------------------- */
-/*                                          DEVICE PORTS                                          */
-/* ---------------------------------------------------------------------------------------------- */
-
-pros::Controller master(pros::E_CONTROLLER_MASTER);
-pros::MotorGroup left_mg({13, -12, -11}, pros::MotorGears::blue);
-pros::MotorGroup right_mg({-18, 19, 20}, pros::MotorGears::blue);
-
-pros::MotorGroup bottom({9, 8}, pros::MotorGears::blue);
-pros::Motor top(1, pros::MotorGears::rpm_200);
-
-pros::Imu imu_1(15);
-pros::Imu imu_2(22); // unused
-pros::Rotation vertical_rotation(-17);
-pros::Rotation horizontal_rotation(-14);
-
-pros::Optical optical_top(22); // unused
-pros::Distance distance_front(3);
-pros::Distance distance_left(4);
-pros::Distance distance_right(10);
-
-pros::adi::Pneumatics loader('A', false);
-pros::adi::Pneumatics wing('B', false);
-pros::adi::Pneumatics hood('C', false);
-pros::adi::Pneumatics mid_descore('D', false);
-pros::adi::Pneumatics intake_raise('E', false);
-pros::adi::Pneumatics odom_lift('F', false);
-
-/* ---------------------------------------------------------------------------------------------- */
-/*                                          LEMLIB CONFIG                                         */
-/* ---------------------------------------------------------------------------------------------- */
-
-// drivetrain settings
-lemlib::Drivetrain drivetrain(&left_mg, // left motor group
-                              &right_mg, // right motor group
-                              11.3, // 10 inch track width
-                              lemlib::Omniwheel::NEW_325, // using new 4" omnis
-                              450, // drivetrain rpm is 360
-                              2 // horizontal drift is 2 (for now)
-);
-
-lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_rotation, lemlib::Omniwheel::NEW_2, -3.5);
-// vertical tracking wheel
-lemlib::TrackingWheel vertical_tracking_wheel(&vertical_rotation, lemlib::Omniwheel::NEW_2, -0.5);
-
-// odometry settings
-lemlib::OdomSensors sensors(&vertical_tracking_wheel, // vertical tracking wheel 1, set to null
-                            nullptr, // vertical tracking wheel 2, set to nullptr as we are using IMEs
-                            &horizontal_tracking_wheel, // horizontal tracking wheel 1
-                            nullptr, // horizontal tracking wheel 2, set to nullptr as we don't have a second one
-                            &imu_1 // inertial sensor
-);
-
-// lateral PID controller
-lemlib::ControllerSettings lateral_controller(10, // proportional gain (kP)
-                                              0, // integral gain (kI)
-                                              3, // derivative gain (kD)
-                                              3, // anti windup
-                                              1, // small error range, in inches
-                                              100, // small error range timeout, in milliseconds
-                                              3, // large error range, in inches
-                                              500, // large error range timeout, in milliseconds
-                                              20 // maximum acceleration (slew)
-);
-
-// angular PID controller
-lemlib::ControllerSettings angular_controller(2, // proportional gain (kP)
-                                              0, // integral gain (kI)
-                                              10, // derivative gain (kD)
-                                              3, // anti windup
-                                              1, // small error range, in degrees
-                                              100, // small error range timeout, in milliseconds
-                                              3, // large error range, in degrees
-                                              500, // large error range timeout, in milliseconds
-                                              0 // maximum acceleration (slew)
-);
-
-// create the chassis
-lemlib::Chassis chassis(drivetrain, // drivetrain settings
-                        lateral_controller, // lateral PID settings
-                        angular_controller, // angular PID settings
-                        sensors // odometry sensors
-);
-
-/* ---------------------------------------------------------------------------------------------- */
 /*                                        GLOBAL VARIABLES                                        */
 /* ---------------------------------------------------------------------------------------------- */
 
@@ -166,8 +82,6 @@ std::pair<std::string, std::string> get_auton_name(int index) {
 
 void calibrate_all() {
     printf("calibrating \n");
-    // chassis.calibrate();
-    // chassis.startTracking();
     chassis.calibrate();
     delay(2500);
     imu_1.set_heading(0);
@@ -176,97 +90,97 @@ void calibrate_all() {
 }
 
 void auton_selector() {
-    // pros::lcd::print(2, "A+X to test auto");
-    // pros::lcd::print(3, "Up+X for driver");
-    // while (selecting) {
-    //     auto [line2, line3] = get_auton_name(auton_index);
+    pros::lcd::print(2, "A+X to test auto");
+    pros::lcd::print(3, "Up+X for driver");
+    while (selecting) {
+        auto [line2, line3] = get_auton_name(auton_index);
 
-    //     pros::lcd::print(0, "%d: %s", auton_index, line2.c_str());
-    //     pros::lcd::print(1, "%s", line3.c_str());
+        pros::lcd::print(0, "%d: %s", auton_index, line2.c_str());
+        pros::lcd::print(1, "%s", line3.c_str());
 
-    //     // print text to controller
-    //     master.print(0, 0, "%d  ", auton_index);
-    //     pros::delay(50);
-    //     master.print(1, 0, "%s              ", line2.c_str());
-    //     pros::delay(50);
-    //     master.print(2, 0, "%s              ", line3.c_str());
+        // print text to controller
+        master.print(0, 0, "%d  ", auton_index);
+        pros::delay(50);
+        master.print(1, 0, "%s              ", line2.c_str());
+        pros::delay(50);
+        master.print(2, 0, "%s              ", line3.c_str());
 
-    //     if (master.get_digital_new_press(DIGITAL_RIGHT)) {
-    //         auton_index++;
-    //     }
-    //     if (master.get_digital_new_press(DIGITAL_LEFT)) {
-    //         auton_index--;
-    //     }
-    //     if (auton_index < 0) auton_index = 15;
-    //     if (auton_index > 15) auton_index = 0;
+        if (master.get_digital_new_press(DIGITAL_RIGHT)) {
+            auton_index++;
+        }
+        if (master.get_digital_new_press(DIGITAL_LEFT)) {
+            auton_index--;
+        }
+        if (auton_index < 0) auton_index = 15;
+        if (auton_index > 15) auton_index = 0;
 
-    //     pros::delay(50);
-    // }
+        pros::delay(50);
+    }
 }
 
 void print_info() {
-    // int cycle = 0;
-    // while (printing) {
-    //     // print pose
-    //     auto pose = chassis.getPose();
-    //     pros::lcd::print(0, "Position: (%.2f, %.2f, %.2f)", pose.x, pose.y, d_reduce_0_to_360(pose.theta));
-    //     pros::lcd::print(1, "Selected Auto: %s", get_auton_name(auton_index).first.c_str());
-    //     pros::lcd::print(2, "H: %.3f, V: %.3f", (float)horizontal_rotation.get_position()/100.0f, (float)vertical_rotation.get_position()/100.0f);
+    int cycle = 0;
+    while (printing) {
+        // print pose
+        auto pose = chassis.getPose();
+        pros::lcd::print(0, "Position: (%.2f, %.2f, %.2f)", pose.x, pose.y, d_reduce_to_0_360(pose.theta));
+        pros::lcd::print(1, "Selected Auto: %s", get_auton_name(auton_index).first.c_str());
+        pros::lcd::print(2, "H: %.3f, V: %.3f", (float)horizontal_rotation.get_position()/100.0f, (float)vertical_rotation.get_position()/100.0f);
         
-    //     /**/
-    //     // print temps
-    //     pros::lcd::print(3, "Temps");
+        /**/
+        // print temps
+        pros::lcd::print(3, "Temps");
 
-    //     auto left_temps = left_mg.get_temperature_all();
-    //     auto right_temps = right_mg.get_temperature_all();
-    //     auto bottom_temps = bottom.get_temperature_all();
-    //     auto top_temp = top.get_temperature();
+        auto left_temps = left_mg.get_temperature_all();
+        auto right_temps = right_mg.get_temperature_all();
+        auto bottom_temps = bottom.get_temperature_all();
+        auto top_temp = top.get_temperature();
 
-    //     std::string left_status = "OK";
-    //     if (left_temps[0] >= 50.0f || left_temps[1] >= 50.0f || left_temps[2] >= 50.0f) left_status = "WARM";
-    //     if (left_temps[0] >= 60.0f || left_temps[1] >= 60.0f || left_temps[2] >= 60.0f) left_status = "1/4";
-    //     if (left_temps[0] >= 65.0f || left_temps[1] >= 65.0f || left_temps[2] >= 65.0f) left_status = "1/8";
-    //     if (left_temps[0] >= 70.0f || left_temps[1] >= 70.0f || left_temps[2] >= 70.0f) left_status = "OFF";
-    //     std::string right_status = "OK";
-    //     if (right_temps[0] >= 50.0f || right_temps[1] >= 50.0f || right_temps[2] >= 50.0f) right_status = "WARM";
-    //     if (right_temps[0] >= 60.0f || right_temps[1] >= 60.0f || right_temps[2] >= 60.0f) right_status = "1/4";
-    //     if (right_temps[0] >= 65.0f || right_temps[1] >= 65.0f || right_temps[2] >= 65.0f) right_status = "1/8";
-    //     if (right_temps[0] >= 70.0f || right_temps[1] >= 70.0f || right_temps[2] >= 70.0f) right_status = "OFF";
-    //     std::string bottom_status = "OK";
-    //     if (bottom_temps[0] >= 50.0f || bottom_temps[1] >= 50.0f) bottom_status = "WARM";
-    //     if (bottom_temps[0] >= 60.0f || bottom_temps[1] >= 60.0f) bottom_status = "1/4";
-    //     if (bottom_temps[0] >= 65.0f || bottom_temps[1] >= 65.0f) bottom_status = "1/8";
-    //     if (bottom_temps[0] >= 70.0f || bottom_temps[1] >= 70.0f) bottom_status = "OFF";
-    //     std::string top_status = "OK";
-    //     if (top_temp >= 50.0f) top_status = "WARM";
-    //     if (top_temp >= 60.0f) top_status = "1/4";
-    //     if (top_temp >= 65.0f) top_status = "1/8";
-    //     if (top_temp >= 70.0f) top_status = "OFF";
+        std::string left_status = "OK";
+        if (left_temps[0] >= 50.0f || left_temps[1] >= 50.0f || left_temps[2] >= 50.0f) left_status = "WARM";
+        if (left_temps[0] >= 60.0f || left_temps[1] >= 60.0f || left_temps[2] >= 60.0f) left_status = "1/4";
+        if (left_temps[0] >= 65.0f || left_temps[1] >= 65.0f || left_temps[2] >= 65.0f) left_status = "1/8";
+        if (left_temps[0] >= 70.0f || left_temps[1] >= 70.0f || left_temps[2] >= 70.0f) left_status = "OFF";
+        std::string right_status = "OK";
+        if (right_temps[0] >= 50.0f || right_temps[1] >= 50.0f || right_temps[2] >= 50.0f) right_status = "WARM";
+        if (right_temps[0] >= 60.0f || right_temps[1] >= 60.0f || right_temps[2] >= 60.0f) right_status = "1/4";
+        if (right_temps[0] >= 65.0f || right_temps[1] >= 65.0f || right_temps[2] >= 65.0f) right_status = "1/8";
+        if (right_temps[0] >= 70.0f || right_temps[1] >= 70.0f || right_temps[2] >= 70.0f) right_status = "OFF";
+        std::string bottom_status = "OK";
+        if (bottom_temps[0] >= 50.0f || bottom_temps[1] >= 50.0f) bottom_status = "WARM";
+        if (bottom_temps[0] >= 60.0f || bottom_temps[1] >= 60.0f) bottom_status = "1/4";
+        if (bottom_temps[0] >= 65.0f || bottom_temps[1] >= 65.0f) bottom_status = "1/8";
+        if (bottom_temps[0] >= 70.0f || bottom_temps[1] >= 70.0f) bottom_status = "OFF";
+        std::string top_status = "OK";
+        if (top_temp >= 50.0f) top_status = "WARM";
+        if (top_temp >= 60.0f) top_status = "1/4";
+        if (top_temp >= 65.0f) top_status = "1/8";
+        if (top_temp >= 70.0f) top_status = "OFF";
 
-    //     pros::lcd::print(4, "L: %.0f %.0f %.0f (%s)",
-    //         left_temps[0], left_temps[1], left_temps[2], left_status.c_str()
-    //     );
-    //     pros::lcd::print(5, "R: %.0f %.0f %.0f (%s)",
-    //         right_temps[0], right_temps[1], right_temps[2], right_status.c_str()
-    //     );
-    //     pros::lcd::print(6, "B: %.0f %.0f (%s) %.1f %.1f", 
-    //         bottom_temps[0], bottom_temps[1], bottom_status.c_str(), bottom.get_power(0), bottom.get_power(1)
-    //     );
-    //     pros::lcd::print(7, "T: %.0f (%s) %.1f",
-    //         top_temp, top_status.c_str(), top.get_power()
-    //     );
-    //     /**/
+        pros::lcd::print(4, "L: %.0f %.0f %.0f (%s)",
+            left_temps[0], left_temps[1], left_temps[2], left_status.c_str()
+        );
+        pros::lcd::print(5, "R: %.0f %.0f %.0f (%s)",
+            right_temps[0], right_temps[1], right_temps[2], right_status.c_str()
+        );
+        pros::lcd::print(6, "B: %.0f %.0f (%s) %.1f %.1f", 
+            bottom_temps[0], bottom_temps[1], bottom_status.c_str(), bottom.get_power(0), bottom.get_power(1)
+        );
+        pros::lcd::print(7, "T: %.0f (%s) %.1f",
+            top_temp, top_status.c_str(), top.get_power()
+        );
+        /**/
 
-    //     // print to controller
-    //     if (cycle % 5 == 0) {
-    //         master.print(0, 0, "(%.1f, %.1f, %.1f)     ", pose.x, pose.y, reduce_0_to_360(pose.theta));
-    //         //delay(50);
-    //         //master.print(1, 0, "B: %.0f%%    ", battery::get_capacity());
-    //     }
+        // print to controller
+        if (cycle % 5 == 0) {
+            master.print(0, 0, "(%.1f, %.1f, %.1f)     ", pose.x, pose.y, d_reduce_to_0_360(pose.theta));
+            //delay(50);
+            //master.print(1, 0, "B: %.0f%%    ", battery::get_capacity());
+        }
 
-    //     cycle++;
-    //     delay(50);
-    // }
+        cycle++;
+        delay(50);
+    }
 }
 
 void wait_for_bypass() {
