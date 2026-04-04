@@ -9,7 +9,7 @@
 #define INTAKE_TO_MID_GOAL      DIGITAL_L2
 #define INTAKE_TO_HIGH_GOAL     DIGITAL_L1
 #define LOADER_TOGGLE           master.get_digital(DIGITAL_DOWN)
-#define DESCORE_MID_TOGGLE      master.get_digital(DIGITAL_RIGHT)//sidh was here
+#define DESCORE_MID_TOGGLE      master.get_digital(DIGITAL_RIGHT)
 #define DESCORE_WING_TOGGLE     master.get_digital(DIGITAL_Y)
 #define INTAKE_RAISE_TOGGLE     master.get_digital(DIGITAL_B)
 
@@ -55,7 +55,7 @@ void IntakeControl() {
         } else if (master.get_digital(INTAKE_TO_LOW_GOAL)) {
             hood.retract();
             if (skillsSlow) {
-                bottom.move(-75);
+                bottom.move(-40);
                 top.brake();
             } else {
                 bottom.move(-127);

@@ -4,7 +4,7 @@
 /*                                        GLOBAL VARIABLES                                        */
 /* ---------------------------------------------------------------------------------------------- */
 
-const bool skillsSlow = false;
+const bool skillsSlow = true;
 const bool autoForDriver = false;
 
 bool comp_started = false;
@@ -231,8 +231,9 @@ void initialize() {
     // skills things
     // odom_lift.extend();
     calibrate_all();
+    autonomous();
 
-    pros::Task selector(auton_selector);
+    // pros::Task selector(auton_selector);
     pros::Task bypass(wait_for_bypass);
 }
 
@@ -256,7 +257,7 @@ void autonomous() {
     printing = true;
     pros::Task logger(print_info);
 
-    // auton_skills();
+    auton_none();
     /**
     // delay
     if (competition::is_connected()) {
@@ -334,7 +335,7 @@ void opcontrol() {
     pros::lcd::shutdown();
     delay(50);
     pros::lcd::initialize();
-    delay(250);
+    delay(50);
     printing = true;
     pros::Task logger(print_info);
 
