@@ -1,94 +1,352 @@
-#include "main.h"
+#include "main.h" // IWYU pragma: keep
+#include "danielib/utils.hpp"
 
-/**
- * A callback function for LLEMU's center button.
- *
- * When this callback is fired, it will toggle line 2 of the LCD text between
- * "I was pressed!" and nothing.
- */
-void on_center_button() {
-	static bool pressed = false;
-	pressed = !pressed;
-	if (pressed) {
-		pros::lcd::set_text(2, "I was pressed!");
-	} else {
-		pros::lcd::clear_line(2);
-	}
+/* ---------------------------------------------------------------------------------------------- */
+/*                                        GLOBAL VARIABLES                                        */
+/* ---------------------------------------------------------------------------------------------- */
+
+const bool skillsSlow = false;
+const bool autoForDriver = false;
+
+bool comp_started = false;
+bool printing = false;
+bool selecting = true;
+int auton_index = 0;
+float testAutonDuration = 0;
+
+/* ---------------------------------------------------------------------------------------------- */
+/*                                            AUTO LIST                                           */
+/* ---------------------------------------------------------------------------------------------- */
+
+void run_auton(int index) {
+    // default auto to run when no auto is selected, also runs in test mode
+    if (index == 0) {
+        auton_all_mid();
+    }
+
+    // sawps
+    else if (index == 1)    auton_sawp_counter_nowing();
+    else if (index == 2)    auton_sawp_counter_wing();
+    else if (index == 3)    auton_sawp_standard();
+    else if (index == 4)    auton_sawp_low_mid();
+
+    // left sides
+    else if (index == 5)    auton_left_split();
+    else if (index == 6)    auton_left_4ball_loader();
+    else if (index == 7)    auton_left_4ball_stack();
+    // else if (index == 8)    auton_left_7ball();
+    else if (index == 9)    auton_left_7ball_counter();
+
+    // right sides
+    else if (index == 10)   auton_right_split();
+    else if (index == 11)   auton_right_4ball_loader();
+    else if (index == 12)   auton_right_4ball_stack();
+    else if (index == 13)   auton_right_7ball();
+    else if (index == 14)   auton_right_7ball_counter();
+
+    // misc autos
+    else if (index == 15)   auton_all_mid();
 }
 
-/**
- * Runs initialization code. This occurs as soon as the program is started.
- *
- * All other competition modes are blocked by initialize; it is recommended
- * to keep execution time for this mode under a few seconds.
- */
+std::pair<std::string, std::string> get_auton_name(int index) {
+    if (index == 0) return {"None", ""};
+
+    // sawps
+    else if (index == 1)    return {"Counter SAWP no wing", ""};
+    else if (index == 2)    return {"Counter SAWP + Wing", ""};
+    else if (index == 3)    return {"Standard SAWP", ""};
+    else if (index == 4)    return {"Low goal SAWP", ""};
+
+    // left sides
+    else if (index == 5)    return {"Left split", "Loader setup"};
+    else if (index == 6)    return {"Left 4 ball", "Loader"};
+    else if (index == 7)    return {"Left 4 ball", "Stack"};
+    // else if (index == 8)    return {"Left 7 ball", "Stack setup"};
+    else if (index == 9)    return {"Left 7 counter", "Stack setup"};
+
+    // right sides
+    else if (index == 10)   return {"Right split", "Loader setup"};
+    else if (index == 11)   return {"Right 4 ball", "Loader"};
+    else if (index == 12)   return {"Right 4 ball", "Stack"};
+    else if (index == 13)   return {"Right 7 ball", "Stack setup"};
+    else if (index == 14)   return {"Right 7 counter", "Loader setup"};
+
+    // misc autos
+    else if (index == 15)   return {"All mid right", "Loader setup"};
+
+    else return {"Invalid auto", ""};
+}
+
+/* ---------------------------------------------------------------------------------------------- */
+/*                                             HELPERS                                            */
+/* ---------------------------------------------------------------------------------------------- */
+
+void calibrate_all() {
+    printf("calibrating \n");
+    // chassis.calibrate();
+    // chassis.startTracking();
+    drive.calibrate();
+    imu_1.set_heading(0);
+    horizontal_rotation.reset_position();
+    vertical_rotation.reset_position();
+}
+
+void auton_selector() {
+    pros::lcd::print(2, "A+X to test auto");
+    pros::lcd::print(3, "Up+X for driver");
+    while (selecting) {
+        auto [line2, line3] = get_auton_name(auton_index);
+
+        pros::lcd::print(0, "%d: %s", auton_index, line2.c_str());
+        pros::lcd::print(1, "%s", line3.c_str());
+
+        // print text to controller
+        master.print(0, 0, "%d  ", auton_index);
+        pros::delay(50);
+        master.print(1, 0, "%s              ", line2.c_str());
+        pros::delay(50);
+        master.print(2, 0, "%s              ", line3.c_str());
+
+        if (master.get_digital_new_press(DIGITAL_RIGHT)) {
+            auton_index++;
+        }
+        if (master.get_digital_new_press(DIGITAL_LEFT)) {
+            auton_index--;
+        }
+        if (auton_index < 0) auton_index = 15;
+        if (auton_index > 15) auton_index = 0;
+
+        pros::delay(50);
+    }
+}
+
+void print_info() {
+    int cycle = 0;
+    while (printing) {
+        // print pose
+        auto pose = drive.getPose();
+        pros::lcd::print(0, "Position: (%.2f, %.2f, %.2f)", pose.x, pose.y, d_reduce_to_0_360(pose.theta));
+        pros::lcd::print(1, "Selected Auto: %s", get_auton_name(auton_index).first.c_str());
+        pros::lcd::print(2, "H: %.3f, V: %.3f", (float)horizontal_rotation.get_position()/100.0f, (float)vertical_rotation.get_position()/100.0f);
+        
+        /**/
+        // print temps
+        pros::lcd::print(3, "Temps");
+
+        auto left_temps = left_mg.get_temperature_all();
+        auto right_temps = right_mg.get_temperature_all();
+        auto bottom_temps = bottom.get_temperature_all();
+        auto top_temp = top.get_temperature();
+
+        std::string left_status = "OK";
+        if (left_temps[0] >= 50.0f || left_temps[1] >= 50.0f || left_temps[2] >= 50.0f) left_status = "WARM";
+        if (left_temps[0] >= 60.0f || left_temps[1] >= 60.0f || left_temps[2] >= 60.0f) left_status = "1/4";
+        if (left_temps[0] >= 65.0f || left_temps[1] >= 65.0f || left_temps[2] >= 65.0f) left_status = "1/8";
+        if (left_temps[0] >= 70.0f || left_temps[1] >= 70.0f || left_temps[2] >= 70.0f) left_status = "OFF";
+        std::string right_status = "OK";
+        if (right_temps[0] >= 50.0f || right_temps[1] >= 50.0f || right_temps[2] >= 50.0f) right_status = "WARM";
+        if (right_temps[0] >= 60.0f || right_temps[1] >= 60.0f || right_temps[2] >= 60.0f) right_status = "1/4";
+        if (right_temps[0] >= 65.0f || right_temps[1] >= 65.0f || right_temps[2] >= 65.0f) right_status = "1/8";
+        if (right_temps[0] >= 70.0f || right_temps[1] >= 70.0f || right_temps[2] >= 70.0f) right_status = "OFF";
+        std::string bottom_status = "OK";
+        if (bottom_temps[0] >= 50.0f || bottom_temps[1] >= 50.0f) bottom_status = "WARM";
+        if (bottom_temps[0] >= 60.0f || bottom_temps[1] >= 60.0f) bottom_status = "1/4";
+        if (bottom_temps[0] >= 65.0f || bottom_temps[1] >= 65.0f) bottom_status = "1/8";
+        if (bottom_temps[0] >= 70.0f || bottom_temps[1] >= 70.0f) bottom_status = "OFF";
+        std::string top_status = "OK";
+        if (top_temp >= 50.0f) top_status = "WARM";
+        if (top_temp >= 60.0f) top_status = "1/4";
+        if (top_temp >= 65.0f) top_status = "1/8";
+        if (top_temp >= 70.0f) top_status = "OFF";
+
+        pros::lcd::print(4, "L: %.0f %.0f %.0f (%s)",
+            left_temps[0], left_temps[1], left_temps[2], left_status.c_str()
+        );
+        pros::lcd::print(5, "R: %.0f %.0f %.0f (%s)",
+            right_temps[0], right_temps[1], right_temps[2], right_status.c_str()
+        );
+        pros::lcd::print(6, "B: %.0f %.0f (%s) %.1f %.1f", 
+            bottom_temps[0], bottom_temps[1], bottom_status.c_str(), bottom.get_power(0), bottom.get_power(1)
+        );
+        pros::lcd::print(7, "T: %.0f (%s) %.1f",
+            top_temp, top_status.c_str(), top.get_power()
+        );
+        /**/
+
+        // print to controller
+        if (cycle % 5 == 0) {
+            master.print(0, 0, "(%.1f, %.1f, %.1f)     ", pose.x, pose.y, d_reduce_to_0_360(pose.theta));
+            //delay(50);
+            //master.print(1, 0, "B: %.0f%%    ", battery::get_capacity());
+        }
+
+        cycle++;
+        delay(50);
+    }
+}
+
+void wait_for_bypass() {
+    while (!comp_started) {
+        if (!competition::is_connected() && master.get_digital(DIGITAL_X) && master.get_digital(DIGITAL_A)) {
+            waitUntilCondition(!master.get_digital(DIGITAL_X) && !master.get_digital(DIGITAL_A));
+            calibrate_all();
+            printing = false;
+            selecting = false;
+            // delay(250);
+            autonomous();
+            return;
+        } else if (comp_started || (master.get_digital(DIGITAL_UP) && master.get_digital(DIGITAL_X))) {
+            waitUntilCondition(!master.get_digital(DIGITAL_UP) && !master.get_digital(DIGITAL_X));
+            comp_started = true;
+            break;
+        } else if (master.get_digital(DIGITAL_DOWN) && master.get_digital(DIGITAL_B)) {
+            printing = false;
+            selecting = false;
+            delay(150);
+            //pros::lcd::clear();
+            calibrate_all();
+            waitUntilCondition(!(master.get_digital(DIGITAL_DOWN) && master.get_digital(DIGITAL_B)));
+        }
+        pros::delay(10);
+    }
+}
+
+/* ---------------------------------------------------------------------------------------------- */
+/*                                           COMP TASKS                                           */
+/* ---------------------------------------------------------------------------------------------- */
+
 void initialize() {
-	pros::lcd::initialize();
-	pros::lcd::set_text(1, "Hello PROS User!");
+    printf("init \n");
 
-	pros::lcd::register_btn1_cb(on_center_button);
+    // initialize devices
+    // pros::lcd::initialize();
+    printf("init \n");
+    master.clear();
+    imu_1.set_data_rate(5);
+    // imu_2.set_data_rate(5);
+    horizontal_rotation.set_data_rate(5);
+    vertical_rotation.set_data_rate(5);
+    left_mg.set_brake_mode_all(MotorBrake::coast);
+    right_mg.set_brake_mode_all(MotorBrake::coast);
+    bottom.set_brake_mode(MotorBrake::brake);
+    top.set_brake_mode(MotorBrake::brake);
+    optical_top.set_integration_time(5);
+    optical_top.set_led_pwm(0);
+
+    // skills things
+    // odom_lift.extend();
+    // calibrate_all();
+    printf("init \n");
+
+    // pros::Task selector(auton_selector);
+    pros::Task bypass(wait_for_bypass);
 }
 
-/**
- * Runs while the robot is in the disabled state of Field Management System or
- * the VEX Competition Switch, following either autonomous or opcontrol. When
- * the robot is enabled, this task will exit.
- */
-void disabled() {}
+void competition_initialize() {
+    printf("comp start \n");
+    comp_started = true;
+    // printing = true;
+    selecting = false;
 
-/**
- * Runs after initialize(), and before autonomous when connected to the Field
- * Management System or the VEX Competition Switch. This is intended for
- * competition-specific initialization routines, such as an autonomous selector
- * on the LCD.
- *
- * This task will exit when the robot is enabled and autonomous or opcontrol
- * starts.
- */
-void competition_initialize() {}
+    // pros::lcd::print(0, "Calibrating...");
+    calibrate_all();
+    // pros::Task logger(print_info);
+}
 
-/**
- * Runs the user autonomous code. This function will be started in its own task
- * with the default priority and stack size whenever the robot is enabled via
- * the Field Management System or the VEX Competition Switch in the autonomous
- * mode. Alternatively, this function may be called in initialize or opcontrol
- * for non-competition testing purposes.
- *
- * If the robot is disabled or communications is lost, the autonomous task
- * will be stopped. Re-enabling the robot will restart the task, not re-start it
- * from where it left off.
- */
-void autonomous() {}
+void autonomous() {
+    printf("auto start \n");
+    
+    left_mg.set_brake_mode_all(MotorBrake::brake);
+    right_mg.set_brake_mode_all(MotorBrake::brake);
+    master.clear();
+    // printing = true;
+    // pros::Task logger(print_info);
 
-/**
- * Runs the operator control code. This function will be started in its own task
- * with the default priority and stack size whenever the robot is enabled via
- * the Field Management System or the VEX Competition Switch in the operator
- * control mode.
- *
- * If no competition control is connected, this function will run immediately
- * following initialize().
- *
- * If the robot is disabled or communications is lost, the
- * operator control task will be stopped. Re-enabling the robot will restart the
- * task, not resume it from where it left off.
- */
+    // auton_skills();
+    /**
+    // delay
+    if (competition::is_connected()) {
+        // run_auton(auton_index);
+    } else {
+        int startTime;
+        bool finished = false;
+        pros::Task test_auto ([&] {
+            startTime = millis();
+            run_auton(auton_index);
+            // auton_skills();
+            finished = true;
+        });
+
+        waitUntilCondition(millis() > startTime + 15000);
+        // waitUntilCondition(millis() > startTime + 60000 || finished);
+        if (!finished) {
+            test_auto.remove();
+            // chassis.stopAllMovements();
+        }
+        top.brake();
+        bottom.brake();
+        left_mg.brake();
+        right_mg.brake();
+    }
+    /**/
+    comp_started = true;
+}
+
 void opcontrol() {
-	pros::Controller master(pros::E_CONTROLLER_MASTER);
-	pros::MotorGroup left_mg({1, -2, 3});    // Creates a motor group with forwards ports 1 & 3 and reversed port 2
-	pros::MotorGroup right_mg({-4, 5, -6});  // Creates a motor group with forwards port 5 and reversed ports 4 & 6
+    printf("driver start \n");
 
+    // wait for comp start or bypass
+    waitUntilCondition(/* (competition::is_connected() && !competition::is_disabled() && !competition::is_autonomous()) || */ comp_started);
+    printf("driver enable \n");
+    int matchStartTime = millis();
+    comp_started = true;
+    selecting = false;
 
-	while (true) {
-		pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
-		                 (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
-		                 (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);  // Prints status of the emulated screen LCDs
+    master.rumble("..");
 
-		// Arcade control scheme
-		int dir = master.get_analog(ANALOG_LEFT_Y);    // Gets amount forward/backward from left joystick
-		int turn = master.get_analog(ANALOG_RIGHT_X);  // Gets the turn left/right from right joystick
-		left_mg.move(dir - turn);                      // Sets left motor voltage
-		right_mg.move(dir + turn);                     // Sets right motor voltage
-		pros::delay(20);                               // Run for 20 ms then update
-	}
+    if (autoForDriver) {
+        left_mg.set_brake_mode_all(MotorBrake::brake);
+        right_mg.set_brake_mode_all(MotorBrake::brake);
+
+        pros::Task skills(auton_skills);
+
+        waitUntilCondition(master.get_digital(DIGITAL_UP) && master.get_digital(DIGITAL_X));
+        waitUntilCondition(!master.get_digital(DIGITAL_UP) && !master.get_digital(DIGITAL_X));
+
+        skills.remove();
+        // chassis.stopAllMovements();
+        top.brake();
+        bottom.brake();
+        left_mg.brake();
+        right_mg.brake();
+    }
+
+    left_mg.set_brake_mode_all(MotorBrake::coast);
+    right_mg.set_brake_mode_all(MotorBrake::coast);
+    bottom.set_brake_mode_all(MotorBrake::brake);
+    top.set_brake_mode_all(MotorBrake::brake);
+    odom_lift.extend();
+    optical_top.set_led_pwm(0);
+    //master.clear();
+
+    pros::Task d_drivetrain_control     (DrivetrainControl);
+    pros::Task d_intake_control         (IntakeControl);
+    pros::Task d_loader_control         (LoaderControl);
+    pros::Task d_descore_wing_control   (DescoreWingControl);
+    pros::Task d_mid_descore_control    (MidDescoreControl);
+    pros::Task d_intake_raise_control   (IntakeRaiseControl);
+
+    // printing = false;
+    // pros::lcd::shutdown();
+    // delay(50);
+    // pros::lcd::initialize();
+    // delay(250);
+    // printing = true;
+    // pros::Task logger(print_info);
+
+    while (true) { pros::delay(50); }
+}
+
+void disabled() {
+    printf("disabled \n");
 }

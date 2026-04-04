@@ -32,14 +32,78 @@
  *
  * For instance, you can do `4_mtr = 50` to set motor 4's target velocity to 50
  */
-#define PROS_USE_LITERALS
+// #define PROS_USE_LITERALS
 
-#include "api.h"
+#include "api.h" // IWYU pragma: keep
 
 /**
  * You should add more #includes here
  */
-//#include "okapi/api.hpp"
+#include "pros/apix.h" // IWYU pragma: keep
+#include "lemlib/api.hpp" // IWYU pragma: keep
+
+/**
+ * Standard library #includes go here
+ */
+#include <math.h> // IWYU pragma: keep
+#include <stdio.h> // IWYU pragma: keep
+#include <stdlib.h> // IWYU pragma: keep
+#include <string.h> // IWYU pragma: keep
+#include <iostream> // IWYU pragma: keep
+#include <cmath> // IWYU pragma: keep
+#include <string> // IWYU pragma: keep
+#include <vector> // IWYU pragma: keep
+
+/**
+ * Custom includes go here
+ */
+#include "auton.hpp" // IWYU pragma: keep
+#include "driver.hpp" // IWYU pragma: keep
+#include "extras.hpp" // IWYU pragma: keep
+#include "lemlib-helpers.hpp" // IWYU pragma: keep
+
+extern const bool skillsSlow;
+extern const bool autoForDriver;
+
+/**
+ * Robot configuration
+ */
+extern pros::Controller master;
+extern pros::MotorGroup left_mg;
+extern pros::MotorGroup right_mg;
+extern pros::Rotation horizontal_rotation;
+extern pros::Rotation vertical_rotation;
+extern pros::Imu imu_1;
+extern pros::Imu imu_2;
+extern pros::MotorGroup bottom;
+extern pros::Motor top;
+extern pros::Optical optical_top;
+extern pros::Distance distance_left;
+extern pros::Distance distance_right;
+extern pros::Distance distance_front;
+
+extern pros::adi::Pneumatics loader;
+extern pros::adi::Pneumatics wing;
+extern pros::adi::Pneumatics hood;
+extern pros::adi::Pneumatics mid_descore;
+extern pros::adi::Pneumatics odom_lift;
+extern pros::adi::Pneumatics intake_raise;
+
+extern lemlib::Chassis drive;
+// extern danielib::Drivetrain chassis;
+// extern danielib::Beam left_beam;
+// extern danielib::Beam right_beam;
+// extern danielib::Beam front_beam;
+
+#define waitUntilCondition(condition)    \
+  do {                          \
+    pros::delay(5);             \
+  } while (!(condition))
+
+template <typename Func>
+void waitUntilFunction(Func condition) {
+  while (!condition()) pros::delay(5);
+}
 
 /**
  * If you find doing pros::Motor() to be tedious and you'd prefer just to do
@@ -49,7 +113,7 @@
  * concurrently! The okapi namespace will export all symbols inside the pros
  * namespace.
  */
-// using namespace pros;
+using namespace pros;
 // using namespace pros::literals;
 // using namespace okapi;
 
@@ -61,10 +125,58 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+/**
+ * Runs the user autonomous code. This function will be started in its own task
+ * with the default priority and stack size whenever the robot is enabled via
+ * the Field Management System or the VEX Competition Switch in the autonomous
+ * mode. Alternatively, this function may be called in initialize or opcontrol
+ * for non-competition testing purposes.
+ *
+ * If the robot is disabled or communications is lost, the autonomous task
+ * will be stopped. Re-enabling the robot will restart the task, not re-start it
+ * from where it left off.
+ */
 void autonomous(void);
+
+/**
+ * Runs initialization code. This occurs as soon as the program is started.
+ *
+ * All other competition modes are blocked by initialize; it is recommended
+ * to keep execution time for this mode under a few seconds.
+ */
 void initialize(void);
+
+/**
+ * Runs while the robot is in the disabled state of Field Management System or
+ * the VEX Competition Switch, following either autonomous or opcontrol. When
+ * the robot is enabled, this task will exit.
+ */
 void disabled(void);
+
+/**
+ * Runs after initialize(), and before autonomous when connected to the Field
+ * Management System or the VEX Competition Switch. This is intended for
+ * competition-specific initialization routines, such as an autonomous selector
+ * on the LCD.
+ *
+ * This task will exit when the robot is enabled and autonomous or opcontrol
+ * starts.
+ */
 void competition_initialize(void);
+
+/**
+ * Runs the operator control code. This function will be started in its own task
+ * with the default priority and stack size whenever the robot is enabled via
+ * the Field Management System or the VEX Competition Switch in the operator
+ * control mode.
+ *
+ * If no competition control is connected, this function will run immediately
+ * following initialize().
+ *
+ * If the robot is disabled or communications is lost, the
+ * operator control task will be stopped. Re-enabling the robot will restart the
+ * task, not resume it from where it left off.
+ */
 void opcontrol(void);
 #ifdef __cplusplus
 }

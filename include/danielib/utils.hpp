@@ -1,0 +1,93 @@
+#pragma once
+#include <cmath>
+#include "danielib/pose.hpp"
+
+// returns the sign of the input as -1, 0, or 1
+template <typename T> constexpr auto d_sgn(const T& lhs) {
+    auto q = lhs;
+    if (q > 0) return T(1);
+    if (q < 0) return T(-1);
+    return T(0);
+}
+
+// degrees to radians
+inline float d_toRadians(float deg) {
+    return deg * M_PI / 180.0f;
+}
+
+// radians to degrees
+inline float d_toDegrees(float rad) {
+    return rad * 180.0f / M_PI;
+}
+
+// converts a number in inches to a number in some variation of meters (by default, 0.001 meters or 1 mm)
+inline float d_toMetric(float input, float meterScale = 0.001) {
+    return input * (0.0254 / meterScale);
+}
+
+// converts a number in a metric unit (by default, 0.001 meters or 1 mm) to a number in inches
+inline float d_toInches(float input, float meterScale = 0.001) {
+    return input / (0.0254 / meterScale);
+}
+
+// reduce angle to range [0, 360)
+inline float d_reduce_to_0_360(float angle) {
+    angle = std::fmod(angle, 360.0f);
+    if (angle < 0) angle += 360.0f;
+    return angle;
+}
+
+// reduce angle to range [-180, 180)
+inline float d_reduce_to_180_180(float angle) {
+    angle = std::fmod(angle + 180.0f, 360.0f);
+    if (angle < 0) angle += 360.0f;
+    return angle - 180.0f;
+}
+
+// reduce radians to range [0, 2pi)
+inline float d_reduce_radians(float angle) {
+    angle = std::fmod(angle, M_PI * 2.0f);
+    if (angle < 0) angle += M_PI * 2.0f;
+    return angle;
+}
+
+inline constexpr float d_sanitizeAngle(float angle, bool radians = false) {
+    if (radians) return std::fmod(std::fmod(angle, 2 * M_PI) + 2 * M_PI, 2 * M_PI);
+    else return std::fmod(std::fmod(angle, 360) + 360, 360);
+}   
+
+// calculates the difference between two angles or the angle between them, bounded to (-180,180] or (-pi,pi]
+inline float d_angleError(float target, float position, bool radians = false) {
+    const float max = radians ? 2 * M_PI : 360.0f;
+    return std::remainder(target - position, max);
+}
+
+inline float d_slew(float target, float current, float maxChange) {
+    float change = target - current;
+    if (maxChange == 0) return target;
+    if (change > maxChange) change = maxChange;
+    else if (change < -maxChange) change = -maxChange;
+    return current + change;
+}
+
+// get curvature between two poses by finding a circle using their headings, theta must be in radians and increase ccw
+inline float d_getCurvature(danielib::Pose pose, danielib::Pose other) {
+    // calculate whether the pose is on the left or right side of the circle
+    float side = d_sgn(std::sin(pose.theta) * (other.x - pose.x) - std::cos(pose.theta) * (other.y - pose.y));
+    // calculate center point and radius
+    float a = -std::tan(pose.theta);
+    float c = std::tan(pose.theta) * pose.x - pose.y;
+    float x = std::abs(a * other.x + other.y + c) / std::sqrt((a * a) + 1);
+    float d = std::hypot(other.x - pose.x, other.y - pose.y);
+
+    // return curvature
+    return side * ((2 * x) / (d * d));
+}
+
+inline danielib::Pose d_fixRadians(danielib::Pose& pose) {
+    return {pose.x, pose.y, static_cast<float>(M_PI_2) - pose.theta};
+}
+
+inline float d_fixRadians(float angle) {
+    return static_cast<float>(M_PI_2) - angle;
+}
