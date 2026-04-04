@@ -9,6 +9,7 @@ const bool autoForDriver = false;
 
 bool comp_started = false;
 bool printing = false;
+bool logging = false;
 bool selecting = true;
 int auton_index = 0;
 float testAutonDuration = 0;
@@ -85,7 +86,7 @@ void calibrate_all() {
     horizontal_rotation.reset_position();
     vertical_rotation.reset_position();
     chassis.calibrate();
-    // imu_1.set_heading(0);
+    imu_1.set_heading(0);
 }
 
 void auton_selector() {
@@ -209,9 +210,15 @@ void wait_for_bypass() {
 }
 
 void log_info() {
-    while (printing) {
-        
+    FILE* log = fopen("/usd/log.txt", "w");
+    waitUntilCondition(logging);
+    int startTime = pros::millis();
+    std::uint32_t time = pros::millis();
+    while (logging) {
+        if (log) fprintf(log, "(%d,%.2f),", pros::millis() - startTime, 90.0f-imu_1.get_heading());
+        pros::Task::delay_until(&time, 10);
     }
+    if (log) fclose(log);
 }
 
 /* ---------------------------------------------------------------------------------------------- */
@@ -261,7 +268,9 @@ void autonomous() {
     right_mg.set_brake_mode_all(MotorBrake::brake);
     master.clear();
     printing = true;
-    pros::Task logger(print_info);
+    pros::Task logger(log_info);
+    pros::Task printer(print_info);
+    logging = true;
 
     auton_none();
     /**
@@ -290,6 +299,7 @@ void autonomous() {
         right_mg.brake();
     }
     **/
+    logging = false;
     comp_started = true;
 }
 

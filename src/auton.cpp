@@ -39,7 +39,7 @@ void outtake() {
 void auton_none() {
     chassis.setPose(0, 0, 0);
 
-    chassis.turnToHeading(75, 100000, {}, false); 
+    chassis.turnToHeading(90, 2000, {}, false); 
 }
 
 // /* ---------------------------------------------------------------------------------------------- */
