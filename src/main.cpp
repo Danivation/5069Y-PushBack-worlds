@@ -82,11 +82,10 @@ std::pair<std::string, std::string> get_auton_name(int index) {
 
 void calibrate_all() {
     printf("calibrating \n");
-    chassis.calibrate();
-    delay(2500);
-    imu_1.set_heading(0);
     horizontal_rotation.reset_position();
     vertical_rotation.reset_position();
+    chassis.calibrate();
+    imu_1.set_heading(0);
 }
 
 void auton_selector() {
@@ -220,7 +219,6 @@ void initialize() {
     pros::lcd::initialize();
     master.clear();
     imu_1.set_data_rate(5);
-    // // imu_2.set_data_rate(5);
     horizontal_rotation.set_data_rate(5);
     vertical_rotation.set_data_rate(5);
     left_mg.set_brake_mode_all(MotorBrake::coast);
@@ -232,8 +230,7 @@ void initialize() {
 
     // skills things
     // odom_lift.extend();
-    // calibrate_all();
-    printf("init \n");
+    calibrate_all();
 
     pros::Task selector(auton_selector);
     pros::Task bypass(wait_for_bypass);
