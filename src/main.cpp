@@ -1,6 +1,7 @@
 #include "main.h"
 #include "lemlib/api.hpp"
 
+pros::Controller master(pros::E_CONTROLLER_MASTER);
 pros::MotorGroup left_mg({13, -12, -11}, pros::MotorGears::blue);
 pros::MotorGroup right_mg({-18, 19, 20}, pros::MotorGears::green);
 
@@ -66,6 +67,16 @@ void initialize() {
     pros::lcd::initialize(); // initialize brain screen
     chassis.calibrate(); // calibrate sensors
     // print position to brain screen
+}
+
+void disabled() {}
+
+void competition_initialize() {}
+
+void autonomous() {}
+
+void opcontrol() {
+
     pros::Task screen_task([&]() {
         while (true) {
             // print robot location to the brain screen
@@ -76,15 +87,6 @@ void initialize() {
             pros::delay(20);
         }
     });
-}
-
-void disabled() {}
-
-void competition_initialize() {}
-
-void autonomous() {}
-
-void opcontrol() {
     pros::Task d_drivetrain_control     (DrivetrainControl);
     while (true) {
         pros::delay(10);
