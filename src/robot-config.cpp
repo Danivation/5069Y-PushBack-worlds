@@ -35,24 +35,24 @@ pros::adi::Pneumatics odom_lift('F', false);
 
 // drivetrain settings
 lemlib::Drivetrain drivetrain(&left_mg, &right_mg, 11.3, lemlib::Omniwheel::NEW_325, 450, 2);
-lemlib::TrackingWheel vertical_tracking_wheel(&vertical_rotation, lemlib::Omniwheel::NEW_2, -0.5);
-lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_rotation, lemlib::Omniwheel::NEW_2, -2.4);
+lemlib::TrackingWheel vertical_tracking_wheel(&vertical_rotation, 2, -0.5);
+lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_rotation, 2, -2.4);
 lemlib::OdomSensors sensors(&vertical_tracking_wheel, nullptr, &horizontal_tracking_wheel, nullptr, &imu_1);
 
 // lateral PID controller
-lemlib::ControllerSettings lateral_controller(8.5, // proportional gain (kP)
+lemlib::ControllerSettings lateral_controller(7.5, // proportional gain (kP)
                                               0, // integral gain (kI)
-                                              29, // derivative gain (kD)
+                                              32, // derivative gain (kD)
                                               0, // anti windup
                                               0, // small error range, in inches
                                               0, // small error range timeout, in milliseconds
                                               0, // large error range, in inches
                                               0, // large error range timeout, in milliseconds
-                                              12 // maximum acceleration (slew)
+                                              8 // maximum acceleration (slew)
 );
 
 // angular PID controller
-lemlib::ControllerSettings angular_controller(5, 0, 37, 0, 1, 85, 3, 300, 0);
+lemlib::ControllerSettings angular_controller(4.2, 0, 27, 0, 1, 85, 3, 300, 0);
 
 // create the chassis
 lemlib::Chassis chassis(drivetrain, lateral_controller, angular_controller, sensors);
