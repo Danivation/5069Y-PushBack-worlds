@@ -8,7 +8,7 @@ void lemlibDistReset(std::initializer_list<danielib::Beam*> beams, float xChange
     int countY = 0;
 
     // get pose once
-    auto startPose = chassis.getPose();
+    auto startPose = c_lemlib.getPose();
 
     // loop through all beams
     for (danielib::Beam* beamPtr : beams) {
@@ -97,6 +97,6 @@ void lemlibDistReset(std::initializer_list<danielib::Beam*> beams, float xChange
     // sets x and y based on averages of valid readings independently, keeps old value if no valid readings
     // if only x readings are valid, only x is changed (same for y)
     if (changeX < xChange && changeY < yChange && std::abs(newX) < 80 && std::abs(newY) < 80) {
-        chassis.setPose({newX, newY, startPose.theta});
+        c_lemlib.setPose({newX, newY, startPose.theta});
     }
 }

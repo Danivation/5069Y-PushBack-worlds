@@ -30,6 +30,27 @@ pros::adi::Pneumatics intake_raise('E', false);
 pros::adi::Pneumatics odom_lift('F', false);
 
 /* ---------------------------------------------------------------------------------------------- */
+/*                                              PIDS                                              */
+/* ---------------------------------------------------------------------------------------------- */
+
+// LEMLIB LINEAR PID - very good for mtp, no tip
+lemlib::ControllerSettings lateral_controller(7.5, 0, 33, 0, 1, 100, 2.5, 300, 7.5);
+
+// LEMLIB ANGULAR PID - good for mtp, little end turning, but may not be good for normal turns
+lemlib::ControllerSettings angular_controller(5.7, 0, 42, 0, 1, 85, 3, 300, 0);
+
+// DANIELIB ANGULAR PID - tuned for normal turns
+danielib::PID angularPID(2.83, 0.12, 18.7, 4, 1.5, 120, 0);
+danielib::PID swingAngularPID(5.9, 0.2, 40, 4, 2, 160, 0);
+
+// DANIELIB LINEAR PID - tuned for straight drives
+danielib::PID linearPID(7.5, 0, 33, 0, 1.5, 150, 7.5);
+
+// DANIELIB MTP - somewhat tuned, but not very optimal
+danielib::PID mtpLinearPID(7.35, 0, 28.5, 0, 1.5, 90, 6);
+danielib::PID mtpAngularPID(2.95, 0, 18, 0, 0, 0, 0); // tuned?
+
+/* ---------------------------------------------------------------------------------------------- */
 /*                                          LEMLIB CONFIG                                         */
 /* ---------------------------------------------------------------------------------------------- */
 
@@ -39,23 +60,8 @@ lemlib::TrackingWheel vertical_tracking_wheel(&vertical_rotation, 2, -0.5);
 lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_rotation, 2, -2.4);
 lemlib::OdomSensors sensors(&vertical_tracking_wheel, nullptr, &horizontal_tracking_wheel, nullptr, &imu_1);
 
-// lateral PID controller
-lemlib::ControllerSettings lateral_controller(7.5, // proportional gain (kP)
-                                              0, // integral gain (kI)
-                                              33, // derivative gain (kD)
-                                              0, // anti windup
-                                              0, // small error range, in inches
-                                              0, // small error range timeout, in milliseconds
-                                              0, // large error range, in inches
-                                              0, // large error range timeout, in milliseconds
-                                              7.5 // maximum acceleration (slew)
-);
-
-// angular PID controller
-lemlib::ControllerSettings angular_controller(5.7, 0, 42, 0, 1, 85, 3, 300, 0);
-
 // create the chassis
-lemlib::Chassis chassis(drivetrain, lateral_controller, angular_controller, sensors);
+lemlib::Chassis c_lemlib(drivetrain, lateral_controller, angular_controller, sensors);
 
 /* ---------------------------------------------------------------------------------------------- */
 /*                                         DANIELIB CONFIG                                        */
@@ -74,16 +80,4 @@ danielib::Inertial inertial(imu_1);
 danielib::Localization mcl({left_beam, right_beam, front_beam});
 danielib::Sensors sensors_danielib(vertical_tracker_danielib, horizontal_tracker_danielib, inertial, mcl);
 
-
-// angular pid constants
-danielib::PID angularPID(2.83, 0.12, 18.7, 4, 1.5, 120, 0); // tuned
-danielib::PID swingAngularPID(6.2, 0.28, 61.8, 2, 0, 0, 0);
-
-// linear pid constants
-danielib::PID linearPID(7.4, 0.09, 25, 0.75, 1, 70, 6);
-
-// mtp pid constants
-danielib::PID mtpLinearPID(7.35, 0, 28.5, 0, 1.5, 90, 6);
-danielib::PID mtpAngularPID(2.95, 0, 18, 0, 0, 0, 0); // tuned?
-
-danielib::Drivetrain chassis_danielib(left_mg, right_mg, sensors_danielib, 11.3, 3.25, 450, linearPID, angularPID, mtpLinearPID, mtpAngularPID, swingAngularPID);
+danielib::Drivetrain c_danielib(left_mg, right_mg, sensors_danielib, 11.3, 3.25, 450, linearPID, angularPID, mtpLinearPID, mtpAngularPID, swingAngularPID);

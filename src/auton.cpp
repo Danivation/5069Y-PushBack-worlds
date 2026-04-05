@@ -41,11 +41,10 @@ void outtake() {
 /* ---------------------------------------------------------------------------------------------- */
 
 void auton_none() {
-    chassis.setPose(0, 0, 0);
-    chassis_danielib.setPose(0, 0);
+    c_lemlib.setPose(0, 0, 0);
+    c_danielib.setPose(0, 0);
 
     // chassis_danielib.turnToHeading(90, 5000);
-    // chassis.turnToHeading(140, 5000, {}, false); 
-
-    chassis.moveToPoint(0, 24, 10000, {}, false);
+    // chassis.turnToHeading(140, 5000, {}, false);
+    // chassis.moveToPoint(0, 24, 10000, {}, false);
 }

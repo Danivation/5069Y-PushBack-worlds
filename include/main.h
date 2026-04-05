@@ -67,8 +67,8 @@ extern pros::adi::Pneumatics mid_descore;
 extern pros::adi::Pneumatics odom_lift;
 extern pros::adi::Pneumatics intake_raise;
 
-extern lemlib::Chassis chassis;
-extern danielib::Drivetrain chassis_danielib;
+extern lemlib::Chassis c_lemlib;
+extern danielib::Drivetrain c_danielib;
 extern danielib::Beam left_beam;
 extern danielib::Beam right_beam;
 extern danielib::Beam front_beam;

@@ -84,11 +84,11 @@ std::pair<std::string, std::string> get_auton_name(int index) {
 void calibrate_all() {
     printf("calibrating \n");
 
-    chassis.calibrate(false);
-    chassis_danielib.calibrate();
-    chassis_danielib.startTracking();
-    chassis.setPose(0, 0, 0);
-    chassis_danielib.setPose(0, 0);
+    c_lemlib.calibrate(false);
+    c_danielib.calibrate();
+    c_danielib.startTracking();
+    c_lemlib.setPose(0, 0, 0);
+    c_danielib.setPose(0, 0);
     master.rumble(".");
 }
 
@@ -125,7 +125,7 @@ void print_info() {
     int cycle = 0;
     while (printing) {
         // print pose
-        auto pose = chassis.getPose();
+        auto pose = c_lemlib.getPose();
         pros::lcd::print(0, "Position: (%.2f, %.2f, %.2f)", pose.x, pose.y, d_reduce_to_0_360(pose.theta));
         pros::lcd::print(1, "Selected Auto: %s", get_auton_name(auton_index).first.c_str());
         pros::lcd::print(2, "H: %.3f, V: %.3f", (float)horizontal_rotation.get_position()/100.0f, (float)vertical_rotation.get_position()/100.0f);
@@ -293,7 +293,7 @@ void autonomous() {
     //     // waitUntilCondition(millis() > startTime + 60000 || finished);
     //     if (!finished) {
     //         test_auto.remove();
-    //         // chassis.stopAllMovements();
+    //         // c_lemlib.stopAllMovements();
     //     }
     //     top.brake();
     //     bottom.brake();
@@ -327,7 +327,7 @@ void opcontrol() {
     //     waitUntilCondition(!master.get_digital(DIGITAL_UP) && !master.get_digital(DIGITAL_X));
 
     //     // skills.remove();
-    //     // chassis.stopAllMovements();
+    //     // c_lemlib.stopAllMovements();
     //     top.brake();
     //     bottom.brake();
     //     left_mg.brake();
