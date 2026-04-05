@@ -44,10 +44,10 @@ danielib::PID angularPID(2.83, 0.12, 18.7, 4, 1.5, 120, 0);
 danielib::PID swingAngularPID(5.9, 0.2, 40, 4, 2, 160, 0);
 
 // DANIELIB LINEAR PID - tuned for straight drives
-danielib::PID linearPID(7.5, 0, 33, 0, 1.5, 150, 7.5);
+danielib::PID linearPID(7.5, 0, 33, 0, 1.5, 150, 6.5);
 
 // DANIELIB MTP - somewhat tuned, but not very optimal
-danielib::PID mtpLinearPID(7.35, 0, 28.5, 0, 1.5, 90, 6);
+danielib::PID mtpLinearPID(7.35, 0, 28.5, 0, 1.5, 90, 7.5);
 danielib::PID mtpAngularPID(2.95, 0, 18, 0, 0, 0, 0); // tuned?
 
 /* ---------------------------------------------------------------------------------------------- */
