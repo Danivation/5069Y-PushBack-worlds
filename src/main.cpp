@@ -83,11 +83,13 @@ std::pair<std::string, std::string> get_auton_name(int index) {
 
 void calibrate_all() {
     printf("calibrating \n");
-    horizontal_rotation.reset_position();
-    vertical_rotation.reset_position();
-    chassis_danielib.calibrate();
+
     chassis.calibrate(false);
-    imu_1.set_heading(0);
+    chassis_danielib.calibrate();
+    chassis_danielib.startTracking();
+    chassis.setPose(0, 0, 0);
+    chassis_danielib.setPose(0, 0);
+    master.rumble(".");
 }
 
 void auton_selector() {
@@ -245,10 +247,10 @@ void initialize() {
     // skills things
     // odom_lift.extend();
     calibrate_all();
-    // autonomous();
+    autonomous();
 
     // pros::Task selector(auton_selector);
-    pros::Task bypass(wait_for_bypass);
+    // pros::Task bypass(wait_for_bypass);
 }
 
 void competition_initialize() {
