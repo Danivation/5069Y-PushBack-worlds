@@ -45,5 +45,5 @@ void auton_none() {
     chassis_danielib.setPose(0, 0);
 
     // chassis.turnToHeading(135, 3000, {}, false); 
-    chassis_danielib.turnToHeading(135, 5000);
+    chassis_danielib.turnToHeading(90, 5000);
 }
