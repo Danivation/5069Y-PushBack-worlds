@@ -58,23 +58,23 @@ lemlib::OdomSensors sensors(&vertical_tracking_wheel, // vertical tracking wheel
 lemlib::ControllerSettings lateral_controller(10, // proportional gain (kP)
                                               0, // integral gain (kI)
                                               3, // derivative gain (kD)
-                                              3, // anti windup
-                                              1, // small error range, in inches
-                                              100, // small error range timeout, in milliseconds
-                                              3, // large error range, in inches
-                                              500, // large error range timeout, in milliseconds
-                                              20 // maximum acceleration (slew)
+                                              0, // anti windup
+                                              0, // small error range, in inches
+                                              0, // small error range timeout, in milliseconds
+                                              0, // large error range, in inches
+                                              0, // large error range timeout, in milliseconds
+                                              0 // maximum acceleration (slew)
 );
 
 // angular PID controller
-lemlib::ControllerSettings angular_controller(2.92, // proportional gain (kP)
-                                              0.7, // integral gain (kI)
-                                              20.3, // derivative gain (kD)
-                                              6, // anti windup
+lemlib::ControllerSettings angular_controller(2.96, // proportional gain (kP)
+                                              0.03, // integral gain (kI)
+                                              19, // derivative gain (kD)
+                                              3, // anti windup
                                               1, // small error range, in degrees
-                                              70, // small error range timeout, in milliseconds
+                                              80, // small error range timeout, in milliseconds
                                               3, // large error range, in degrees
-                                              160, // large error range timeout, in milliseconds
+                                              200, // large error range timeout, in milliseconds
                                               0 // maximum acceleration (slew)
 );
 
