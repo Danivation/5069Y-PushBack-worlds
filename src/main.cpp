@@ -245,12 +245,11 @@ void initialize() {
     optical_top.set_led_pwm(0);
 
     // skills things
-    // odom_lift.extend();
     calibrate_all();
     autonomous();
 
     // pros::Task selector(auton_selector);
-    // pros::Task bypass(wait_for_bypass);
+    pros::Task bypass(wait_for_bypass);
 }
 
 void competition_initialize() {
