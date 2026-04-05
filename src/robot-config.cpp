@@ -86,7 +86,7 @@ danielib::Sensors sensors_danielib(vertical_tracker_danielib, horizontal_tracker
 
 
 
-danielib::PID angularPID(2.9, 0, 18, 0, 0, 0, 0);
+danielib::PID angularPID(2.8, 0, 19, 0, 0, 0, 0);
 
 
 
