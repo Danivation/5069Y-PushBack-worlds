@@ -40,28 +40,19 @@ lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_rotation, lemlib::Om
 lemlib::OdomSensors sensors(&vertical_tracking_wheel, nullptr, &horizontal_tracking_wheel, nullptr, &imu_1);
 
 // lateral PID controller
-lemlib::ControllerSettings lateral_controller(10, // proportional gain (kP)
+lemlib::ControllerSettings lateral_controller(9, // proportional gain (kP)
                                               0, // integral gain (kI)
-                                              3, // derivative gain (kD)
+                                              26, // derivative gain (kD)
                                               0, // anti windup
                                               0, // small error range, in inches
                                               0, // small error range timeout, in milliseconds
                                               0, // large error range, in inches
                                               0, // large error range timeout, in milliseconds
-                                              0 // maximum acceleration (slew)
+                                              15 // maximum acceleration (slew)
 );
 
 // angular PID controller
-lemlib::ControllerSettings angular_controller(5, // proportional gain (kP)
-                                              0, // integral gain (kI)
-                                              40, // derivative gain (kD)
-                                              0, // anti windup
-                                              0, // small error range, in degrees
-                                              0, // small error range timeout, in milliseconds
-                                              0, // large error range, in degrees
-                                              0, // large error range timeout, in milliseconds
-                                              0 // maximum acceleration (slew)
-);
+lemlib::ControllerSettings angular_controller(5, 0, 40, 0, 1, 85, 3, 300, 0);
 
 // create the chassis
 lemlib::Chassis chassis(drivetrain, lateral_controller, angular_controller, sensors);
