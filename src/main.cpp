@@ -4,7 +4,7 @@
 /*                                        GLOBAL VARIABLES                                        */
 /* ---------------------------------------------------------------------------------------------- */
 
-const bool skillsSlow = true;
+const bool skillsSlow = false;
 const bool autoForDriver = false;
 
 bool comp_started = false;
