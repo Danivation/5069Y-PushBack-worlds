@@ -52,14 +52,14 @@ lemlib::ControllerSettings lateral_controller(10, // proportional gain (kP)
 );
 
 // angular PID controller
-lemlib::ControllerSettings angular_controller(2.5, // proportional gain (kP)
-                                              0.0, // integral gain (kI)
-                                              16.1, // derivative gain (kD)
-                                              5, // anti windup
-                                              1, // small error range, in degrees
-                                              80, // small error range timeout, in milliseconds
-                                              3, // large error range, in degrees
-                                              300, // large error range timeout, in milliseconds
+lemlib::ControllerSettings angular_controller(5, // proportional gain (kP)
+                                              0, // integral gain (kI)
+                                              40, // derivative gain (kD)
+                                              0, // anti windup
+                                              0, // small error range, in degrees
+                                              0, // small error range timeout, in milliseconds
+                                              0, // large error range, in degrees
+                                              0, // large error range timeout, in milliseconds
                                               0 // maximum acceleration (slew)
 );
 
@@ -84,18 +84,15 @@ danielib::Localization mcl({left_beam, right_beam, front_beam});
 danielib::Sensors sensors_danielib(vertical_tracker_danielib, horizontal_tracker_danielib, inertial, mcl);
 
 
-
 // angular pid constants
-danielib::PID angularPID(2.83, 0.12, 18.7, 4, 1.5, 120, 0);
+danielib::PID angularPID(2.83, 0.12, 18.7, 4, 1.5, 120, 0); // tuned
+danielib::PID swingAngularPID(6.2, 0.28, 61.8, 2, 0, 0, 0);
 
-
-
-
+// linear pid constants
 danielib::PID linearPID(7.4, 0.09, 25, 0.75, 1, 70, 6);
 
+// mtp pid constants
 danielib::PID mtpLinearPID(7.35, 0, 28.5, 0, 1.5, 90, 6);
-danielib::PID mtpAngularPID(2.46, 0, 13.9, 0, 0, 0, 0);
-
-danielib::PID swingAngularPID(6.2, 0.28, 61.8, 2, 0, 0, 0);
+danielib::PID mtpAngularPID(2.95, 0, 18, 0, 0, 0, 0); // tuned?
 
 danielib::Drivetrain chassis_danielib(left_mg, right_mg, sensors_danielib, 11.3, 3.25, 450, linearPID, angularPID, mtpLinearPID, mtpAngularPID, swingAngularPID);
