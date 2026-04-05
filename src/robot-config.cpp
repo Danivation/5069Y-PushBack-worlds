@@ -34,25 +34,10 @@ pros::adi::Pneumatics odom_lift('F', false);
 /* ---------------------------------------------------------------------------------------------- */
 
 // drivetrain settings
-lemlib::Drivetrain drivetrain(&left_mg, // left motor group
-                              &right_mg, // right motor group
-                              11.3, // 10 inch track width
-                              lemlib::Omniwheel::NEW_325, // using new 4" omnis
-                              450, // drivetrain rpm is 360
-                              2 // horizontal drift is 2 (for now)
-);
-
-lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_rotation, lemlib::Omniwheel::NEW_2, -2.4);
-// vertical tracking wheel
+lemlib::Drivetrain drivetrain(&left_mg, &right_mg, 11.3, lemlib::Omniwheel::NEW_325, 450, 2);
 lemlib::TrackingWheel vertical_tracking_wheel(&vertical_rotation, lemlib::Omniwheel::NEW_2, -0.5);
-
-// odometry settings
-lemlib::OdomSensors sensors(&vertical_tracking_wheel, // vertical tracking wheel 1, set to null
-                            nullptr, // vertical tracking wheel 2, set to nullptr as we are using IMEs
-                            &horizontal_tracking_wheel, // horizontal tracking wheel 1
-                            nullptr, // horizontal tracking wheel 2, set to nullptr as we don't have a second one
-                            &imu_1 // inertial sensor
-);
+lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_rotation, lemlib::Omniwheel::NEW_2, -2.4);
+lemlib::OdomSensors sensors(&vertical_tracking_wheel, nullptr, &horizontal_tracking_wheel, nullptr, &imu_1);
 
 // lateral PID controller
 lemlib::ControllerSettings lateral_controller(10, // proportional gain (kP)
@@ -79,8 +64,31 @@ lemlib::ControllerSettings angular_controller(2.5, // proportional gain (kP)
 );
 
 // create the chassis
-lemlib::Chassis chassis(drivetrain, // drivetrain settings
-                        lateral_controller, // lateral PID settings
-                        angular_controller, // angular PID settings
-                        sensors // odometry sensors
-);
+lemlib::Chassis chassis(drivetrain, lateral_controller, angular_controller, sensors);
+
+/* ---------------------------------------------------------------------------------------------- */
+/*                                         DANIELIB CONFIG                                        */
+/* ---------------------------------------------------------------------------------------------- */
+
+// STILL USED FOR DISTANCE RESETS
+danielib::Beam left_beam(-90, -4.375, 2.5, distance_left);
+danielib::Beam right_beam(90, 4.375, 2.5, distance_right);
+danielib::Beam front_beam(0, -4, 4, distance_front);
+
+// + offset is right or front, - offset is left or back
+danielib::TrackerWheel vertical_tracker_danielib(vertical_rotation, 2, -0.5);
+danielib::TrackerWheel horizontal_tracker_danielib(horizontal_rotation, 2, -2.4);
+danielib::Inertial inertial(imu_1);
+
+danielib::Localization mcl({left_beam, right_beam, front_beam});
+danielib::Sensors sensors_danielib(vertical_tracker_danielib, horizontal_tracker_danielib, inertial, mcl);
+
+danielib::PID linearPID(7.4, 0.09, 25, 0.75, 1, 70, 6);
+danielib::PID angularPID(2.4, 0.1, 16.1, 1, 2, 110, 0);
+
+danielib::PID mtpLinearPID(7.35, 0, 28.5, 0, 1.5, 90, 6);
+danielib::PID mtpAngularPID(2.46, 0, 13.9, 0, 0, 0, 0);
+
+danielib::PID swingAngularPID(6.2, 0.28, 61.8, 2, 0, 0, 0);
+
+danielib::Drivetrain chassis_danielib(left_mg, right_mg, sensors_danielib, 11.3, 3.25, 450, linearPID, angularPID, mtpLinearPID, mtpAngularPID, swingAngularPID);

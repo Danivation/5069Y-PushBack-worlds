@@ -85,7 +85,8 @@ void calibrate_all() {
     printf("calibrating \n");
     horizontal_rotation.reset_position();
     vertical_rotation.reset_position();
-    chassis.calibrate();
+    chassis_danielib.calibrate();
+    chassis.calibrate(false);
     imu_1.set_heading(0);
 }
 
@@ -210,15 +211,15 @@ void wait_for_bypass() {
 }
 
 void log_info() {
-    FILE* log = fopen("/usd/log.txt", "w");
-    waitUntilCondition(logging);
-    int startTime = pros::millis();
-    std::uint32_t time = pros::millis();
-    while (logging) {
-        if (log) fprintf(log, "(%d,%.2f),", pros::millis() - startTime, 90.0f-imu_1.get_heading());
-        pros::Task::delay_until(&time, 10);
-    }
-    if (log) fclose(log);
+    // FILE* log = fopen("/usd/log.txt", "w");
+    // waitUntilCondition(logging);
+    // int startTime = pros::millis();
+    // std::uint32_t time = pros::millis();
+    // while (logging) {
+    //     if (log) fprintf(log, "(%d,%.2f),", pros::millis() - startTime, 90.0f-imu_1.get_heading());
+    //     pros::Task::delay_until(&time, 10);
+    // }
+    // if (log) fclose(log);
 }
 
 /* ---------------------------------------------------------------------------------------------- */
@@ -244,7 +245,7 @@ void initialize() {
     // skills things
     // odom_lift.extend();
     calibrate_all();
-    autonomous();
+    // autonomous();
 
     // pros::Task selector(auton_selector);
     pros::Task bypass(wait_for_bypass);
