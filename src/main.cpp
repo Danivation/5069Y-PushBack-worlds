@@ -271,38 +271,37 @@ void autonomous() {
     right_mg.set_brake_mode_all(MotorBrake::brake);
     master.clear();
     printing = true;
-    pros::Task logger(log_info);
     pros::Task printer(print_info);
-    logging = true;
+    // logging = true;
+    // pros::Task logger(log_info);
 
     auton_none();
-    /**
-    // delay
-    if (competition::is_connected()) {
-        // run_auton(auton_index);
-    } else {
-        int startTime;
-        bool finished = false;
-        pros::Task test_auto ([&] {
-            startTime = millis();
-            run_auton(auton_index);
-            // auton_skills();
-            finished = true;
-        });
+    // /**/
+    // if (competition::is_connected()) {
+    //     run_auton(auton_index);
+    // } else {
+    //     int startTime;
+    //     bool finished = false;
+    //     pros::Task test_auto ([&] {
+    //         startTime = millis();
+    //         run_auton(auton_index);
+    //         // auton_skills();
+    //         finished = true;
+    //     });
 
-        waitUntilCondition(millis() > startTime + 15000);
-        // waitUntilCondition(millis() > startTime + 60000 || finished);
-        if (!finished) {
-            test_auto.remove();
-            // chassis.stopAllMovements();
-        }
-        top.brake();
-        bottom.brake();
-        left_mg.brake();
-        right_mg.brake();
-    }
-    **/
-    logging = false;
+    //     waitUntilCondition(millis() > startTime + 15000);
+    //     // waitUntilCondition(millis() > startTime + 60000 || finished);
+    //     if (!finished) {
+    //         test_auto.remove();
+    //         // chassis.stopAllMovements();
+    //     }
+    //     top.brake();
+    //     bottom.brake();
+    //     left_mg.brake();
+    //     right_mg.brake();
+    // }
+    // /**/
+    // logging = false;
     comp_started = true;
 }
 
@@ -354,9 +353,9 @@ void opcontrol() {
     pros::lcd::shutdown();
     delay(50);
     pros::lcd::initialize();
-    delay(50);
+    delay(100);
     printing = true;
-    pros::Task logger(print_info);
+    pros::Task printer(print_info);
 
     while (true) { pros::delay(50); }
 }

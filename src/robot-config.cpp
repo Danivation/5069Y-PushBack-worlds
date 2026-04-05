@@ -83,8 +83,16 @@ danielib::Inertial inertial(imu_1);
 danielib::Localization mcl({left_beam, right_beam, front_beam});
 danielib::Sensors sensors_danielib(vertical_tracker_danielib, horizontal_tracker_danielib, inertial, mcl);
 
+
+
+
+danielib::PID angularPID(2.55, 0, 16.1, 0, 0, 0, 0);
+
+
+
+
+
 danielib::PID linearPID(7.4, 0.09, 25, 0.75, 1, 70, 6);
-danielib::PID angularPID(2.4, 0.1, 16.1, 1, 2, 110, 0);
 
 danielib::PID mtpLinearPID(7.35, 0, 28.5, 0, 1.5, 90, 6);
 danielib::PID mtpAngularPID(2.46, 0, 13.9, 0, 0, 0, 0);
