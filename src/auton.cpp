@@ -44,8 +44,8 @@ void outtake() {
 // PUSH COUNTER SAWP
 void auton_none() {
     int startTime = millis();
-    c_danielib.setPose(2, -47.5, 270);
-    c_lemlib.setPose(2, -47.5, 270);
+    c_danielib.setPose(1.75, -47, 270);
+    c_lemlib.setPose(1.75, -47, 270);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                     PUSH AND STEAL PRELOAD                                     */
@@ -56,11 +56,11 @@ void auton_none() {
     c_danielib.driveForDistance(9, 400);
 
     // drive backwards towards match loader
-    c_lemlib.moveToPoint(1.98_tiles, -1.95_tiles, 1300, {.forwards = false}, true);
+    c_lemlib.moveToPoint(1.98_tiles, -1.95_tiles, 1300, {.forwards = false, .minSpeed = 10, .earlyExitRange = 2}, true);
     delay(700);
     loader.extend();
     c_lemlib.waitUntilDone();
-    c_danielib.turnToHeading(180, 500);
+    // c_danielib.turnToHeading(180, 500);
 
     // distance reset
     // lemlibDistReset({&left_beam});
@@ -70,13 +70,11 @@ void auton_none() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive into loader
-    c_lemlib.moveToPoint(1.99_tiles, -55, 1300, {.maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 6.5}, false);
+    c_lemlib.moveToPoint(1.98_tiles, -55, 1300, {.maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 6.5}, false);
     store();
     int loader1Start = millis();
-    c_lemlib.moveToPoint(1.99_tiles, -70, 1000, {.maxSpeed = 37}, true);
+    c_lemlib.moveToPoint(1.98_tiles, -70, 1000, {.maxSpeed = 45}, true);
     waitUntilCondition(millis() >= loader1Start + 750);
-    c_lemlib.setPose(2_tiles, -26, c_lemlib.getPose().theta);
-    lemlibDistReset({&left_beam});
     c_lemlib.cancelMotion();
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -90,6 +88,8 @@ void auton_none() {
     int score1Start = millis();
     waitUntilCondition(millis() >= score1Start + 700);
     c_lemlib.cancelMotion();
+    c_lemlib.setPose(2_tiles, -28, c_lemlib.getPose().theta);
+    lemlibDistReset({&left_beam});
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                           MID STACKS                                           */
@@ -125,7 +125,7 @@ void auton_none() {
     int score2Start = millis();
     waitUntilCondition(millis() >= score2Start + 900);
     c_lemlib.cancelMotion();
-    c_lemlib.setPose(-2_tiles, -26, c_lemlib.getPose().theta);
+    c_lemlib.setPose(-2_tiles, -28, c_lemlib.getPose().theta);
     lemlibDistReset({&right_beam});
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -136,7 +136,7 @@ void auton_none() {
     c_lemlib.moveToPoint(-1.97_tiles, -55, 1300, {.maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 6.5}, false);
     store();
     int loader2Start = millis();
-    c_lemlib.moveToPoint(-1.97_tiles, -70, 1000, {.maxSpeed = 37}, true);
+    c_lemlib.moveToPoint(-1.97_tiles, -70, 1000, {.maxSpeed = 45}, true);
     waitUntilCondition(millis() >= loader2Start + 750);
     c_lemlib.cancelMotion();
 
