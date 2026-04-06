@@ -320,3 +320,61 @@ void auton_right_4ball_stack() {
 /* ---------------------------------------------------------------------------------------------- */
 /*                                             7 BALLS                                            */
 /* ---------------------------------------------------------------------------------------------- */
+
+void auton_right_7ball() {
+
+}
+
+void auton_left_7ball() {
+
+}
+
+/* ---------------------------------------------------------------------------------------------- */
+/*                                             SKILLS                                             */
+/* ---------------------------------------------------------------------------------------------- */
+
+void auton_skills() {
+    int startTime = millis();
+    // c_danielib.setPose(0, -50, 180);
+    // c_lemlib.setPose(0, -50, 180);
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                   REALIGN AND DISTANCE RESET                                   */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // distance reset left and right
+    c_danielib.setPose(0, -2_tiles, 0);
+    c_lemlib.setPose(0, -2_tiles, 0);
+    lemlibDistReset({&left_beam, &right_beam});
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                            LOW GOAL                                            */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // grab one blue block
+    store();
+    c_lemlib.moveToPoint(16, -29, 1000, {}, true);
+    delay(400);
+    outtake();
+    delay(70);
+    store();
+
+    c_lemlib.moveToPoint(15, -20, 1000, {.minSpeed = 10, .earlyExitRange = 4}, false);
+    stop();
+    intake_raise.extend();
+    c_lemlib.moveToPoint(8, -10, 800, {.maxSpeed = 80}, false);
+
+    // outtake
+    bottom.move(-55);
+    delay(500);
+    bottom.move(-20);
+    delay(1000);
+    c_danielib.driveForDistance(-2.5, 500);
+    bottom.move(-10);
+    delay(800);
+
+    // back up
+    c_lemlib.moveToPoint(1_tiles, -1_tiles, 800, {.forwards = false, .minSpeed = 10, .earlyExitRange = 2}, false);
+    stop();
+    intake_raise.retract();
+}
