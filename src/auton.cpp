@@ -108,7 +108,7 @@ void auton_none() {
     c_lemlib.waitUntilDone();
 
     // setup for left side
-    c_lemlib.moveToPoint(-1.95_tiles, -1.7_tiles, 900, {.minSpeed = 10, .earlyExitRange = 2}, false);
+    c_lemlib.moveToPoint(-1.92_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2}, false);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                         LEFT LONG GOAL                                         */
@@ -119,7 +119,7 @@ void auton_none() {
     delay(560);
     score();
     int score2Start = millis();
-    waitUntilCondition(millis() >= score2Start + 900);
+    waitUntilCondition(millis() >= score2Start + 800);
     c_lemlib.cancelMotion();
     c_lemlib.setPose(-2_tiles, -28, c_lemlib.getPose().theta);
     lemlibDistReset({&right_beam});
@@ -129,8 +129,8 @@ void auton_none() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive into loader
-    c_lemlib.moveToPoint(-1.97_tiles, -55, 1300, {.maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 6.5}, false);
     store();
+    c_lemlib.moveToPoint(-1.97_tiles, -55, 1300, {.maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 6.5}, false);
     int loader2Start = millis();
     c_lemlib.moveToPoint(-1.97_tiles, -70, 1000, {.maxSpeed = 45}, true);
     waitUntilCondition(millis() >= loader2Start + 750);
@@ -140,14 +140,24 @@ void auton_none() {
     /*                                            MID GOAL                                            */
     /* ---------------------------------------------------------------------------------------------- */
 
-    // c_lemlib.moveToPoint(-2_tiles, -2.1_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7});
-    // c_lemlib.moveToPoint(-13, -13, 1700, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7});
-    // c_lemlib.moveToPoint(-9, -9, 1200, {.forwards = false, .maxSpeed = 80}, true);
-    c_lemlib.moveToPoint(-1.8_tiles, -2_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(-2_tiles, -1.9_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 6}, false);
     c_lemlib.moveToPoint(-13, -13, 1700, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
     c_lemlib.moveToPoint(-9, -9, 1200, {.forwards = false, .maxSpeed = 80}, true);
     delay(300);
     top.move(-80);
     bottom.move(70);
     delay(1000);
+    c_lemlib.cancelMotion();
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                              WING                                              */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // move to wing position
+    stop();
+    loader.retract();
+    c_lemlib.moveToPoint(-1.6_tiles, -1.6_tiles, 1100, {.minSpeed = 10, .earlyExitRange = 2}, false);
+
+    // motion chain wing into goal
+    c_lemlib.moveToPoint(-1.5_tiles, -12, 1500, {.forwards = false, .maxSpeed = 80}, false);
 }
