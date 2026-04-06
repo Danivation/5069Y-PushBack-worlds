@@ -101,18 +101,14 @@ void auton_none() {
     store();
 
     // grab both stacks
-    c_lemlib.moveToPoint(0.7_tiles, -0.9_tiles, 1000, {.maxSpeed = 100, .minSpeed = 10, .earlyExitRange = 7}, false);
-    c_lemlib.moveToPoint(-0.78_tiles, -0.97_tiles, 1300, {.maxSpeed = 100, .minSpeed = 10, .earlyExitRange = 7}, true);
+    c_lemlib.moveToPoint(0.7_tiles, -0.89_tiles, 1000, {.maxSpeed = 100, .minSpeed = 10, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(-0.78_tiles, -0.94_tiles, 1300, {.maxSpeed = 100, .minSpeed = 10, .earlyExitRange = 7}, true);
     delay(700);
     loader.extend();
     c_lemlib.waitUntilDone();
 
     // setup for left side
-    c_lemlib.moveToPoint(-1.98_tiles, -1.7_tiles, 900, {.minSpeed = 10, .earlyExitRange = 2}, false);
-    // c_danielib.turnToHeading(180, 500);
-
-    // distance reset
-    // lemlibDistReset({&right_beam});
+    c_lemlib.moveToPoint(-1.95_tiles, -1.7_tiles, 900, {.minSpeed = 10, .earlyExitRange = 2}, false);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                         LEFT LONG GOAL                                         */
@@ -144,10 +140,10 @@ void auton_none() {
     /*                                            MID GOAL                                            */
     /* ---------------------------------------------------------------------------------------------- */
 
-    c_lemlib.moveToPoint(-2_tiles, -2.1_tiles, 800, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7.5});
-    c_lemlib.moveToPoint(-13, -13, 1700, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7});
-    c_lemlib.moveToPoint(-9, -9, 1200, {.forwards = false, .maxSpeed = 80}, true);
-    delay(400);
+    // c_lemlib.moveToPoint(-2_tiles, -2.1_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7});
+    // c_lemlib.moveToPoint(-13, -13, 1700, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7});
+    // c_lemlib.moveToPoint(-9, -9, 1200, {.forwards = false, .maxSpeed = 80}, true);
+    delay(300);
     top.move(-80);
     bottom.move(70);
     delay(1000);
