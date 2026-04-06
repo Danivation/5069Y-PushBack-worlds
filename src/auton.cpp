@@ -208,8 +208,9 @@ void auton_right_4ball_loader() {
     c_lemlib.setPose(18.5, -49.2, -90);
 
     // drive backwards towards match loader
-    c_lemlib.moveToPoint(1.98_tiles, -2_tiles, 1300, {.forwards = false, .minSpeed = 10, .earlyExitRange = 2}, true);
-    delay(300);
+    store();
+    c_lemlib.moveToPoint(1.98_tiles, -2_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 2}, true);
+    delay(200);
     loader.extend();
     c_lemlib.waitUntilDone();
 
@@ -234,7 +235,7 @@ void auton_right_4ball_loader() {
     delay(800);
     score();
     int score1Start = millis();
-    waitUntilCondition(millis() >= score1Start + 700);
+    waitUntilCondition(millis() >= score1Start + 600);
     c_lemlib.cancelMotion();
     c_lemlib.setPose(2_tiles, -28, c_lemlib.getPose().theta);
     lemlibDistReset({&left_beam});
@@ -245,13 +246,16 @@ void auton_right_4ball_loader() {
 
     // swing out
     loader.retract();
-    c_lemlib.moveToPoint(2_tiles+0.35_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2}, false);
+    c_lemlib.moveToPoint(2_tiles+0.27_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 3.5}, false);
     hood.retract();
     stop();
 
     // back up into wing
-    c_lemlib.moveToPoint(2_tiles+0.5_tiles, -0.8_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
-    c_lemlib.moveToPoint(2_tiles+0.5_tiles, -12, 1500, {.forwards = false, .maxSpeed = 70}, false);
+    left_mg.set_brake_mode_all(MotorBrake::hold);
+    left_mg.set_brake_mode_all(MotorBrake::hold);
+    c_lemlib.moveToPoint(2_tiles+0.45_tiles, -1.05_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(2_tiles+0.45_tiles, -10, 1500, {.forwards = false, .maxSpeed = 70, .minSpeed = 10, .earlyExitRange = 1}, false);
+    c_danielib.turnToHeading(190, 600);
 }
 
 void auton_left_4ball_stack() {
