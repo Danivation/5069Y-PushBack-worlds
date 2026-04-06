@@ -215,7 +215,7 @@ void auton_right_4ball_loader() {
     c_lemlib.waitUntilDone();
 
     /* ---------------------------------------------------------------------------------------------- */
-    /*                                          RIGHT LOADER                                          */
+    /*                                             LOADER                                             */
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive into loader
@@ -227,7 +227,7 @@ void auton_right_4ball_loader() {
     c_lemlib.cancelMotion();
 
     /* ---------------------------------------------------------------------------------------------- */
-    /*                                         RIGHT LONG GOAL                                        */
+    /*                                            LONG GOAL                                           */
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive backwards to goal
@@ -253,7 +253,7 @@ void auton_right_4ball_loader() {
     // back up into wing
     left_mg.set_brake_mode_all(MotorBrake::hold);
     left_mg.set_brake_mode_all(MotorBrake::hold);
-    c_lemlib.moveToPoint(2_tiles+0.45_tiles, -1.05_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(2_tiles+0.47_tiles, -1.05_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
     c_lemlib.moveToPoint(2_tiles+0.45_tiles, -10, 1500, {.forwards = false, .maxSpeed = 70, .minSpeed = 10, .earlyExitRange = 1}, false);
     c_danielib.turnToHeading(190, 600);
 }
@@ -263,7 +263,54 @@ void auton_left_4ball_stack() {
 }
 
 void auton_right_4ball_stack() {
+    int startTime = millis();
+    c_danielib.setPose(14, -47, 0);
+    c_lemlib.setPose(14, -47, 0);
 
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                              STACK                                             */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    store();
+    c_lemlib.moveToPoint(1.08_tiles, -0.88_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2}, true);
+    delay(300);
+    loader.extend();
+    c_lemlib.moveToPoint(1.35_tiles, -1.35_tiles, 900, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
+    c_danielib.swingToHeading(250, danielib::SwingSide::LEFT, 400);
+    
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                            LONG GOAL                                           */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // drive backwards to goal
+    c_lemlib.moveToPoint(1.95_tiles, -22, 900, {.forwards = false}, true);
+    delay(600);
+    score();
+    int score1Start = millis();
+    // delay(200);
+    // c_lemlib.cancelMotion();
+    // c_lemlib.turnToHeading(180, 400, {}, true);
+    waitUntilCondition(millis() >= score1Start + 600);
+    c_lemlib.cancelMotion();
+    c_lemlib.setPose(2_tiles, -28, c_lemlib.getPose().theta);
+    lemlibDistReset({&left_beam});
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                              WING                                              */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // swing out
+    loader.retract();
+    c_lemlib.moveToPoint(2_tiles+0.27_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 3.5}, false);
+    hood.retract();
+    stop();
+
+    // back up into wing
+    left_mg.set_brake_mode_all(MotorBrake::hold);
+    left_mg.set_brake_mode_all(MotorBrake::hold);
+    c_lemlib.moveToPoint(2_tiles+0.47_tiles, -1.05_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(2_tiles+0.45_tiles, -10, 1500, {.forwards = false, .maxSpeed = 70, .minSpeed = 10, .earlyExitRange = 1}, false);
+    c_danielib.turnToHeading(190, 600);
 }
 
 /* ---------------------------------------------------------------------------------------------- */
