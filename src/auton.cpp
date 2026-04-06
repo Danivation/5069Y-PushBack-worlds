@@ -120,7 +120,7 @@ void auton_sawp_counter_wing() {
     c_lemlib.waitUntilDone();
 
     // setup for left side
-    c_lemlib.moveToPoint(-1.92_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2}, false);
+    c_lemlib.moveToPoint(-1.85_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2}, false);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                         LEFT LONG GOAL                                         */
@@ -153,8 +153,8 @@ void auton_sawp_counter_wing() {
     /* ---------------------------------------------------------------------------------------------- */
 
     c_lemlib.moveToPoint(-2_tiles, -1.9_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 6}, false);
-    c_lemlib.moveToPoint(-13, -13, 1700, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
-    c_lemlib.moveToPoint(-9, -9, 1200, {.forwards = false, .maxSpeed = 80}, true);
+    c_lemlib.moveToPoint(-12, -14, 1700, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(-8, -10.5, 1200, {.forwards = false, .maxSpeed = 80}, true);
     delay(300);
     top.move(-80);
     bottom.move(70);
@@ -168,10 +168,14 @@ void auton_sawp_counter_wing() {
     // move to wing position
     stop();
     loader.retract();
-    c_lemlib.moveToPoint(-2_tiles+0.4_tiles, -1.6_tiles, 1100, {.minSpeed = 10, .earlyExitRange = 2}, false);
+    c_lemlib.moveToPoint(-2_tiles+0.6_tiles, -1.75_tiles, 1100, {.minSpeed = 10, .earlyExitRange = 2}, false);
 
-    // motion chain wing into goal
-    c_lemlib.moveToPoint(-2_tiles+0.5_tiles, -12, 1500, {.forwards = false, .maxSpeed = 70}, false);
+    // back up into wing
+    left_mg.set_brake_mode_all(MotorBrake::hold);
+    left_mg.set_brake_mode_all(MotorBrake::hold);
+    c_lemlib.moveToPoint(-2_tiles+0.52_tiles, -1.05_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(-2_tiles+0.45_tiles, -10, 1500, {.forwards = false, .maxSpeed = 70, .minSpeed = 10, .earlyExitRange = 1}, false);
+    c_danielib.turnToHeading(190, 600);
 }
 
 void auton_sawp_standard() {
