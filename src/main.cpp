@@ -21,7 +21,7 @@ float testAutonDuration = 0;
 void run_auton(int index) {
     // default auto to run when no auto is selected, also runs in test mode
     if (index == 0) {
-        // auton_all_mid();
+        auton_none();
     }
 
     // // sawps
@@ -274,32 +274,31 @@ void autonomous() {
     // logging = true;
     // pros::Task logger(log_info);
 
-    auton_none();
-    // /**/
-    // if (competition::is_connected()) {
-    //     run_auton(auton_index);
-    // } else {
-    //     int startTime;
-    //     bool finished = false;
-    //     pros::Task test_auto ([&] {
-    //         startTime = millis();
-    //         run_auton(auton_index);
-    //         // auton_skills();
-    //         finished = true;
-    //     });
+    /**/
+    if (competition::is_connected()) {
+        run_auton(auton_index);
+    } else {
+        int startTime;
+        bool finished = false;
+        pros::Task test_auto ([&] {
+            startTime = millis();
+            run_auton(auton_index);
+            finished = true;
+        });
 
-    //     waitUntilCondition(millis() > startTime + 15000);
-    //     // waitUntilCondition(millis() > startTime + 60000 || finished);
-    //     if (!finished) {
-    //         test_auto.remove();
-    //         // c_lemlib.stopAllMovements();
-    //     }
-    //     top.brake();
-    //     bottom.brake();
-    //     left_mg.brake();
-    //     right_mg.brake();
-    // }
-    // /**/
+        waitUntilCondition(millis() > startTime + 15000);
+        // waitUntilCondition(millis() > startTime + 60000 || finished);
+        if (!finished) {
+            test_auto.remove();
+            c_lemlib.cancelAllMotions();
+            c_danielib.stopAllMovements();
+        }
+        top.brake();
+        bottom.brake();
+        left_mg.brake();
+        right_mg.brake();
+    }
+    /**/
     // logging = false;
     comp_started = true;
 }

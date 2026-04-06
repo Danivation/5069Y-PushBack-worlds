@@ -68,9 +68,9 @@ lemlib::Chassis c_lemlib(drivetrain, lateral_controller, angular_controller, sen
 /* ---------------------------------------------------------------------------------------------- */
 
 // STILL USED FOR DISTANCE RESETS
-danielib::Beam left_beam(-90, -4.375, 2.5, distance_left);
-danielib::Beam right_beam(90, 4.375, 2.5, distance_right);
-danielib::Beam front_beam(0, -4, 4, distance_front);
+danielib::Beam left_beam(-90, -4.5, -1.25, distance_left);
+danielib::Beam right_beam(90, 4.5, -1.25, distance_right);
+danielib::Beam front_beam(0, -4.2, 3.5, distance_front);
 
 // + offset is right or front, - offset is left or back
 danielib::TrackerWheel vertical_tracker_danielib(vertical_rotation, 2, -0.5);
