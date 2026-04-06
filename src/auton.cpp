@@ -1,3 +1,4 @@
+#include "auton.hpp"
 #include "lemlib-helpers.hpp"
 #include "main.h"
 using namespace pros;
@@ -41,8 +42,19 @@ void outtake() {
 /*                                        NONE (TEST AUTO)                                        */
 /* ---------------------------------------------------------------------------------------------- */
 
-// PUSH COUNTER SAWP
 void auton_none() {
+    
+}
+
+/* ---------------------------------------------------------------------------------------------- */
+/*                                              SAWPS                                             */
+/* ---------------------------------------------------------------------------------------------- */
+
+void auton_sawp_counter_nowing() {
+
+}
+
+void auton_sawp_counter_wing() {
     int startTime = millis();
     c_danielib.setPose(1.75, -47, 270);
     c_lemlib.setPose(1.75, -47, 270);
@@ -156,8 +168,99 @@ void auton_none() {
     // move to wing position
     stop();
     loader.retract();
-    c_lemlib.moveToPoint(-1.6_tiles, -1.6_tiles, 1100, {.minSpeed = 10, .earlyExitRange = 2}, false);
+    c_lemlib.moveToPoint(-2_tiles+0.4_tiles, -1.6_tiles, 1100, {.minSpeed = 10, .earlyExitRange = 2}, false);
 
     // motion chain wing into goal
-    c_lemlib.moveToPoint(-1.5_tiles, -12, 1500, {.forwards = false, .maxSpeed = 80}, false);
+    c_lemlib.moveToPoint(-2_tiles+0.5_tiles, -12, 1500, {.forwards = false, .maxSpeed = 70}, false);
 }
+
+void auton_sawp_standard() {
+
+}
+
+void auton_sawp_low_mid() {
+
+}
+
+/* ---------------------------------------------------------------------------------------------- */
+/*                                             SPLITS                                             */
+/* ---------------------------------------------------------------------------------------------- */
+
+void auton_left_split() {
+
+}
+
+void auton_right_split() {
+
+}
+
+/* ---------------------------------------------------------------------------------------------- */
+/*                                             4 BALLS                                            */
+/* ---------------------------------------------------------------------------------------------- */
+
+void auton_left_4ball_loader() {
+
+}
+
+void auton_right_4ball_loader() {
+    int startTime = millis();
+    c_danielib.setPose(18.5, -49.2, -90);
+    c_lemlib.setPose(18.5, -49.2, -90);
+
+    // drive backwards towards match loader
+    c_lemlib.moveToPoint(1.98_tiles, -2_tiles, 1300, {.forwards = false, .minSpeed = 10, .earlyExitRange = 2}, true);
+    delay(300);
+    loader.extend();
+    c_lemlib.waitUntilDone();
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                          RIGHT LOADER                                          */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // drive into loader
+    c_lemlib.moveToPoint(1.98_tiles, -56, 1300, {.maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 6.5}, false);
+    store();
+    int loader1Start = millis();
+    c_lemlib.moveToPoint(1.98_tiles, -70, 1000, {.maxSpeed = 45}, true);
+    waitUntilCondition(millis() >= loader1Start + 750);
+    c_lemlib.cancelMotion();
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                         RIGHT LONG GOAL                                        */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // drive backwards to goal
+    c_lemlib.moveToPoint(2_tiles, -25, 1100, {.forwards = false}, true);
+    delay(800);
+    score();
+    int score1Start = millis();
+    waitUntilCondition(millis() >= score1Start + 700);
+    c_lemlib.cancelMotion();
+    c_lemlib.setPose(2_tiles, -28, c_lemlib.getPose().theta);
+    lemlibDistReset({&left_beam});
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                              WING                                              */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // swing out
+    loader.retract();
+    c_lemlib.moveToPoint(2_tiles+0.3_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2}, false);
+    hood.retract();
+    stop();
+
+    // back up into wing
+    c_lemlib.moveToPoint(2_tiles+0.5_tiles, -12, 1500, {.forwards = false, .maxSpeed = 70}, false);
+}
+
+void auton_left_4ball_stack() {
+
+}
+
+void auton_right_4ball_stack() {
+
+}
+
+/* ---------------------------------------------------------------------------------------------- */
+/*                                             7 BALLS                                            */
+/* ---------------------------------------------------------------------------------------------- */
