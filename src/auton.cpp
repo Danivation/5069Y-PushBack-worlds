@@ -143,6 +143,9 @@ void auton_none() {
     // c_lemlib.moveToPoint(-2_tiles, -2.1_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7});
     // c_lemlib.moveToPoint(-13, -13, 1700, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7});
     // c_lemlib.moveToPoint(-9, -9, 1200, {.forwards = false, .maxSpeed = 80}, true);
+    c_lemlib.moveToPoint(-1.8_tiles, -2_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(-13, -13, 1700, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(-9, -9, 1200, {.forwards = false, .maxSpeed = 80}, true);
     delay(300);
     top.move(-80);
     bottom.move(70);
