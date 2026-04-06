@@ -245,11 +245,12 @@ void auton_right_4ball_loader() {
 
     // swing out
     loader.retract();
-    c_lemlib.moveToPoint(2_tiles+0.3_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2}, false);
+    c_lemlib.moveToPoint(2_tiles+0.35_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2}, false);
     hood.retract();
     stop();
 
     // back up into wing
+    c_lemlib.moveToPoint(2_tiles+0.5_tiles, -0.8_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
     c_lemlib.moveToPoint(2_tiles+0.5_tiles, -12, 1500, {.forwards = false, .maxSpeed = 70}, false);
 }
 
