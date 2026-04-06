@@ -56,14 +56,14 @@ void auton_none() {
     c_danielib.driveForDistance(9, 400);
 
     // drive backwards towards match loader
-    c_lemlib.moveToPoint(1.98_tiles, -1.9_tiles, 1300, {.forwards = false}, true);
+    c_lemlib.moveToPoint(1.98_tiles, -1.95_tiles, 1300, {.forwards = false}, true);
     delay(700);
     loader.extend();
     c_lemlib.waitUntilDone();
     c_danielib.turnToHeading(180, 500);
 
     // distance reset
-    lemlibDistReset({&left_beam});
+    // lemlibDistReset({&left_beam});
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                          RIGHT LOADER                                          */
@@ -73,8 +73,10 @@ void auton_none() {
     c_lemlib.moveToPoint(1.99_tiles, -55, 1300, {.maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 6.5}, false);
     store();
     int loader1Start = millis();
-    c_lemlib.moveToPoint(1.99_tiles, -70, 1000, {.maxSpeed = 40}, true);
+    c_lemlib.moveToPoint(1.99_tiles, -70, 1000, {.maxSpeed = 37}, true);
     waitUntilCondition(millis() >= loader1Start + 750);
+    c_lemlib.setPose(2_tiles, -26, c_lemlib.getPose().theta);
+    lemlibDistReset({&left_beam});
     c_lemlib.cancelMotion();
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -100,27 +102,31 @@ void auton_none() {
 
     // grab both stacks
     c_lemlib.moveToPoint(0.7_tiles, -0.9_tiles, 1000, {.maxSpeed = 100, .minSpeed = 10, .earlyExitRange = 7}, false);
-    c_lemlib.moveToPoint(-0.78_tiles, -0.97_tiles, 1300, {.maxSpeed = 100, .minSpeed = 10, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(-0.78_tiles, -0.97_tiles, 1300, {.maxSpeed = 100, .minSpeed = 10, .earlyExitRange = 7}, true);
+    delay(700);
     loader.extend();
+    c_lemlib.waitUntilDone();
 
     // setup for left side
-    c_lemlib.moveToPoint(-1.93_tiles, -2_tiles, 1100);
-    c_danielib.turnToHeading(180, 500);
+    c_lemlib.moveToPoint(-1.98_tiles, -1.7_tiles, 900, {.minSpeed = 10, .earlyExitRange = 2}, false);
+    // c_danielib.turnToHeading(180, 500);
 
     // distance reset
-    lemlibDistReset({&right_beam});
+    // lemlibDistReset({&right_beam});
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                         LEFT LONG GOAL                                         */
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive backwards to goal
-    c_lemlib.moveToPoint(-2_tiles, -25, 800, {.forwards = false}, true);
-    delay(580);
+    c_lemlib.moveToPoint(-2_tiles, -25, 1100, {.forwards = false}, true);
+    delay(560);
     score();
     int score2Start = millis();
     waitUntilCondition(millis() >= score2Start + 900);
     c_lemlib.cancelMotion();
+    c_lemlib.setPose(-2_tiles, -26, c_lemlib.getPose().theta);
+    lemlibDistReset({&right_beam});
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                           LEFT LOADER                                          */
@@ -130,7 +136,7 @@ void auton_none() {
     c_lemlib.moveToPoint(-1.97_tiles, -55, 1300, {.maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 6.5}, false);
     store();
     int loader2Start = millis();
-    c_lemlib.moveToPoint(-1.97_tiles, -70, 1000, {.maxSpeed = 40}, true);
+    c_lemlib.moveToPoint(-1.97_tiles, -70, 1000, {.maxSpeed = 37}, true);
     waitUntilCondition(millis() >= loader2Start + 750);
     c_lemlib.cancelMotion();
 
@@ -138,10 +144,10 @@ void auton_none() {
     /*                                            MID GOAL                                            */
     /* ---------------------------------------------------------------------------------------------- */
 
-    c_lemlib.moveToPoint(-2_tiles, -2.2_tiles, 800, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7.5}, true);
-    c_lemlib.moveToPoint(-13, -13, 1700, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, true);
+    c_lemlib.moveToPoint(-2_tiles, -2.1_tiles, 800, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7.5});
+    c_lemlib.moveToPoint(-13, -13, 1700, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7});
     c_lemlib.moveToPoint(-9, -9, 1200, {.forwards = false, .maxSpeed = 80}, true);
-    delay(800);
+    delay(400);
     top.move(-80);
     bottom.move(70);
     delay(1000);
