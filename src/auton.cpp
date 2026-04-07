@@ -206,9 +206,9 @@ void auton_left_split() {
 
 
     // swerve around to goal
-    c_lemlib.moveToPoint(-1.13_tiles, -1.33_tiles, 800, {.forwards = false, .maxSpeed = 100, .minSpeed = 50, .earlyExitRange = 3}, false);
-    c_lemlib.moveToPoint(-1.54_tiles, -1.78_tiles, 800, {.forwards = false, .maxSpeed = 100, .minSpeed = 50, .earlyExitRange = 3}, false);
-    c_lemlib.moveToPoint(-2_tiles, -1.59_tiles, 800, {.forwards = false, .maxSpeed = 100, .minSpeed = 50, .earlyExitRange = 3}, false);
+    // c_lemlib.moveToPoint(-1.13_tiles, -1.33_tiles, 800, {.forwards = false, .maxSpeed = 100, .minSpeed = 30, .earlyExitRange = 3}, false);
+    c_lemlib.moveToPoint(-1.52_tiles, -1.65_tiles, 1500, {.forwards = false, .maxSpeed = 100, .minSpeed = 20, .earlyExitRange = 3}, false);
+    c_lemlib.moveToPoint(-1.8_tiles, -1.4_tiles, 1000, {.forwards = false, .maxSpeed = 100, .minSpeed = 5, .earlyExitRange = 2}, false);
 
     // c_lemlib.moveToPoint(-1.3_tiles, -1.35_tiles, 900, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
     // c_lemlib.moveToPoint(-1.7_tiles, -1.6_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
@@ -218,6 +218,7 @@ void auton_left_split() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive backwards to goal
+    // c_danielib.turnToHeading(180, 400);
     c_lemlib.moveToPoint(-2_tiles, -22, 2000, {.forwards = false}, true);
     // delay(600);
     // score();
