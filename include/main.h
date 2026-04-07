@@ -52,7 +52,7 @@ extern pros::MotorGroup right_mg;
 extern pros::Rotation horizontal_rotation;
 extern pros::Rotation vertical_rotation;
 extern CustomImu imu_1;
-extern pros::Imu imu_2;
+// extern pros::Imu imu_2;
 extern pros::MotorGroup bottom;
 extern pros::Motor top;
 extern pros::Optical optical_top;

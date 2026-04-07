@@ -13,11 +13,11 @@ pros::MotorGroup bottom({9, 8}, pros::MotorGears::blue);
 pros::Motor top(1, pros::MotorGears::rpm_200);
 
 CustomImu imu_1(15, 360.0f/356.6f);
-pros::Imu imu_2(22); // unused
+// pros::Imu imu_2(22); // unused
 pros::Rotation vertical_rotation(-17);
 pros::Rotation horizontal_rotation(14);
 
-pros::Optical optical_top(22); // unused
+pros::Optical optical_top(7);
 pros::Distance distance_front(3);
 pros::Distance distance_left(4);
 pros::Distance distance_right(10);

@@ -7,6 +7,44 @@ using namespace pros;
 /*                                             HELPERS                                            */
 /* ---------------------------------------------------------------------------------------------- */
 
+// pros::Color WrongColor = Color::black;
+pros::Color get_color(pros::Optical* sensor) {
+    float hue = sensor->get_hue();
+
+    // only return a color if a block is detected
+    if ((int)sensor->get_proximity() <= 60) {
+        return pros::Color::black;
+    }
+
+    // sort hue into colors
+    if (hue < 30 || hue > 330) {        // 330–360, 0–30
+        return pros::Color::red;
+    } else if (hue < 90) {              // 30–90
+        return pros::Color::yellow;
+    } else if (hue < 150) {             // 90–150
+        return pros::Color::green;
+    } else if (hue < 270) {             // 150–270
+        return pros::Color::blue;
+    } else {                            // 270–330
+        return pros::Color::white;
+    }
+}
+
+void waitUntilColor(pros::Optical* sensor, pros::Color color, int stopTime) {
+    waitUntilFunction([&]{
+        if (millis() >= stopTime) {
+            return true;
+        } else if (get_color(sensor) == color) {
+            // wait 25 ms before checking again
+            delay(25);
+            if (get_color(sensor) == color) {
+                return true;
+            }
+        }
+        return false;
+    });
+}
+
 constexpr double operator""_tiles(long double value) {
     return value * 23.622;
 }
@@ -191,6 +229,14 @@ void auton_sawp_low_mid() {
 /* ---------------------------------------------------------------------------------------------- */
 
 void auton_left_split() {
+    
+    int midScoreStart = millis();
+    score();
+    waitUntilColor(&optical_top, Color::blue, midScoreStart + 5000);
+    stop();
+}
+
+void auton_left_splits() {
     int startTime = millis();
     c_danielib.setPose(-14, -47, 0);
     c_lemlib.setPose(-14, -47, 0);
@@ -209,16 +255,22 @@ void auton_left_split() {
     // c_lemlib.moveToPoint(-1.8_tiles, -1.4_tiles, 1000, {.forwards = false, .maxSpeed = 100, .minSpeed = 5, .earlyExitRange = 2}, false);
 
     // point arc to goal
-    c_lemlib.moveToPoint(-1.9_tiles, -1.5_tiles, 1000, {.forwards = false, .minSpeed = 8, .earlyExitRange = 2}, false);
-    c_danielib.turnToHeading(180, 400);
+    // c_lemlib.moveToPoint(-1.9_tiles, -1.5_tiles, 1000, {.forwards = false, .minSpeed = 8, .earlyExitRange = 2}, false);
+    // c_danielib.turnToHeading(180, 400);
+
+    // js get in the goal somehow ig
+    // c_danielib.turnToHeading(80, 500);
+    c_lemlib.moveToPoint(-1.6_tiles, -1.07_tiles, 900, {.forwards = false, .minSpeed = 25, .earlyExitRange = 2}, false);
+    c_lemlib.swingToHeading(180, lemlib::DriveSide::LEFT, 800, {.maxSpeed = 100}, false);
+    stop();
     
-    // /* ---------------------------------------------------------------------------------------------- */
+    /* ---------------------------------------------------------------------------------------------- */
     /*                                            LONG GOAL                                           */
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive backwards to goal
-    c_lemlib.moveToPoint(-2_tiles, -25, 2000, {.forwards = false}, true);
-    delay(600);
+    c_lemlib.moveToPoint(-2_tiles, -23, 1000, {.forwards = false}, true);
+    // delay(600);
     score();
     int score1Start = millis();
     waitUntilCondition(millis() >= score1Start + 700);
@@ -246,9 +298,11 @@ void auton_left_split() {
     c_lemlib.moveToPoint(-12, -14, 1700, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
     c_lemlib.moveToPoint(-7, -9.5, 1200, {.forwards = false, .maxSpeed = 80}, true);
     delay(300);
+    int midScoreStart = millis();
     top.move(-80);
     bottom.move(70);
-    delay(1000);
+    // delay(1000);
+    waitUntilColor(&optical_top, Color::blue, midScoreStart + 1500);
     c_lemlib.cancelMotion();
 
     /* ---------------------------------------------------------------------------------------------- */
