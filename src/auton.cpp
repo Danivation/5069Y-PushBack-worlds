@@ -480,20 +480,24 @@ void auton_left_7ball() {
     wing.extend();
 
     // turnaround and move towards loader
-    c_danielib.turnToHeading(-180, 650);
-    c_lemlib.moveToPoint(-1.35_tiles, -1.3_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 7}, false);
-    c_lemlib.moveToPoint(-1.88_tiles, -2.3_tiles, 1300, {.minSpeed = 10, .earlyExitRange = 6}, false);
+    c_danielib.turnToHeading(-180, 700);
+    c_lemlib.moveToPoint(-1.35_tiles, -1.35_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 6}, false);
+    c_lemlib.moveToPoint(-1.84_tiles, -2_tiles, 1300, {.minSpeed = 10, .earlyExitRange = 6}, false);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                             LOADER                                             */
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive into loader
-    c_lemlib.moveToPoint(-1.98_tiles, -58, 1300, {.maxSpeed = 105, .minSpeed = 10, .earlyExitRange = 6.5}, false);
+    c_lemlib.moveToPoint(-1.97_tiles, -57, 800, {.maxSpeed = 100, .minSpeed = 10, .earlyExitRange = 6.5}, true);
+    // delay(200);
+    outtake();
+    delay(100);
     store();
+    c_lemlib.waitUntilDone();
     int loader1Start = millis();
-    c_lemlib.moveToPoint(-1.98_tiles, -70, 1000, {.maxSpeed = 50}, true);
-    waitUntilCondition(millis() >= loader1Start + 750);
+    c_lemlib.moveToPoint(-1.97_tiles, -70, 1000, {.maxSpeed = 50}, true);
+    waitUntilCondition(millis() >= loader1Start + 1000);
     c_lemlib.cancelMotion();
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -503,11 +507,12 @@ void auton_left_7ball() {
     // drive backwards to goal
     wing.retract();
     c_lemlib.moveToPoint(-2_tiles, -25, 1100, {.forwards = false}, true);
-    delay(800);
+    delay(850);
     score();
     int score1Start = millis();
-    waitUntilCondition(millis() >= score1Start + 700);
+    waitUntilCondition(millis() >= score1Start + 1000);
     c_lemlib.cancelMotion();
+    lemlibDistReset({&right_beam});
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                              WING                                              */
