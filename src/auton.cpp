@@ -195,7 +195,76 @@ void auton_left_split() {
 }
 
 void auton_right_split() {
+    int startTime = millis();
+    c_danielib.setPose(18.5, -49.2, -90);
+    c_lemlib.setPose(18.5, -49.2, -90);
 
+    // drive backwards towards match loader
+    store();
+    c_lemlib.moveToPoint(1.98_tiles, -2_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 2}, true);
+    delay(200);
+    loader.extend();
+    c_lemlib.waitUntilDone();
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                             LOADER                                             */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // drive into loader
+    c_lemlib.moveToPoint(1.98_tiles, -56, 1300, {.maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 6.5}, false);
+    store();
+    int loader1Start = millis();
+    c_lemlib.moveToPoint(1.98_tiles, -70, 1000, {.maxSpeed = 45}, true);
+    waitUntilCondition(millis() >= loader1Start + 750);
+    c_lemlib.cancelMotion();
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                            LONG GOAL                                           */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // drive backwards to goal
+    c_lemlib.moveToPoint(2_tiles, -25, 1100, {.forwards = false}, true);
+    delay(800);
+    score();
+    int score1Start = millis();
+    waitUntilCondition(millis() >= score1Start + 700);
+    c_lemlib.cancelMotion();
+    c_lemlib.setPose(2_tiles, -28, c_lemlib.getPose().theta);
+    lemlibDistReset({&left_beam});
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                      MID STACK + LOW GOAL                                      */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // swing out of long goal
+    loader.retract();
+    c_danielib.turnToHeading(270, 500);
+    store();
+
+    // grab both stacks
+    c_lemlib.moveToPoint(0.9_tiles, -0.85_tiles, 1000, {.maxSpeed = 100}, false);
+    c_danielib.turnToHeading(-40, 400);
+    c_lemlib.moveToPoint(10, -9, 1200, {.maxSpeed = 60}, true);
+    delay(500);
+    intake_raise.extend();
+    c_lemlib.waitUntilDone();
+
+    // intake raise and score
+    outtake();
+    delay(1000);
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                              WING                                              */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    c_lemlib.moveToPoint(1.55_tiles, -1.7_tiles, 1300, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
+    stop();
+    intake_raise.retract();
+    left_mg.set_brake_mode_all(MotorBrake::hold);
+    left_mg.set_brake_mode_all(MotorBrake::hold);
+    c_lemlib.moveToPoint(2_tiles+0.47_tiles, -1.05_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(2_tiles+0.45_tiles, -10, 1500, {.forwards = false, .maxSpeed = 70, .minSpeed = 10, .earlyExitRange = 1}, false);
+    c_danielib.turnToHeading(190, 600);
 }
 
 /* ---------------------------------------------------------------------------------------------- */
