@@ -359,22 +359,28 @@ void auton_skills() {
     delay(70);
     store();
 
-    c_lemlib.moveToPoint(15, -20, 1000, {.minSpeed = 10, .earlyExitRange = 4}, false);
+    c_lemlib.moveToPoint(15, -18, 1000, {.minSpeed = 10, .earlyExitRange = 4}, false);
     stop();
     intake_raise.extend();
-    c_lemlib.moveToPoint(8, -10, 800, {.maxSpeed = 80}, false);
+    c_lemlib.moveToPoint(8, -9, 800, {.maxSpeed = 80}, false);
 
     // outtake
-    bottom.move(-55);
+    bottom.move(-50);
     delay(500);
+    bottom.move(-35);
+    delay(1400);
+    c_danielib.driveForDistance(-2.9, 500);
     bottom.move(-20);
-    delay(1000);
-    c_danielib.driveForDistance(-2.5, 500);
-    bottom.move(-10);
     delay(800);
 
     // back up
-    c_lemlib.moveToPoint(1_tiles, -1_tiles, 800, {.forwards = false, .minSpeed = 10, .earlyExitRange = 2}, false);
+    c_lemlib.moveToPoint(1_tiles, -1_tiles, 800, {.forwards = false, .minSpeed = 10, .earlyExitRange = 4}, false);
     stop();
     intake_raise.retract();
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                     LEFT STACK + SCORE - 1                                     */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // c_lemlib.moveToPoint()
 }
