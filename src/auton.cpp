@@ -217,14 +217,14 @@ void auton_left_split() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive backwards to goal
-    c_lemlib.moveToPoint(-2_tiles, -22, 2000, {.forwards = false}, true);
+    c_lemlib.moveToPoint(-2_tiles, -25, 2000, {.forwards = false}, true);
     delay(600);
     score();
     int score1Start = millis();
-    waitUntilCondition(millis() >= score1Start + 600);
+    waitUntilCondition(millis() >= score1Start + 700);
     c_lemlib.cancelMotion();
     // c_lemlib.setPose(-2_tiles, -28, c_lemlib.getPose().theta);
-    // lemlibDistReset({&right_beam});
+    lemlibDistReset({&right_beam});
     
     /* ---------------------------------------------------------------------------------------------- */
     /*                                           LEFT LOADER                                          */
@@ -234,8 +234,8 @@ void auton_left_split() {
     store();
     c_lemlib.moveToPoint(-1.97_tiles, -55, 1300, {.maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 6.5}, false);
     int loader2Start = millis();
-    c_lemlib.moveToPoint(-1.97_tiles, -70, 1000, {.maxSpeed = 45}, true);
-    waitUntilCondition(millis() >= loader2Start + 750);
+    c_lemlib.moveToPoint(-1.97_tiles, -70, 1000, {.maxSpeed = 42}, true);
+    waitUntilCondition(millis() >= loader2Start + 700);
     c_lemlib.cancelMotion();
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -479,7 +479,7 @@ void auton_left_7ball() {
     loader.extend();
     wing.extend();
 
-    // turnaround and move towards loader
+    // turn around and move towards loader
     c_danielib.turnToHeading(-180, 700);
     c_lemlib.moveToPoint(-1.35_tiles, -1.35_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 6}, false);
     c_lemlib.moveToPoint(-1.84_tiles, -2_tiles, 1300, {.minSpeed = 10, .earlyExitRange = 6}, false);
