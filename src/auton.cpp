@@ -100,7 +100,7 @@ void auton_sawp_counter_wing() {
     int score1Start = millis();
     waitUntilCondition(millis() >= score1Start + 700);
     c_lemlib.cancelMotion();
-    c_lemlib.setPose(2_tiles, -28, c_lemlib.getPose().theta);
+    // c_lemlib.setPose(2_tiles, -28, c_lemlib.getPose().theta);
     lemlibDistReset({&left_beam});
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -133,7 +133,7 @@ void auton_sawp_counter_wing() {
     int score2Start = millis();
     waitUntilCondition(millis() >= score2Start + 800);
     c_lemlib.cancelMotion();
-    c_lemlib.setPose(-2_tiles, -28, c_lemlib.getPose().theta);
+    // c_lemlib.setPose(-2_tiles, -28, c_lemlib.getPose().theta);
     lemlibDistReset({&right_beam});
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -209,7 +209,7 @@ void auton_left_split() {
     // c_lemlib.moveToPoint(-1.8_tiles, -1.4_tiles, 1000, {.forwards = false, .maxSpeed = 100, .minSpeed = 5, .earlyExitRange = 2}, false);
 
     // point arc to goal
-    c_lemlib.moveToPoint(-1.93_tiles, -1.5_tiles, 1000, {.forwards = false}, false);
+    c_lemlib.moveToPoint(-1.9_tiles, -1.5_tiles, 1000, {.forwards = false, .minSpeed = 8, .earlyExitRange = 2}, false);
     c_danielib.turnToHeading(180, 400);
     
     // /* ---------------------------------------------------------------------------------------------- */
@@ -223,9 +223,8 @@ void auton_left_split() {
     int score1Start = millis();
     waitUntilCondition(millis() >= score1Start + 600);
     c_lemlib.cancelMotion();
-    c_lemlib.setPose(-2_tiles, -28, c_lemlib.getPose().theta);
-    lemlibDistReset({&right_beam});
-
+    // c_lemlib.setPose(-2_tiles, -28, c_lemlib.getPose().theta);
+    // lemlibDistReset({&right_beam});
     
     /* ---------------------------------------------------------------------------------------------- */
     /*                                           LEFT LOADER                                          */
@@ -304,8 +303,8 @@ void auton_right_split() {
     int score1Start = millis();
     waitUntilCondition(millis() >= score1Start + 700);
     c_lemlib.cancelMotion();
-    c_lemlib.setPose(2_tiles, -28, c_lemlib.getPose().theta);
-    lemlibDistReset({&left_beam});
+    // c_lemlib.setPose(2_tiles, -28, c_lemlib.getPose().theta);
+    // lemlibDistReset({&left_beam});
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                      MID STACK + LOW GOAL                                      */
@@ -385,8 +384,8 @@ void auton_right_4ball_loader() {
     int score1Start = millis();
     waitUntilCondition(millis() >= score1Start + 600);
     c_lemlib.cancelMotion();
-    c_lemlib.setPose(2_tiles, -28, c_lemlib.getPose().theta);
-    lemlibDistReset({&left_beam});
+    // c_lemlib.setPose(2_tiles, -28, c_lemlib.getPose().theta);
+    // lemlibDistReset({&left_beam});
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                              WING                                              */
@@ -440,8 +439,8 @@ void auton_right_4ball_stack() {
     // c_lemlib.turnToHeading(180, 400, {}, true);
     waitUntilCondition(millis() >= score1Start + 600);
     c_lemlib.cancelMotion();
-    c_lemlib.setPose(2_tiles, -28, c_lemlib.getPose().theta);
-    lemlibDistReset({&left_beam});
+    // c_lemlib.setPose(2_tiles, -28, c_lemlib.getPose().theta);
+    // lemlibDistReset({&left_beam});
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                              WING                                              */
@@ -465,11 +464,67 @@ void auton_right_4ball_stack() {
 /*                                             7 BALLS                                            */
 /* ---------------------------------------------------------------------------------------------- */
 
-void auton_right_7ball() {
+void auton_left_7ball() {
+    int startTime = millis();
+    c_danielib.setPose(-14, -47, 0);
+    c_lemlib.setPose(-14, -47, 0);
 
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                              STACK                                             */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    store();
+    c_lemlib.moveToPoint(-1.08_tiles, -0.88_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2}, true);
+    delay(300);
+    loader.extend();
+
+    // turnaround and move towards loader
+    c_danielib.turnToHeading(-150, 500);
+    c_lemlib.moveToPoint(-2_tiles, -2_tiles, 1300, {.minSpeed = 10, .earlyExitRange = 7}, false);
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                             LOADER                                             */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // drive into loader
+    c_lemlib.moveToPoint(1.98_tiles, -56, 1300, {.maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 6.5}, false);
+    store();
+    int loader1Start = millis();
+    c_lemlib.moveToPoint(1.98_tiles, -70, 1000, {.maxSpeed = 45}, true);
+    waitUntilCondition(millis() >= loader1Start + 750);
+    c_lemlib.cancelMotion();
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                            LONG GOAL                                           */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // drive backwards to goal
+    c_lemlib.moveToPoint(-2_tiles, -25, 1100, {.forwards = false}, true);
+    delay(800);
+    score();
+    int score1Start = millis();
+    waitUntilCondition(millis() >= score1Start + 700);
+    c_lemlib.cancelMotion();
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                              WING                                              */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // swing out
+    loader.retract();
+    c_lemlib.moveToPoint(-2_tiles+0.27_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 3.5}, false);
+    hood.retract();
+    stop();
+
+    // back up into wing
+    left_mg.set_brake_mode_all(MotorBrake::hold);
+    left_mg.set_brake_mode_all(MotorBrake::hold);
+    c_lemlib.moveToPoint(-2_tiles+0.47_tiles, -1.05_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(-2_tiles+0.45_tiles, -10, 1500, {.forwards = false, .maxSpeed = 70, .minSpeed = 10, .earlyExitRange = 1}, false);
+    c_danielib.turnToHeading(190, 600);
 }
 
-void auton_left_7ball() {
+void auton_right_7ball() {
 
 }
 
