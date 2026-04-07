@@ -474,23 +474,25 @@ void auton_left_7ball() {
     /* ---------------------------------------------------------------------------------------------- */
 
     store();
-    c_lemlib.moveToPoint(-1.08_tiles, -0.88_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2}, true);
+    c_lemlib.moveToPoint(-1.05_tiles, -0.88_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2}, true);
     delay(300);
     loader.extend();
+    wing.extend();
 
     // turnaround and move towards loader
-    c_danielib.turnToHeading(-150, 500);
-    c_lemlib.moveToPoint(-2_tiles, -2_tiles, 1300, {.minSpeed = 10, .earlyExitRange = 7}, false);
+    c_danielib.turnToHeading(-180, 650);
+    c_lemlib.moveToPoint(-1.35_tiles, -1.3_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(-1.88_tiles, -2.3_tiles, 1300, {.minSpeed = 10, .earlyExitRange = 6}, false);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                             LOADER                                             */
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive into loader
-    c_lemlib.moveToPoint(1.98_tiles, -56, 1300, {.maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 6.5}, false);
+    c_lemlib.moveToPoint(-1.98_tiles, -58, 1300, {.maxSpeed = 105, .minSpeed = 10, .earlyExitRange = 6.5}, false);
     store();
     int loader1Start = millis();
-    c_lemlib.moveToPoint(1.98_tiles, -70, 1000, {.maxSpeed = 45}, true);
+    c_lemlib.moveToPoint(-1.98_tiles, -70, 1000, {.maxSpeed = 50}, true);
     waitUntilCondition(millis() >= loader1Start + 750);
     c_lemlib.cancelMotion();
 
@@ -499,6 +501,7 @@ void auton_left_7ball() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive backwards to goal
+    wing.retract();
     c_lemlib.moveToPoint(-2_tiles, -25, 1100, {.forwards = false}, true);
     delay(800);
     score();
@@ -512,6 +515,7 @@ void auton_left_7ball() {
 
     // swing out
     loader.retract();
+    wing.retract();
     c_lemlib.moveToPoint(-2_tiles+0.27_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 3.5}, false);
     hood.retract();
     stop();
