@@ -390,8 +390,60 @@ void auton_right_split() {
 /*                                             4 BALLS                                            */
 /* ---------------------------------------------------------------------------------------------- */
 
+// left side tuned
 void auton_left_4ball_loader() {
+    int startTime = millis();
+    c_danielib.setPose(-18.5, -49.2, 90);
+    c_lemlib.setPose(-18.5, -49.2, 90);
 
+    // drive backwards towards match loader
+    store();
+    c_lemlib.moveToPoint(-1.98_tiles, -2_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 2}, true);
+    delay(200);
+    loader.extend();
+    c_lemlib.waitUntilDone();
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                             LOADER                                             */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // drive into loader
+    c_lemlib.moveToPoint(-1.98_tiles, -56, 1300, {.maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 6.5}, false);
+    store();
+    int loader1Start = millis();
+    c_lemlib.moveToPoint(-1.98_tiles, -70, 1000, {.maxSpeed = 45}, true);
+    waitUntilCondition(millis() >= loader1Start + 750);
+    c_lemlib.cancelMotion();
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                            LONG GOAL                                           */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // drive backwards to goal
+    c_lemlib.moveToPoint(-2_tiles, -25, 1100, {.forwards = false}, true);
+    delay(800);
+    score();
+    int score1Start = millis();
+    waitUntilCondition(millis() >= score1Start + 700);
+    c_lemlib.cancelMotion();
+    lemlibDistReset({&right_beam});
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                              WING                                              */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // swing out
+    loader.retract();
+    c_lemlib.moveToPoint(-2_tiles+0.27_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 3.5}, false);
+    hood.retract();
+    stop();
+
+    // back up into wing
+    left_mg.set_brake_mode_all(MotorBrake::hold);
+    left_mg.set_brake_mode_all(MotorBrake::hold);
+    c_lemlib.moveToPoint(-2_tiles+0.47_tiles, -1.05_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(-2_tiles+0.45_tiles, -10, 1500, {.forwards = false, .maxSpeed = 70, .minSpeed = 10, .earlyExitRange = 1}, false);
+    c_danielib.turnToHeading(190, 600);
 }
 
 void auton_right_4ball_loader() {
@@ -427,10 +479,10 @@ void auton_right_4ball_loader() {
     delay(800);
     score();
     int score1Start = millis();
-    waitUntilCondition(millis() >= score1Start + 600);
+    waitUntilCondition(millis() >= score1Start + 700);
     c_lemlib.cancelMotion();
     // c_lemlib.setPose(2_tiles, -28, c_lemlib.getPose().theta);
-    // lemlibDistReset({&left_beam});
+    lemlibDistReset({&left_beam});
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                              WING                                              */
