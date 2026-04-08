@@ -21,7 +21,7 @@ float testAutonDuration = 0;
 void run_auton(int index) {
     // default auto to run when no auto is selected, also runs in test mode
     if (index == 0) {
-        auton_left_4ball_loader();
+        auton_left_7ball();
     }
 
     // // sawps
