@@ -911,6 +911,7 @@ void auton_left_7ball_counter() {
     c_danielib.turnToHeading(190, 600);
 }
 
+// right side tuned
 void auton_right_7ball_counter() {
     int startTime = millis();
     c_danielib.setPose(18.5, -49.2, -90);
@@ -1069,10 +1070,11 @@ void auton_skills() {
     bottom.move(-50);
     delay(500);
     bottom.move(-35);
-    delay(1400);
-    c_danielib.driveForDistance(-2.9, 500);
-    bottom.move(-20);
-    delay(800);
+    delay(500);
+    c_danielib.driveForDistance(-3, 500);
+    delay(400);
+    bottom.move(-25);
+    delay(1300);
 
     // back up
     c_lemlib.moveToPoint(1_tiles, -1_tiles, 800, {.forwards = false, .minSpeed = 10, .earlyExitRange = 4}, false);

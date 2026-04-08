@@ -212,18 +212,6 @@ void wait_for_bypass() {
     }
 }
 
-void log_info() {
-    // FILE* log = fopen("/usd/log.txt", "w");
-    // waitUntilCondition(logging);
-    // int startTime = pros::millis();
-    // std::uint32_t time = pros::millis();
-    // while (logging) {
-    //     if (log) fprintf(log, "(%d,%.2f),", pros::millis() - startTime, 90.0f-imu_1.get_heading());
-    //     pros::Task::delay_until(&time, 10);
-    // }
-    // if (log) fclose(log);
-}
-
 /* ---------------------------------------------------------------------------------------------- */
 /*                                           COMP TASKS                                           */
 /* ---------------------------------------------------------------------------------------------- */
@@ -272,10 +260,9 @@ void autonomous() {
     optical_top.set_led_pwm(100);
     printing = true;
     pros::Task printer(print_info);
-    // logging = true;
-    // pros::Task logger(log_info);
 
-    /**/
+    auton_skills();
+    /**
     if (competition::is_connected()) {
         run_auton(auton_index);
     } else {
