@@ -1037,7 +1037,7 @@ void auton_right_7ball_counter() {
 /*                                             SKILLS                                             */
 /* ---------------------------------------------------------------------------------------------- */
 
-void auton_skills() {
+void auton_skillss() {
     int startTime = millis();
     // c_danielib.setPose(0, -50, 180);
     // c_lemlib.setPose(0, -50, 180);
@@ -1221,4 +1221,67 @@ void auton_skills() {
     lemlibDistReset({&left_beam});
 
     stop();
+}
+
+void auton_skills2() {
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                   REALIGN AND DISTANCE RESET                                   */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // distance reset left and right
+    wing.extend();
+    c_danielib.setPose(0, -2_tiles, 0);
+    c_lemlib.setPose(0, -2_tiles, 0);
+    lemlibDistReset({&left_beam, &right_beam});
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                          HIGH MID GOAL                                         */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // grab one block
+    store();
+    c_lemlib.swingToHeading(-50, DriveSide::LEFT, 350, {}, false);
+    c_lemlib.moveToPoint(-15, -30, 1000, {}, true);
+    delay(300);
+    outtake();
+    delay(100);
+    store();
+    delay(500);
+    c_lemlib.waitUntilDone();
+    c_danielib.driveForDistance(-5, 300);
+
+    // get to mid goal and avoid blocks
+    c_danielib.turnToHeading(170, 600);
+    c_lemlib.moveToPoint(-11, -13, 900, {.forwards = false}, false);
+    c_lemlib.swingToHeading(-130, DriveSide::LEFT, 700, {}, false);
+    // c_danielib.turnToHeading(-135, 400);
+
+    // score mid goal
+}
+
+void auton_skills() {
+    c_danielib.setPose(0, 0, 0);
+    c_lemlib.setPose(0, 0, 0);
+
+    // score mid goal
+    bottom.move(-120);
+    top.move(-30);
+    delay(150);
+    stop();
+
+    top.move(-55);
+    bottom.move(75);
+    delay(450);
+
+    top.move(-50);
+    bottom.move(55);
+    delay(700);
+
+    c_danielib.async().driveForDistance(2, 500);
+    top.move(-35);
+    bottom.move(28);
+    delay(1800);
+
+    stop();
+    c_danielib.driveForDistance(-5, 500, 15);
 }
