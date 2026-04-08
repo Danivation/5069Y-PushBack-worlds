@@ -1076,7 +1076,7 @@ void auton_skills() {
     // outtake
     bottom.move(-55);
     delay(500);
-    bottom.move(-37);
+    bottom.move(-40);
     delay(500);
     c_danielib.driveForDistance(-3, 500);
     delay(400);
@@ -1100,7 +1100,8 @@ void auton_skills() {
     c_lemlib.waitUntilDone();
 
     // setup for left side
-    c_lemlib.moveToPoint(-1.85_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2}, false);
+    c_lemlib.moveToPoint(-2_tiles, -1.7_tiles, 1000, {}, false);
+    c_lemlib.turnToHeading(180, 300, {}, false);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                      CLOSE LEFT SCORE - 1                                      */
