@@ -316,6 +316,7 @@ void auton_left_split() {
     c_danielib.turnToHeading(190, 600);
 }
 
+// right side tuned
 void auton_right_split() {
     int startTime = millis();
     c_danielib.setPose(18.5, -49.2, -90);
@@ -707,7 +708,77 @@ void auton_left_7ball() {
 }
 
 void auton_right_7ball() {
+    int startTime = millis();
+    c_danielib.setPose(14, -47, 0);
+    c_lemlib.setPose(14, -47, 0);
 
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                              STACK                                             */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // intake 3 stack
+    store();
+    wing.extend();
+    c_lemlib.moveToPoint(1.05_tiles, -0.88_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2}, true);
+    delay(240);
+    loader.extend();
+
+    // setup movement
+    c_lemlib.turnToHeading(150, 550, {}, false);
+    c_lemlib.moveToPoint(1.86_tiles, -1.7_tiles, 1300, {.minSpeed = 50, .earlyExitRange = 5}, false);
+    c_lemlib.turnToHeading(180, 200, {.earlyExitRange = 5}, false);
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                             LOADER                                             */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // drive into loader
+    c_lemlib.moveToPoint(1.97_tiles, -57, 800, {.maxSpeed = 100, .minSpeed = 10, .earlyExitRange = 6.5}, true);
+    outtake();
+    delay(150);
+    store();
+    c_lemlib.waitUntilDone();
+    int loader1Start = millis();
+    c_lemlib.moveToPoint(1.97_tiles, -70, 1500, {.maxSpeed = 45}, true);
+    waitUntilCondition(millis() >= loader1Start + 1000);
+    c_lemlib.cancelMotion();
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                            LONG GOAL                                           */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // drive backwards to goal
+    wing.retract();
+    c_lemlib.moveToPoint(2_tiles, -25, 1100, {.forwards = false}, true);
+    delay(850);
+    score();
+    int score1Start = millis();
+    bool colorStopped = waitUntilColor(&optical_top, WrongColor, score1Start + 1300);
+    if (colorStopped) {
+        delayLong();
+        hood.retract();
+        stop();
+    }
+    c_lemlib.cancelMotion();
+    lemlibDistReset({&left_beam});
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                              WING                                              */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // swing out
+    loader.retract();
+    wing.retract();
+    c_lemlib.moveToPoint(2_tiles+0.35_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 3.5}, false);
+    hood.retract();
+    stop();
+
+    // back up into wing
+    left_mg.set_brake_mode_all(MotorBrake::hold);
+    left_mg.set_brake_mode_all(MotorBrake::hold);
+    c_lemlib.moveToPoint(2_tiles+0.5_tiles, -1_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 5}, false);
+    c_lemlib.moveToPoint(2_tiles+0.45_tiles, -10, 1500, {.forwards = false, .maxSpeed = 70, .minSpeed = 10, .earlyExitRange = 1}, false);
+    c_danielib.turnToHeading(190, 600);
 }
 
 /* ---------------------------------------------------------------------------------------------- */
