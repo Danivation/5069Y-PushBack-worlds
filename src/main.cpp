@@ -286,8 +286,7 @@ void autonomous() {
         left_mg.brake();
         right_mg.brake();
     }
-    /**/
-    // logging = false;
+    **/
     comp_started = true;
 }
 

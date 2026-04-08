@@ -1082,9 +1082,9 @@ void auton_skills() {
     delay(300);
     bottom.move(-35);
     top.brake();
-    delay(1200);
+    delay(1000);
     bottom.move(-30);
-    delay(1300);
+    delay(600);
 
     // back up
     c_lemlib.moveToPoint(1_tiles, -1_tiles, 800, {.forwards = false, .minSpeed = 10, .earlyExitRange = 4}, false);
@@ -1135,16 +1135,16 @@ void auton_skills() {
     c_lemlib.turnToHeading(180-5, 100);
     c_lemlib.turnToHeading(180+5, 100);
     c_lemlib.turnToHeading(180-5, 100);
-    c_lemlib.turnToHeading(180+5, 100);
-    c_lemlib.turnToHeading(180-5, 100);
     c_lemlib.turnToHeading(180, 100, {}, false);
     c_danielib.driveForDistance(2, 200);
     c_lemlib.turnToHeading(180+5, 100);
     c_lemlib.turnToHeading(180-5, 100);
     c_lemlib.turnToHeading(180+5, 100);
     c_lemlib.turnToHeading(180-5, 100);
+    c_lemlib.turnToHeading(180, 100, {}, false);
+    c_danielib.driveForDistance(2, 200);
     waitUntilCondition(millis() >= loader1Start + 2000);
-    c_lemlib.cancelMotion();
+    c_lemlib.cancelAllMotions();
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                           LEFT ALLEY                                           */
@@ -1201,10 +1201,8 @@ void auton_skills() {
     c_lemlib.turnToHeading(0-5, 100);
     c_lemlib.turnToHeading(0, 100, {}, false);
     c_danielib.driveForDistance(2, 200);
-    c_lemlib.turnToHeading(0+5, 100);
-    c_lemlib.turnToHeading(0-5, 100);
     waitUntilCondition(millis() >= loader2Start + 2000);
-    c_lemlib.cancelMotion();
+    c_lemlib.cancelAllMotions();
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                      FAR LEFT SCORE 2 - 2                                      */
@@ -1215,10 +1213,10 @@ void auton_skills() {
     delay(900);
     score();
     int score2LStart = millis();
-    waitUntilCondition(millis() >= score2LStart + 800);
-    bottom.move(80);
-    top.move(75);
-    delay(1000);
+    waitUntilCondition(millis() >= score2LStart + 1800);
+    // bottom.move(80);
+    // top.move(75);
+    // delay(1000);
     c_lemlib.cancelMotion();
     lemlibDistReset({&left_beam});
 
