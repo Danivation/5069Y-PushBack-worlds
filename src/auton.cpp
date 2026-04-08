@@ -1064,22 +1064,23 @@ void auton_skills() {
     delay(100);
     store();
     c_lemlib.waitUntilDone();
-    c_lemlib.swingToHeading(-10, DriveSide::RIGHT, 600, {}, false);
+    c_lemlib.swingToHeading(-10, DriveSide::RIGHT, 550, {}, false);
 
     // line up with the low goal to score
-    c_lemlib.moveToPoint(14, -17.5, 1000, {.minSpeed = 10, .earlyExitRange = 1}, false);
-    stop();
+    c_lemlib.moveToPoint(12.5, -18, 1000, {.minSpeed = 10, .earlyExitRange = 1}, false);
     intake_raise.extend();
     c_lemlib.swingToHeading(-45, DriveSide::LEFT, 300, {}, false);
+    stop();
     c_lemlib.moveToPoint(8, -9, 800, {.maxSpeed = 50}, false);
 
     // outtake
-    bottom.move(-55);
-    delay(500);
+    bottom.move(-60);
+    delay(350);
+    c_danielib.async().driveForDistance(-3, 500);
+    bottom.move(-50);
+    delay(300);
     bottom.move(-40);
-    delay(500);
-    c_danielib.driveForDistance(-3, 500);
-    delay(400);
+    delay(1200);
     bottom.move(-30);
     delay(1300);
 
@@ -1139,4 +1140,20 @@ void auton_skills() {
     c_lemlib.turnToHeading(180-5, 100);
     waitUntilCondition(millis() >= loader2Start + 2000);
     c_lemlib.cancelMotion();
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                           LEFT ALLEY                                           */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // back out of match loader
+    c_lemlib.moveToPoint(-2_tiles, -2.1_tiles, 800, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
+    loader.retract();
+
+    // backwards through alley
+    stop();
+    c_lemlib.moveToPoint(-2.65_tiles, -0.95_tiles, 1300, {.forwards = false, .minSpeed = 10, .earlyExitRange = 5}, false);
+    c_lemlib.moveToPoint(-2.65_tiles, 0.8_tiles, 1500, {.forwards = false}, false);
+
+    // swing around into goal
+    c_lemlib.swingToHeading(0, DriveSide::LEFT, 700, {.direction = AngularDirection::CW_CLOCKWISE}, false);
 }
