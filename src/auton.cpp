@@ -241,15 +241,14 @@ void auton_left_split() {
     /* ---------------------------------------------------------------------------------------------- */
 
     store();
-    c_lemlib.moveToPoint(-1.08_tiles, -0.88_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2}, true);
+    c_lemlib.moveToPoint(-1.05_tiles, -0.88_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2}, true);
     delay(300);
     loader.extend();
 
     // js get in the goal somehow ig
     // c_danielib.turnToHeading(80, 500);
     c_lemlib.moveToPoint(-1.6_tiles, -1.07_tiles, 900, {.forwards = false, .minSpeed = 25, .earlyExitRange = 2}, false);
-    c_lemlib.swingToHeading(180, lemlib::DriveSide::LEFT, 800, {.maxSpeed = 100}, false);
-    stop();
+    c_lemlib.swingToHeading(180, lemlib::DriveSide::LEFT, 700, {.maxSpeed = 100}, false);
     
     /* ---------------------------------------------------------------------------------------------- */
     /*                                            LONG GOAL                                           */
@@ -271,10 +270,10 @@ void auton_left_split() {
 
     // drive into loader
     store();
-    c_lemlib.moveToPoint(-1.97_tiles, -55, 1300, {.maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 6.5}, false);
+    c_lemlib.moveToPoint(-1.97_tiles, -54, 1300, {.maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 7}, false);
     int loader2Start = millis();
-    c_lemlib.moveToPoint(-1.97_tiles, -70, 1000, {.maxSpeed = 42}, true);
-    waitUntilCondition(millis() >= loader2Start + 750);
+    c_lemlib.moveToPoint(-1.97_tiles, -70, 1000, {.maxSpeed = 35}, true);
+    waitUntilCondition(millis() >= loader2Start + 800);
     c_lemlib.cancelMotion();
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -282,16 +281,18 @@ void auton_left_split() {
     /* ---------------------------------------------------------------------------------------------- */
 
     c_lemlib.moveToPoint(-2_tiles, -1.8_tiles, 1000, {.forwards = false, .minSpeed = 30, .earlyExitRange = 6}, false);
-    c_lemlib.moveToPoint(-12, -14, 1700, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
-    c_lemlib.moveToPoint(-7, -9.5, 1200, {.forwards = false, .maxSpeed = 80}, true);
-    delay(300);
+    c_lemlib.moveToPoint(-12, -12, 1700, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(-8, -8, 1200, {.forwards = false, .maxSpeed = 80}, true);
+    delay(350);
+
+    // score mid goal kinda slow
     int midScoreStart = millis();
-    top.move(-65);
-    bottom.move(60);
-    // score_mid();
-    // delay(1000);
+    top.move(-70);
+    bottom.move(70);
+
+    // color sensor timeout
     waitUntilColor(&optical_top, Color::blue, midScoreStart + 1500);
-    delayMid();
+    delay(100); // mid color timer
     c_lemlib.cancelMotion();
 
     /* ---------------------------------------------------------------------------------------------- */
