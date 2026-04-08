@@ -49,7 +49,7 @@ void delayMid() {
     pros::delay(60);
 }
 void delayLong() {
-    pros::delay(30);
+    pros::delay(20);
 }
 constexpr double operator""_tiles(long double value) {
     return value * 23.622;
@@ -430,6 +430,7 @@ void auton_left_4ball_loader() {
     // waitUntilCondition(millis() >= score1Start + 700);
     bool colorStopped = waitUntilColor(&optical_top, WrongColor, score1Start + 700);
     if (colorStopped) {
+        delayLong();
         hood.retract();
         stop();
     }
@@ -491,6 +492,7 @@ void auton_right_4ball_loader() {
     // waitUntilCondition(millis() >= score1Start + 700);
     bool colorStopped = waitUntilColor(&optical_top, WrongColor, score1Start + 700);
     if (colorStopped) {
+        delayLong();
         hood.retract();
         stop();
     }
@@ -527,7 +529,7 @@ void auton_left_4ball_stack() {
 
     store();
     c_lemlib.moveToPoint(-1.05_tiles, -0.88_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2}, true);
-    delay(300);
+    delay(200);
     loader.extend();
 
     // js get in the goal somehow ig
@@ -576,7 +578,7 @@ void auton_right_4ball_stack() {
 
     store();
     c_lemlib.moveToPoint(1.05_tiles, -0.88_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2}, true);
-    delay(300);
+    delay(200);
     loader.extend();
 
     // js get in the goal somehow ig
@@ -628,13 +630,15 @@ void auton_left_7ball() {
 
     // intake 3 stack
     store();
+    wing.extend();
     c_lemlib.moveToPoint(-1.05_tiles, -0.88_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2}, true);
-    delay(300);
+    delay(200);
     loader.extend();
 
     // setup movement
     c_lemlib.turnToHeading(-150, 550, {}, false);
-    c_lemlib.moveToPoint(-1.9_tiles, -1.8_tiles, 1300, {.minSpeed = 10, .earlyExitRange = 6}, false);
+    c_lemlib.moveToPoint(-1.86_tiles, -1.7_tiles, 1300, {.minSpeed = 50, .earlyExitRange = 5}, false);
+    c_lemlib.turnToHeading(180, 200, {.earlyExitRange = 5}, false);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                             LOADER                                             */
@@ -642,50 +646,52 @@ void auton_left_7ball() {
 
     // drive into loader
     c_lemlib.moveToPoint(-1.97_tiles, -57, 800, {.maxSpeed = 100, .minSpeed = 10, .earlyExitRange = 6.5}, true);
-    // delay(200);
     outtake();
-    delay(100);
+    delay(150);
     store();
     c_lemlib.waitUntilDone();
     int loader1Start = millis();
-    c_lemlib.moveToPoint(-1.97_tiles, -70, 1000, {.maxSpeed = 45}, true);
+    c_lemlib.moveToPoint(-1.97_tiles, -70, 1500, {.maxSpeed = 45}, true);
     waitUntilCondition(millis() >= loader1Start + 1000);
     c_lemlib.cancelMotion();
 
-    // /* ---------------------------------------------------------------------------------------------- */
-    // /*                                            LONG GOAL                                           */
-    // /* ---------------------------------------------------------------------------------------------- */
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                            LONG GOAL                                           */
+    /* ---------------------------------------------------------------------------------------------- */
 
-    // // drive backwards to goal
-    // wing.retract();
-    // c_lemlib.moveToPoint(-2_tiles, -25, 1100, {.forwards = false}, true);
-    // delay(850);
-    // score();
-    // int score1Start = millis();
-    // bool colorStopped = waitUntilColor(&optical_top, WrongColor, score1Start + 1300);
-    // if (colorStopped) {
-    //     hood.retract();
-    //     stop();
-    // }
-    // c_lemlib.cancelMotion();
-    // lemlibDistReset({&right_beam});
+    // drive backwards to goal
+    wing.retract();
+    c_lemlib.moveToPoint(-2_tiles, -25, 1100, {.forwards = false}, true);
+    delay(850);
+    score();
+    int score1Start = millis();
+    bool colorStopped = waitUntilColor(&optical_top, WrongColor, score1Start + 1300);
+    if (colorStopped) {
+        delayLong();
+        hood.retract();
+        stop();
+    }
+    c_lemlib.cancelMotion();
+    lemlibDistReset({&right_beam});
 
-    // /* ---------------------------------------------------------------------------------------------- */
-    // /*                                              WING                                              */
-    // /* ---------------------------------------------------------------------------------------------- */
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                              WING                                              */
+    /* ---------------------------------------------------------------------------------------------- */
 
-    // // swing out
-    // loader.retract();
+    // swing out
+    loader.retract();
+    wing.retract();
     // c_lemlib.moveToPoint(-2_tiles+0.27_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 3.5}, false);
-    // hood.retract();
-    // stop();
+    c_lemlib.moveToPoint(-2_tiles+0.2_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 3.5}, false);
+    hood.retract();
+    stop();
 
-    // // back up into wing
-    // left_mg.set_brake_mode_all(MotorBrake::hold);
-    // left_mg.set_brake_mode_all(MotorBrake::hold);
-    // c_lemlib.moveToPoint(-2_tiles+0.47_tiles, -1.05_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
-    // c_lemlib.moveToPoint(-2_tiles+0.45_tiles, -10, 1500, {.forwards = false, .maxSpeed = 70, .minSpeed = 10, .earlyExitRange = 1}, false);
-    // c_danielib.turnToHeading(190, 600);
+    // back up into wing
+    left_mg.set_brake_mode_all(MotorBrake::hold);
+    left_mg.set_brake_mode_all(MotorBrake::hold);
+    c_lemlib.moveToPoint(-2_tiles+0.45_tiles, -1_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 5}, false);
+    c_lemlib.moveToPoint(-2_tiles+0.45_tiles, -10, 1500, {.forwards = false, .maxSpeed = 70, .minSpeed = 10, .earlyExitRange = 1}, false);
+    c_danielib.turnToHeading(190, 600);
 }
 
 void auton_right_7ball() {
