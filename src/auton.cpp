@@ -7,7 +7,7 @@ using namespace pros;
 /*                                             HELPERS                                            */
 /* ---------------------------------------------------------------------------------------------- */
 
-// pros::Color WrongColor = Color::black;
+pros::Color WrongColor = Color::blue;
 pros::Color get_color(pros::Optical* sensor) {
     // only return a color if a block is detected
     if ((int)sensor->get_proximity() <= 60) {
@@ -28,7 +28,8 @@ pros::Color get_color(pros::Optical* sensor) {
         return pros::Color::white;
     }
 }
-void waitUntilColor(pros::Optical* sensor, pros::Color color, int stopTime) {
+// returns true if exited due to color
+bool waitUntilColor(pros::Optical* sensor, pros::Color color, int stopTime) {
     waitUntilFunction([&]{
         if (millis() >= stopTime) {
             return true;
@@ -41,12 +42,14 @@ void waitUntilColor(pros::Optical* sensor, pros::Color color, int stopTime) {
         }
         return false;
     });
+    if (millis() >= stopTime) return false;
+    else return true;
 }
 void delayMid() {
     pros::delay(60);
 }
 void delayLong() {
-    pros::delay(80);
+    pros::delay(30);
 }
 constexpr double operator""_tiles(long double value) {
     return value * 23.622;
@@ -292,7 +295,7 @@ void auton_left_split() {
     bottom.move(70);
 
     // color sensor timeout
-    waitUntilColor(&optical_top, Color::blue, midScoreStart + 1500);
+    waitUntilColor(&optical_top, WrongColor, midScoreStart + 1500);
     delay(100); // mid color timer
     c_lemlib.cancelMotion();
 
@@ -398,7 +401,7 @@ void auton_left_4ball_loader() {
 
     // drive backwards towards match loader
     store();
-    c_lemlib.moveToPoint(-1.98_tiles, -2_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 2}, true);
+    c_lemlib.moveToPoint(-1.98_tiles, -1.95_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 2}, true);
     delay(200);
     loader.extend();
     c_lemlib.waitUntilDone();
@@ -424,7 +427,12 @@ void auton_left_4ball_loader() {
     delay(800);
     score();
     int score1Start = millis();
-    waitUntilCondition(millis() >= score1Start + 700);
+    // waitUntilCondition(millis() >= score1Start + 700);
+    bool colorStopped = waitUntilColor(&optical_top, WrongColor, score1Start + 700);
+    if (colorStopped) {
+        hood.retract();
+        stop();
+    }
     c_lemlib.cancelMotion();
     lemlibDistReset({&right_beam});
 
