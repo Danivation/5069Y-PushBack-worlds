@@ -9,13 +9,12 @@ using namespace pros;
 
 // pros::Color WrongColor = Color::black;
 pros::Color get_color(pros::Optical* sensor) {
-    float hue = sensor->get_hue();
-
     // only return a color if a block is detected
     if ((int)sensor->get_proximity() <= 60) {
         return pros::Color::black;
     }
 
+    float hue = sensor->get_hue();
     // sort hue into colors
     if (hue < 30 || hue > 330) {        // 330–360, 0–30
         return pros::Color::red;
@@ -29,7 +28,6 @@ pros::Color get_color(pros::Optical* sensor) {
         return pros::Color::white;
     }
 }
-
 void waitUntilColor(pros::Optical* sensor, pros::Color color, int stopTime) {
     waitUntilFunction([&]{
         if (millis() >= stopTime) {
@@ -44,7 +42,12 @@ void waitUntilColor(pros::Optical* sensor, pros::Color color, int stopTime) {
         return false;
     });
 }
-
+void delayMid() {
+    pros::delay(60);
+}
+void delayLong() {
+    pros::delay(80);
+}
 constexpr double operator""_tiles(long double value) {
     return value * 23.622;
 }
@@ -229,14 +232,6 @@ void auton_sawp_low_mid() {
 /* ---------------------------------------------------------------------------------------------- */
 
 void auton_left_split() {
-    
-    int midScoreStart = millis();
-    score();
-    waitUntilColor(&optical_top, Color::blue, midScoreStart + 5000);
-    stop();
-}
-
-void auton_left_splits() {
     int startTime = millis();
     c_danielib.setPose(-14, -47, 0);
     c_lemlib.setPose(-14, -47, 0);
@@ -249,14 +244,6 @@ void auton_left_splits() {
     c_lemlib.moveToPoint(-1.08_tiles, -0.88_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2}, true);
     delay(300);
     loader.extend();
-
-    // swerve around to goal
-    // c_lemlib.moveToPoint(-1.52_tiles, -1.65_tiles, 1500, {.forwards = false, .maxSpeed = 100, .minSpeed = 20, .earlyExitRange = 3}, false);
-    // c_lemlib.moveToPoint(-1.8_tiles, -1.4_tiles, 1000, {.forwards = false, .maxSpeed = 100, .minSpeed = 5, .earlyExitRange = 2}, false);
-
-    // point arc to goal
-    // c_lemlib.moveToPoint(-1.9_tiles, -1.5_tiles, 1000, {.forwards = false, .minSpeed = 8, .earlyExitRange = 2}, false);
-    // c_danielib.turnToHeading(180, 400);
 
     // js get in the goal somehow ig
     // c_danielib.turnToHeading(80, 500);
@@ -287,22 +274,24 @@ void auton_left_splits() {
     c_lemlib.moveToPoint(-1.97_tiles, -55, 1300, {.maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 6.5}, false);
     int loader2Start = millis();
     c_lemlib.moveToPoint(-1.97_tiles, -70, 1000, {.maxSpeed = 42}, true);
-    waitUntilCondition(millis() >= loader2Start + 700);
+    waitUntilCondition(millis() >= loader2Start + 750);
     c_lemlib.cancelMotion();
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                            MID GOAL                                            */
     /* ---------------------------------------------------------------------------------------------- */
 
-    c_lemlib.moveToPoint(-2_tiles, -1.9_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 6}, false);
+    c_lemlib.moveToPoint(-2_tiles, -1.8_tiles, 1000, {.forwards = false, .minSpeed = 30, .earlyExitRange = 6}, false);
     c_lemlib.moveToPoint(-12, -14, 1700, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
     c_lemlib.moveToPoint(-7, -9.5, 1200, {.forwards = false, .maxSpeed = 80}, true);
     delay(300);
     int midScoreStart = millis();
-    top.move(-80);
-    bottom.move(70);
+    top.move(-65);
+    bottom.move(60);
+    // score_mid();
     // delay(1000);
     waitUntilColor(&optical_top, Color::blue, midScoreStart + 1500);
+    delayMid();
     c_lemlib.cancelMotion();
 
     /* ---------------------------------------------------------------------------------------------- */
