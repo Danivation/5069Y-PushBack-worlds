@@ -450,6 +450,7 @@ void auton_right_4ball_loader() {
     c_danielib.turnToHeading(190, 600);
 }
 
+// left side tuned
 void auton_left_4ball_stack() {
     int startTime = millis();
     c_danielib.setPose(-14, -47, 0);
