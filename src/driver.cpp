@@ -13,21 +13,22 @@
 #define DESCORE_WING_TOGGLE     master.get_digital(DIGITAL_Y)
 #define INTAKE_RAISE_TOGGLE     master.get_digital(DIGITAL_B)
 
-bool driving = true;
-
+std::atomic<bool> driving = true;
 void DrivetrainControl() {
     float throttle;
     float turn;
     while (true) {
-        throttle = DeadBand(THROTTLE_AXIS, 2);
-        turn = DeadBand(TURN_AXIS, 2);
-        left_mg.move(throttle + turn);
-        right_mg.move(throttle - turn);
-        delay(10);
+        if (driving) {
+            throttle = DeadBand(THROTTLE_AXIS, 2);
+            turn = DeadBand(TURN_AXIS, 2);
+            left_mg.move(throttle + turn);
+            right_mg.move(throttle - turn);
+            delay(10);
+        }
     }
 }
 
-int lastPressed = 0;
+std::atomic<int> lastPressed = 0;
 void IntakeControl() {
     while (true) {
         if (master.get_digital_new_press(INTAKE_TO_STORAGE)) lastPressed = 1;
@@ -38,8 +39,8 @@ void IntakeControl() {
         if (master.get_digital(INTAKE_TO_MID_GOAL)) {
             hood.retract();
             if (skillsSlow) {
+                bottom.move(35);
                 top.move(-40);
-                bottom.move(40);
             } else {
                 bottom.move(127);
                 top.move(-127);
@@ -55,57 +56,77 @@ void IntakeControl() {
         } else if (master.get_digital(INTAKE_TO_LOW_GOAL)) {
             hood.retract();
             if (skillsSlow) {
-                bottom.move(-40);
-                top.brake();
+                bottom.move(-30);
+                top.move(-20);
             } else {
                 bottom.move(-127);
                 top.move(-127);
             }
         } else if (master.get_digital_new_press(INTAKE_TO_SLOW_LOW_GOAL) && skillsSlow) {   // slow low goal macro
-            // driving = false;
-            // chassis.setPose(0, 0, 0);
-            // chassis.driveForDistance(-3.7, 600);
-            // driving = true;
-
-            // first fast score
-            intake_raise.extend();
-            hood.retract();
-            bottom.move(-70);
-            top.move(-40);
-            delay(600);
-
-            // medium score
-            bottom.move(-55);
-            top.brake();
-            delay(850);
-
-            // slow score end
-            bottom.move(-35);
-            top.brake();
-            delay(700);
-        } else if (master.get_digital_new_press(INTAKE_TO_SLOW_MID_GOAL) && skillsSlow) {   // slow mid goal macro
-            hood.retract();
-
-            bottom.move(-127);
-            top.move(-30);
-            delay(130);
+            driving = false;
+            left_mg.brake();
+            right_mg.brake();
             bottom.brake();
+            top.brake();
+            c_danielib.setPose(0, 0, 0);
+            hood.retract();
+            if (!intake_raise.is_extended()) {
+                intake_raise.extend();
+                delay(100);
+            }
+
+            // outtake
+            c_danielib.async().driveForDistance(-3.1, 500);
+            bottom.move_velocity(-85);
+            top.move(-20);
+            delay(300);
+
+            bottom.move_velocity(-63);
+            delay(200);
             delay(100);
 
-            // first fast score
-            bottom.move(60);
-            top.move(-55);
+            bottom.move_velocity(-52);
+            top.brake();
+            delay(1100);
+
+            bottom.move_velocity(-45);
             delay(700);
 
-            // slow score
-            bottom.move(50);
-            top.move(-35);
+            bottom.brake();
+            top.brake();
+            driving = true;
+
+        } else if (master.get_digital_new_press(INTAKE_TO_SLOW_MID_GOAL) && skillsSlow) {   // slow mid goal macro
+            driving = false;
+            left_mg.brake();
+            right_mg.brake();
+            bottom.brake();
+            top.brake();
+            c_danielib.setPose(0, 0, 0);
+            hood.retract();
+
+            // score mid goal
+            bottom.move(-120);
+            top.move(-50);
+            delay(150);
+
+            top.move(-55);
+            bottom.move(75);
+            delay(450);
+
+            top.move(-50);
+            bottom.move(55);
+            delay(700);
+
+            c_danielib.async().driveForDistance(2.3, 500);
+            top.move(-40);
+            bottom.move(35);
             delay(2000);
 
-            // slowest score
-            bottom.move(30);
-            top.move(-18);
-            delay(800);
+            bottom.brake();
+            top.brake();
+
+            driving = true;
         } else {
             //hood.retract();
             bottom.brake();

@@ -21,28 +21,28 @@ float testAutonDuration = 0;
 void run_auton(int index) {
     // default auto to run when no auto is selected, also runs in test mode
     if (index == 0) {
-        auton_right_7ball_counter();
+        auton_none();
     }
 
-    // // sawps
+    // sawps
     // else if (index == 1)    auton_sawp_counter_nowing();
-    // else if (index == 2)    auton_sawp_counter_wing();
+    else if (index == 2)    auton_sawp_counter_wing();
     // else if (index == 3)    auton_sawp_standard();
     // else if (index == 4)    auton_sawp_low_mid();
 
-    // // left sides
-    // else if (index == 5)    auton_left_split();
-    // else if (index == 6)    auton_left_4ball_loader();
-    // else if (index == 7)    auton_left_4ball_stack();
-    // else if (index == 8)    auton_left_7ball();
-    // else if (index == 9)    auton_left_7ball_counter();
+    // left sides
+    else if (index == 5)    auton_left_split();
+    else if (index == 6)    auton_left_4ball_loader();
+    else if (index == 7)    auton_left_4ball_stack();
+    else if (index == 8)    auton_left_7ball();
+    else if (index == 9)    auton_left_7ball_counter();
 
-    // // right sides
-    // else if (index == 10)   auton_right_split();
-    // else if (index == 11)   auton_right_4ball_loader();
-    // else if (index == 12)   auton_right_4ball_stack();
-    // else if (index == 13)   auton_right_7ball();
-    // else if (index == 14)   auton_right_7ball_counter();
+    // right sides
+    else if (index == 10)   auton_right_split();
+    else if (index == 11)   auton_right_4ball_loader();
+    else if (index == 12)   auton_right_4ball_stack();
+    else if (index == 13)   auton_right_7ball();
+    else if (index == 14)   auton_right_7ball_counter();
 
     // // misc autos
     // else if (index == 15)   auton_all_mid();
@@ -61,7 +61,7 @@ std::pair<std::string, std::string> get_auton_name(int index) {
     else if (index == 5)    return {"Left split", "Loader setup"};
     else if (index == 6)    return {"Left 4 ball", "Loader"};
     else if (index == 7)    return {"Left 4 ball", "Stack"};
-    // else if (index == 8)    return {"Left 7 ball", "Stack setup"};
+    else if (index == 8)    return {"Left 7 ball", "Stack setup"};
     else if (index == 9)    return {"Left 7 counter", "Stack setup"};
 
     // right sides
@@ -72,7 +72,7 @@ std::pair<std::string, std::string> get_auton_name(int index) {
     else if (index == 14)   return {"Right 7 counter", "Loader setup"};
 
     // misc autos
-    else if (index == 15)   return {"All mid right", "Loader setup"};
+    // else if (index == 15)   return {"All mid right", "Loader setup"};
 
     else return {"Invalid auto", ""};
 }
@@ -233,10 +233,10 @@ void initialize() {
     optical_top.set_led_pwm(0);
 
     // skills things
-    calibrate_all();
-    autonomous();
+    // calibrate_all();
+    // autonomous();
 
-    // pros::Task selector(auton_selector);
+    pros::Task selector(auton_selector);
     pros::Task bypass(wait_for_bypass);
 }
 
@@ -261,8 +261,8 @@ void autonomous() {
     printing = true;
     pros::Task printer(print_info);
 
-    auton_skills();
-    /**
+    // auton_skills();
+    /**/
     if (competition::is_connected()) {
         run_auton(auton_index);
     } else {
@@ -286,7 +286,7 @@ void autonomous() {
         left_mg.brake();
         right_mg.brake();
     }
-    **/
+    /**/
     comp_started = true;
 }
 
@@ -302,22 +302,23 @@ void opcontrol() {
 
     master.rumble("..");
 
-    // if (autoForDriver) {
-    //     left_mg.set_brake_mode_all(MotorBrake::brake);
-    //     right_mg.set_brake_mode_all(MotorBrake::brake);
+    if (autoForDriver) {
+        left_mg.set_brake_mode_all(MotorBrake::brake);
+        right_mg.set_brake_mode_all(MotorBrake::brake);
 
-    //     // pros::Task skills(auton_skills);
+        pros::Task skills(auton_skills);
 
-    //     waitUntilCondition(master.get_digital(DIGITAL_UP) && master.get_digital(DIGITAL_X));
-    //     waitUntilCondition(!master.get_digital(DIGITAL_UP) && !master.get_digital(DIGITAL_X));
+        waitUntilCondition(master.get_digital(DIGITAL_UP) && master.get_digital(DIGITAL_X));
+        waitUntilCondition(!master.get_digital(DIGITAL_UP) && !master.get_digital(DIGITAL_X));
 
-    //     // skills.remove();
-    //     // c_lemlib.stopAllMovements();
-    //     top.brake();
-    //     bottom.brake();
-    //     left_mg.brake();
-    //     right_mg.brake();
-    // }
+        skills.remove();
+        c_lemlib.cancelAllMotions();
+        c_danielib.stopAllMovements();
+        top.brake();
+        bottom.brake();
+        left_mg.brake();
+        right_mg.brake();
+    }
 
     left_mg.set_brake_mode_all(MotorBrake::coast);
     right_mg.set_brake_mode_all(MotorBrake::coast);
