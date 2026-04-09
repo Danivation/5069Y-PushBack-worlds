@@ -1084,7 +1084,7 @@ void auton_skills() {
     c_danielib.driveForDistance(5, 500);
 
     // back out
-    c_danielib.async().driveForDistance(-24, 1500);
+    c_danielib.async().driveForDistance(-22, 1500);
     delay(100);
     loader.extend();
     c_danielib.waitUntilDone();
@@ -1095,11 +1095,17 @@ void auton_skills() {
 
     // front reset
     odom_lift.retract();
-    c_lemlib.turnToHeading(180, 300);
+    c_lemlib.turnToHeading(180, 300, {}, true);
+    bottom.move(-127);
+    delay(150);
+    store();
+    c_lemlib.waitUntilDone();
     lemlibDistReset({&front_beam, &left_beam, &right_beam}, 10);
 
     // line up backwards
     loader.retract();
+    // c_lemlib.turnToHeading(0, 600, {.direction = lemlib::AngularDirection::CW_CLOCKWISE}, false);
+    // c_lemlib.moveToPoint(0, -47, 1000, {.forwards = false, .maxSpeed = 40}, false);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                            LOW GOAL                                            */
@@ -1107,7 +1113,8 @@ void auton_skills() {
 
     // grab one block
     store();
-    c_lemlib.swingToHeading(50, DriveSide::RIGHT, 350, {}, false);
+    // c_lemlib.swingToHeading(50, DriveSide::RIGHT, 350, {}, false);
+    c_lemlib.turnToHeading(50, 500, {}, false);
     c_lemlib.moveToPoint(16, -30, 1000, {}, true);
     delay(300);
     outtake();
@@ -1154,7 +1161,7 @@ void auton_skills() {
     c_lemlib.waitUntilDone();
 
     // setup for left side
-    c_lemlib.moveToPoint(-1.9_tiles, -1.7_tiles, 1000, {}, false);
+    c_lemlib.moveToPoint(-1.9_tiles, -1.7_tiles, 1200, {.maxSpeed = 80}, false);
     c_lemlib.turnToHeading(180, 300, {}, false);
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -1212,6 +1219,7 @@ void auton_skills() {
     // swing around into goal
     c_lemlib.swingToHeading(-90, DriveSide::LEFT, 600, {.direction = AngularDirection::CW_CLOCKWISE}, false);
     c_lemlib.swingToHeading(0, DriveSide::LEFT, 600, {.direction = AngularDirection::CW_CLOCKWISE}, false);
+    c_lemlib.turnToHeading(0, 250, {}, false);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                       FAR LEFT SCORE - 2                                       */
@@ -1327,7 +1335,7 @@ void auton_skills() {
     c_danielib.driveForDistance(5, 500);
 
     // back out
-    c_danielib.async().driveForDistance(-24, 1500);
+    c_danielib.async().driveForDistance(-22, 1500);
     delay(100);
     loader.extend();
     c_danielib.waitUntilDone();
@@ -1338,7 +1346,11 @@ void auton_skills() {
 
     // front reset
     odom_lift.retract();
-    c_lemlib.turnToHeading(0, 300);
+    c_lemlib.turnToHeading(0, 300, {}, true);
+    bottom.move(-127);
+    delay(150);
+    store();
+    c_lemlib.waitUntilDone();
     lemlibDistReset({&front_beam, &left_beam, &right_beam}, 10);
 
     // line up backwards
@@ -1350,7 +1362,7 @@ void auton_skills() {
 
     // grab one block
     store();
-    c_lemlib.swingToHeading(180-50, DriveSide::LEFT, 350, {}, false);
+    c_lemlib.turnToHeading(180-50, 500, {}, false);
     c_lemlib.moveToPoint(16, 30, 1000, {}, true);
     delay(300);
     outtake();
@@ -1362,7 +1374,7 @@ void auton_skills() {
 
     // get to mid goal and avoid blocks
     c_danielib.turnToHeading(-10, 600);
-    c_lemlib.moveToPoint(11, 13, 900, {.forwards = false}, false);
+    c_lemlib.moveToPoint(10, 13.5, 900, {.forwards = false}, false);
     c_lemlib.swingToHeading(130, DriveSide::LEFT, 700, {}, false);
 
     // score mid goal
@@ -1399,7 +1411,7 @@ void auton_skills() {
     c_lemlib.waitUntilDone();
 
     // setup for left side
-    c_lemlib.moveToPoint(1.9_tiles, 1.7_tiles, 1000, {}, false);
+    c_lemlib.moveToPoint(1.85_tiles, 1.7_tiles, 1000, {.maxSpeed = 80}, false);
     c_lemlib.turnToHeading(0, 300, {}, false);
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -1457,6 +1469,7 @@ void auton_skills() {
     // swing around into goal
     c_lemlib.swingToHeading(90, DriveSide::LEFT, 600, {.direction = AngularDirection::CW_CLOCKWISE}, false);
     c_lemlib.swingToHeading(180, DriveSide::LEFT, 600, {.direction = AngularDirection::CW_CLOCKWISE}, false);
+    c_lemlib.turnToHeading(180, 250, {}, false);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                      CLOSE RIGHT SCORE - 4                                     */
@@ -1479,9 +1492,9 @@ void auton_skills() {
 
     // drive into loader
     store();
-    c_lemlib.moveToPoint(-1.97_tiles, 55, 1300, {.maxSpeed = 80, .minSpeed = 10, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(1.97_tiles, -55, 1300, {.maxSpeed = 80, .minSpeed = 10, .earlyExitRange = 7}, false);
     int loader4Start = millis();
-    c_lemlib.moveToPoint(-1.97_tiles, 70, 1000, {.maxSpeed = 38}, true);
+    c_lemlib.moveToPoint(1.97_tiles, -70, 1000, {.maxSpeed = 38}, true);
     waitUntilCondition(millis() >= loader4Start + 500);
     c_lemlib.cancelMotion();
     c_lemlib.turnToHeading(180+5, 100);
