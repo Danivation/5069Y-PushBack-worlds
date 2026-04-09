@@ -1056,13 +1056,15 @@ void auton_skills1() {
     /*                                            LOW GOAL                                            */
     /* ---------------------------------------------------------------------------------------------- */
 
-    // grab one blue block
+    // grab one block
     store();
-    c_lemlib.moveToPoint(16, -31, 1000, {}, true);
+    c_lemlib.swingToHeading(50, DriveSide::RIGHT, 350, {}, false);
+    c_lemlib.moveToPoint(16, -30, 1000, {}, true);
     delay(300);
     outtake();
     delay(100);
     store();
+    delay(500);
     c_lemlib.waitUntilDone();
     c_lemlib.swingToHeading(-10, DriveSide::RIGHT, 550, {}, false);
 
@@ -1306,16 +1308,20 @@ void auton_skills2() {
 }
 
 void auton_skills() {
-    c_danielib.setPose(0, -44.6, 180);
-    c_lemlib.setPose(0, -44.6, 180);
+    int startTime = millis();
+    c_danielib.setPose(0, -46, 180);
+    c_lemlib.setPose(0, -46, 180);
+    odom_lift.extend();
+    wing.extend();
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                          RED PARK ZONE                                         */
     /* ---------------------------------------------------------------------------------------------- */
 
-    odom_lift.extend();
+    // c_danielib.driveForDistance(-2, 400);
     store();
 
+    // first row wiggles
     c_danielib.driveForDistance(13, 1500, 120, 0, false);
     c_lemlib.turnToHeading(180+5, 100);
     c_lemlib.turnToHeading(180-5, 100);
@@ -1324,6 +1330,8 @@ void auton_skills() {
     c_lemlib.turnToHeading(180, 100, {}, false);
     c_danielib.driveForDistance(4, 400);
     c_danielib.driveForDistance(-3, 300);
+
+    // second row wiggles
     c_danielib.driveForDistance(7, 600, 120, 0, false);
     c_lemlib.turnToHeading(180+7, 150);
     c_lemlib.turnToHeading(180-7, 150);
@@ -1333,11 +1341,39 @@ void auton_skills() {
     bottom.move(-127);
     c_lemlib.turnToHeading(180, 100, {}, false);
     store();
-    // c_danielib.driveForDistance(4, 400);
-    // c_danielib.driveForDistance(-2, 200);
-    // c_danielib.driveForDistance(4, 400);
+
+    // back up a bit
+    c_danielib.driveForDistance(-4, 700, 120, 0, false);
+    bottom.move(-127);
+    delay(200);
+    store();
+    c_lemlib.turnToHeading(180+7, 150);
+    c_lemlib.turnToHeading(180-7, 150);
+    c_lemlib.turnToHeading(180, 100, {}, false);
+
+    // drive back in
+    c_danielib.driveForDistance(5, 500);
 
     // back out
-    // c_danielib.driveForDistance(-22, 1500);
+    c_danielib.async().driveForDistance(-24, 1500);
+    delay(100);
+    loader.extend();
+    c_danielib.waitUntilDone();
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                    REALIGN + DISTANCE RESET                                    */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // front reset
+    c_lemlib.turnToHeading(180, 300);
+    lemlibDistReset({&front_beam, &left_beam, &right_beam}, 10);
+
+    // line up backwards
+    loader.retract();
+    c_lemlib.turnToHeading(0, 700, {.direction = AngularDirection::CW_CLOCKWISE}, false);
+    c_lemlib.moveToPoint(0, -46, 1000, {.forwards = false, .maxSpeed = 70}, false);
+    c_lemlib.moveToPoint(0, -49, 1000, {.forwards = false, .maxSpeed = 35}, false);
+
+    lemlibDistReset({&left_beam, &right_beam});
 
 }
