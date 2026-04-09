@@ -4,7 +4,7 @@
 /*                                        GLOBAL VARIABLES                                        */
 /* ---------------------------------------------------------------------------------------------- */
 
-const bool skillsSlow = false;
+const bool skillsSlow = true;
 const bool autoForDriver = false;
 
 bool comp_started = false;
@@ -52,10 +52,10 @@ std::pair<std::string, std::string> get_auton_name(int index) {
     if (index == 0) return {"None", ""};
 
     // sawps
-    else if (index == 1)    return {"Counter SAWP no wing", ""};
+    // else if (index == 1)    return {"Counter SAWP no wing", ""};
     else if (index == 2)    return {"Counter SAWP + Wing", ""};
-    else if (index == 3)    return {"Standard SAWP", ""};
-    else if (index == 4)    return {"Low goal SAWP", ""};
+    // else if (index == 3)    return {"Standard SAWP", ""};
+    // else if (index == 4)    return {"Low goal SAWP", ""};
 
     // left sides
     else if (index == 5)    return {"Left split", "Loader setup"};
@@ -337,7 +337,7 @@ void opcontrol() {
 
     printing = false;
     pros::lcd::shutdown();
-    delay(50);
+    delay(100);
     pros::lcd::initialize();
     delay(100);
     printing = true;
