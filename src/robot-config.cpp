@@ -9,7 +9,7 @@ pros::Controller master(pros::E_CONTROLLER_MASTER);
 pros::MotorGroup left_mg({13, -12, -11}, pros::MotorGears::blue);
 pros::MotorGroup right_mg({-18, 19, 20}, pros::MotorGears::blue);
 
-pros::MotorGroup bottom({9, 8}, pros::MotorGears::blue);
+pros::MotorGroup bottom({9, 8}, pros::MotorGears::rpm_200);
 pros::Motor top(1, pros::MotorGears::rpm_200);
 
 CustomImu imu_1(15, 360.0f/356.6f);
