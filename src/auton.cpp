@@ -1117,7 +1117,6 @@ void auton_skillss() {
     int score1Start = millis();
     waitUntilCondition(millis() >= score1Start + 1000);
     c_lemlib.cancelMotion();
-    // c_lemlib.setPose(-2_tiles, -28, c_lemlib.getPose().theta);
     lemlibDistReset({&right_beam});
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -1223,15 +1222,15 @@ void auton_skillss() {
     stop();
 }
 
-void auton_skills2() {
+void auton_skills() {
     /* ---------------------------------------------------------------------------------------------- */
     /*                                   REALIGN AND DISTANCE RESET                                   */
     /* ---------------------------------------------------------------------------------------------- */
 
     // distance reset left and right
     wing.extend();
-    c_danielib.setPose(0, -2_tiles, 0);
-    c_lemlib.setPose(0, -2_tiles, 0);
+    c_danielib.setPose(0, 2_tiles, 180);
+    c_lemlib.setPose(0, 2_tiles, 180);
     lemlibDistReset({&left_beam, &right_beam});
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -1240,8 +1239,8 @@ void auton_skills2() {
 
     // grab one block
     store();
-    c_lemlib.swingToHeading(-50, DriveSide::LEFT, 350, {}, false);
-    c_lemlib.moveToPoint(-15, -30, 1000, {}, true);
+    c_lemlib.swingToHeading(180-50, DriveSide::LEFT, 350, {}, false);
+    c_lemlib.moveToPoint(16, 30, 1000, {}, true);
     delay(300);
     outtake();
     delay(100);
@@ -1251,17 +1250,9 @@ void auton_skills2() {
     c_danielib.driveForDistance(-5, 300);
 
     // get to mid goal and avoid blocks
-    c_danielib.turnToHeading(170, 600);
-    c_lemlib.moveToPoint(-11, -13, 900, {.forwards = false}, false);
-    c_lemlib.swingToHeading(-130, DriveSide::LEFT, 700, {}, false);
-    // c_danielib.turnToHeading(-135, 400);
-
-    // score mid goal
-}
-
-void auton_skills() {
-    c_danielib.setPose(0, 0, 0);
-    c_lemlib.setPose(0, 0, 0);
+    c_danielib.turnToHeading(-10, 600);
+    c_lemlib.moveToPoint(11, 13, 900, {.forwards = false}, false);
+    c_lemlib.swingToHeading(130, DriveSide::LEFT, 700, {}, false);
 
     // score mid goal
     bottom.move(-120);
@@ -1277,11 +1268,39 @@ void auton_skills() {
     bottom.move(55);
     delay(700);
 
-    c_danielib.async().driveForDistance(2, 500);
-    top.move(-35);
-    bottom.move(28);
-    delay(1800);
+    c_danielib.async().driveForDistance(2.3, 500);
+    top.move(-40);
+    bottom.move(35);
+    delay(2000);
 
     stop();
     c_danielib.driveForDistance(-5, 500, 15);
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                       FAR RIGHT STACK - 3                                      */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // intake leftover 3 stack
+    store();
+    c_lemlib.moveToPoint(1_tiles, 1_tiles, 100, {.maxSpeed = 80, .minSpeed = 10, .earlyExitRange = 7}, true);
+    delay(300);
+    loader.extend();
+    c_lemlib.waitUntilDone();
+
+    // setup for left side
+    c_lemlib.moveToPoint(1.9_tiles, 1.7_tiles, 1000, {}, false);
+    c_lemlib.turnToHeading(0, 300, {}, false);
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                       FAR RIGHT SCORE - 3                                      */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // drive backwards to goal
+    c_lemlib.moveToPoint(2_tiles, 25, 1500, {.forwards = false}, true);
+    delay(650);
+    score();
+    int score3Start = millis();
+    waitUntilCondition(millis() >= score3Start + 1000);
+    c_lemlib.cancelMotion();
+    lemlibDistReset({&right_beam});
 }
