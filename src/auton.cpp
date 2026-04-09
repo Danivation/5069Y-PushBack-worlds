@@ -1037,7 +1037,7 @@ void auton_right_7ball_counter() {
 /*                                             SKILLS                                             */
 /* ---------------------------------------------------------------------------------------------- */
 
-void auton_skillss() {
+void auton_skills1() {
     int startTime = millis();
     // c_danielib.setPose(0, -50, 180);
     // c_lemlib.setPose(0, -50, 180);
@@ -1222,7 +1222,7 @@ void auton_skillss() {
     stop();
 }
 
-void auton_skills() {
+void auton_skills2() {
     /* ---------------------------------------------------------------------------------------------- */
     /*                                   REALIGN AND DISTANCE RESET                                   */
     /* ---------------------------------------------------------------------------------------------- */
@@ -1303,4 +1303,41 @@ void auton_skills() {
     waitUntilCondition(millis() >= score3Start + 1000);
     c_lemlib.cancelMotion();
     lemlibDistReset({&right_beam});
+}
+
+void auton_skills() {
+    c_danielib.setPose(0, -44.6, 180);
+    c_lemlib.setPose(0, -44.6, 180);
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                          RED PARK ZONE                                         */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    odom_lift.extend();
+    store();
+
+    c_danielib.driveForDistance(13, 1500, 120, 0, false);
+    c_lemlib.turnToHeading(180+5, 100);
+    c_lemlib.turnToHeading(180-5, 100);
+    c_lemlib.turnToHeading(180+5, 100);
+    c_lemlib.turnToHeading(180-5, 100);
+    c_lemlib.turnToHeading(180, 100, {}, false);
+    c_danielib.driveForDistance(4, 400);
+    c_danielib.driveForDistance(-3, 300);
+    c_danielib.driveForDistance(7, 600, 120, 0, false);
+    c_lemlib.turnToHeading(180+7, 150);
+    c_lemlib.turnToHeading(180-7, 150);
+    c_lemlib.turnToHeading(180+7, 150);
+    c_lemlib.turnToHeading(180-7, 150);
+    c_lemlib.waitUntilDone();
+    bottom.move(-127);
+    c_lemlib.turnToHeading(180, 100, {}, false);
+    store();
+    // c_danielib.driveForDistance(4, 400);
+    // c_danielib.driveForDistance(-2, 200);
+    // c_danielib.driveForDistance(4, 400);
+
+    // back out
+    // c_danielib.driveForDistance(-22, 1500);
+
 }
