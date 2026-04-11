@@ -1220,11 +1220,12 @@ void auton_skills() {
     // backwards through alley
     stop();
     c_lemlib.moveToPoint(-2.6_tiles, -0.95_tiles, 1300, {.forwards = false, .minSpeed = 20, .earlyExitRange = 6}, false);
-    c_lemlib.moveToPoint(-2.55_tiles, 0.78_tiles, 1300, {.forwards = false, .minSpeed = 10, .earlyExitRange = 1}, false);
+    c_lemlib.moveToPoint(-2.55_tiles, 0.76_tiles, 1300, {.forwards = false}, false);
 
     // swing around into goal
-    c_lemlib.swingToHeading(-90, DriveSide::LEFT, 500, {.direction = AngularDirection::CW_CLOCKWISE}, false);
-    c_lemlib.swingToHeading(0, DriveSide::LEFT, 600, {.direction = AngularDirection::CW_CLOCKWISE}, false);
+    // c_lemlib.swingToHeading(-90, DriveSide::LEFT, 500, {.direction = AngularDirection::CW_CLOCKWISE}, false);
+    // c_lemlib.swingToHeading(0, DriveSide::LEFT, 600, {.direction = AngularDirection::CW_CLOCKWISE}, false);
+    c_lemlib.swingToHeading(0, DriveSide::LEFT, 900, {.direction = AngularDirection::CW_CLOCKWISE}, false);
     c_lemlib.turnToHeading(0, 250, {}, false);
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -1232,7 +1233,7 @@ void auton_skills() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive backwards to goal
-    c_lemlib.moveToPoint(-2_tiles, 25, 1500, {.forwards = false}, true);
+    c_lemlib.moveToPoint(-2_tiles, 22, 1500, {.forwards = false}, true);
     loader.extend();
     // delay(650);
     delay(100);
@@ -1375,8 +1376,9 @@ void auton_skills() {
     // grab one block
     loader.retract();
     store();
-    c_lemlib.turnToHeading(180-50, 500, {}, false);
-    c_lemlib.moveToPoint(16, 30, 1000, {}, true);
+    
+    c_lemlib.turnToHeading(50, 500, {}, false);
+    c_lemlib.moveToPoint(16, -30, 1000, {}, true);
     delay(300);
     outtake();
     delay(100);
@@ -1387,8 +1389,9 @@ void auton_skills() {
 
     // get to mid goal and avoid blocks
     c_danielib.turnToHeading(-10, 600);
-    c_lemlib.moveToPoint(10, 13.5, 900, {.forwards = false}, false);
-    c_lemlib.swingToHeading(45, DriveSide::LEFT, 600, {.maxSpeed = 80}, false);
+    c_lemlib.moveToPoint(11, 14.5, 900, {.forwards = false}, false);
+    // c_lemlib.swingToHeading(45, DriveSide::LEFT, 600, {.maxSpeed = 80}, false);
+    c_lemlib.moveToPose(8, 8, 45, 1000, {.horizontalDrift = 3, .lead = 0.45}, false);
 
     // score mid goal
     bottom.move(-120);
@@ -1397,20 +1400,20 @@ void auton_skills() {
     stop();
 
     top.move(-55);
-    bottom.move(75);
+    bottom.move(71);
     delay(450);
 
     top.move(-50);
-    bottom.move(55);
+    bottom.move(50);
     delay(700);
 
     c_danielib.async().driveForDistance(1.6, 500);
-    top.move(-40);
-    bottom.move(35);
+    top.move(-36);
+    bottom.move(32);
     delay(1000);
 
-    top.move(-35);
-    bottom.move(35);
+    top.move(-33);
+    bottom.move(30);
     delay(1000);
 
     stop();
@@ -1481,11 +1484,11 @@ void auton_skills() {
     // backwards through alley
     stop();
     c_lemlib.moveToPoint(2.6_tiles, 0.95_tiles, 1300, {.forwards = false, .minSpeed = 20, .earlyExitRange = 6}, false);
-    c_lemlib.moveToPoint(2.55_tiles, -0.78_tiles, 1300, {.forwards = false, .minSpeed = 10, .earlyExitRange = 1}, false);
+    c_lemlib.moveToPoint(2.55_tiles, -0.76_tiles, 1300, {.forwards = false}, false);
 
     // swing around into goal
-    c_lemlib.swingToHeading(90, DriveSide::LEFT, 500, {.direction = AngularDirection::CW_CLOCKWISE}, false);
-    c_lemlib.swingToHeading(180, DriveSide::LEFT, 600, {.direction = AngularDirection::CW_CLOCKWISE}, false);
+    // c_lemlib.swingToHeading(90, DriveSide::LEFT, 500, {.direction = AngularDirection::CW_CLOCKWISE}, false);
+    c_lemlib.swingToHeading(180, DriveSide::LEFT, 900, {.direction = AngularDirection::CW_CLOCKWISE}, false);
     c_lemlib.turnToHeading(180, 250, {}, false);
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -1493,7 +1496,7 @@ void auton_skills() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive backwards to goal
-    c_lemlib.moveToPoint(2_tiles, -25, 1500, {.forwards = false}, true);
+    c_lemlib.moveToPoint(2_tiles, -22, 1500, {.forwards = false}, true);
     loader.extend();
     delay(100);
     score();
