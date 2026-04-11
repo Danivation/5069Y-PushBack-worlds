@@ -369,12 +369,13 @@ void auton_right_split() {
     // swing out of long goal
     loader.retract();
     c_danielib.turnToHeading(270, 500);
-    store();
+    score();
 
     // grab both stacks
     c_lemlib.moveToPoint(0.86_tiles, -0.91_tiles, 1000, {.maxSpeed = 100}, true);
     loader.extend();
     c_lemlib.waitUntilDone();
+    store();
     c_danielib.turnToHeading(-40, 400);
     loader.retract();
     c_lemlib.moveToPoint(10, -9, 1200, {.maxSpeed = 60}, true);
@@ -383,19 +384,21 @@ void auton_right_split() {
     c_lemlib.waitUntilDone();
 
     // intake raise and score
-    outtake();
+    bottom.move(-80);
+    top.move(-40);
     delay(1000);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                              WING                                              */
     /* ---------------------------------------------------------------------------------------------- */
 
-    c_lemlib.moveToPoint(1.55_tiles, -1.7_tiles, 1300, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(1.96_tiles, -1.64_tiles, 1300, {.forwards = false, .minSpeed = 10, .earlyExitRange = 2}, false);
     stop();
     intake_raise.retract();
+    c_lemlib.turnToHeading(200, 300, {}, false);
     left_mg.set_brake_mode_all(MotorBrake::hold);
     left_mg.set_brake_mode_all(MotorBrake::hold);
-    c_lemlib.moveToPoint(2_tiles+0.43_tiles, -1.05_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(2_tiles+0.42_tiles, -1.05_tiles, 1000, {.forwards = false, .maxSpeed = 80, .minSpeed = 10, .earlyExitRange = 7}, false);
     c_lemlib.moveToPoint(2_tiles+0.45_tiles, -10, 1500, {.forwards = false, .maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 1}, false);
     c_danielib.turnToHeading(190, 600);
 }
@@ -968,7 +971,7 @@ void auton_right_7ball_counter() {
 
     // intake raise and score
     // outtake();
-    bottom.move(-66);
+    bottom.move(-75);
     delay(400);
     stop();
     intake_raise.retract();

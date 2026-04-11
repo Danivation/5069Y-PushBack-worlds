@@ -108,11 +108,11 @@ void auton_selector() {
         pros::lcd::print(1, "%s", line3.c_str());
 
         // print text to controller
-        master.print(0, 0, "%d    %s", auton_index, color);
+        master.print(0, 0, "%d    %s    ", auton_index, color);
         pros::delay(50);
-        master.print(1, 0, "%s              ", line2.c_str());
+        master.print(1, 0, "%s         ", line2.c_str());
         pros::delay(50);
-        master.print(2, 0, "%s              ", line3.c_str());
+        master.print(2, 0, "%s         ", line3.c_str());
 
         if (master.get_digital_new_press(DIGITAL_RIGHT)) {
             auton_index++;
