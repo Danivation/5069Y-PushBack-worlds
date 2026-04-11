@@ -1214,7 +1214,7 @@ void auton_skills() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // back out of match loader
-    c_lemlib.moveToPoint(-2_tiles, -1.85_tiles, 1000, {.forwards = false, .minSpeed = 40, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(-2_tiles, -1.95_tiles, 1000, {.forwards = false, .minSpeed = 40, .earlyExitRange = 7}, false);
     loader.retract();
 
     // backwards through alley
@@ -1389,9 +1389,9 @@ void auton_skills() {
 
     // get to mid goal and avoid blocks
     c_danielib.turnToHeading(-10, 600);
-    c_lemlib.moveToPoint(11, 14.5, 900, {.forwards = false}, false);
+    c_lemlib.moveToPoint(11, 14, 900, {.forwards = false}, false);
     // c_lemlib.swingToHeading(45, DriveSide::LEFT, 600, {.maxSpeed = 80}, false);
-    c_lemlib.moveToPose(8, 8, 45, 1000, {.horizontalDrift = 3, .lead = 0.45}, false);
+    c_lemlib.moveToPose(8, 8, 45, 1000, {.horizontalDrift = 3, .lead = 0.65}, false);
 
     // score mid goal
     bottom.move(-120);
@@ -1478,7 +1478,7 @@ void auton_skills() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // back out of match loader
-    c_lemlib.moveToPoint(2_tiles, 1.85_tiles, 1000, {.forwards = false, .minSpeed = 40, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(2_tiles, 1.95_tiles, 1000, {.forwards = false, .minSpeed = 40, .earlyExitRange = 7}, false);
     loader.retract();
 
     // backwards through alley
@@ -1511,9 +1511,9 @@ void auton_skills() {
 
     // drive into loader
     store();
-    c_lemlib.moveToPoint(1.98_tiles, -55, 1300, {.maxSpeed = 80, .minSpeed = 10, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(1.95_tiles, -55, 1300, {.maxSpeed = 80, .minSpeed = 10, .earlyExitRange = 7}, false);
     int loader4Start = millis();
-    c_lemlib.moveToPoint(1.98_tiles, -70, 1000, {.maxSpeed = 38}, true);
+    c_lemlib.moveToPoint(1.95_tiles, -70, 1000, {.maxSpeed = 38}, true);
     waitUntilCondition(millis() >= loader4Start + 500);
     c_lemlib.cancelMotion();
     c_lemlib.turnToHeading(180+5, 100);
