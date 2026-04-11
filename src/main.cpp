@@ -97,12 +97,18 @@ void auton_selector() {
     pros::lcd::print(3, "Up+X for driver");
     while (selecting) {
         auto [line2, line3] = get_auton_name(auton_index);
+        std::string color = "";
+        if (WrongColor == Color::blue) {
+            color = "RED";
+        } else if (WrongColor == Color::red) {
+            color = "BLUE";
+        }
 
         pros::lcd::print(0, "%d: %s", auton_index, line2.c_str());
         pros::lcd::print(1, "%s", line3.c_str());
 
         // print text to controller
-        master.print(0, 0, "%d  ", auton_index);
+        master.print(0, 0, "%d    %s", auton_index, color);
         pros::delay(50);
         master.print(1, 0, "%s              ", line2.c_str());
         pros::delay(50);
@@ -113,6 +119,13 @@ void auton_selector() {
         }
         if (master.get_digital_new_press(DIGITAL_LEFT)) {
             auton_index--;
+        }
+        if (master.get_digital_new_press(DIGITAL_DOWN)) {
+            if (WrongColor == Color::red) {
+                WrongColor = Color::blue;
+            } else {
+                WrongColor = Color::red;
+            }
         }
         if (auton_index < 0) auton_index = 15;
         if (auton_index > 15) auton_index = 0;
@@ -233,8 +246,8 @@ void initialize() {
     optical_top.set_led_pwm(0);
 
     // skills things
-    calibrate_all();
-    autonomous();
+    // calibrate_all();
+    // autonomous();
 
     pros::Task selector(auton_selector);
     pros::Task bypass(wait_for_bypass);
@@ -269,13 +282,13 @@ void autonomous() {
         bool finished = false;
         pros::Task test_auto ([&] {
             startTime = millis();
-            // run_auton(auton_index);
-            auton_skills();
+            run_auton(auton_index);
+            // auton_skills();
             finished = true;
         });
 
-        // waitUntilCondition(millis() > startTime + 15000);
-        waitUntilCondition(millis() > startTime + 60000);
+        waitUntilCondition(millis() > startTime + 15000);
+        // waitUntilCondition(millis() > startTime + 60000);
         if (!finished) {
             test_auto.remove();
             c_lemlib.cancelAllMotions();

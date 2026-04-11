@@ -1,4 +1,7 @@
 #pragma once
+#include "pros/colors.hpp"
+
+extern pros::Color WrongColor;
 
 void auton_none();
 
