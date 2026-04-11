@@ -1074,15 +1074,15 @@ void auton_skills() {
 
     // back up a bit
     c_danielib.driveForDistance(-5, 500, 120, 0, false);
-    bottom.move(-127);
-    delay(200);
+    // bottom.move(-127);
+    // delay(200);
     store();
     c_lemlib.turnToHeading(180+5, 100);
     c_lemlib.turnToHeading(180-5, 100);
     c_lemlib.turnToHeading(180, 100, {}, false);
 
     // drive back in
-    c_danielib.driveForDistance(5, 400);
+    c_danielib.driveForDistance(7, 500);
 
     // back out
     left_mg.set_brake_mode_all(MotorBrake::brake);
@@ -1116,7 +1116,7 @@ void auton_skills() {
     loader.retract();
     store();
     c_lemlib.turnToHeading(50, 500, {}, false);
-    c_lemlib.moveToPoint(16, -30, 1000, {}, true);
+    c_lemlib.moveToPoint(15, -30.5, 1000, {}, true);
     delay(300);
     outtake();
     delay(100);
@@ -1148,7 +1148,7 @@ void auton_skills() {
     delay(1100);
 
     bottom.move_velocity(-37);
-    delay(700);
+    delay(1000);
 
     // back up
     c_lemlib.moveToPoint(1_tiles, -1_tiles, 800, {.forwards = false, .minSpeed = 10, .earlyExitRange = 4}, false);
@@ -1175,7 +1175,7 @@ void auton_skills() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive backwards to goal
-    c_lemlib.moveToPoint(-2_tiles, -25, 1500, {.forwards = false}, true);
+    c_lemlib.moveToPoint(-2_tiles, -23, 1500, {.forwards = false}, true);
     delay(650);
     score();
     int score1Start = millis();
@@ -1215,12 +1215,12 @@ void auton_skills() {
 
     // back out of match loader
     c_lemlib.moveToPoint(-2_tiles, -1.95_tiles, 1000, {.forwards = false, .minSpeed = 40, .earlyExitRange = 7}, false);
-    loader.retract();
-
+    
     // backwards through alley
     stop();
-    c_lemlib.moveToPoint(-2.6_tiles, -0.95_tiles, 1300, {.forwards = false, .minSpeed = 20, .earlyExitRange = 6}, false);
-    c_lemlib.moveToPoint(-2.55_tiles, 0.76_tiles, 1300, {.forwards = false}, false);
+    c_lemlib.moveToPoint(-2.6_tiles, -1_tiles, 1300, {.forwards = false, .minSpeed = 20, .earlyExitRange = 6}, false);
+    c_lemlib.moveToPoint(-2.4_tiles, 0.7_tiles, 1300, {.forwards = false}, false);
+    loader.retract();
 
     // swing around into goal
     // c_lemlib.swingToHeading(-90, DriveSide::LEFT, 500, {.direction = AngularDirection::CW_CLOCKWISE}, false);
@@ -1274,7 +1274,7 @@ void auton_skills() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive backwards to goal
-    c_lemlib.moveToPoint(-2_tiles, 25, 1500, {.forwards = false}, true);
+    c_lemlib.moveToPoint(-2_tiles, 23, 1500, {.forwards = false}, true);
     delay(900);
     score();
     int score2LStart = millis();
@@ -1293,7 +1293,7 @@ void auton_skills() {
     stop();
     loader.retract();
     c_lemlib.moveToPoint(-1_tiles, 1.5_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 6}, false);
-    score();
+    score_mid();
     c_lemlib.moveToPoint(0, 1.5_tiles, 1000, {.maxSpeed = 90}, false);
     stop();
 
@@ -1337,15 +1337,15 @@ void auton_skills() {
 
     // back up a bit
     c_danielib.driveForDistance(-5, 500, 120, 0, false);
-    bottom.move(-127);
-    delay(200);
+    // bottom.move(-127);
+    // delay(200);
     store();
     c_lemlib.turnToHeading(0+5, 100);
     c_lemlib.turnToHeading(0-5, 100);
     c_lemlib.turnToHeading(0, 100, {}, false);
 
     // drive back in
-    c_danielib.driveForDistance(5, 400);
+    c_danielib.driveForDistance(7, 500);
 
     // back out
     left_mg.set_brake_mode_all(MotorBrake::brake);
@@ -1377,8 +1377,9 @@ void auton_skills() {
     loader.retract();
     store();
     
-    c_lemlib.turnToHeading(180-55, 500, {}, false);
-    c_lemlib.moveToPoint(15.5, 31, 1000, {}, true);
+    c_lemlib.turnToHeading(90, 500, {}, false);
+    // c_lemlib.moveToPoint(0.5_tiles, 1.65_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 5}, false);
+    c_lemlib.moveToPoint(15, 29.5, 1000, {}, true);
     delay(300);
     outtake();
     delay(100);
@@ -1389,9 +1390,9 @@ void auton_skills() {
 
     // get to mid goal and avoid blocks
     c_danielib.turnToHeading(-10, 600);
-    c_lemlib.moveToPoint(11, 14, 900, {.forwards = false}, false);
+    c_lemlib.moveToPoint(12, 13.5, 1000, {.forwards = false}, false);
     // c_lemlib.swingToHeading(45, DriveSide::LEFT, 600, {.maxSpeed = 80}, false);
-    c_lemlib.moveToPose(6.5, 8, 45, 1000, {.horizontalDrift = 3, .lead = 0.65}, false);
+    c_lemlib.moveToPose(7, 8, 45, 1000, {.forwards = false, .horizontalDrift = 5, .lead = 0.75}, false);
 
     // score mid goal
     c_danielib.async().driveForDistance(-5, 500, 15);
@@ -1425,14 +1426,18 @@ void auton_skills() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // intake leftover 3 stack
-    c_lemlib.moveToPoint(1_tiles, 1_tiles, 100, {.maxSpeed = 80, .minSpeed = 10, .earlyExitRange = 7}, true);
+    c_danielib.stopMovement();
+    c_lemlib.cancelMotion();
+    c_lemlib.moveToPoint(1.85_tiles, 1.7_tiles, 1400, {.maxSpeed = 90}, true);
+    delay(200);
+    score_mid();
+    delay(150);
+    loader.extend();
     delay(300);
     store();
-    loader.extend();
     c_lemlib.waitUntilDone();
 
     // setup for left side
-    c_lemlib.moveToPoint(1.85_tiles, 1.7_tiles, 1000, {.maxSpeed = 80}, false);
     c_lemlib.turnToHeading(0, 300, {}, false);
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -1440,7 +1445,7 @@ void auton_skills() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive backwards to goal
-    c_lemlib.moveToPoint(2_tiles, 25, 1500, {.forwards = false}, true);
+    c_lemlib.moveToPoint(2_tiles, 23, 1500, {.forwards = false}, true);
     delay(650);
     score();
     int score3Start = millis();
@@ -1480,12 +1485,12 @@ void auton_skills() {
 
     // back out of match loader
     c_lemlib.moveToPoint(2_tiles, 1.95_tiles, 1000, {.forwards = false, .minSpeed = 40, .earlyExitRange = 7}, false);
-    loader.retract();
-
+    
     // backwards through alley
     stop();
-    c_lemlib.moveToPoint(2.6_tiles, 0.95_tiles, 1300, {.forwards = false, .minSpeed = 20, .earlyExitRange = 6}, false);
-    c_lemlib.moveToPoint(2.55_tiles, -0.76_tiles, 1300, {.forwards = false}, false);
+    c_lemlib.moveToPoint(2.6_tiles, 1_tiles, 1300, {.forwards = false, .minSpeed = 20, .earlyExitRange = 6}, false);
+    c_lemlib.moveToPoint(2.4_tiles, -0.7_tiles, 1300, {.forwards = false}, false);
+    loader.retract();
 
     // swing around into goal
     // c_lemlib.swingToHeading(90, DriveSide::LEFT, 500, {.direction = AngularDirection::CW_CLOCKWISE}, false);
@@ -1537,7 +1542,7 @@ void auton_skills() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive backwards to goal
-    c_lemlib.moveToPoint(2_tiles, -25, 1500, {.forwards = false}, true);
+    c_lemlib.moveToPoint(2_tiles, -23, 1500, {.forwards = false}, true);
     delay(900);
     score();
     int score4LStart = millis();
