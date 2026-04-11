@@ -4,7 +4,7 @@
 /*                                        GLOBAL VARIABLES                                        */
 /* ---------------------------------------------------------------------------------------------- */
 
-const bool skillsSlow = true;
+const bool skillsSlow = false;
 const bool autoForDriver = false;
 
 bool comp_started = false;
@@ -233,8 +233,8 @@ void initialize() {
     optical_top.set_led_pwm(0);
 
     // skills things
-    // calibrate_all();
-    // autonomous();
+    calibrate_all();
+    autonomous();
 
     pros::Task selector(auton_selector);
     pros::Task bypass(wait_for_bypass);
@@ -261,7 +261,6 @@ void autonomous() {
     printing = true;
     pros::Task printer(print_info);
 
-    // auton_skills();
     /**/
     if (competition::is_connected()) {
         run_auton(auton_index);
@@ -270,12 +269,13 @@ void autonomous() {
         bool finished = false;
         pros::Task test_auto ([&] {
             startTime = millis();
-            run_auton(auton_index);
+            // run_auton(auton_index);
+            auton_skills();
             finished = true;
         });
 
-        waitUntilCondition(millis() > startTime + 15000);
-        // waitUntilCondition(millis() > startTime + 60000 || finished);
+        // waitUntilCondition(millis() > startTime + 15000);
+        waitUntilCondition(millis() > startTime + 60000);
         if (!finished) {
             test_auto.remove();
             c_lemlib.cancelAllMotions();
