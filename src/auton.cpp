@@ -1067,13 +1067,15 @@ void auton_skills() {
     // second row wiggles
     c_danielib.driveForDistance(7, 600, 120, 0, false);
     c_lemlib.turnToHeading(180+7, 150);
-    c_lemlib.turnToHeading(180-7, 150, {}, false);
-    bottom.move(-80);
+    c_lemlib.turnToHeading(180-7, 150);
     c_lemlib.turnToHeading(180, 100, {}, false);
-    store();
 
     // back and forth
-    c_danielib.driveForDistance(-5, 400, 120, 0, false);
+    c_danielib.async().driveForDistance(-5, 400, 120, 0, false);
+    bottom.move(-127);
+    delay(150);
+    store();
+    c_danielib.waitUntilDone();
     c_danielib.driveForDistance(7, 360);
 
     // back out
@@ -1141,25 +1143,25 @@ void auton_skills() {
     delay(1000);
 
     // back up
-    c_lemlib.moveToPoint(0.6_tiles, -0.6_tiles, 800, {.forwards = false, .maxSpeed = 80, .minSpeed = 20, .earlyExitRange = 3}, false);
+    c_lemlib.moveToPoint(0.9_tiles, -0.9_tiles, 1000, {.forwards = false, .maxSpeed = 80, .minSpeed = 20, .earlyExitRange = 3}, false);
     stop();
     intake_raise.retract();
     c_lemlib.turnToHeading(270, 300, {}, false);
 
-    // /* ---------------------------------------------------------------------------------------------- */
-    // /*                                      CLOSE LEFT STACK - 1                                      */
-    // /* ---------------------------------------------------------------------------------------------- */
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                      CLOSE LEFT STACK - 1                                      */
+    /* ---------------------------------------------------------------------------------------------- */
 
-    // // intake 4 left stack
-    // store();
-    // c_lemlib.moveToPoint(-0.82_tiles, -1_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 6}, true);
-    // delay(700);
-    // loader.extend();
-    // c_lemlib.waitUntilDone();
+    // intake 4 left stack
+    store();
+    c_lemlib.moveToPoint(-0.82_tiles, -1_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 6}, true);
+    delay(700);
+    loader.extend();
+    c_lemlib.waitUntilDone();
 
-    // // setup for left side
-    // c_lemlib.moveToPoint(-1.9_tiles, -1.7_tiles, 1000, {.maxSpeed = 80}, false);
-    // c_lemlib.turnToHeading(180, 300, {}, false);
+    // setup for left side
+    c_lemlib.moveToPoint(-1.9_tiles, -1.55_tiles, 1000, {.maxSpeed = 90}, false);
+    c_danielib.turnToHeading(180, 300);
 
     // /* ---------------------------------------------------------------------------------------------- */
     // /*                                      CLOSE LEFT SCORE - 1                                      */
