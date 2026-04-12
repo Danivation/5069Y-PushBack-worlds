@@ -312,7 +312,6 @@ void opcontrol() {
     int matchStartTime = millis();
     comp_started = true;
     selecting = false;
-
     master.rumble("..");
 
     if (autoForDriver) {
@@ -333,11 +332,11 @@ void opcontrol() {
         right_mg.brake();
     }
 
+    // odom_lift.extend();
     left_mg.set_brake_mode_all(MotorBrake::coast);
     right_mg.set_brake_mode_all(MotorBrake::coast);
     bottom.set_brake_mode_all(MotorBrake::brake);
     top.set_brake_mode_all(MotorBrake::brake);
-    odom_lift.extend();
     optical_top.set_led_pwm(0);
     master.clear();
 

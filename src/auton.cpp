@@ -1045,50 +1045,44 @@ void auton_skills() {
     c_danielib.setPose(0, -53, 180);
     c_lemlib.setPose(0, -53, 180);
     wing.extend();
+    odom_lift.extend();
+    store();
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                          RED PARK ZONE                                         */
     /* ---------------------------------------------------------------------------------------------- */
 
-    odom_lift.extend();
-    store();
-
-    // first row wiggles
+    // drive in
     left_mg.set_brake_mode_all(MotorBrake::coast);
     right_mg.set_brake_mode_all(MotorBrake::coast);
     c_danielib.driveForDistance(2.5, 300, 35, 0, false);
+
+    // first row wiggles
     c_lemlib.turnToHeading(180+7, 150);
     c_lemlib.turnToHeading(180-7, 150);
     c_lemlib.turnToHeading(180+7, 150);
-    c_lemlib.turnToHeading(180-7, 150);
+    // c_lemlib.turnToHeading(180-7, 150);
     c_lemlib.turnToHeading(180, 100, {}, false);
 
     // second row wiggles
     c_danielib.driveForDistance(7, 600, 120, 0, false);
     c_lemlib.turnToHeading(180+7, 150);
-    c_lemlib.turnToHeading(180-7, 150);
-    c_lemlib.waitUntilDone();
-    bottom.move(-127);
+    c_lemlib.turnToHeading(180-7, 150, {}, false);
+    bottom.move(-80);
     c_lemlib.turnToHeading(180, 100, {}, false);
     store();
 
-    // back up a bit
-    c_danielib.driveForDistance(-5, 500, 120, 0, false);
-    store();
-    c_lemlib.turnToHeading(180+5, 100);
-    c_lemlib.turnToHeading(180-5, 100);
-    c_lemlib.turnToHeading(180, 100, {}, false);
-
-    // drive back in
-    c_danielib.driveForDistance(7, 500);
+    // back and forth
+    c_danielib.driveForDistance(-5, 400, 120, 0, false);
+    c_danielib.driveForDistance(7, 360);
 
     // back out
     left_mg.set_brake_mode_all(MotorBrake::brake);
     right_mg.set_brake_mode_all(MotorBrake::brake);
     int backoutTime = millis();
-    c_danielib.async().driveForDistance(-24, 1200);
+    c_danielib.async().driveForDistance(-24, 1500);
     loader.extend();
-    waitUntilCondition(millis() >= backoutTime + 1200 || (distance_front.get_distance() > 860 && distance_front.get_distance() < 2000));
+    waitUntilCondition(millis() >= backoutTime + 1100 || (distance_front.get_distance() > 770 && distance_front.get_distance() < 2000));
     c_danielib.stopMovement();
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -1098,13 +1092,11 @@ void auton_skills() {
     // front reset
     odom_lift.retract();
     c_lemlib.turnToHeading(180, 300, {}, true);
-    // c_danielib.async().driveForDistance(7, 500, 60);
     bottom.move(-127);
-    delay(150);
+    delay(100);
     store();
-    // c_danielib.waitUntilDone();
     c_lemlib.waitUntilDone();
-    lemlibDistReset({&front_beam, &left_beam, &right_beam}, 12);
+    lemlibDistReset({&front_beam, &left_beam, &right_beam});
 
     // /* ---------------------------------------------------------------------------------------------- */
     // /*                                            LOW GOAL                                            */
