@@ -1141,6 +1141,7 @@ void auton_skills() {
 
     bottom.move_velocity(-37);
     delay(1000);
+    c_danielib.driveForDistance(5, 300, 15);
 
     // back up
     c_lemlib.moveToPoint(0.8_tiles, -0.8_tiles, 1000, {.forwards = false, .maxSpeed = 80, .minSpeed = 20, .earlyExitRange = 3}, false);
@@ -1160,7 +1161,7 @@ void auton_skills() {
     c_lemlib.waitUntilDone();
 
     // setup for left side
-    c_lemlib.moveToPoint(-1.9_tiles, -1.55_tiles, 1000, {.maxSpeed = 90}, false);
+    c_lemlib.moveToPoint(-1.95_tiles, -1.55_tiles, 1000, {.maxSpeed = 90}, false);
     c_danielib.turnToHeading(180, 300);
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -1180,97 +1181,91 @@ void auton_skills() {
     /*                                      CLOSE LEFT LOADER - 1                                     */
     /* ---------------------------------------------------------------------------------------------- */
 
-    // // drive into loader
-    // c_lemlib.moveToPoint(-1.99_tiles, -55, 1300, {.maxSpeed = 80, .minSpeed = 10, .earlyExitRange = 7}, false);
-    // int loader1Start = millis();
-    // store();
-    // c_lemlib.moveToPoint(-1.99_tiles, -70, 1000, {.maxSpeed = 38}, true);
-    // waitUntilCondition(millis() >= loader1Start + 500);
-    // c_lemlib.cancelMotion();
-    // c_lemlib.turnToHeading(180+5, 100);
-    // c_lemlib.turnToHeading(180-5, 100);
-    // c_lemlib.turnToHeading(180, 100, {}, false);
-    // c_danielib.driveForDistance(2, 200);
-    // c_lemlib.turnToHeading(180+5, 100);
-    // c_lemlib.turnToHeading(180-5, 100);
-    // c_lemlib.turnToHeading(180, 100, {}, false);
-    // c_danielib.driveForDistance(2, 200);
-    // waitUntilCondition(millis() >= loader1Start + 1500);
-    // c_lemlib.cancelAllMotions();
+    // drive into loader
+    c_lemlib.moveToPoint(-1.99_tiles, -55, 1300, {.maxSpeed = 80, .minSpeed = 10, .earlyExitRange = 7}, false);
+    int loader1Start = millis();
+    store();
+    c_lemlib.moveToPoint(-1.99_tiles, -70, 1000, {.maxSpeed = 38}, true);
+    waitUntilCondition(millis() >= loader1Start + 500);
+    c_lemlib.cancelMotion();
+    c_lemlib.turnToHeading(180-5, 100);
+    c_lemlib.turnToHeading(180+5, 100);
+    c_lemlib.turnToHeading(180, 100, {}, false);
+    c_danielib.driveForDistance(2, 200);
+    c_lemlib.turnToHeading(180+5, 100);
+    c_lemlib.turnToHeading(180-5, 100);
+    c_lemlib.turnToHeading(180, 100, {}, false);
+    c_danielib.driveForDistance(2, 200);
+    waitUntilCondition(millis() >= loader1Start + 1500);
+    c_lemlib.cancelAllMotions();
 
-    // /* ---------------------------------------------------------------------------------------------- */
-    // /*                                           LEFT ALLEY                                           */
-    // /* ---------------------------------------------------------------------------------------------- */
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                           LEFT ALLEY                                           */
+    /* ---------------------------------------------------------------------------------------------- */
 
-    // // back out of match loader
-    // c_lemlib.moveToPoint(-2_tiles, -1.95_tiles, 1000, {.forwards = false, .minSpeed = 40, .earlyExitRange = 7}, false);
+    // back out of match loader
+    c_lemlib.moveToPoint(-2_tiles, -2_tiles, 1000, {.forwards = false, .minSpeed = 40, .earlyExitRange = 6}, false);
     
-    // // backwards through alley
-    // stop();
-    // c_lemlib.moveToPoint(-2.6_tiles, -1_tiles, 1300, {.forwards = false, .minSpeed = 20, .earlyExitRange = 6}, false);
-    // loader.retract();
-    // c_lemlib.moveToPoint(-2.4_tiles, 0.79_tiles, 1300, {.forwards = false}, false);
+    // backwards through alley
+    c_lemlib.moveToPoint(-2.6_tiles, -1_tiles, 1300, {.forwards = false, .minSpeed = 30, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(-2.6_tiles, 1.2_tiles, 1300, {.forwards = false, .minSpeed = 30, .earlyExitRange = 6}, false);
+    loader.retract();
 
-    // // swing around into goal
-    // c_lemlib.swingToHeading(0, DriveSide::LEFT, 900, {.direction = AngularDirection::CW_CLOCKWISE}, false);
-    // c_lemlib.turnToHeading(0, 250, {}, false);
+    // swing around into goal
+    c_lemlib.moveToPoint(-2_tiles, 1.7_tiles, 1000, {.forwards = false}, false);
+    c_lemlib.turnToHeading(0, 500, {}, false);
 
-    // /* ---------------------------------------------------------------------------------------------- */
-    // /*                                       FAR LEFT SCORE - 2                                       */
-    // /* ---------------------------------------------------------------------------------------------- */
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                       FAR LEFT SCORE - 2                                       */
+    /* ---------------------------------------------------------------------------------------------- */
 
-    // // drive backwards to goal
-    // c_lemlib.moveToPoint(-2_tiles, 22, 1500, {.forwards = false}, true);
-    // loader.extend();
-    // // delay(650);
-    // delay(100);
-    // score();
-    // int score2Start = millis();
-    // waitUntilCondition(millis() >= score2Start + 1100);
-    // c_lemlib.cancelMotion();
-    // lemlibDistReset({&left_beam});
+    // drive backwards to goal
+    loader.extend();
+    c_lemlib.moveToPoint(-2_tiles, 22, 1500, {.forwards = false}, true);
+    delay(500);
+    score();
+    int score2Start = millis();
+    waitUntilCondition(millis() >= score2Start + 1100);
+    c_lemlib.cancelMotion();
+    lemlibDistReset({&left_beam});
 
-    // /* ---------------------------------------------------------------------------------------------- */
-    // /*                                       FAR LEFT LOADER - 2                                      */
-    // /* ---------------------------------------------------------------------------------------------- */
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                       FAR LEFT LOADER - 2                                      */
+    /* ---------------------------------------------------------------------------------------------- */
 
-    // // drive into loader
-    // c_lemlib.moveToPoint(-1.97_tiles, 55, 1300, {.maxSpeed = 80, .minSpeed = 10, .earlyExitRange = 7}, false);
-    // int loader2Start = millis();
-    // store();
-    // c_lemlib.moveToPoint(-1.97_tiles, 70, 1000, {.maxSpeed = 38}, true);
-    // waitUntilCondition(millis() >= loader2Start + 500);
-    // c_lemlib.cancelMotion();
-    // c_lemlib.turnToHeading(0+5, 100);
-    // c_lemlib.turnToHeading(0-5, 100);
-    // c_lemlib.turnToHeading(0, 100, {}, false);
-    // c_danielib.driveForDistance(2, 300);
-    // c_lemlib.turnToHeading(0+5, 100);
-    // c_lemlib.turnToHeading(0-5, 100);
-    // c_lemlib.turnToHeading(0, 100, {}, false);
-    // c_danielib.driveForDistance(2, 300);
-    // // c_lemlib.turnToHeading(0+5, 100);
-    // // c_lemlib.turnToHeading(0-5, 100);
-    // // c_lemlib.turnToHeading(0, 100, {}, false);
-    // // c_danielib.driveForDistance(2, 300);
-    // waitUntilCondition(millis() >= loader2Start + 1500);
-    // c_lemlib.cancelAllMotions();
+    // drive into loader
+    c_lemlib.moveToPoint(-1.97_tiles, 55, 1300, {.maxSpeed = 80, .minSpeed = 10, .earlyExitRange = 7}, false);
+    int loader2Start = millis();
+    store();
+    c_lemlib.moveToPoint(-1.97_tiles, 70, 1000, {.maxSpeed = 38}, true);
+    waitUntilCondition(millis() >= loader2Start + 500);
+    c_lemlib.cancelMotion();
+    c_lemlib.turnToHeading(0-5, 100);
+    c_lemlib.turnToHeading(0+5, 100);
+    c_lemlib.turnToHeading(0, 100, {}, false);
+    c_danielib.driveForDistance(2, 200);
+    c_lemlib.turnToHeading(0+5, 100);
+    c_lemlib.turnToHeading(0-5, 100);
+    c_lemlib.turnToHeading(0, 100, {}, false);
+    c_danielib.driveForDistance(2, 200);
+    waitUntilCondition(millis() >= loader2Start + 1500);
+    c_lemlib.cancelAllMotions();
 
-    // /* ---------------------------------------------------------------------------------------------- */
-    // /*                                      FAR LEFT SCORE 2 - 2                                      */
-    // /* ---------------------------------------------------------------------------------------------- */
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                      FAR LEFT SCORE 2 - 2                                      */
+    /* ---------------------------------------------------------------------------------------------- */
 
-    // // drive backwards to goal
-    // c_lemlib.moveToPoint(-2_tiles, 23, 1500, {.forwards = false}, true);
-    // delay(900);
-    // score();
-    // int score2LStart = millis();
-    // waitUntilCondition(millis() >= score2LStart + 600);
-    // bottom.move(75);
-    // top.move(70);
-    // delay(750);
-    // c_lemlib.cancelMotion();
-    // lemlibDistReset({&left_beam/* , &front_beam */});
+    // drive backwards to goal
+    c_lemlib.moveToPoint(-2_tiles, 23, 1500, {.forwards = false}, true);
+    delay(900);
+    score();
+    int score2LStart = millis();
+    waitUntilCondition(millis() >= score2LStart + 600);
+    bottom.move(75);
+    top.move(70);
+    delay(750);
+    c_lemlib.cancelMotion();
+    lemlibDistReset({&left_beam});
 
     // /* ---------------------------------------------------------------------------------------------- */
     // /*                                      SETUP BLUE PARK ZONE                                      */

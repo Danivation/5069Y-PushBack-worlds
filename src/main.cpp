@@ -190,8 +190,8 @@ void print_info() {
         // print to controller
         if (cycle % 5 == 0) {
             master.print(0, 0, "(%.1f, %.1f, %.1f)     ", pose.x, pose.y, d_reduce_to_0_360(pose.theta));
-            //delay(50);
-            //master.print(1, 0, "B: %.0f%%    ", battery::get_capacity());
+            delay(50);
+            master.print(2, 0, "Time: %.2f", testAutonDuration);
         }
 
         cycle++;
@@ -297,7 +297,7 @@ void autonomous() {
         bottom.brake();
         left_mg.brake();
         right_mg.brake();
-        master.print(2, 0, "Time: %.2f", (float)(endTime - startTime)/1000.0f);
+        testAutonDuration = (float)(endTime - startTime)/(1000.0f);
     }
     /**/
     comp_started = true;
