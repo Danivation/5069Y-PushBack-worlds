@@ -75,22 +75,24 @@ void IntakeControl() {
                 delay(100);
             }
 
-            // outtake
+            // START MACRO
+
             c_danielib.async().driveForDistance(-3.1, 500);
-            bottom.move_velocity(-85);
-            top.move(-20);
+            bottom.move_velocity(-70);
+            top.move(-30);
             delay(300);
 
-            bottom.move_velocity(-63);
-            delay(200);
-            delay(100);
+            bottom.move_velocity(-60);
+            delay(300);
 
-            bottom.move_velocity(-52);
+            bottom.move_velocity(-48);
             top.brake();
             delay(1100);
 
-            bottom.move_velocity(-45);
-            delay(700);
+            bottom.move_velocity(-40);
+            delay(1000);
+
+            // BRAKE AND START DRIVING
 
             bottom.brake();
             top.brake();
@@ -105,26 +107,36 @@ void IntakeControl() {
             c_danielib.setPose(0, 0, 0);
             hood.retract();
 
-            // score mid goal
-            bottom.move(-120);
-            top.move(-50);
+            // START MACRO
+
+            bottom.move(-127);
+            top.move(-30);
             delay(150);
 
-            top.move(-55);
-            bottom.move(75);
+            top.move_velocity(-87);
+            bottom.move_velocity(110);
             delay(450);
 
-            top.move(-50);
-            bottom.move(55);
+            top.move_velocity(-82);
+            bottom.move_velocity(72);
             delay(700);
 
-            c_danielib.async().driveForDistance(2.3, 500);
-            top.move(-40);
-            bottom.move(35);
-            delay(2000);
+            c_danielib.async().driveForDistance(1.8, 500);
+            top.move_velocity(-62);
+            bottom.move_velocity(45);
+            delay(1000);
+
+            top.move_velocity(-57);
+            bottom.move_velocity(45);
+            delay(1000);
+
+            // BRAKE AND BACK UP
 
             bottom.brake();
             top.brake();
+            c_danielib.driveForDistance(-5, 350, 15);
+
+            // START DRIVING
 
             driving = true;
         } else {
