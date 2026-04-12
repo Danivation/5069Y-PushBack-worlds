@@ -203,10 +203,9 @@ void wait_for_bypass() {
     while (!comp_started) {
         if (!competition::is_connected() && master.get_digital(DIGITAL_X) && master.get_digital(DIGITAL_A)) {
             waitUntilCondition(!master.get_digital(DIGITAL_X) && !master.get_digital(DIGITAL_A));
-            calibrate_all();
+            // calibrate_all();
             printing = false;
             selecting = false;
-            // delay(250);
             autonomous();
             return;
         } else if (comp_started || (master.get_digital(DIGITAL_UP) && master.get_digital(DIGITAL_X))) {
@@ -216,8 +215,6 @@ void wait_for_bypass() {
         } else if (master.get_digital(DIGITAL_DOWN) && master.get_digital(DIGITAL_B)) {
             printing = false;
             selecting = false;
-            delay(150);
-            //pros::lcd::clear();
             calibrate_all();
             waitUntilCondition(!(master.get_digital(DIGITAL_DOWN) && master.get_digital(DIGITAL_B)));
         }
