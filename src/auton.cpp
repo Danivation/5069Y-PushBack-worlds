@@ -1080,7 +1080,7 @@ void auton_skills() {
     left_mg.set_brake_mode_all(MotorBrake::brake);
     right_mg.set_brake_mode_all(MotorBrake::brake);
     int backoutTime = millis();
-    c_danielib.async().driveForDistance(-23, 1500);
+    c_danielib.async().driveForDistance(-21, 1500);
     loader.extend();
     waitUntilCondition((millis() >= backoutTime + 1000) || (distance_front.get_distance() > 600 && distance_front.get_distance() < 2000));
     c_danielib.stopMovement();
@@ -1108,7 +1108,7 @@ void auton_skills() {
     c_lemlib.turnToHeading(90, 300, {}, false);
 
     // unjam during movement
-    c_lemlib.moveToPoint(15, -31, 1000, {}, true);
+    c_lemlib.moveToPoint(16, -31.5, 1300, {}, true);
     delay(200);
     bottom.move(-127);
     delay(150);
@@ -1119,34 +1119,32 @@ void auton_skills() {
     c_danielib.driveForDistance(-5, 500);
     c_danielib.turnToHeading(0, 400);
 
-    // // line up with the low goal to score
-    // c_lemlib.moveToPoint(13, -21, 1000, {}, false);
-    // intake_raise.extend();
-    // // c_lemlib.swingToHeading(-45, DriveSide::LEFT, 450, {}, false);
-    // // stop();
-    // // c_lemlib.moveToPoint(8, -9, 800, {.maxSpeed = 55}, false);
-    // c_lemlib.moveToPose(8, -9, -45, 1100, {.horizontalDrift = 3, .lead = 0.45}, false);
+    // line up with low goal
+    c_lemlib.moveToPoint(12, -19, 1000, {.minSpeed = 30, .earlyExitRange = 3}, false);
+    intake_raise.extend();
+    c_lemlib.moveToPose(8, -9, -45, 1100, {.horizontalDrift = 4, .lead = 0.5}, false);
 
-    // // outtake
-    // c_danielib.async().driveForDistance(-3.1, 500);
-    // bottom.move_velocity(-75);
-    // top.move(-20);
-    // delay(300);
+    // outtake
+    c_danielib.async().driveForDistance(-3.1, 500);
+    bottom.move_velocity(-75);
+    top.move(-20);
+    delay(300);
 
-    // bottom.move_velocity(-60);
-    // delay(300);
+    bottom.move_velocity(-60);
+    delay(300);
 
-    // bottom.move_velocity(-48);
-    // top.brake();
-    // delay(1100);
+    bottom.move_velocity(-48);
+    top.brake();
+    delay(1100);
 
-    // bottom.move_velocity(-37);
-    // delay(1000);
+    bottom.move_velocity(-37);
+    delay(1000);
 
-    // // back up
-    // c_lemlib.moveToPoint(1_tiles, -1_tiles, 800, {.forwards = false, .minSpeed = 10, .earlyExitRange = 4}, false);
-    // stop();
-    // intake_raise.retract();
+    // back up
+    c_lemlib.moveToPoint(0.6_tiles, -0.6_tiles, 800, {.forwards = false, .maxSpeed = 80, .minSpeed = 20, .earlyExitRange = 3}, false);
+    stop();
+    intake_raise.retract();
+    c_lemlib.turnToHeading(270, 300, {}, false);
 
     // /* ---------------------------------------------------------------------------------------------- */
     // /*                                      CLOSE LEFT STACK - 1                                      */
