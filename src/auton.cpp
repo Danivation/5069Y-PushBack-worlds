@@ -1061,7 +1061,7 @@ void auton_skills() {
     c_lemlib.turnToHeading(180+7, 150);
     c_lemlib.turnToHeading(180-7, 150);
     c_lemlib.turnToHeading(180+7, 150);
-    // c_lemlib.turnToHeading(180-7, 150);
+    c_lemlib.turnToHeading(180-7, 150);
     c_lemlib.turnToHeading(180, 100, {}, false);
 
     // second row wiggles
@@ -1080,9 +1080,9 @@ void auton_skills() {
     left_mg.set_brake_mode_all(MotorBrake::brake);
     right_mg.set_brake_mode_all(MotorBrake::brake);
     int backoutTime = millis();
-    c_danielib.async().driveForDistance(-24, 1500);
+    c_danielib.async().driveForDistance(-23, 1500);
     loader.extend();
-    waitUntilCondition(millis() >= backoutTime + 1100 || (distance_front.get_distance() > 770 && distance_front.get_distance() < 2000));
+    waitUntilCondition((millis() >= backoutTime + 1000) || (distance_front.get_distance() > 600 && distance_front.get_distance() < 2000));
     c_danielib.stopMovement();
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -1098,22 +1098,26 @@ void auton_skills() {
     c_lemlib.waitUntilDone();
     lemlibDistReset({&front_beam, &left_beam, &right_beam});
 
-    // /* ---------------------------------------------------------------------------------------------- */
-    // /*                                            LOW GOAL                                            */
-    // /* ---------------------------------------------------------------------------------------------- */
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                            LOW GOAL                                            */
+    /* ---------------------------------------------------------------------------------------------- */
 
-    // // grab one block
-    // loader.retract();
-    // store();
-    // c_lemlib.turnToHeading(50, 500, {}, false);
-    // c_lemlib.moveToPoint(15, -30.5, 1000, {}, true);
-    // delay(300);
-    // outtake();
-    // delay(100);
-    // store();
-    // delay(500);
-    // c_lemlib.waitUntilDone();
-    // c_lemlib.swingToHeading(-10, DriveSide::RIGHT, 550, {}, false);
+    // grab one block
+    loader.retract();
+    store();
+    c_lemlib.turnToHeading(90, 300, {}, false);
+
+    // unjam during movement
+    c_lemlib.moveToPoint(15, -31, 1000, {}, true);
+    delay(200);
+    bottom.move(-127);
+    delay(150);
+    store();
+    c_lemlib.waitUntilDone();
+
+    // swing away from stack
+    c_danielib.driveForDistance(-5, 500);
+    c_danielib.turnToHeading(0, 400);
 
     // // line up with the low goal to score
     // c_lemlib.moveToPoint(13, -21, 1000, {}, false);
