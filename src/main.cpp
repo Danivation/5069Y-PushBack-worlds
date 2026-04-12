@@ -246,7 +246,7 @@ void initialize() {
     optical_top.set_led_pwm(0);
 
     // skills things
-    // calibrate_all();
+    calibrate_all();
     // autonomous();
 
     pros::Task selector(auton_selector);
@@ -279,25 +279,28 @@ void autonomous() {
         run_auton(auton_index);
     } else {
         int startTime;
+        int endTime;
         bool finished = false;
         pros::Task test_auto ([&] {
             startTime = millis();
-            run_auton(auton_index);
-            // auton_skills();
+            // run_auton(auton_index);
+            auton_skills();
+            endTime = millis();
             finished = true;
         });
 
-        waitUntilCondition(millis() > startTime + 15000);
-        // waitUntilCondition(millis() > startTime + 60000);
+        waitUntilCondition(millis() > startTime + 60000 || finished);
         if (!finished) {
             test_auto.remove();
             c_lemlib.cancelAllMotions();
             c_danielib.stopAllMovements();
+            endTime = millis();
         }
         top.brake();
         bottom.brake();
         left_mg.brake();
         right_mg.brake();
+        master.print(2, 0, "Time: %.2f", (float)(endTime - startTime)/1000.0f);
     }
     /**/
     comp_started = true;

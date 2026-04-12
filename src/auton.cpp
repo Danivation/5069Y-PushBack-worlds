@@ -7,7 +7,7 @@ using namespace pros;
 /*                                             HELPERS                                            */
 /* ---------------------------------------------------------------------------------------------- */
 
-pros::Color WrongColor = Color::black;
+pros::Color WrongColor = Color::blue;
 pros::Color get_color(pros::Optical* sensor) {
     // only return a color if a block is detected
     if ((int)sensor->get_proximity() <= 60) {
