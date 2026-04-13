@@ -1424,7 +1424,7 @@ void auton_skills() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive backwards to goal
-    c_lemlib.moveToPoint(2_tiles, 24, 1000, {.forwards = false, .maxSpeed = 90}, true);
+    c_lemlib.moveToPoint(2_tiles, 22.5, 1000, {.forwards = false, .maxSpeed = 90}, true);
     delay(480);
     score();
     int score3Start = millis();
