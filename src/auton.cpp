@@ -1077,6 +1077,7 @@ void auton_skills() {
     store();
     c_danielib.waitUntilDone();
     c_danielib.driveForDistance(7, 360);
+    delay(300);
 
     // back out
     left_mg.set_brake_mode_all(MotorBrake::brake);
@@ -1173,8 +1174,9 @@ void auton_skills() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive backwards to goal
-    c_lemlib.moveToPoint(-2_tiles, -25, 1500, {.forwards = false}, true);
-    delay(450);
+    c_lemlib.moveToPoint(-2_tiles, -26, 2000, {.forwards = false, .minSpeed = 30, .earlyExitRange = 4.5}, false);
+    c_lemlib.moveToPoint(-2_tiles, -22, 2000, {.forwards = false, .maxSpeed = 65}, true);
+    delay(200);
     score();
     int score1Start = millis();
     waitUntilCondition(millis() >= score1Start + 600);
@@ -1227,8 +1229,9 @@ void auton_skills() {
 
     // drive backwards to goal
     loader.extend();
-    c_lemlib.moveToPoint(-2_tiles, 25, 1500, {.forwards = false}, true);
-    delay(460);
+    c_lemlib.moveToPoint(-2_tiles, 26, 2000, {.forwards = false, .minSpeed = 30, .earlyExitRange = 4.5}, false);
+    c_lemlib.moveToPoint(-2_tiles, 22, 2000, {.forwards = false, .maxSpeed = 65}, true);
+    delay(200);
     score();
     int score2Start = millis();
     waitUntilCondition(millis() >= score2Start + 1100);
@@ -1261,16 +1264,17 @@ void auton_skills() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive backwards to goal
-    c_lemlib.moveToPoint(-2_tiles, 25, 1500, {.forwards = false}, true);
-    delay(900);
+    c_lemlib.moveToPoint(-2_tiles, 26, 2000, {.forwards = false, .minSpeed = 30, .earlyExitRange = 4.5}, false);
+    c_lemlib.moveToPoint(-2_tiles, 22, 2000, {.forwards = false, .maxSpeed = 65}, true);
+    delay(200);
     score();
     int score2LStart = millis();
-    waitUntilCondition(millis() >= score2LStart + 400);
+    // waitUntilCondition(millis() >= score2LStart + 400);
     bottom.move(70);
     top.move(65);
 
     // wait until global timeout
-    waitUntilCondition(millis() >= startTime + 26100 || millis() >= score2LStart + 1500);
+    waitUntilCondition(millis() >= startTime + 26400 || millis() >= score2LStart + 1500);
     c_lemlib.cancelMotion();
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -1322,6 +1326,7 @@ void auton_skills() {
     store();
     c_danielib.waitUntilDone();
     c_danielib.driveForDistance(7, 360);
+    delay(300);
 
     // back out
     left_mg.set_brake_mode_all(MotorBrake::brake);
@@ -1422,8 +1427,9 @@ void auton_skills() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive backwards to goal
-    c_lemlib.moveToPoint(2_tiles, 25, 1500, {.forwards = false}, true);
-    delay(530);
+    c_lemlib.moveToPoint(2_tiles, 26, 2000, {.forwards = false, .minSpeed = 30, .earlyExitRange = 4.5}, false);
+    c_lemlib.moveToPoint(2_tiles, 22, 2000, {.forwards = false, .maxSpeed = 65}, true);
+    delay(200);
     score();
     int score3Start = millis();
     waitUntilCondition(millis() >= score3Start + 600);
@@ -1476,8 +1482,9 @@ void auton_skills() {
 
     // drive backwards to goal
     loader.extend();
-    c_lemlib.moveToPoint(2_tiles, -25, 1500, {.forwards = false}, true);
-    delay(460);
+    c_lemlib.moveToPoint(2_tiles, -26, 2000, {.forwards = false, .minSpeed = 30, .earlyExitRange = 4.5}, false);
+    c_lemlib.moveToPoint(2_tiles, -22, 2000, {.forwards = false, .maxSpeed = 65}, true);
+    delay(200);
     score();
     int score4Start = millis();
     waitUntilCondition(millis() >= score4Start + 1100);
@@ -1510,16 +1517,16 @@ void auton_skills() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive backwards to goal
-    c_lemlib.moveToPoint(2_tiles, -25, 1500, {.forwards = false}, true);
-    delay(900);
+    c_lemlib.moveToPoint(2_tiles, -26, 2000, {.forwards = false, .minSpeed = 30, .earlyExitRange = 4.5}, false);
+    c_lemlib.moveToPoint(2_tiles, -22, 2000, {.forwards = false, .maxSpeed = 65}, true);
+    delay(200);
     score();
     int score4LStart = millis();
-    waitUntilCondition(millis() >= score4LStart + 400);
     bottom.move(70);
     top.move(65);
 
     // wait until global timeout
-    waitUntilCondition(millis() >= startTime + 56400 || millis() >= score4LStart + 1500);
+    waitUntilCondition(millis() >= startTime + 56500 || millis() >= score4LStart + 1500);
     c_lemlib.cancelMotion();
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -1534,6 +1541,6 @@ void auton_skills() {
     // drive in
     odom_lift.extend();
     store();
-    c_lemlib.moveToPoint(-2, -63, 1500, {}, false);
+    c_lemlib.moveToPoint(-1, -63, 1500, {}, false);
     // c_danielib.driveForDistance(24, 1500, 120, 0, false);
 }
