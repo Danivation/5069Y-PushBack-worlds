@@ -1165,7 +1165,7 @@ void auton_skills() {
 
     // setup for left side
     c_lemlib.moveToPoint(-1.95_tiles, -1.55_tiles, 850, {.maxSpeed = 90}, false);
-    c_danielib.turnToHeading(180, 300);
+    c_danielib.turnToHeading(180, 400);
     lemlibDistReset({&right_beam});
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -1218,7 +1218,7 @@ void auton_skills() {
 
     // swing around into goal
     c_lemlib.moveToPoint(-2_tiles, 1.7_tiles, 1000, {.forwards = false}, false);
-    c_lemlib.turnToHeading(0, 500, {}, false);
+    c_danielib.turnToHeading(0, 650);
     lemlibDistReset({&left_beam});
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -1265,7 +1265,6 @@ void auton_skills() {
     delay(900);
     score();
     int score2LStart = millis();
-    waitUntilCondition(millis() >= score2LStart + 400);
     bottom.move(70);
     top.move(65);
 
@@ -1535,5 +1534,4 @@ void auton_skills() {
     odom_lift.extend();
     store();
     c_lemlib.moveToPoint(-2, -63, 1500, {}, false);
-    // c_danielib.driveForDistance(24, 1500, 120, 0, false);
 }
