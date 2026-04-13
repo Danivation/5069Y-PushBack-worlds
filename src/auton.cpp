@@ -1165,7 +1165,7 @@ void auton_skills() {
     c_lemlib.waitUntilDone();
 
     // setup for left side
-    c_lemlib.moveToPoint(-1.95_tiles, -1.55_tiles, 850, {.maxSpeed = 90}, false);
+    c_lemlib.moveToPoint(-1.9_tiles, -1.55_tiles, 850, {.maxSpeed = 90}, false);
     c_danielib.turnToHeading(180, 400);
     lemlibDistReset({&right_beam});
 
@@ -1174,9 +1174,9 @@ void auton_skills() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive backwards to goal
-    c_lemlib.moveToPoint(-2_tiles, -26, 1000, {.forwards = false, .minSpeed = 30, .earlyExitRange = 6}, false);
-    c_lemlib.moveToPoint(-2_tiles, -22, 2000, {.forwards = false, .maxSpeed = 75}, true);
-    delay(200);
+    c_lemlib.moveToPoint(-2_tiles, -24, 1000, {.forwards = false}, false);
+    // c_lemlib.moveToPoint(-2_tiles, -22, 2000, {.forwards = false, .maxSpeed = 75}, true);
+    delay(400);
     score();
     int score1Start = millis();
     waitUntilCondition(millis() >= score1Start + 600);
@@ -1273,7 +1273,7 @@ void auton_skills() {
     top.move(65);
 
     // wait until global timeout
-    waitUntilCondition(millis() >= startTime + 26800 || millis() >= score2LStart + 1500);
+    waitUntilCondition(millis() >= startTime + 26100 || millis() >= score2LStart + 1500);
     c_lemlib.cancelMotion();
 
     /* ---------------------------------------------------------------------------------------------- */
