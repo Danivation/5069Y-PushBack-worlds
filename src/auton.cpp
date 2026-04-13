@@ -1357,7 +1357,7 @@ void auton_skills() {
     c_lemlib.turnToHeading(135, 500, {}, false);
 
     // unjam during movement
-    c_lemlib.moveToPoint(15.5, 29, 1300, {}, true);
+    c_lemlib.moveToPoint(15.5, 28.5, 1300, {}, true);
     delay(200);
     bottom.move(-127);
     delay(150);
@@ -1369,8 +1369,8 @@ void auton_skills() {
     c_danielib.turnToHeading(0, 400);
 
     // line up with mid goal
-    c_lemlib.moveToPoint(12, 19, 1000, {.forwards = false, .minSpeed = 30, .earlyExitRange = 3}, false);
-    c_lemlib.moveToPose(8, 9, 45, 850, {.forwards = false, .horizontalDrift = 4, .lead = 0.5}, false);
+    c_lemlib.moveToPoint(10.5, 18.3, 1000, {.forwards = false, .minSpeed = 30, .earlyExitRange = 3}, false);
+    c_lemlib.moveToPose(7.5, 8, 45, 850, {.forwards = false, .horizontalDrift = 4, .lead = 0.5}, false);
 
     // score mid goal
     c_danielib.async().driveForDistance(-5, 500, 15);
@@ -1388,12 +1388,12 @@ void auton_skills() {
     delay(700);
 
     c_danielib.async().driveForDistance(1.8, 500);
-    top.move_velocity(-62);
-    bottom.move_velocity(45);
+    top.move_velocity(65);
+    bottom.move_velocity(40);
     delay(1000);
 
-    top.move_velocity(-57);
-    bottom.move_velocity(45);
+    top.move_velocity(-60);
+    bottom.move_velocity(40);
     delay(1000);
 
     c_danielib.driveForDistance(-5, 350, 15);
