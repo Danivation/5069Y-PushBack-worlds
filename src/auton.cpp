@@ -1277,127 +1277,127 @@ void auton_skills() {
     waitUntilCondition(millis() >= startTime + 26250 || millis() >= score2LStart + 1500);
     c_lemlib.cancelMotion();
 
-    // /* ---------------------------------------------------------------------------------------------- */
-    // /*                                      SETUP BLUE PARK ZONE                                      */
-    // /* ---------------------------------------------------------------------------------------------- */
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                      SETUP BLUE PARK ZONE                                      */
+    /* ---------------------------------------------------------------------------------------------- */
 
-    // // drive out of goal
-    // loader.retract();
-    // c_lemlib.moveToPoint(-2_tiles, 1.5_tiles, 600, {.minSpeed = 20, .earlyExitRange = 8}, false);
-    // stop();
-    // c_lemlib.moveToPoint(-0.5, 1.6_tiles, 1600, {}, false);
+    // drive out of goal
+    loader.retract();
+    c_lemlib.moveToPoint(-2_tiles, 1.5_tiles, 600, {.minSpeed = 20, .earlyExitRange = 8}, false);
+    stop();
+    c_lemlib.moveToPoint(-0.5, 1.6_tiles, 1600, {}, false);
 
-    // // line up with park zone
-    // c_danielib.turnToHeading(0, 500);
-    // lemlibDistReset({&left_beam, &right_beam});
-    // c_lemlib.moveToPoint(0, 46, 900, {.maxSpeed = 95, .minSpeed = 20, .earlyExitRange = 3}, false);
+    // line up with park zone
+    c_danielib.turnToHeading(0, 500);
+    lemlibDistReset({&left_beam, &right_beam});
+    c_lemlib.moveToPoint(0, 46, 900, {.maxSpeed = 95, .minSpeed = 20, .earlyExitRange = 3}, false);
 
-    // /* ---------------------------------------------------------------------------------------------- */
-    // /*                                         BLUE PARK ZONE                                         */
-    // /* ---------------------------------------------------------------------------------------------- */
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                         BLUE PARK ZONE                                         */
+    /* ---------------------------------------------------------------------------------------------- */
 
-    // odom_lift.extend();
-    // store();
+    odom_lift.extend();
+    store();
 
-    // left_mg.set_brake_mode_all(MotorBrake::coast);
-    // right_mg.set_brake_mode_all(MotorBrake::coast);
-    // c_danielib.driveForDistance(14, 1400, 120, 0, false);
+    left_mg.set_brake_mode_all(MotorBrake::coast);
+    right_mg.set_brake_mode_all(MotorBrake::coast);
+    c_danielib.driveForDistance(14, 1400, 120, 0, false);
 
-    // // first row wiggles
-    // c_lemlib.turnToHeading(0+7, 150);
-    // c_lemlib.turnToHeading(0-7, 150);
-    // c_lemlib.turnToHeading(0+7, 150);
-    // c_lemlib.turnToHeading(0-7, 150);
-    // c_lemlib.turnToHeading(0, 100, {}, false);
+    // first row wiggles
+    c_lemlib.turnToHeading(0+7, 150);
+    c_lemlib.turnToHeading(0-7, 150);
+    c_lemlib.turnToHeading(0+7, 150);
+    c_lemlib.turnToHeading(0-7, 150);
+    c_lemlib.turnToHeading(0, 100, {}, false);
 
-    // // second row wiggles
-    // c_danielib.driveForDistance(7, 600, 120, 0, false);
-    // c_lemlib.turnToHeading(0+7, 150);
-    // c_lemlib.turnToHeading(0-7, 150);
-    // c_lemlib.turnToHeading(0, 100, {}, false);
+    // second row wiggles
+    c_danielib.driveForDistance(7, 600, 120, 0, false);
+    c_lemlib.turnToHeading(0+7, 150);
+    c_lemlib.turnToHeading(0-7, 150);
+    c_lemlib.turnToHeading(0, 100, {}, false);
 
-    // // back and forth
-    // c_danielib.async().driveForDistance(-5, 400, 120, 0, false);
-    // bottom.move(-127);
-    // delay(150);
-    // store();
-    // c_danielib.waitUntilDone();
-    // c_danielib.driveForDistance(7, 360);
-    // delay(300);
+    // back and forth
+    c_danielib.async().driveForDistance(-5, 400, 120, 0, false);
+    bottom.move(-127);
+    delay(150);
+    store();
+    c_danielib.waitUntilDone();
+    c_danielib.driveForDistance(7, 360);
+    delay(300);
 
-    // // back out
-    // left_mg.set_brake_mode_all(MotorBrake::brake);
-    // right_mg.set_brake_mode_all(MotorBrake::brake);
-    // int backout2Time = millis();
-    // c_danielib.async().driveForDistance(-21, 1500);
-    // loader.extend();
-    // waitUntilCondition((millis() >= backout2Time + 1000) || (distance_front.get_distance() > 600 && distance_front.get_distance() < 2000));
-    // c_danielib.stopMovement();
+    // back out
+    left_mg.set_brake_mode_all(MotorBrake::brake);
+    right_mg.set_brake_mode_all(MotorBrake::brake);
+    int backout2Time = millis();
+    c_danielib.async().driveForDistance(-21, 1500);
+    loader.extend();
+    waitUntilCondition((millis() >= backout2Time + 1000) || (distance_front.get_distance() > 600 && distance_front.get_distance() < 2000));
+    c_danielib.stopMovement();
 
-    // /* ---------------------------------------------------------------------------------------------- */
-    // /*                                    REALIGN + DISTANCE RESET                                    */
-    // /* ---------------------------------------------------------------------------------------------- */
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                    REALIGN + DISTANCE RESET                                    */
+    /* ---------------------------------------------------------------------------------------------- */
 
-    // // front reset
-    // odom_lift.retract();
-    // c_lemlib.turnToHeading(0, 300, {}, true);
-    // bottom.move(-127);
-    // delay(100);
-    // store();
-    // c_lemlib.waitUntilDone();
-    // lemlibDistReset({&front_beam, &left_beam, &right_beam});
+    // front reset
+    odom_lift.retract();
+    c_lemlib.turnToHeading(0, 300, {}, true);
+    bottom.move(-127);
+    delay(100);
+    store();
+    c_lemlib.waitUntilDone();
+    lemlibDistReset({&front_beam, &left_beam, &right_beam});
 
-    // /* ---------------------------------------------------------------------------------------------- */
-    // /*                                          HIGH MID GOAL                                         */
-    // /* ---------------------------------------------------------------------------------------------- */
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                          HIGH MID GOAL                                         */
+    /* ---------------------------------------------------------------------------------------------- */
 
-    // // grab one block
-    // loader.retract();
-    // store();
-    // c_lemlib.turnToHeading(135, 500, {}, false);
+    // grab one block
+    loader.retract();
+    store();
+    c_lemlib.turnToHeading(135, 500, {}, false);
 
-    // // unjam during movement
-    // c_lemlib.moveToPoint(16, 30.5, 1300, {}, true);
-    // delay(200);
-    // bottom.move(-127);
-    // delay(150);
-    // store();
-    // c_lemlib.waitUntilDone();
+    // unjam during movement
+    c_lemlib.moveToPoint(16, 30.5, 1300, {}, true);
+    delay(200);
+    bottom.move(-127);
+    delay(150);
+    store();
+    c_lemlib.waitUntilDone();
 
-    // // swing away from stack
-    // c_danielib.driveForDistance(-6, 500);
-    // c_danielib.turnToHeading(0, 400);
+    // swing away from stack
+    c_danielib.driveForDistance(-6, 500);
+    c_danielib.turnToHeading(0, 400);
 
-    // // line up with mid goal
-    // c_lemlib.moveToPoint(12, 19, 1000, {.forwards = false, .minSpeed = 30, .earlyExitRange = 3}, false);
-    // c_lemlib.moveToPose(8, 9, 45, 850, {.forwards = false, .horizontalDrift = 4, .lead = 0.5}, false);
+    // line up with mid goal
+    c_lemlib.moveToPoint(12, 19, 1000, {.forwards = false, .minSpeed = 30, .earlyExitRange = 3}, false);
+    c_lemlib.moveToPose(8, 9, 45, 850, {.forwards = false, .horizontalDrift = 4, .lead = 0.5}, false);
 
-    // // score mid goal
-    // c_danielib.async().driveForDistance(-5, 500, 15);
-    // bottom.move(-127);
-    // top.move(-30);
-    // delay(150);
-    // stop();
+    // score mid goal
+    c_danielib.async().driveForDistance(-5, 500, 15);
+    bottom.move(-127);
+    top.move(-30);
+    delay(150);
+    stop();
 
-    // top.move_velocity(-87);
-    // bottom.move_velocity(110);
-    // delay(450);
+    top.move_velocity(-87);
+    bottom.move_velocity(110);
+    delay(450);
 
-    // top.move_velocity(-82);
-    // bottom.move_velocity(72);
-    // delay(700);
+    top.move_velocity(-82);
+    bottom.move_velocity(72);
+    delay(700);
 
-    // c_danielib.async().driveForDistance(1.8, 500);
-    // top.move_velocity(-62);
-    // bottom.move_velocity(45);
-    // delay(1000);
+    c_danielib.async().driveForDistance(1.8, 500);
+    top.move_velocity(-62);
+    bottom.move_velocity(45);
+    delay(1000);
 
-    // top.move_velocity(-57);
-    // bottom.move_velocity(45);
-    // delay(1000);
+    top.move_velocity(-57);
+    bottom.move_velocity(45);
+    delay(1000);
 
-    // stop();
-    // c_danielib.driveForDistance(-5, 350, 15);
+    stop();
+    c_danielib.driveForDistance(-5, 350, 15);
 
     // /* ---------------------------------------------------------------------------------------------- */
     // /*                                       FAR RIGHT STACK - 3                                      */
