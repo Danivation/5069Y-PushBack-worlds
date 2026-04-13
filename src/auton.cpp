@@ -1159,7 +1159,7 @@ void auton_skills() {
 
     // intake 4 left stack
     store();
-    c_lemlib.moveToPoint(-0.82_tiles, -0.96_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 6}, true);
+    c_lemlib.moveToPoint(-0.82_tiles, -0.93_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 6}, true);
     delay(730);
     loader.extend();
     c_lemlib.waitUntilDone();
@@ -1174,9 +1174,8 @@ void auton_skills() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive backwards to goal
-    c_lemlib.moveToPoint(-2_tiles, -24, 1000, {.forwards = false, .maxSpeed = 100}, false);
-    // c_lemlib.moveToPoint(-2_tiles, -22, 2000, {.forwards = false, .maxSpeed = 75}, true);
-    delay(450);
+    c_lemlib.moveToPoint(-2_tiles, -24, 1000, {.forwards = false, .maxSpeed = 90}, true);
+    delay(480);
     score();
     int score1Start = millis();
     waitUntilCondition(millis() >= score1Start + 600);
@@ -1219,7 +1218,7 @@ void auton_skills() {
     loader.retract();
 
     // swing around into goal
-    c_lemlib.moveToPoint(-1.96_tiles, 1.7_tiles, 1000, {.forwards = false}, false);
+    c_lemlib.moveToPoint(-1.96_tiles, 1.7_tiles, 900, {.forwards = false}, false);
     c_danielib.turnToHeading(0, 650);
     lemlibDistReset({&left_beam});
 
@@ -1230,7 +1229,7 @@ void auton_skills() {
     // drive backwards to goal
     loader.extend();
     c_lemlib.moveToPoint(-2.05_tiles, 26, 800, {.forwards = false, .maxSpeed = 90}, true);
-    delay(500);
+    delay(450);
     int score2Start = millis();
     score();
 
@@ -1269,12 +1268,13 @@ void auton_skills() {
     c_lemlib.moveToPoint(-2.05_tiles, 26, 1300, {.forwards = false, .maxSpeed = 90}, true);
     delay(900);
     int score2LStart = millis();
+    hood.extend();
     bottom.move(70);
     top.move(65);
 
     // realign inside goal and wait until global timeout
     c_lemlib.moveToPoint(-2.05_tiles, 22, 2000, {.forwards = false, .maxSpeed = 60}, true);
-    waitUntilCondition(millis() >= startTime + 26100 || millis() >= score2LStart + 1500);
+    waitUntilCondition(millis() >= startTime + 26250 || millis() >= score2LStart + 1500);
     c_lemlib.cancelMotion();
 
     // /* ---------------------------------------------------------------------------------------------- */
