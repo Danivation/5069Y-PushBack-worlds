@@ -1357,7 +1357,7 @@ void auton_skills() {
     c_lemlib.turnToHeading(135, 500, {}, false);
 
     // unjam during movement
-    c_lemlib.moveToPoint(14.9, 29.2, 1300, {}, true);
+    c_lemlib.moveToPoint(16, 30.5, 1300, {}, true);
     delay(200);
     bottom.move(-127);
     delay(150);
