@@ -1129,7 +1129,7 @@ void auton_skills() {
 
     // outtake
     c_danielib.async().driveForDistance(-3.1, 500);
-    bottom.move_velocity(-70);
+    bottom.move_velocity(-68);
     top.move(-30);
     delay(300);
 
@@ -1357,7 +1357,7 @@ void auton_skills() {
     c_lemlib.turnToHeading(135, 500, {}, false);
 
     // unjam during movement
-    c_lemlib.moveToPoint(15.5, 31.9, 1300, {}, true);
+    c_lemlib.moveToPoint(14.9, 30.5, 1300, {}, true);
     delay(200);
     bottom.move(-127);
     delay(150);
@@ -1388,12 +1388,12 @@ void auton_skills() {
     delay(700);
 
     // c_danielib.async().driveForDistance(1.5, 500);
-    top.move_velocity(-75);
-    bottom.move_velocity(30);
+    top.move_velocity(-80);
+    bottom.move_velocity(37);
     delay(1000);
 
     top.move_velocity(-75);
-    bottom.move_velocity(23);
+    bottom.move_velocity(25);
     delay(1000);
 
     c_danielib.driveForDistance(-5, 350, 15);
@@ -1493,10 +1493,10 @@ void auton_skills() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive into loader
-    c_lemlib.moveToPoint(1.98_tiles, -54, 1300, {.maxSpeed = 80, .minSpeed = 10, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(1.95_tiles, -54, 1300, {.maxSpeed = 80, .minSpeed = 10, .earlyExitRange = 7}, false);
     int loader4Start = millis();
     store();
-    c_lemlib.moveToPoint(1.98_tiles, -70, 1000, {.maxSpeed = 35}, true);
+    c_lemlib.moveToPoint(1.95_tiles, -70, 1000, {.maxSpeed = 35}, true);
     waitUntilCondition(millis() >= loader4Start + 750);
     c_lemlib.cancelMotion();
     c_lemlib.turnToHeading(180+5, 100, {}, false);
@@ -1534,7 +1534,7 @@ void auton_skills() {
     // drive to park
     loader.retract();
     stop();
-    c_lemlib.moveToPose(10, -62, 260, 1500, {.horizontalDrift = 3.5, .lead = 0.55, .minSpeed = 30, .earlyExitRange = 3}, false);
+    c_lemlib.moveToPose(10, -64, 260, 1500, {.horizontalDrift = 3.5, .lead = 0.55, .minSpeed = 30, .earlyExitRange = 3}, false);
 
     // drive in
     odom_lift.extend();
