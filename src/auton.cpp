@@ -1069,11 +1069,11 @@ void auton_skills() {
 
     // c_danielib.async().driveForDistance(1.5, 500);
     top.move_velocity(-85);
-    bottom.move_velocity(38);
+    bottom.move_velocity(45);
     delay(1200);
 
     top.move_velocity(-85);
-    bottom.move_velocity(20);
+    bottom.move_velocity(40);
     delay(800);
 
     c_danielib.driveForDistance(-5, 350, 15);
