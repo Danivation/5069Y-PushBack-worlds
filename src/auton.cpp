@@ -1099,7 +1099,9 @@ void auton_skills() {
     delay(100);
     store();
     c_lemlib.waitUntilDone();
-    lemlibDistReset({&front_beam, &left_beam, &right_beam});
+    c_lemlib.setPose({0, -45, c_lemlib.getPose().theta});
+    lemlibDistReset({&left_beam, &right_beam}, 10);
+    lemlibDistReset({&front_beam}, 8);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                            LOW GOAL                                            */
@@ -1345,7 +1347,9 @@ void auton_skills() {
     delay(100);
     store();
     c_lemlib.waitUntilDone();
-    lemlibDistReset({&front_beam, &left_beam, &right_beam});
+    c_lemlib.setPose({0, 45, c_lemlib.getPose().theta});
+    lemlibDistReset({&left_beam, &right_beam}, 10);
+    lemlibDistReset({&front_beam}, 8);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                          HIGH MID GOAL                                         */
