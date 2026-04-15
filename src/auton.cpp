@@ -1438,10 +1438,10 @@ void auton_skills() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive into loader
-    c_lemlib.moveToPoint(2_tiles, 54, 1300, {.maxSpeed = 80, .minSpeed = 10, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(1.99_tiles, 54, 1300, {.maxSpeed = 80, .minSpeed = 10, .earlyExitRange = 7}, false);
     int loader3Start = millis();
     store();
-    c_lemlib.moveToPoint(2_tiles, 70, 1000, {.maxSpeed = 35}, true);
+    c_lemlib.moveToPoint(1.99_tiles, 70, 1000, {.maxSpeed = 35}, true);
     waitUntilCondition(millis() >= loader3Start + 750);
     c_lemlib.cancelMotion();
     c_lemlib.turnToHeading(0+5, 100, {}, false);
@@ -1493,10 +1493,10 @@ void auton_skills() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive into loader
-    c_lemlib.moveToPoint(1.95_tiles, -54, 1300, {.maxSpeed = 80, .minSpeed = 10, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(1.94_tiles, -54, 1300, {.maxSpeed = 80, .minSpeed = 10, .earlyExitRange = 7}, false);
     int loader4Start = millis();
     store();
-    c_lemlib.moveToPoint(1.95_tiles, -70, 1000, {.maxSpeed = 35}, true);
+    c_lemlib.moveToPoint(1.94_tiles, -70, 1000, {.maxSpeed = 35}, true);
     waitUntilCondition(millis() >= loader4Start + 750);
     c_lemlib.cancelMotion();
     c_lemlib.turnToHeading(180+5, 100, {}, false);
@@ -1534,10 +1534,10 @@ void auton_skills() {
     // drive to park
     loader.retract();
     stop();
-    c_lemlib.moveToPose(10, -64, 260, 1500, {.horizontalDrift = 3.5, .lead = 0.55, .minSpeed = 30, .earlyExitRange = 3}, false);
+    c_lemlib.moveToPose(10, -64, -100, 1500, {.horizontalDrift = 3.5, .lead = 0.52, .minSpeed = 30, .earlyExitRange = 5}, false);
 
     // drive in
     odom_lift.extend();
     store();
-    c_lemlib.moveToPoint(-1, -63, 1500, {}, false);
+    c_lemlib.moveToPoint(-1, -63, 1500, {.minSpeed = 60}, false);
 }
