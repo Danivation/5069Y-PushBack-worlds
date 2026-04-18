@@ -8,6 +8,7 @@
 #define INTAKE_TO_SLOW_MID_GOAL DIGITAL_X
 #define INTAKE_TO_MID_GOAL      DIGITAL_L2
 #define INTAKE_TO_HIGH_GOAL     DIGITAL_L1
+#define INTAKE_UNJAM_MACRO      DIGITAL_LEFT
 #define LOADER_TOGGLE           master.get_digital(DIGITAL_DOWN)
 #define DESCORE_MID_TOGGLE      master.get_digital(DIGITAL_RIGHT)
 #define DESCORE_WING_TOGGLE     master.get_digital(DIGITAL_Y)
@@ -38,6 +39,7 @@ void IntakeControl() {
 
         if (master.get_digital(INTAKE_TO_MID_GOAL)) {
             hood.retract();
+            intake_raise.retract();
             if (skillsSlow) {
                 bottom.move(35);
                 top.move(-40);
@@ -47,14 +49,17 @@ void IntakeControl() {
             }
         } else if (master.get_digital(INTAKE_TO_HIGH_GOAL)) {
             hood.extend();
+            intake_raise.retract();
             bottom.move(127);
             top.move(127);
         } else if (master.get_digital(INTAKE_TO_STORAGE)) {
             hood.retract();
+            intake_raise.retract();
             bottom.move(127);
             top.move(127);
         } else if (master.get_digital(INTAKE_TO_LOW_GOAL)) {
             hood.retract();
+            intake_raise.extend();
             if (skillsSlow) {
                 bottom.move(-30);
                 top.move(-20);
@@ -140,7 +145,6 @@ void IntakeControl() {
 
             driving = true;
         } else {
-            //hood.retract();
             bottom.brake();
             top.brake();
             lastPressed = 0;

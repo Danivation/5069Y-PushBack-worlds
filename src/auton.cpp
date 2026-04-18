@@ -392,10 +392,10 @@ void auton_right_split() {
     /*                                              WING                                              */
     /* ---------------------------------------------------------------------------------------------- */
 
-    c_lemlib.moveToPoint(1.96_tiles, -1.64_tiles, 1300, {.forwards = false, .minSpeed = 10, .earlyExitRange = 2}, false);
+    c_lemlib.moveToPoint(2.1_tiles, -1.64_tiles, 1300, {.forwards = false, .minSpeed = 10, .earlyExitRange = 2}, false);
     stop();
     intake_raise.retract();
-    c_lemlib.turnToHeading(200, 300, {}, false);
+    c_lemlib.turnToHeading(210, 450, {}, false);
     left_mg.set_brake_mode_all(MotorBrake::hold);
     left_mg.set_brake_mode_all(MotorBrake::hold);
     c_lemlib.moveToPoint(2_tiles+0.42_tiles, -1.05_tiles, 1000, {.forwards = false, .maxSpeed = 80, .minSpeed = 10, .earlyExitRange = 7}, false);
@@ -846,7 +846,7 @@ void auton_left_7ball_counter() {
     score_mid();
 
     // color sensor timeout
-    waitUntilColor(&optical_top, WrongColor, midScoreStart + 760);
+    waitUntilColor(&optical_top, WrongColor, midScoreStart + 660);
     // delay(100); // mid color timer
     c_lemlib.cancelMotion();
 
@@ -856,20 +856,21 @@ void auton_left_7ball_counter() {
 
     // move to wing position
     stop();
+    c_lemlib.moveToPoint(-2_tiles+0.53_tiles, -1.75_tiles, 1100, {.minSpeed = 10, .earlyExitRange = 2}, true);
     loader.retract();
     wing.extend();
     top.move(127);
-    bottom.move(-127);
-    delay(100);
-    top.brake();
+    bottom.move(-90);
+    delay(200);
+    bottom.brake();
     delay(200);
     stop();
     
     
     // get into position to sweep out
-    c_lemlib.moveToPoint(-2_tiles+0.56_tiles, -1.75_tiles, 1100, {.minSpeed = 10, .earlyExitRange = 2}, false);
-    c_lemlib.moveToPoint(-2_tiles+0.48_tiles, -1.05_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
-    c_lemlib.moveToPoint(-2_tiles+0.45_tiles, -10, 1500, {.forwards = false, .minSpeed = 10, .earlyExitRange = 1}, false);
+    c_lemlib.waitUntilDone();
+    c_lemlib.moveToPoint(-2_tiles+0.46_tiles, -1.05_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(-2_tiles+0.43_tiles, -10, 1500, {.forwards = false, .minSpeed = 10, .earlyExitRange = 1}, false);
 
     // sweep out
     wing.retract();

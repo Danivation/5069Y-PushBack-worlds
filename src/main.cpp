@@ -21,7 +21,7 @@ float testAutonDuration = 0;
 void run_auton(int index) {
     // default auto to run when no auto is selected, also runs in test mode
     if (index == 0) {
-        auton_none();
+        auton_right_split();
     }
 
     // sawps
@@ -203,7 +203,7 @@ void wait_for_bypass() {
     while (!comp_started) {
         if (!competition::is_connected() && master.get_digital(DIGITAL_X) && master.get_digital(DIGITAL_A)) {
             waitUntilCondition(!master.get_digital(DIGITAL_X) && !master.get_digital(DIGITAL_A));
-            // calibrate_all();
+            calibrate_all();
             printing = false;
             selecting = false;
             autonomous();
@@ -243,7 +243,7 @@ void initialize() {
     optical_top.set_led_pwm(0);
 
     // skills things
-    calibrate_all();
+    // calibrate_all();
     // autonomous();
 
     pros::Task selector(auton_selector);
@@ -280,8 +280,8 @@ void autonomous() {
         bool finished = false;
         pros::Task test_auto ([&] {
             startTime = millis();
-            // run_auton(auton_index);
-            auton_skills();
+            run_auton(auton_index);
+            // auton_skills();
             endTime = millis();
             finished = true;
         });
@@ -332,7 +332,7 @@ void opcontrol() {
         right_mg.brake();
     }
 
-    // odom_lift.extend();
+    odom_lift.extend();
     left_mg.set_brake_mode_all(MotorBrake::coast);
     right_mg.set_brake_mode_all(MotorBrake::coast);
     bottom.set_brake_mode_all(MotorBrake::brake);
