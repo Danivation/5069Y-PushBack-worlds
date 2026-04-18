@@ -58,7 +58,7 @@ std::pair<std::string, std::string> get_auton_name(int index) {
     // else if (index == 4)    return {"Low goal SAWP", ""};
 
     // left sides
-    else if (index == 5)    return {"Left split", "Loader setup"};
+    else if (index == 5)    return {"Left split", "Stack setup"};
     else if (index == 6)    return {"Left 4 ball", "Loader"};
     else if (index == 7)    return {"Left 4 ball", "Stack"};
     else if (index == 8)    return {"Left 7 ball", "Stack setup"};
@@ -120,7 +120,7 @@ void auton_selector() {
         if (master.get_digital_new_press(DIGITAL_LEFT)) {
             auton_index--;
         }
-        if (master.get_digital_new_press(DIGITAL_DOWN)) {
+        if (master.get_digital_new_press(DIGITAL_UP)) {
             if (WrongColor == Color::red) {
                 WrongColor = Color::blue;
             } else {

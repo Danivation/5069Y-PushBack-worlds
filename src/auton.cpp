@@ -275,21 +275,28 @@ void auton_left_split() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive into loader
-    store();
     c_lemlib.moveToPoint(-1.97_tiles, -54, 1300, {.maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 7}, false);
+    store();
     int loader2Start = millis();
     c_lemlib.moveToPoint(-1.97_tiles, -70, 1000, {.maxSpeed = 35}, true);
-    waitUntilCondition(millis() >= loader2Start + 800);
+    waitUntilCondition(millis() >= loader2Start + 1300);
     c_lemlib.cancelMotion();
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                            MID GOAL                                            */
     /* ---------------------------------------------------------------------------------------------- */
 
+    // move to mid goal
     c_lemlib.moveToPoint(-2_tiles, -1.8_tiles, 1000, {.forwards = false, .minSpeed = 30, .earlyExitRange = 6}, false);
     c_lemlib.moveToPoint(-12, -12, 1700, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
-    c_lemlib.moveToPoint(-8, -8, 1200, {.forwards = false, .maxSpeed = 80}, true);
-    delay(350);
+    c_lemlib.moveToPoint(-8, -8, 1200, {.forwards = false, .maxSpeed = 80}, false);
+
+    // wait until ready to score
+    delay(200);
+    bottom.move(-127);
+    delay(150);
+    stop();
+    waitUntilCondition(millis() >= startTime + 10800);
 
     // score mid goal kinda slow
     int midScoreStart = millis();
@@ -297,7 +304,7 @@ void auton_left_split() {
     bottom.move(70);
 
     // color sensor timeout
-    waitUntilColor(&optical_top, WrongColor, midScoreStart + 1500);
+    waitUntilColor(&optical_top, WrongColor, startTime + 12100);
     delay(100); // mid color timer
     c_lemlib.cancelMotion();
 
@@ -308,7 +315,15 @@ void auton_left_split() {
     // move to wing position
     stop();
     loader.retract();
-    c_lemlib.moveToPoint(-2_tiles+0.6_tiles, -1.75_tiles, 1100, {.minSpeed = 10, .earlyExitRange = 2}, false);
+    c_lemlib.moveToPoint(-2_tiles+0.6_tiles, -1.75_tiles, 1100, {.minSpeed = 10, .earlyExitRange = 2}, true);
+    bottom.move(-127);
+    delay(150);
+    top.move(127);
+    bottom.brake();
+    delay(200);
+    top.brake();
+    bottom.brake();
+    c_lemlib.waitUntilDone();
 
     // back up into wing
     left_mg.set_brake_mode_all(MotorBrake::hold);
@@ -833,6 +848,7 @@ void auton_left_7ball_counter() {
     /*                                            MID GOAL                                            */
     /* ---------------------------------------------------------------------------------------------- */
 
+    // move to mid goal
     c_lemlib.moveToPoint(-2_tiles, -1.8_tiles, 1000, {.forwards = false, .minSpeed = 30, .earlyExitRange = 6}, false);
     c_lemlib.moveToPoint(-12, -12, 1700, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
     c_lemlib.moveToPoint(-8, -8, 1200, {.forwards = false, .maxSpeed = 80}, true);
@@ -840,6 +856,9 @@ void auton_left_7ball_counter() {
     delay(100);
     stop();
     delay(200);
+
+    // wait until ready to score
+    waitUntilCondition(millis() >= startTime + 9000);
 
     // score mid goal kinda slow
     int midScoreStart = millis();
@@ -874,9 +893,9 @@ void auton_left_7ball_counter() {
 
     // sweep out
     wing.retract();
-    c_lemlib.moveToPoint(-2_tiles+0.45_tiles, -1.1_tiles, 1500, {.minSpeed = 10, .earlyExitRange = 5}, false);
+    c_lemlib.moveToPoint(-2_tiles+0.45_tiles, -1.2_tiles, 1500, {.minSpeed = 10, .earlyExitRange = 5}, false);
     c_lemlib.swingToHeading(150, DriveSide::LEFT, 400, {}, false);
-    c_lemlib.moveToPoint(-1.9_tiles, -1.6_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2}, false);
+    c_lemlib.moveToPoint(-1.9_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2}, false);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                         LONG GOAL SCORE                                        */

@@ -67,6 +67,14 @@ void IntakeControl() {
                 bottom.move(-127);
                 top.move(-127);
             }
+        } else if (master.get_digital_new_press(INTAKE_UNJAM_MACRO)) {
+            bottom.move(-127);
+            delay(150);
+            top.move(127);
+            bottom.brake();
+            delay(200);
+            top.brake();
+            bottom.brake();
         } else if (master.get_digital_new_press(INTAKE_TO_SLOW_LOW_GOAL) && skillsSlow) {   // slow low goal macro
             driving = false;
             left_mg.brake();
