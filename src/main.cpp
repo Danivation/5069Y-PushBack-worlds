@@ -284,7 +284,7 @@ void autonomous() {
             finished = true;
         });
 
-        waitUntilCondition(millis() > startTime + 60000 || finished);
+        waitUntilCondition(millis() > startTime + 15000 || finished);
         if (!finished) {
             test_auto.remove();
             c_lemlib.cancelAllMotions();

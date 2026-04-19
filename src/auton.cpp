@@ -237,7 +237,7 @@ void auton_sawp_counter_wing() {
     store();
     int loader1Start = millis();
     c_lemlib.moveToPoint(1.98_tiles, -70, 1000, {.maxSpeed = 45}, true);
-    waitUntilCondition(millis() >= loader1Start + 1200);
+    waitUntilCondition(millis() >= loader1Start + 1100);
     c_lemlib.cancelMotion();
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -289,7 +289,7 @@ void auton_sawp_counter_wing() {
     delay(560);
     score();
     int score2Start = millis();
-    waitUntilCondition(millis() >= score2Start + 950);
+    waitUntilCondition(millis() >= score2Start + 900);
     c_lemlib.cancelMotion();
     lemlibDistReset({&right_beam});
 
@@ -299,11 +299,11 @@ void auton_sawp_counter_wing() {
 
     // drive into loader
     stop();
-    c_lemlib.moveToPoint(-1.98_tiles, -55, 1300, {.maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 6.5}, false);
+    c_lemlib.moveToPoint(-1.96_tiles, -55, 1300, {.maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 6.5}, false);
     store();
     int loader2Start = millis();
-    c_lemlib.moveToPoint(-1.98_tiles, -70, 1000, {.maxSpeed = 45}, true);
-    waitUntilCondition(millis() >= loader2Start + 1200);
+    c_lemlib.moveToPoint(-1.96_tiles, -70, 1000, {.maxSpeed = 45}, true);
+    waitUntilCondition(millis() >= loader2Start + 1100);
     c_lemlib.cancelMotion();
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -315,12 +315,12 @@ void auton_sawp_counter_wing() {
     c_lemlib.moveToPoint(-12, -14, 1700, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
     c_lemlib.moveToPoint(-8, -10.5, 1200, {.forwards = false, .maxSpeed = 80}, true);
     
-    delay(350);
+    delay(320);
     top.move(-95);
-    bottom.move(65);
+    bottom.move(70);
     
     // color sensor timeout
-    waitUntilColor(&optical_top, WrongColor, startTime + 13000);
+    waitUntilColor(&optical_top, WrongColor, startTime + 12000);
     delay(100); // mid color timer
     c_lemlib.cancelMotion();
 
@@ -332,7 +332,7 @@ void auton_sawp_counter_wing() {
     stop();
     loader.retract();
     wing.retract();
-    c_lemlib.moveToPoint(-2_tiles+0.57_tiles, -1.62_tiles, 1100, {.minSpeed = 10, .earlyExitRange = 2}, true);
+    c_lemlib.moveToPoint(-2_tiles+0.55_tiles, -1.65_tiles, 1100, {.minSpeed = 10, .earlyExitRange = 2}, true);
     bottom.move(-127);
     delay(150);
     top.move(127);
