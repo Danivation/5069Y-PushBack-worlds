@@ -1186,16 +1186,16 @@ void auton_right_7ball_counter() {
     // swing out
     loader.retract();
     wing.retract();
-    c_lemlib.moveToPoint(2_tiles+0.35_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 3.5}, false);
+    c_lemlib.moveToPoint(2_tiles+0.41_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 3.5}, false);
     hood.retract();
     stop();
 
     // back up into wing
     left_mg.set_brake_mode_all(MotorBrake::hold);
     left_mg.set_brake_mode_all(MotorBrake::hold);
-    c_lemlib.moveToPoint(2_tiles+0.5_tiles, -1_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 5}, false);
-    c_lemlib.moveToPoint(2_tiles+0.45_tiles, -10, 1500, {.forwards = false, .maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 1}, false);
-    c_danielib.turnToHeading(190, 600);
+    c_lemlib.moveToPoint(2_tiles+0.45_tiles, -1_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 5}, false);
+    c_lemlib.moveToPoint(2_tiles+0.42_tiles, -10, 1500, {.forwards = false, .maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 1}, false);
+    c_danielib.turnToHeading(195);
 }
 
 /* ---------------------------------------------------------------------------------------------- */
