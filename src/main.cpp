@@ -22,18 +22,18 @@ float testAutonDuration = 0;
 void run_auton(int index) {
     // default auto to run when no auto is selected, also runs in test mode
     if (index == 0) {
-        auton_left_split();
+        auton_left_4ball_loader();
     }
 
     // sawps
-    else if (index == 1)    auton_sawp_counter_nowing();
-    else if (index == 2)    auton_sawp_counter_wing();
+    else if (index == 1)    auton_sawp_counter_nowing();    // TUNED
+    else if (index == 2)    auton_sawp_counter_wing();      // TUNED
     // else if (index == 3)    auton_sawp_low_mid();
 
     // left sides
-    else if (index == 4)    auton_left_split();
-    else if (index == 5)    auton_left_4ball_loader();
-    else if (index == 6)    auton_left_4ball_stack();
+    else if (index == 4)    auton_left_split();             // TUNED
+    else if (index == 5)    auton_left_4ball_loader();      // TUNED
+    else if (index == 6)    auton_left_4ball_stack();       // TUNED
     else if (index == 7)    auton_left_7ball();
     else if (index == 8)    auton_left_7ball_counter();
 
