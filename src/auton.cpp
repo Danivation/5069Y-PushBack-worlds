@@ -998,7 +998,7 @@ void auton_left_7ball_counter() {
     delay(200);
 
     // wait until ready to score
-    waitUntilCondition(millis() >= startTime + 6500);
+    waitUntilCondition(millis() >= startTime + 6200);
 
     // score mid goal kinda slow
     int midScoreStart = millis();
@@ -1006,7 +1006,7 @@ void auton_left_7ball_counter() {
     bottom.move(85);
 
     // color sensor timeout
-    waitUntilColor(&optical_top, WrongColor, midScoreStart + 660);
+    waitUntilColor(&optical_top, WrongColor, midScoreStart + 610);
     delay(70); // mid color timer
     c_lemlib.cancelMotion();
 
@@ -1017,7 +1017,7 @@ void auton_left_7ball_counter() {
     // move to wing position
     stop();
     loader.retract();
-    wing.retract();
+    wing.extend();
     c_lemlib.moveToPoint(-2_tiles+0.5_tiles, -1.67_tiles, 1100, {.minSpeed = 10, .earlyExitRange = 2}, true);
     bottom.move(-127);
     delay(150);
@@ -1051,7 +1051,7 @@ void auton_left_7ball_counter() {
     delay(700);
     score();
     int score1Start = millis();
-    bool colorStopped = waitUntilColor(&optical_top, WrongColor, score1Start + 800);
+    bool colorStopped = waitUntilColor(&optical_top, WrongColor, score1Start + 950);
     if (colorStopped) {
         delayLong();
         hood.retract();
@@ -1067,16 +1067,16 @@ void auton_left_7ball_counter() {
     // swing out
     loader.retract();
     wing.retract();
-    c_lemlib.moveToPoint(-2_tiles+0.35_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 3.5}, false);
+    c_lemlib.moveToPoint(-2_tiles+0.41_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 3.5}, false);
     hood.retract();
     stop();
 
     // back up into wing
     left_mg.set_brake_mode_all(MotorBrake::hold);
     left_mg.set_brake_mode_all(MotorBrake::hold);
-    c_lemlib.moveToPoint(-2_tiles+0.5_tiles, -1_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 5}, false);
-    c_lemlib.moveToPoint(-2_tiles+0.45_tiles, -10, 1500, {.forwards = false, .maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 1}, false);
-    c_danielib.turnToHeading(190, 600);
+    c_lemlib.moveToPoint(-2_tiles+0.45_tiles, -1_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 5}, false);
+    c_lemlib.moveToPoint(-2_tiles+0.42_tiles, -10, 1500, {.forwards = false, .maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 1}, false);
+    c_danielib.turnToHeading(195);
 }
 
 // right side tuned
