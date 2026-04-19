@@ -223,14 +223,10 @@ void auton_sawp_counter_wing() {
     c_danielib.driveForDistance(9, 400);
 
     // drive backwards towards match loader
-    c_lemlib.moveToPoint(1.98_tiles, -1.95_tiles, 1300, {.forwards = false, .minSpeed = 10, .earlyExitRange = 2}, true);
+    c_lemlib.moveToPoint(2_tiles, -1.95_tiles, 1300, {.forwards = false, .minSpeed = 10, .earlyExitRange = 2}, true);
     delay(700);
     loader.extend();
     c_lemlib.waitUntilDone();
-    // c_danielib.turnToHeading(180, 500);
-
-    // distance reset
-    // lemlibDistReset({&left_beam});
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                          RIGHT LOADER                                          */
@@ -241,7 +237,7 @@ void auton_sawp_counter_wing() {
     store();
     int loader1Start = millis();
     c_lemlib.moveToPoint(1.98_tiles, -70, 1000, {.maxSpeed = 45}, true);
-    waitUntilCondition(millis() >= loader1Start + 750);
+    waitUntilCondition(millis() >= loader1Start + 1200);
     c_lemlib.cancelMotion();
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -293,7 +289,7 @@ void auton_sawp_counter_wing() {
     delay(560);
     score();
     int score2Start = millis();
-    waitUntilCondition(millis() >= score2Start + 800);
+    waitUntilCondition(millis() >= score2Start + 950);
     c_lemlib.cancelMotion();
     lemlibDistReset({&right_beam});
 
@@ -307,7 +303,7 @@ void auton_sawp_counter_wing() {
     store();
     int loader2Start = millis();
     c_lemlib.moveToPoint(-1.98_tiles, -70, 1000, {.maxSpeed = 45}, true);
-    waitUntilCondition(millis() >= loader2Start + 750);
+    waitUntilCondition(millis() >= loader2Start + 1200);
     c_lemlib.cancelMotion();
 
     /* ---------------------------------------------------------------------------------------------- */

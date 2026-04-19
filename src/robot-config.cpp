@@ -9,7 +9,7 @@ pros::Controller master(pros::E_CONTROLLER_MASTER);
 pros::MotorGroup left_mg({13, -12, -11}, pros::MotorGears::blue);
 pros::MotorGroup right_mg({-18, 19, 20}, pros::MotorGears::blue);
 
-pros::MotorGroup bottom({8, 9}, pros::MotorGears::rpm_200);
+pros::MotorGroup bottom({8, 10}, pros::MotorGears::rpm_200);
 pros::Motor top(1, pros::MotorGears::rpm_200);
 
 CustomImu imu_1(15, 360.0f/356.6f);
@@ -20,7 +20,7 @@ pros::Rotation horizontal_rotation(14);
 pros::Optical optical_top(7);
 pros::Distance distance_front(2);
 pros::Distance distance_left(3);
-pros::Distance distance_right(10);
+pros::Distance distance_right(9);
 
 pros::adi::Pneumatics odom_lift('B', false);
 pros::adi::Pneumatics hood('C', false);
