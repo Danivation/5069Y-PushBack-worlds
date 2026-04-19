@@ -21,58 +21,56 @@ float testAutonDuration = 0;
 void run_auton(int index) {
     // default auto to run when no auto is selected, also runs in test mode
     if (index == 0) {
-        auton_right_split();
+        auton_sawp_counter_wing();
     }
 
     // sawps
-    // else if (index == 1)    auton_sawp_counter_nowing();
+    else if (index == 1)    auton_sawp_counter_nowing();
     else if (index == 2)    auton_sawp_counter_wing();
-    // else if (index == 3)    auton_sawp_standard();
-    // else if (index == 4)    auton_sawp_low_mid();
+    // else if (index == 3)    auton_sawp_low_mid();
 
     // left sides
-    else if (index == 5)    auton_left_split();
-    else if (index == 6)    auton_left_4ball_loader();
-    else if (index == 7)    auton_left_4ball_stack();
-    else if (index == 8)    auton_left_7ball();
-    else if (index == 9)    auton_left_7ball_counter();
+    else if (index == 4)    auton_left_split();
+    else if (index == 5)    auton_left_4ball_loader();
+    else if (index == 6)    auton_left_4ball_stack();
+    else if (index == 7)    auton_left_7ball();
+    else if (index == 8)    auton_left_7ball_counter();
 
     // right sides
-    else if (index == 10)   auton_right_split();
-    else if (index == 11)   auton_right_4ball_loader();
-    else if (index == 12)   auton_right_4ball_stack();
-    else if (index == 13)   auton_right_7ball();
-    else if (index == 14)   auton_right_7ball_counter();
+    else if (index == 9)   auton_right_split();
+    else if (index == 10)   auton_right_4ball_loader();
+    else if (index == 11)   auton_right_4ball_stack();
+    else if (index == 12)   auton_right_7ball();
+    else if (index == 13)   auton_right_7ball_counter();
 
-    // // misc autos
-    // else if (index == 15)   auton_all_mid();
+    // misc autos
+    // else if (index == 14)   auton_all_mid();
 }
 
 std::pair<std::string, std::string> get_auton_name(int index) {
     if (index == 0) return {"None", ""};
 
     // sawps
-    // else if (index == 1)    return {"Counter SAWP no wing", ""};
+    else if (index == 1)    return {"Counter SAWP no wing", ""};
     else if (index == 2)    return {"Counter SAWP + Wing", ""};
-    // else if (index == 3)    return {"Standard SAWP", ""};
-    // else if (index == 4)    return {"Low goal SAWP", ""};
+    // else if (index == 3)    return {"Low goal SAWP", ""};
 
     // left sides
-    else if (index == 5)    return {"Left split", "Stack setup"};
-    else if (index == 6)    return {"Left 4 ball", "Loader"};
-    else if (index == 7)    return {"Left 4 ball", "Stack"};
-    else if (index == 8)    return {"Left 7 ball", "Stack setup"};
-    else if (index == 9)    return {"Left 7 counter", "Stack setup"};
+    else if (index == 4)    return {"Left split", "Stack setup"};
+    else if (index == 5)    return {"Left 4 ball", "Loader"};
+    else if (index == 6)    return {"Left 4 ball", "Stack"};
+    else if (index == 7)    return {"Left 7 ball", "Stack setup"};
+    else if (index == 8)    return {"Left 7 counter", "Stack setup"};
 
     // right sides
-    else if (index == 10)   return {"Right split", "Loader setup"};
-    else if (index == 11)   return {"Right 4 ball", "Loader"};
-    else if (index == 12)   return {"Right 4 ball", "Stack"};
-    else if (index == 13)   return {"Right 7 ball", "Stack setup"};
-    else if (index == 14)   return {"Right 7 counter", "Loader setup"};
+    else if (index == 9)   return {"Right split", "Loader setup"};
+    else if (index == 10)   return {"Right 4 ball", "Loader"};
+    else if (index == 11)   return {"Right 4 ball", "Stack"};
+    else if (index == 12)   return {"Right 7 ball", "Stack setup"};
+    else if (index == 13)   return {"Right 7 counter", "Loader setup"};
 
     // misc autos
-    // else if (index == 15)   return {"All mid right", "Loader setup"};
+    // else if (index == 14)   return {"All mid right", "Loader setup"};
 
     else return {"Invalid auto", ""};
 }
