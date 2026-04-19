@@ -162,7 +162,7 @@ void auton_sawp_counter_nowing() {
     c_lemlib.waitUntilDone();
 
     // setup for left side
-    c_lemlib.moveToPoint(-1.82_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2}, false);
+    c_lemlib.moveToPoint(-1.8_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 1.2}, false);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                         LEFT LONG GOAL                                         */
@@ -213,8 +213,10 @@ void auton_sawp_counter_nowing() {
     c_lemlib.cancelMotion();
 
     // macro and descore
-    mid_descore.extend();
+    // mid_descore.extend();
     loader.retract();
+    stop();
+    delay(500);
     bottom.move(-127);
     delay(150);
     top.move(127);
@@ -292,7 +294,7 @@ void auton_sawp_counter_wing() {
     c_lemlib.waitUntilDone();
 
     // setup for left side
-    c_lemlib.moveToPoint(-1.82_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2}, false);
+    c_lemlib.moveToPoint(-1.8_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 1.2}, false);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                         LEFT LONG GOAL                                         */
