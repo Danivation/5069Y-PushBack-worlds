@@ -998,15 +998,16 @@ void auton_left_7ball_counter() {
     delay(200);
 
     // wait until ready to score
-    waitUntilCondition(millis() >= startTime + 9000);
+    waitUntilCondition(millis() >= startTime + 6500);
 
     // score mid goal kinda slow
     int midScoreStart = millis();
-    score_mid();
+    top.move(-96);
+    bottom.move(85);
 
     // color sensor timeout
     waitUntilColor(&optical_top, WrongColor, midScoreStart + 660);
-    // delay(100); // mid color timer
+    delay(70); // mid color timer
     c_lemlib.cancelMotion();
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -1015,20 +1016,22 @@ void auton_left_7ball_counter() {
 
     // move to wing position
     stop();
-    c_lemlib.moveToPoint(-2_tiles+0.53_tiles, -1.75_tiles, 1100, {.minSpeed = 10, .earlyExitRange = 2}, true);
     loader.retract();
-    wing.extend();
+    wing.retract();
+    c_lemlib.moveToPoint(-2_tiles+0.5_tiles, -1.67_tiles, 1100, {.minSpeed = 10, .earlyExitRange = 2}, true);
+    bottom.move(-127);
+    delay(150);
     top.move(127);
-    bottom.move(-90);
-    delay(200);
     bottom.brake();
     delay(200);
-    stop();
-    
-    
-    // get into position to sweep out
+    top.brake();
+    bottom.brake();
     c_lemlib.waitUntilDone();
-    c_lemlib.moveToPoint(-2_tiles+0.46_tiles, -1.05_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
+
+    // back up into wing
+    left_mg.set_brake_mode_all(MotorBrake::hold);
+    left_mg.set_brake_mode_all(MotorBrake::hold);
+    c_lemlib.moveToPoint(-2_tiles+0.47_tiles, -1.05_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
     c_lemlib.moveToPoint(-2_tiles+0.43_tiles, -10, 1500, {.forwards = false, .minSpeed = 10, .earlyExitRange = 1}, false);
 
     // sweep out
