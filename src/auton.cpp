@@ -540,23 +540,23 @@ void auton_right_split() {
     c_lemlib.waitUntilDone();
 
     // intake raise and score
-    bottom.move(-80);
+    bottom.move(-60);
     top.move(-40);
-    delay(1000);
+    delay(1400);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                              WING                                              */
     /* ---------------------------------------------------------------------------------------------- */
 
-    c_lemlib.moveToPoint(2.1_tiles, -1.64_tiles, 1300, {.forwards = false, .minSpeed = 10, .earlyExitRange = 2}, false);
+    // front wing
+    c_lemlib.moveToPoint(2_tiles-0.56_tiles, -1.4_tiles, 1100, {.forwards = false, .minSpeed = 10, .earlyExitRange = 2}, false);
     stop();
     intake_raise.retract();
-    c_lemlib.turnToHeading(210, 450, {}, false);
     left_mg.set_brake_mode_all(MotorBrake::hold);
     left_mg.set_brake_mode_all(MotorBrake::hold);
-    c_lemlib.moveToPoint(2_tiles+0.42_tiles, -1.05_tiles, 1000, {.forwards = false, .maxSpeed = 80, .minSpeed = 10, .earlyExitRange = 7}, false);
-    c_lemlib.moveToPoint(2_tiles+0.45_tiles, -10, 1500, {.forwards = false, .maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 1}, false);
-    c_danielib.turnToHeading(190, 600);
+    c_lemlib.moveToPoint(2_tiles-0.45_tiles, -1.05_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(2_tiles-0.4_tiles, -7, 1000, {}, false);
+    c_lemlib.turnToHeading(-15, 5000, {}, false);
 }
 
 /* ---------------------------------------------------------------------------------------------- */
