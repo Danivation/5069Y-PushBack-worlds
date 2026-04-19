@@ -429,23 +429,23 @@ void auton_left_split() {
     // move to mid goal
     c_lemlib.moveToPoint(-2_tiles, -1.8_tiles, 1000, {.forwards = false, .minSpeed = 30, .earlyExitRange = 6}, false);
     c_lemlib.moveToPoint(-12, -12, 1700, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
-    c_lemlib.moveToPoint(-8, -8, 1200, {.forwards = false, .maxSpeed = 80}, false);
+    c_lemlib.moveToPoint(-8, -8, 700, {.forwards = false, .maxSpeed = 80}, true);
 
     // wait until ready to score
-    delay(200);
+    delay(160);
     bottom.move(-127);
     delay(150);
     stop();
-    waitUntilCondition(millis() >= startTime + 10800);
+    // waitUntilCondition(millis() >= startTime + 10800);
 
     // score mid goal kinda slow
     int midScoreStart = millis();
-    top.move(-70);
-    bottom.move(70);
+    top.move(-96);
+    bottom.move(85);
 
     // color sensor timeout
-    waitUntilColor(&optical_top, WrongColor, startTime + 12100);
-    delay(100); // mid color timer
+    waitUntilColor(&optical_top, WrongColor, midScoreStart + 1300);
+    delay(70); // mid color timer
     c_lemlib.cancelMotion();
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -456,7 +456,7 @@ void auton_left_split() {
     stop();
     loader.retract();
     wing.retract();
-    c_lemlib.moveToPoint(-2_tiles+0.6_tiles, -1.75_tiles, 1100, {.minSpeed = 10, .earlyExitRange = 2}, true);
+    c_lemlib.moveToPoint(-2_tiles+0.5_tiles, -1.67_tiles, 1100, {.minSpeed = 10, .earlyExitRange = 2}, true);
     bottom.move(-127);
     delay(150);
     top.move(127);
@@ -469,9 +469,9 @@ void auton_left_split() {
     // back up into wing
     left_mg.set_brake_mode_all(MotorBrake::hold);
     left_mg.set_brake_mode_all(MotorBrake::hold);
-    c_lemlib.moveToPoint(-2_tiles+0.52_tiles, -1.05_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(-2_tiles+0.47_tiles, -1.05_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
     c_lemlib.moveToPoint(-2_tiles+0.45_tiles, -10, 1500, {.forwards = false, .maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 1}, false);
-    c_danielib.turnToHeading(190, 600);
+    c_danielib.turnToHeading(195);
 }
 
 // right side tuned
