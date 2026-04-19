@@ -238,11 +238,11 @@ void auton_sawp_counter_wing() {
     store();
     int loader1Start = millis();
     c_lemlib.moveToPoint(1.98_tiles, -70, 1000, {.maxSpeed = 45}, true);
-    waitUntilCondition(millis() >= loader1Start + 750);
+    waitUntilCondition(millis() >= loader1Start + 720);
     c_lemlib.cancelMotion();
 
     /* ---------------------------------------------------------------------------------------------- */
-    /*                                            LONG GOAL                                           */
+    /*                                         RIGHT LONG GOAL                                        */
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive backwards to goal
@@ -250,7 +250,6 @@ void auton_sawp_counter_wing() {
     delay(800);
     score();
     int score1Start = millis();
-    // waitUntilCondition(millis() >= score1Start + 700);
     bool colorStopped = waitUntilColor(&optical_top, WrongColor, score1Start + 700);
     if (colorStopped) {
         delayLong();
@@ -279,7 +278,7 @@ void auton_sawp_counter_wing() {
     c_lemlib.waitUntilDone();
 
     // setup for left side
-    c_lemlib.moveToPoint(-1.85_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2}, false);
+    c_lemlib.moveToPoint(-1.82_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2}, false);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                         LEFT LONG GOAL                                         */
@@ -290,7 +289,7 @@ void auton_sawp_counter_wing() {
     delay(560);
     score();
     int score2Start = millis();
-    waitUntilCondition(millis() >= score2Start + 900);
+    waitUntilCondition(millis() >= score2Start + 800);
     c_lemlib.cancelMotion();
     lemlibDistReset({&right_beam});
 
@@ -300,11 +299,15 @@ void auton_sawp_counter_wing() {
 
     // drive into loader
     stop();
-    c_lemlib.moveToPoint(-1.96_tiles, -55, 1300, {.maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 6.5}, false);
+    top.move(-127);
+    bottom.move(-127);
+    c_lemlib.moveToPoint(-1.96_tiles, -55, 1300, {.maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 6.5}, true);
+    delay(250);
     store();
+    c_lemlib.waitUntilDone();
     int loader2Start = millis();
     c_lemlib.moveToPoint(-1.96_tiles, -70, 1000, {.maxSpeed = 45}, true);
-    waitUntilCondition(millis() >= loader2Start + 750);
+    waitUntilCondition(millis() >= loader2Start + 720);
     c_lemlib.cancelMotion();
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -316,9 +319,9 @@ void auton_sawp_counter_wing() {
     c_lemlib.moveToPoint(-12, -14, 1700, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
     c_lemlib.moveToPoint(-8, -10.5, 1200, {.forwards = false, .maxSpeed = 80}, true);
     
-    delay(320);
+    delay(290);
     top.move(-95);
-    bottom.move(70);
+    bottom.move(85);
     
     // color sensor timeout
     waitUntilColor(&optical_top, WrongColor, startTime + 12000);
@@ -333,7 +336,7 @@ void auton_sawp_counter_wing() {
     stop();
     loader.retract();
     wing.retract();
-    c_lemlib.moveToPoint(-2_tiles+0.55_tiles, -1.65_tiles, 1100, {.minSpeed = 10, .earlyExitRange = 2}, true);
+    c_lemlib.moveToPoint(-2_tiles+0.5_tiles, -1.67_tiles, 1100, {.minSpeed = 10, .earlyExitRange = 2}, true);
     bottom.move(-127);
     delay(150);
     top.move(127);
@@ -346,7 +349,7 @@ void auton_sawp_counter_wing() {
     // back up into wing
     left_mg.set_brake_mode_all(MotorBrake::hold);
     left_mg.set_brake_mode_all(MotorBrake::hold);
-    c_lemlib.moveToPoint(-2_tiles+0.52_tiles, -1.05_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(-2_tiles+0.47_tiles, -1.05_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
     c_lemlib.moveToPoint(-2_tiles+0.45_tiles, -10, 1500, {.forwards = false, .maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 1}, false);
     c_danielib.turnToHeading(190, 600);
 }
