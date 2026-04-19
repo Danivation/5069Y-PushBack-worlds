@@ -7,7 +7,6 @@ using namespace pros;
 /*                                             HELPERS                                            */
 /* ---------------------------------------------------------------------------------------------- */
 
-pros::Color WrongColor = Color::blue;
 pros::Color get_color(pros::Optical* sensor) {
     // only return a color if a block is detected
     if ((int)sensor->get_proximity() <= 60) {
@@ -134,7 +133,7 @@ void auton_sawp_counter_nowing() {
     delay(800);
     score();
     int score1Start = millis();
-    bool colorStopped = waitUntilColor(&optical_top, WrongColor, score1Start + 700);
+    bool colorStopped = waitUntilColor(&optical_top, WrongColor, score1Start + 850);
     if (colorStopped) {
         delayLong();
         hood.retract();
@@ -209,13 +208,12 @@ void auton_sawp_counter_nowing() {
     
     // color sensor timeout
     waitUntilColor(&optical_top, WrongColor, startTime + 16000);
-    delay(100); // mid color timer
+    delay(70); // mid color timer
+    stop();
     c_lemlib.cancelMotion();
 
     // macro and descore
-    // mid_descore.extend();
     loader.retract();
-    stop();
     delay(500);
     bottom.move(-127);
     delay(150);

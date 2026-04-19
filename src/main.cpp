@@ -7,6 +7,7 @@
 const bool skillsSlow = false;
 const bool autoForDriver = false;
 
+pros::Color WrongColor = Color::red;
 bool comp_started = false;
 bool printing = false;
 bool logging = false;
