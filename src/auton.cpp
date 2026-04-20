@@ -1219,13 +1219,14 @@ void auton_skills() {
     delay(150);
     lemlibDistReset({&left_beam});
     store();
-    c_lemlib.moveToPoint(1, 65, 1500, {.maxSpeed = 80, .minSpeed = 60, .earlyExitRange = 3}, false);
+    c_lemlib.moveToPoint(0.5, 65, 1500, {.maxSpeed = 80, .minSpeed = 60, .earlyExitRange = 3}, false);
 
     // drive thru
     odom_lift.retract();
     lemlibDistReset({&left_beam});
-    c_lemlib.moveToPoint(16, 62.5, 800, {.maxSpeed = 65, .minSpeed = 50, .earlyExitRange = 4}, false);
-    c_lemlib.moveToPoint(27, 64, 800, {.minSpeed = 30, .earlyExitRange = 4}, false);
+    c_lemlib.moveToPoint(16, 61, 800, {.maxSpeed = 65, .minSpeed = 50, .earlyExitRange = 4}, false);
+    c_lemlib.moveToPoint(29, 61.5, 800, {.minSpeed = 30, .earlyExitRange = 4}, false);
+    // c_lemlib.turnToHeading(0, 250);
     c_lemlib.swingToHeading(0, DriveSide::LEFT, 600, {.minSpeed = 30}, false);
     
     // reset on wall
@@ -1240,10 +1241,10 @@ void auton_skills() {
     loader.retract();
     c_lemlib.moveToPoint(0.4_tiles, 1.85_tiles, 1000, {.forwards = false, .minSpeed = 30, .earlyExitRange = 2}, false);
     c_lemlib.turnToHeading(180-45, 300, {}, false);
-    c_lemlib.moveToPoint(15.8, 30, 1000, {}, true);
+    c_lemlib.moveToPoint(16.1, 30.2, 1000, {}, true);
     delay(200);
     bottom.move(-127);
-    delay(150);
+    delay(100);
     store();
     c_lemlib.waitUntilDone();
 
@@ -1257,9 +1258,9 @@ void auton_skills() {
 
     // score mid goal
     c_danielib.async().driveForDistance(-8, 500, 15);
-    bottom.move(-127);
+    bottom.move(-100);
     top.move(-30);
-    delay(120);
+    delay(100);
     stop();
 
     top.move_velocity(-95);
@@ -1271,12 +1272,12 @@ void auton_skills() {
     delay(700);
 
     top.move_velocity(-85);
-    bottom.move_velocity(45);
-    delay(1200);
+    bottom.move_velocity(50);
+    delay(900);
 
     top.move_velocity(-85);
-    bottom.move_velocity(40);
-    delay(800);
+    bottom.move_velocity(70);
+    delay(1100);
 
     c_danielib.driveForDistance(-5, 350, 15);
     stop();
