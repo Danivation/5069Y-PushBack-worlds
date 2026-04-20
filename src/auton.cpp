@@ -1219,14 +1219,14 @@ void auton_skills() {
     delay(150);
     lemlibDistReset({&left_beam});
     store();
-    c_lemlib.moveToPoint(0.5, 65, 1500, {.maxSpeed = 80, .minSpeed = 60, .earlyExitRange = 3}, false);
+    c_lemlib.moveToPoint(1.5, 65, 1500, {.maxSpeed = 80, .minSpeed = 65, .earlyExitRange = 3}, false);
 
     // drive thru
     odom_lift.retract();
     lemlibDistReset({&left_beam});
-    c_lemlib.moveToPoint(16, 61, 800, {.maxSpeed = 65, .minSpeed = 50, .earlyExitRange = 4}, false);
-    c_lemlib.moveToPoint(29, 61.5, 800, {.minSpeed = 30, .earlyExitRange = 4}, false);
-    // c_lemlib.turnToHeading(0, 250);
+    c_lemlib.moveToPoint(16, 64, 800, {.maxSpeed = 70, .minSpeed = 55, .earlyExitRange = 4}, false);
+    c_lemlib.moveToPoint(26.3, 64, 800, {.minSpeed = 30, .earlyExitRange = 4}, false);
+    c_lemlib.turnToHeading(0, 250);
     c_lemlib.swingToHeading(0, DriveSide::LEFT, 600, {.minSpeed = 30}, false);
     
     // reset on wall
@@ -1260,7 +1260,7 @@ void auton_skills() {
     c_danielib.async().driveForDistance(-8, 500, 15);
     bottom.move(-100);
     top.move(-30);
-    delay(100);
+    delay(130);
     stop();
 
     top.move_velocity(-95);
@@ -1269,14 +1269,14 @@ void auton_skills() {
 
     top.move_velocity(-90);
     bottom.move_velocity(65);
-    delay(700);
+    delay(850);
 
     top.move_velocity(-85);
-    bottom.move_velocity(50);
-    delay(900);
+    bottom.move_velocity(58);
+    delay(1000);
 
     top.move_velocity(-85);
-    bottom.move_velocity(70);
+    bottom.move_velocity(95);
     delay(1100);
 
     c_danielib.driveForDistance(-5, 350, 15);
