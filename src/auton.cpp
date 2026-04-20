@@ -1217,16 +1217,15 @@ void auton_skills() {
     // drive in
     left_mg.set_brake_mode_all(MotorBrake::coast);
     right_mg.set_brake_mode_all(MotorBrake::coast);
-    c_danielib.driveForDistance(3, 340, 35, 0, false);
+    c_danielib.driveForDistance(2, 410, 38, 0, false);
 
     // first row wiggles
-    c_lemlib.turnToHeading(180+7, 150);
-    c_lemlib.turnToHeading(180-7, 150);
+    c_lemlib.turnToHeading(180+5, 150);
+    c_lemlib.turnToHeading(180-5, 150);
     left_mg.set_brake_mode_all(MotorBrake::hold);
     right_mg.set_brake_mode_all(MotorBrake::hold);
-    c_lemlib.turnToHeading(180+7, 150);
-    c_lemlib.turnToHeading(180, 200, {}, true);
-    c_lemlib.waitUntilDone();
+    c_lemlib.turnToHeading(180+5, 150);
+    c_lemlib.turnToHeading(180, 200, {}, false);
 
     // second row wiggles
     c_danielib.async().driveForDistance(6, 600, 120, 0, false);
@@ -1239,21 +1238,24 @@ void auton_skills() {
     // turns
     c_lemlib.turnToHeading(180+7, 150);
     c_lemlib.turnToHeading(180-7, 150);
-    c_lemlib.turnToHeading(180, 200, {}, true);
+    c_lemlib.turnToHeading(180, 200, {}, false);
 
     // NEW BACK AND FORTH TECH
     left_mg.set_brake_mode_all(MotorBrake::coast);
     right_mg.set_brake_mode_all(MotorBrake::coast);
+    c_danielib.async().driveForDistance(-5, 300, 120, 0, false);
+    delay(200);
+    bottom.move(-127);
+    delay(100);
+    store();
+    c_danielib.driveForDistance(7, 250, 120, 0, false);
+    c_lemlib.turnToHeading(180+7, 150);
+    c_lemlib.turnToHeading(180-7, 150, {}, false);
     c_danielib.driveForDistance(-5, 350, 100, 0, false);
     bottom.move(-127);
-    delay(175);
+    delay(130);
     store();
-    c_danielib.driveForDistance(7, 200, 120, 0, false);
-    delay(250);
-    c_danielib.driveForDistance(-5, 350, 100, 0, false);
-    bottom.move(-127);
-    delay(175);
-    store();
+    delay(30);
     c_danielib.driveForDistance(7, 200, 120, 0, false);
     delay(250);
 
@@ -1273,9 +1275,11 @@ void auton_skills() {
     right_mg.set_brake_mode_all(MotorBrake::brake);
     odom_lift.retract();
     c_danielib.turnToHeading(180, 350, 120, false);
-    c_lemlib.setPose({0, -42, c_lemlib.getPose().theta});
+    // c_lemlib.setPose({0, -42, c_lemlib.getPose().theta});
     lemlibDistReset({&left_beam, &right_beam}, 10, 10);
     lemlibDistReset({&front_beam}, 8, 8);
+
+    // HEADING RESET - NEW
 
     // /* ---------------------------------------------------------------------------------------------- */
     // /*                                            LOW GOAL                                            */
