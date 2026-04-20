@@ -1310,10 +1310,12 @@ void auton_skills() {
     c_danielib.turnToHeading(0, 300);
 
     // line up with low goal
-    c_lemlib.moveToPoint(11.5, -18.5, 1000, {.minSpeed = 40, .earlyExitRange = 3}, false);
+    // c_lemlib.moveToPoint(11.5, -18.5, 1000, {.minSpeed = 40, .earlyExitRange = 3}, false);
+    c_lemlib.moveToPoint(10, -16, 1000, {.minSpeed = 40, .earlyExitRange = 2}, false);
     intake_raise.extend();
-    c_lemlib.moveToPose(7.5, -8.5, -45, 1100, {.horizontalDrift = 4, .lead = 0.55, .maxSpeed = 90}, true);
-    delay(900);
+    c_lemlib.swingToHeading(-45, DriveSide::LEFT, 500, {}, false);
+    c_lemlib.moveToPose(7.5, -8.5, -45, 700, {.horizontalDrift = 4, .lead = 0.55, .maxSpeed = 90}, true);
+    delay(200);
 
     // outtake
     bottom.move_velocity(-66);
