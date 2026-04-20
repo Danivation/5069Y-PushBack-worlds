@@ -1217,7 +1217,7 @@ void auton_skills() {
     // drive in
     left_mg.set_brake_mode_all(MotorBrake::coast);
     right_mg.set_brake_mode_all(MotorBrake::coast);
-    c_danielib.driveForDistance(2.5, 300, 35, 0, false);
+    c_danielib.driveForDistance(3, 340, 35, 0, false);
 
     // first row wiggles
     c_lemlib.turnToHeading(180+7, 150);
@@ -1231,17 +1231,15 @@ void auton_skills() {
     c_lemlib.waitUntilDone();
 
     // second row wiggles
-    c_danielib.async().driveForDistance(7, 600, 120, 0, false);
-    delay(100);
+    c_danielib.async().driveForDistance(6, 600, 120, 0, false);
+    delay(160);
     intake_raise.extend();
-    delay(400);
+    delay(380);
     intake_raise.retract();
     c_danielib.waitUntilDone();
     c_lemlib.turnToHeading(180+7, 150);
-    c_lemlib.turnToHeading(180-7, 150);
-    c_lemlib.turnToHeading(180+7, 150);
-    c_lemlib.turnToHeading(180-7, 150);
-    c_lemlib.turnToHeading(180, 100, {}, false);
+    c_lemlib.turnToHeading(180-7, 150, {}, false);
+    // c_lemlib.turnToHeading(180, 100, {}, false);
 
     // back and forth
     c_danielib.async().driveForDistance(-5, 300, 120, 0, false);
@@ -1250,6 +1248,9 @@ void auton_skills() {
     store();
     c_danielib.waitUntilDone();
     c_danielib.driveForDistance(7, 500);
+    c_lemlib.turnToHeading(180+7, 150);
+    c_lemlib.turnToHeading(180-7, 150);
+    c_lemlib.turnToHeading(180, 100, {}, false);
 
     // back out
     left_mg.set_brake_mode_all(MotorBrake::brake);
