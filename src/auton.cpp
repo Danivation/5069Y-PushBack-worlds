@@ -1279,7 +1279,7 @@ void auton_skills() {
 
     // HEADING RESET - NEW
     auto redPose1 = c_lemlib.getPose();
-    c_danielib.driveForDistance(49+redPose1.y, 470, 30);
+    c_danielib.driveForDistance(8, 500, 30);
     auto redPose = c_lemlib.getPose();
     if (redPose.y > -48.0f && redPose.y < -44.5f && redPose.theta < 195 && redPose.theta > 165) {
         c_lemlib.setPose(redPose.x, redPose.y, 180);
@@ -1306,13 +1306,13 @@ void auton_skills() {
     c_lemlib.waitUntilDone();
 
     // swing away from stack
-    c_danielib.driveForDistance(-7, 400, 120);
+    c_danielib.driveForDistance(-7, 320, 100);
     c_danielib.turnToHeading(0, 300);
 
     // line up with low goal
-    c_lemlib.moveToPoint(10, -17, 1000, {.minSpeed = 40, .earlyExitRange = 4}, false);
+    c_lemlib.moveToPoint(12, -19, 1000, {.minSpeed = 40, .earlyExitRange = 3}, false);
     intake_raise.extend();
-    c_lemlib.moveToPose(7, -8, -45, 1100, {.horizontalDrift = 4, .lead = 0.5, .maxSpeed = 90}, true);
+    c_lemlib.moveToPose(8, -9, -45, 1100, {.horizontalDrift = 4, .lead = 0.5, .maxSpeed = 90}, true);
     delay(900);
 
     // outtake
@@ -1331,7 +1331,7 @@ void auton_skills() {
 
     bottom.move_velocity(-43);
     delay(650);
-    c_danielib.driveForDistance(5, 300, 16);
+    // c_danielib.driveForDistance(5, 300, 16);
 
     // back up
     c_lemlib.moveToPoint(0.8_tiles, -0.8_tiles, 1000, {.forwards = false, .maxSpeed = 80, .minSpeed = 20, .earlyExitRange = 3}, true);
