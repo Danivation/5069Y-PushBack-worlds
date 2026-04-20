@@ -22,7 +22,7 @@ float testAutonDuration = 0;
 void run_auton(int index) {
     // default auto to run when no auto is selected, also runs in test mode
     if (index == 0) {
-        auton_right_7ball_counter();
+        auton_skills();
     }
 
     // sawps
@@ -42,7 +42,7 @@ void run_auton(int index) {
     else if (index == 10)   auton_right_4ball_loader();     // TUNED
     else if (index == 11)   auton_right_4ball_stack();      // TUNED
     else if (index == 12)   auton_right_7ball();            // TUNED
-    else if (index == 13)   auton_right_7ball_counter();    // 
+    else if (index == 13)   auton_right_7ball_counter();    // TUNED
 
     // misc autos
     // else if (index == 14)   auton_all_mid();
@@ -285,7 +285,7 @@ void autonomous() {
             finished = true;
         });
 
-        waitUntilCondition(millis() > startTime + 15000 || finished);
+        waitUntilCondition(millis() > startTime + 60000 || finished);
         if (!finished) {
             test_auto.remove();
             c_lemlib.cancelAllMotions();
