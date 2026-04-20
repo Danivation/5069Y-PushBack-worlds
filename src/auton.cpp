@@ -1217,7 +1217,7 @@ void auton_skills() {
     // drive in
     left_mg.set_brake_mode_all(MotorBrake::coast);
     right_mg.set_brake_mode_all(MotorBrake::coast);
-    c_danielib.driveForDistance(2, 410, 38, 0, false);
+    c_danielib.driveForDistance(3.2, 410, 40, 0, false);
 
     // first row wiggles
     c_lemlib.turnToHeading(180+5, 150);
@@ -1251,17 +1251,16 @@ void auton_skills() {
     c_danielib.driveForDistance(7, 250, 120, 0, false);
     c_lemlib.turnToHeading(180+5, 100);
     c_lemlib.turnToHeading(180-5, 100, {}, false);
-    c_danielib.driveForDistance(-5, 270, 100, 0, false);
+    c_danielib.driveForDistance(-5, 250, 100, 0, true);
     bottom.move(-127);
-    delay(100);
+    delay(200);
     store();
     delay(30);
-    c_danielib.driveForDistance(7, 160, 120, 0, false);
-    delay(150);
+    c_danielib.driveForDistance(7, 150, 120, 0, false);
 
     // back out
     int backoutTime = millis();
-    c_danielib.async().driveForDistance(-19, 1500);
+    c_danielib.async().driveForDistance(-18.5, 1500);
     loader.extend();
     waitUntilCondition((millis() >= backoutTime + 1000) || (distance_front.get_distance() > 600 && distance_front.get_distance() < 2000));
     c_danielib.stopMovement();
@@ -1274,25 +1273,26 @@ void auton_skills() {
     left_mg.set_brake_mode_all(MotorBrake::brake);
     right_mg.set_brake_mode_all(MotorBrake::brake);
     odom_lift.retract();
-    c_danielib.turnToHeading(180, 350, 120, false);
+    // c_danielib.turnToHeading(180, 150, 120, false);
     lemlibDistReset({&left_beam, &right_beam}, 10, 10);
     lemlibDistReset({&front_beam}, 8, 8);
 
     // HEADING RESET - NEW
-    c_danielib.driveForDistance(8, 600, 20);
+    auto redPose1 = c_lemlib.getPose();
+    c_danielib.driveForDistance(48+redPose1.y, 600, 25);
     auto redPose = c_lemlib.getPose();
-    if (redPose.y > -48.0f && redPose.y < -43.0f && redPose.theta < 195 && redPose.theta > 165) {
+    if (redPose.y > -48.0f && redPose.y < -44.5f && redPose.theta < 195 && redPose.theta > 165) {
         c_lemlib.setPose(redPose.x, redPose.y, 180);
         lemlibDistReset({&left_beam, &right_beam}, 10, 10);
         lemlibDistReset({&front_beam}, 8, 8);
     }
 
-    // /* ---------------------------------------------------------------------------------------------- */
-    // /*                                            LOW GOAL                                            */
-    // /* ---------------------------------------------------------------------------------------------- */
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                            LOW GOAL                                            */
+    /* ---------------------------------------------------------------------------------------------- */
 
-    // // grab one block
-    c_danielib.driveForDistance(-10, 400, 120, 5);
+    // grab one block
+    c_danielib.driveForDistance(-10, 200, 120, 5);
     loader.retract();
     store();
     c_lemlib.turnToHeading(45, 500, {}, false);
