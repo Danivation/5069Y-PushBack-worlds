@@ -1232,7 +1232,7 @@ void auton_skills() {
     c_danielib.async().driveForDistance(6, 600, 120, 0, false);
     delay(160);
     intake_raise.extend();
-    delay(550);
+    delay(500);
     intake_raise.retract();
     c_danielib.waitUntilDone();
 
@@ -1253,7 +1253,7 @@ void auton_skills() {
     c_danielib.driveForDistance(-5, 350, 100, 0, false);
     delay(175);
     c_danielib.driveForDistance(7, 200, 120, 0, false);
-    delay(175);
+    delay(250);
 
     // back out
     left_mg.set_brake_mode_all(MotorBrake::brake);
@@ -1272,8 +1272,8 @@ void auton_skills() {
     odom_lift.retract();
     c_lemlib.turnToHeading(180, 300, {}, false);
     c_lemlib.setPose({0, -42, c_lemlib.getPose().theta});
-    lemlibDistReset({&left_beam, &right_beam}, 10);
-    lemlibDistReset({&front_beam}, 8);
+    lemlibDistReset({&left_beam, &right_beam}, 10, 10);
+    lemlibDistReset({&front_beam}, 8, 8);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                            LOW GOAL                                            */
@@ -1299,10 +1299,10 @@ void auton_skills() {
     // line up with low goal
     c_lemlib.moveToPoint(12, -19, 1000, {.minSpeed = 30, .earlyExitRange = 3}, false);
     intake_raise.extend();
-    c_lemlib.moveToPose(8, -9, -45, 950, {.horizontalDrift = 4, .lead = 0.5}, false);
+    c_lemlib.moveToPose(8, -9, -45, 1100, {.horizontalDrift = 4, .lead = 0.5}, true);
+    delay(900);
 
     // outtake
-    // c_danielib.async().driveForDistance(-3.1, 500);
     bottom.move_velocity(-68);
     top.move(-30);
     delay(300);
@@ -1314,11 +1314,11 @@ void auton_skills() {
     top.brake();
     delay(600);
     c_danielib.async().driveForDistance(-2.0, 500);
-    delay(500);
+    delay(300);
 
     bottom.move_velocity(-43);
-    delay(1000);
-    c_danielib.driveForDistance(4, 250, 15);
+    delay(650);
+    c_danielib.driveForDistance(5, 300, 16);
 
     // back up
     c_lemlib.moveToPoint(0.8_tiles, -0.8_tiles, 1000, {.forwards = false, .maxSpeed = 80, .minSpeed = 20, .earlyExitRange = 3}, true);
@@ -1522,8 +1522,8 @@ void auton_skills() {
     // store();
     // c_lemlib.waitUntilDone();
     // c_lemlib.setPose({0, 45, c_lemlib.getPose().theta});
-    // lemlibDistReset({&left_beam, &right_beam}, 10);
-    // lemlibDistReset({&front_beam}, 8);
+    // lemlibDistReset({&left_beam, &right_beam}, 10, 10);
+    // lemlibDistReset({&front_beam}, 8, 8);
 
     // /* ---------------------------------------------------------------------------------------------- */
     // /*                                          HIGH MID GOAL                                         */
