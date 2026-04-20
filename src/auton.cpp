@@ -1249,19 +1249,19 @@ void auton_skills() {
     delay(100);
     store();
     c_danielib.driveForDistance(7, 250, 120, 0, false);
-    c_lemlib.turnToHeading(180+7, 150);
-    c_lemlib.turnToHeading(180-7, 150, {}, false);
-    c_danielib.driveForDistance(-5, 350, 100, 0, false);
+    c_lemlib.turnToHeading(180+5, 100);
+    c_lemlib.turnToHeading(180-5, 100, {}, false);
+    c_danielib.driveForDistance(-5, 270, 100, 0, false);
     bottom.move(-127);
-    delay(130);
+    delay(100);
     store();
     delay(30);
-    c_danielib.driveForDistance(7, 200, 120, 0, false);
-    delay(250);
+    c_danielib.driveForDistance(7, 160, 120, 0, false);
+    delay(150);
 
     // back out
     int backoutTime = millis();
-    c_danielib.async().driveForDistance(-20, 1500);
+    c_danielib.async().driveForDistance(-19, 1500);
     loader.extend();
     waitUntilCondition((millis() >= backoutTime + 1000) || (distance_front.get_distance() > 600 && distance_front.get_distance() < 2000));
     c_danielib.stopMovement();
@@ -1280,6 +1280,13 @@ void auton_skills() {
     lemlibDistReset({&front_beam}, 8, 8);
 
     // HEADING RESET - NEW
+    c_danielib.driveForDistance(8, 600, 20);
+    auto redPose = c_lemlib.getPose();
+    if (redPose.y > -48.0f && redPose.y < -43.0f && redPose.theta < 195 && redPose.theta > 165) {
+        c_lemlib.setPose(redPose.x, redPose.y, 180);
+        lemlibDistReset({&left_beam, &right_beam}, 10, 10);
+        lemlibDistReset({&front_beam}, 8, 8);
+    }
 
     // /* ---------------------------------------------------------------------------------------------- */
     // /*                                            LOW GOAL                                            */
