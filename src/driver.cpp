@@ -76,82 +76,115 @@ void IntakeControl() {
             top.brake();
             bottom.brake();
         } else if (master.get_digital_new_press(INTAKE_TO_SLOW_LOW_GOAL) && skillsSlow) {   // slow low goal macro
-            driving = false;
-            left_mg.brake();
-            right_mg.brake();
-            bottom.brake();
-            top.brake();
-            c_danielib.setPose(0, 0, 0);
-            hood.retract();
-            if (!intake_raise.is_extended()) {
-                intake_raise.extend();
-                delay(100);
+
+            pros::Task lowMacro = pros::Task {[&] {
+                driving = false;
+                left_mg.brake();
+                right_mg.brake();
+                bottom.brake();
+                top.brake();
+                c_danielib.setPose(0, 0, 0);
+                hood.retract();
+                if (!intake_raise.is_extended()) {
+                    intake_raise.extend();
+                    delay(100);
+                }
+
+                // START MACRO
+
+                // outtake
+                bottom.move_velocity(-66);
+                top.move(-30);
+                delay(300);
+
+                bottom.move_velocity(-60);
+                delay(300);
+
+                bottom.move_velocity(-50);
+                top.brake();
+                delay(600);
+                c_danielib.async().driveForDistance(-2.0, 500);
+                delay(300);
+
+                bottom.move_velocity(-43);
+                delay(650);
+                c_danielib.driveForDistance(5, 300, 18);
+
+                // BRAKE AND START DRIVING
+
+                bottom.brake();
+                top.brake();
+                driving = true;
+            
+            }};
+            pros::delay(10);
+            waitUntilCondition(driving || DeadBand(THROTTLE_AXIS, 2) > 1 || DeadBand(TURN_AXIS, 2) > 1);
+            if (!driving) {
+                lowMacro.remove();
+                bottom.brake();
+                top.brake();
+                delay(10);
+                driving = true;
             }
 
-            // START MACRO
-
-            c_danielib.async().driveForDistance(-3.1, 500);
-            bottom.move_velocity(-70);
-            top.move(-30);
-            delay(300);
-
-            bottom.move_velocity(-60);
-            delay(300);
-
-            bottom.move_velocity(-48);
-            top.brake();
-            delay(1100);
-
-            bottom.move_velocity(-40);
-            delay(1000);
-
-            // BRAKE AND START DRIVING
-
-            bottom.brake();
-            top.brake();
-            driving = true;
-
         } else if (master.get_digital_new_press(INTAKE_TO_SLOW_MID_GOAL) && skillsSlow) {   // slow mid goal macro
-            driving = false;
-            left_mg.brake();
-            right_mg.brake();
-            bottom.brake();
-            top.brake();
-            c_danielib.setPose(0, 0, 0);
-            hood.retract();
+            pros::Task midMacro = pros::Task {[&] {
+                driving = false;
+                left_mg.brake();
+                right_mg.brake();
+                bottom.brake();
+                top.brake();
+                c_danielib.setPose(0, 0, 0);
+                hood.retract();
 
-            // START MACRO
+                // START MACRO
 
-            bottom.move(-127);
-            top.move(-30);
-            delay(150);
+                
+                // score mid goal
+                c_danielib.async().driveForDistance(-8, 500, 15);
+                bottom.move(-100);
+                top.move(-30);
+                delay(130);
 
-            top.move_velocity(-87);
-            bottom.move_velocity(110);
-            delay(450);
+                top.move_velocity(-95);
+                bottom.move_velocity(90);
+                delay(450);
 
-            top.move_velocity(-82);
-            bottom.move_velocity(72);
-            delay(700);
+                top.move_velocity(-90);
+                bottom.move_velocity(65);
+                delay(850);
 
-            c_danielib.async().driveForDistance(1.8, 500);
-            top.move_velocity(-62);
-            bottom.move_velocity(45);
-            delay(1000);
+                top.move_velocity(-85);
+                bottom.move_velocity(58);
+                delay(1000);
 
-            top.move_velocity(-57);
-            bottom.move_velocity(45);
-            delay(1000);
+                top.move_velocity(-85);
+                bottom.move_velocity(95);
+                delay(1100);
 
-            // BRAKE AND BACK UP
+                c_danielib.driveForDistance(-5, 350, 15);
+                top.brake();
+                bottom.brake();
 
-            bottom.brake();
-            top.brake();
-            c_danielib.driveForDistance(-5, 350, 15);
+                // BRAKE AND BACK UP
 
-            // START DRIVING
+                bottom.brake();
+                top.brake();
+                c_danielib.driveForDistance(-5, 350, 15);
 
-            driving = true;
+                // START DRIVING
+
+                driving = true;
+            }};
+            pros::delay(10);
+            waitUntilCondition(driving || DeadBand(THROTTLE_AXIS, 2) > 1 || DeadBand(TURN_AXIS, 2) > 1);
+            if (!driving) {
+                midMacro.remove();
+                bottom.brake();
+                top.brake();
+                delay(10);
+                driving = true;
+            }
         } else {
             bottom.brake();
             top.brake();

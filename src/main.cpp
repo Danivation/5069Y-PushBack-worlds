@@ -4,7 +4,7 @@
 /*                                        GLOBAL VARIABLES                                        */
 /* ---------------------------------------------------------------------------------------------- */
 
-const bool skillsSlow = false;
+const bool skillsSlow = true;
 const bool autoForDriver = false;
 
 pros::Color WrongColor = Color::red;
@@ -242,7 +242,7 @@ void initialize() {
     optical_top.set_led_pwm(0);
 
     // skills things
-    calibrate_all();
+    // calibrate_all();
     // autonomous();
 
     pros::Task selector(auton_selector);

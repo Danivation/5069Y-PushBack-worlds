@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "5069Y",
+    "project_name": "driver skills",
     "target": "v5",
     "templates": {
       "LemLib": {
