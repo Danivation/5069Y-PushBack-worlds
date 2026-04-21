@@ -138,7 +138,7 @@ void auton_sawp_counter_nowing() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive backwards to goal
-    c_lemlib.moveToPoint(2_tiles, -25, 1100, {.forwards = false}, true);
+    c_lemlib.moveToPoint(2.03_tiles, -23, 1100, {.forwards = false}, true);
     delay(800);
     score();
     int score1Start = millis();
@@ -177,11 +177,11 @@ void auton_sawp_counter_nowing() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive backwards to goal
-    c_lemlib.moveToPoint(-2_tiles, -25, 1100, {.forwards = false}, true);
+    c_lemlib.moveToPoint(-2_tiles, -23, 1100, {.forwards = false}, true);
     delay(560);
     score();
     int score2Start = millis();
-    waitUntilCondition(millis() >= score2Start + 500);
+    waitUntilCondition(millis() >= score2Start + 550);
     c_lemlib.cancelMotion();
     lemlibDistReset({&right_beam});
 
