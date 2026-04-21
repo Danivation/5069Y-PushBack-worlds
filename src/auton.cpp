@@ -332,12 +332,11 @@ void auton_sawp_counter_wing() {
     c_lemlib.moveToPoint(-12, -14, 1700, {.forwards = false, .minSpeed = 50, .earlyExitRange = 7}, false);
     c_lemlib.moveToPoint(-8, -10.5, 700, {.forwards = false, .maxSpeed = 80}, true);
     
-    delay(70);
+    delay(60);
     outtake();
     delay(100);
-    top.move(-90);
+    top.move(-80);
     bottom.move(80);
-    delay(300);
     
     // color sensor timeout
     waitUntilColor(&optical_top, WrongColor, startTime + 12100);

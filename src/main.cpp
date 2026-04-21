@@ -201,7 +201,7 @@ void wait_for_bypass() {
     while (!comp_started) {
         if (!competition::is_connected() && master.get_digital(DIGITAL_X) && master.get_digital(DIGITAL_A)) {
             waitUntilCondition(!master.get_digital(DIGITAL_X) && !master.get_digital(DIGITAL_A));
-            calibrate_all();
+            // calibrate_all();
             printing = false;
             selecting = false;
             autonomous();
@@ -233,15 +233,15 @@ void initialize() {
     imu_1.set_data_rate(5);
     horizontal_rotation.set_data_rate(5);
     vertical_rotation.set_data_rate(5);
-    left_mg.set_brake_mode_all(MotorBrake::coast);
-    right_mg.set_brake_mode_all(MotorBrake::coast);
+    left_mg.set_brake_mode_all(MotorBrake::hold);
+    right_mg.set_brake_mode_all(MotorBrake::hold);
     bottom.set_brake_mode(MotorBrake::brake);
     top.set_brake_mode(MotorBrake::brake);
     optical_top.set_integration_time(5);
     optical_top.set_led_pwm(0);
 
     // skills things
-    // calibrate_all();
+    calibrate_all();
     // autonomous();
 
     pros::Task selector(auton_selector);
@@ -284,7 +284,7 @@ void autonomous() {
             finished = true;
         });
 
-        waitUntilCondition(millis() > startTime + 15000 || finished);
+        waitUntilCondition(millis() > startTime + 60000 || finished);
         if (!finished) {
             test_auto.remove();
             c_lemlib.cancelAllMotions();
