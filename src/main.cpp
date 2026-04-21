@@ -108,10 +108,11 @@ void auton_selector() {
 
         // print text to controller
         master.print(0, 0, "%d    %s    ", auton_index, color);
-        pros::delay(50);
-        master.print(1, 0, "%s         ", line2.c_str());
-        pros::delay(50);
-        master.print(2, 0, "%s         ", line3.c_str());
+        pros::delay(25);
+        master.print(1, 0, "%s     ", line2.c_str());
+        pros::delay(25);
+        master.print(2, 0, "%s     ", line3.c_str());
+        pros::delay(25);
 
         if (master.get_digital_new_press(DIGITAL_RIGHT)) {
             auton_index++;
@@ -128,8 +129,6 @@ void auton_selector() {
         }
         if (auton_index < 0) auton_index = 15;
         if (auton_index > 15) auton_index = 0;
-
-        pros::delay(50);
     }
 }
 
@@ -188,9 +187,9 @@ void print_info() {
 
         // print to controller
         if (cycle % 5 == 0) {
-            master.print(0, 0, "(%.1f, %.1f, %.1f)     ", pose.x, pose.y, d_reduce_to_0_360(pose.theta));
+            master.print(0, 0, "(%.1f, %.1f, %.1f)    ", pose.x, pose.y, d_reduce_to_0_360(pose.theta));
             delay(50);
-            master.print(2, 0, "Time: %.2f", testAutonDuration);
+            master.print(2, 0, "Time: %.2f    ", testAutonDuration);
         }
 
         cycle++;
@@ -234,8 +233,8 @@ void initialize() {
     imu_1.set_data_rate(5);
     horizontal_rotation.set_data_rate(5);
     vertical_rotation.set_data_rate(5);
-    left_mg.set_brake_mode_all(MotorBrake::hold);
-    right_mg.set_brake_mode_all(MotorBrake::hold);
+    left_mg.set_brake_mode_all(MotorBrake::coast);
+    right_mg.set_brake_mode_all(MotorBrake::coast);
     bottom.set_brake_mode(MotorBrake::brake);
     top.set_brake_mode(MotorBrake::brake);
     optical_top.set_integration_time(5);
