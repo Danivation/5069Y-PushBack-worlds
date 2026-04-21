@@ -4,10 +4,10 @@
 /*                                        GLOBAL VARIABLES                                        */
 /* ---------------------------------------------------------------------------------------------- */
 
-const bool skillsSlow = true;
+const bool skillsSlow = false;
 const bool autoForDriver = false;
 
-pros::Color WrongColor = Color::red;
+pros::Color WrongColor = Color::blue;
 bool comp_started = false;
 bool printing = false;
 bool logging = false;
@@ -22,7 +22,7 @@ float testAutonDuration = 0;
 void run_auton(int index) {
     // default auto to run when no auto is selected, also runs in test mode
     if (index == 0) {
-        auton_skills();
+        auton_left_7ball_counter();
     }
 
     // sawps
@@ -201,7 +201,7 @@ void wait_for_bypass() {
     while (!comp_started) {
         if (!competition::is_connected() && master.get_digital(DIGITAL_X) && master.get_digital(DIGITAL_A)) {
             waitUntilCondition(!master.get_digital(DIGITAL_X) && !master.get_digital(DIGITAL_A));
-            // calibrate_all();
+            calibrate_all();
             printing = false;
             selecting = false;
             autonomous();
@@ -241,7 +241,7 @@ void initialize() {
     optical_top.set_led_pwm(0);
 
     // skills things
-    calibrate_all();
+    // calibrate_all();
     // autonomous();
 
     pros::Task selector(auton_selector);
@@ -284,7 +284,7 @@ void autonomous() {
             finished = true;
         });
 
-        waitUntilCondition(millis() > startTime + 60000 || finished);
+        waitUntilCondition(millis() > startTime + 15000 || finished);
         if (!finished) {
             test_auto.remove();
             c_lemlib.cancelAllMotions();

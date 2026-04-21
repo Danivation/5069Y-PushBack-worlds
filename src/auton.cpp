@@ -973,13 +973,13 @@ void auton_left_7ball_counter() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive into loader
-    c_lemlib.moveToPoint(-1.97_tiles, -57, 800, {.maxSpeed = 100, .minSpeed = 10, .earlyExitRange = 6.5}, true);
+    c_lemlib.moveToPoint(-1.95_tiles, -56, 800, {.maxSpeed = 100, .minSpeed = 40, .earlyExitRange = 6.5}, true);
     outtake();
     delay(150);
     store();
     c_lemlib.waitUntilDone();
     int loader1Start = millis();
-    c_lemlib.moveToPoint(-1.97_tiles, -70, 1500, {.maxSpeed = 45}, true);
+    c_lemlib.moveToPoint(-1.95_tiles, -70, 1500, {.maxSpeed = 42}, true);
     waitUntilCondition(millis() >= loader1Start + 860);
     c_lemlib.cancelMotion();
 
@@ -998,7 +998,7 @@ void auton_left_7ball_counter() {
     delay(200);
 
     // wait until ready to score
-    waitUntilCondition(millis() >= startTime + 6200);
+    waitUntilCondition(millis() >= startTime + 5900);
 
     // score mid goal kinda slow
     int midScoreStart = millis();
@@ -1006,7 +1006,7 @@ void auton_left_7ball_counter() {
     bottom.move(85);
 
     // color sensor timeout
-    waitUntilColor(&optical_top, WrongColor, midScoreStart + 610);
+    waitUntilColor(&optical_top, WrongColor, midScoreStart + 550);
     delay(70); // mid color timer
     c_lemlib.cancelMotion();
 
@@ -1018,7 +1018,7 @@ void auton_left_7ball_counter() {
     stop();
     loader.retract();
     wing.extend();
-    c_lemlib.moveToPoint(-2_tiles+0.5_tiles, -1.67_tiles, 1100, {.minSpeed = 10, .earlyExitRange = 2}, true);
+    c_lemlib.moveToPoint(-2_tiles+0.47_tiles, -1.67_tiles, 1100, {}, true);
     bottom.move(-127);
     delay(150);
     top.move(127);
@@ -1028,16 +1028,21 @@ void auton_left_7ball_counter() {
     bottom.brake();
     c_lemlib.waitUntilDone();
 
+    // dist reset
+    c_danielib.turnToHeading(180, 350);
+    lemlibDistReset({&right_beam});
+    store();
+
     // back up into wing
     left_mg.set_brake_mode_all(MotorBrake::hold);
     left_mg.set_brake_mode_all(MotorBrake::hold);
-    c_lemlib.moveToPoint(-2_tiles+0.47_tiles, -1.05_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
-    c_lemlib.moveToPoint(-2_tiles+0.43_tiles, -10, 1500, {.forwards = false, .minSpeed = 10, .earlyExitRange = 1}, false);
+    c_lemlib.moveToPoint(-2_tiles+0.45_tiles, -1.05_tiles, 1000, {.forwards = false, .minSpeed = 70, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(-2_tiles+0.42_tiles, -9, 1000, {.forwards = false}, false);
 
     // sweep out
     wing.retract();
     c_lemlib.moveToPoint(-2_tiles+0.45_tiles, -1.2_tiles, 1500, {.minSpeed = 10, .earlyExitRange = 5}, false);
-    c_lemlib.swingToHeading(150, DriveSide::LEFT, 400, {}, false);
+    c_lemlib.swingToHeading(150, DriveSide::LEFT, 200, {}, false);
     c_lemlib.moveToPoint(-1.9_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2}, false);
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -1047,7 +1052,7 @@ void auton_left_7ball_counter() {
     // drive backwards to goal
     store();
     c_lemlib.turnToHeading(180, 400, {.minSpeed = 10, .earlyExitRange = 5}, false);
-    c_lemlib.moveToPoint(-2_tiles, -23, 1500, {.forwards = false}, true);
+    c_lemlib.moveToPoint(-2.03_tiles, -23, 1500, {.forwards = false}, true);
     delay(700);
     score();
     int score1Start = millis();
@@ -1074,9 +1079,9 @@ void auton_left_7ball_counter() {
     // back up into wing
     left_mg.set_brake_mode_all(MotorBrake::hold);
     left_mg.set_brake_mode_all(MotorBrake::hold);
-    c_lemlib.moveToPoint(-2_tiles+0.45_tiles, -1_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 5}, false);
-    c_lemlib.moveToPoint(-2_tiles+0.42_tiles, -10, 1500, {.forwards = false, .maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 1}, false);
-    c_danielib.turnToHeading(195);
+    c_lemlib.moveToPoint(-2_tiles+0.45_tiles, -1_tiles, 1000, {.forwards = false, .minSpeed = 80, .earlyExitRange = 5}, false);
+    c_lemlib.moveToPoint(-2_tiles+0.42_tiles, -11, 1000, {.forwards = false, .maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 3}, false);
+    c_lemlib.swingToHeading(195, DriveSide::LEFT, 400, {}, false);
 }
 
 // right side tuned
