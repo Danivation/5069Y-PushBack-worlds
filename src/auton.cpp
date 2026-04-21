@@ -1518,8 +1518,8 @@ void auton_skills() {
     c_lemlib.waitUntilDone();
 
     // drive all the way out
-    c_lemlib.moveToPoint(28, 64, 1200, {}, true);
-    delay(350);
+    c_lemlib.moveToPoint(27.2, 64, 1200, {}, true);
+    delay(220);
 
     // dist reset in the middle
     loader.retract();
