@@ -93,22 +93,26 @@ void IntakeControl() {
                 // START MACRO
 
                 // outtake
-                bottom.move_velocity(-66);
+                bottom.move_velocity(-60);
                 top.move(-30);
                 delay(300);
 
-                bottom.move_velocity(-60);
+                bottom.move_velocity(-55);
                 delay(300);
 
                 bottom.move_velocity(-50);
                 top.brake();
-                delay(600);
-                c_danielib.async().driveForDistance(-2.0, 500);
+                delay(500);
+                c_danielib.async().driveForDistance(-2.3, 500);
                 delay(300);
 
-                bottom.move_velocity(-43);
-                delay(650);
-                c_danielib.driveForDistance(5, 300, 18);
+                bottom.move_velocity(-40);
+                delay(400);
+                bottom.move_velocity(-35);
+                delay(300);
+                
+                
+                c_danielib.driveForDistance(-8, 500);
 
                 // BRAKE AND START DRIVING
 
