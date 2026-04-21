@@ -52,26 +52,26 @@ std::pair<std::string, std::string> get_auton_name(int index) {
     if (index == 0) return {"None", ""};
 
     // sawps
-    else if (index == 1)    return {"Counter SAWP no wing", ""};
-    else if (index == 2)    return {"Counter SAWP + Wing", ""};
-    // else if (index == 3)    return {"Low goal SAWP", ""};
+    else if (index == 1)    return {"CSAWP + W", ""};
+    else if (index == 2)    return {"CSAWP - W", "All loaders"};
+    else if (index == 3)    return {"CSAWP - W", "Left loader"};
+    else if (index == 4)    return {"CSAWP - W", "Right loader"};
+    else if (index == 5)    return {"CSAWP - W", "No loaders"};
+    else if (index == 6)    return {"Helper SAWP", "Right loader setup"};
 
     // left sides
-    else if (index == 4)    return {"Left split", "Stack setup"};
-    else if (index == 5)    return {"Left 4 ball", "Loader"};
-    else if (index == 6)    return {"Left 4 ball", "Stack"};
-    else if (index == 7)    return {"Left 7 ball", "Stack setup"};
-    else if (index == 8)    return {"Left 7 counter", "Stack setup"};
+    else if (index == 7)    return {"Left split", "Stack"};
+    else if (index == 8)    return {"Left 4 ball", "Loader"};
+    else if (index == 9)    return {"Left 4 ball", "Stack"};
+    else if (index == 10)   return {"Left 7 ball", "Stack"};
+    else if (index == 11)   return {"Left 7 counter", "Stack"};
 
     // right sides
-    else if (index == 9)   return {"Right split", "Loader setup"};
-    else if (index == 10)   return {"Right 4 ball", "Loader"};
-    else if (index == 11)   return {"Right 4 ball", "Stack"};
-    else if (index == 12)   return {"Right 7 ball", "Stack setup"};
-    else if (index == 13)   return {"Right 7 counter", "Loader setup"};
-
-    // misc autos
-    // else if (index == 14)   return {"All mid right", "Loader setup"};
+    else if (index == 12)   return {"Right split", "Loader"};
+    else if (index == 13)   return {"Right 4 ball", "Loader"};
+    else if (index == 14)   return {"Right 4 ball", "Stack"};
+    else if (index == 15)   return {"Right 7 ball", "Stack"};
+    else if (index == 16)   return {"Right 7 counter", "Loader"};
 
     else return {"Invalid auto", ""};
 }
@@ -107,11 +107,11 @@ void auton_selector() {
         pros::lcd::print(1, "%s", line3.c_str());
 
         // print text to controller
-        master.print(0, 0, "%d    %s    ", auton_index, color);
+        master.print(0, 0, "%d   %s   ", auton_index, color);
         pros::delay(25);
-        master.print(1, 0, "%s     ", line2.c_str());
+        master.print(1, 0, "%s        ", line2.c_str());
         pros::delay(25);
-        master.print(2, 0, "%s     ", line3.c_str());
+        master.print(2, 0, "%s        ", line3.c_str());
         pros::delay(25);
 
         if (master.get_digital_new_press(DIGITAL_RIGHT)) {
@@ -127,8 +127,8 @@ void auton_selector() {
                 WrongColor = Color::red;
             }
         }
-        if (auton_index < 0) auton_index = 15;
-        if (auton_index > 15) auton_index = 0;
+        if (auton_index < 0) auton_index = 17;
+        if (auton_index > 17) auton_index = 0;
     }
 }
 
@@ -233,8 +233,8 @@ void initialize() {
     imu_1.set_data_rate(5);
     horizontal_rotation.set_data_rate(5);
     vertical_rotation.set_data_rate(5);
-    left_mg.set_brake_mode_all(MotorBrake::hold);
-    right_mg.set_brake_mode_all(MotorBrake::hold);
+    left_mg.set_brake_mode_all(MotorBrake::coast);
+    right_mg.set_brake_mode_all(MotorBrake::coast);
     bottom.set_brake_mode(MotorBrake::brake);
     top.set_brake_mode(MotorBrake::brake);
     optical_top.set_integration_time(5);
@@ -279,7 +279,6 @@ void autonomous() {
         pros::Task test_auto ([&] {
             startTime = millis();
             run_auton(auton_index);
-            // auton_skills();
             endTime = millis();
             finished = true;
         });
@@ -305,7 +304,7 @@ void opcontrol() {
     printf("driver start \n");
 
     // wait for comp start or bypass
-    waitUntilCondition(/* (competition::is_connected() && !competition::is_disabled() && !competition::is_autonomous()) || */ comp_started);
+    waitUntilCondition(comp_started);
     printf("driver enable \n");
     int matchStartTime = millis();
     comp_started = true;

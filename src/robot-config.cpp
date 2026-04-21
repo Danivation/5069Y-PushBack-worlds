@@ -13,7 +13,6 @@ pros::MotorGroup bottom({7, 10}, pros::MotorGears::rpm_200);
 pros::Motor top(1, pros::MotorGears::rpm_200);
 
 CustomImu imu_1(15, 360.0f/356.6f);
-// pros::Imu imu_2(22); // unused
 pros::Rotation vertical_rotation(-17);
 pros::Rotation horizontal_rotation(14);
 
