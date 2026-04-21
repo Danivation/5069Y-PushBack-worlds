@@ -9,7 +9,7 @@ pros::Controller master(pros::E_CONTROLLER_MASTER);
 pros::MotorGroup left_mg({13, -12, -11}, pros::MotorGears::blue);
 pros::MotorGroup right_mg({-18, 19, 20}, pros::MotorGears::blue);
 
-pros::MotorGroup bottom({8, 10}, pros::MotorGears::rpm_200);
+pros::MotorGroup bottom({7, 10}, pros::MotorGears::rpm_200);
 pros::Motor top(1, pros::MotorGears::rpm_200);
 
 CustomImu imu_1(15, 360.0f/356.6f);
@@ -17,8 +17,8 @@ CustomImu imu_1(15, 360.0f/356.6f);
 pros::Rotation vertical_rotation(-17);
 pros::Rotation horizontal_rotation(14);
 
-pros::Optical optical_top(7);
-pros::Distance distance_front(2);
+pros::Optical optical_top(6);
+pros::Distance distance_front(8);
 pros::Distance distance_left(3);
 pros::Distance distance_right(9);
 
@@ -70,7 +70,7 @@ lemlib::Chassis c_lemlib(drivetrain, lateral_controller, angular_controller, sen
 // STILL USED FOR DISTANCE RESETS
 danielib::Beam left_beam(-90, -4.5, -2.25, distance_left);
 danielib::Beam right_beam(90, 4.5, -2.25, distance_right);
-danielib::Beam front_beam(0, -4.7, 3.7, distance_front);
+danielib::Beam front_beam(0, 4.7, 3.7, distance_front);
 
 // + offset is right or front, - offset is left or back
 danielib::TrackerWheel vertical_tracker_danielib(vertical_rotation, 2, -0.5);
