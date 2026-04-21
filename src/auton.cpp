@@ -1409,9 +1409,10 @@ void auton_skills() {
     c_lemlib.moveToPoint(-2.58_tiles, -1.05_tiles, 1300, {.forwards = false, .minSpeed = 70, .earlyExitRange = 7}, false);
     loader.retract();
     c_lemlib.moveToPoint(-2.58_tiles, 1_tiles, 1300, {.forwards = false, .minSpeed = 70, .earlyExitRange = 6}, false);
+    lemlibDistReset({&right_beam});
 
     // swing around into goal
-    c_lemlib.moveToPoint(-2_tiles, 1.64_tiles, 950, {.forwards = false}, false);
+    c_lemlib.moveToPoint(-2_tiles, 1.64_tiles, 1100, {.forwards = false}, false);
     c_danielib.turnToHeading(0, 580);
     lemlibDistReset({&left_beam});
 
@@ -1517,18 +1518,16 @@ void auton_skills() {
     c_lemlib.waitUntilDone();
 
     // drive all the way out
-    c_lemlib.moveToPoint(27, 64, 1200, {}, true);
+    c_lemlib.moveToPoint(28, 64, 1200, {}, true);
     delay(350);
 
     // dist reset in the middle
     loader.retract();
     lemlibDistReset({&front_beam, &right_beam});
-    auto parkPose3 = c_lemlib.getPose();
-    c_lemlib.setPose(parkPose3.x - 26, parkPose3.y, parkPose3.theta);
     c_lemlib.waitUntilDone();
 
     // swing and scoop
-    c_lemlib.swingToHeading(120, DriveSide::RIGHT, 300, {.minSpeed = 30}, false);
+    c_lemlib.swingToHeading(130, DriveSide::RIGHT, 450, {}, false);
     c_danielib.turnToHeading(0, 500);
     c_danielib.driveForDistance(6, 500);
     
@@ -1556,8 +1555,8 @@ void auton_skills() {
     c_danielib.turnToHeading(0, 400);
 
     // line up with mid goal
-    c_lemlib.moveToPoint(10, 17, 1000, {.forwards = false, .minSpeed = 30, .earlyExitRange = 3}, false);
-    c_lemlib.moveToPose(6, 7, 45, 850, {.forwards = false, .horizontalDrift = 4, .lead = 0.4}, false);
+    c_lemlib.moveToPoint(10, 16.5, 1000, {.forwards = false, .minSpeed = 30, .earlyExitRange = 3}, false);
+    c_lemlib.moveToPose(6, 6, 45, 850, {.forwards = false, .horizontalDrift = 4, .lead = 0.4}, false);
 
     // score mid goal
     c_danielib.async().driveForDistance(-8, 500, 15);
@@ -1659,9 +1658,10 @@ void auton_skills() {
     c_lemlib.moveToPoint(2.58_tiles, 1.05_tiles, 1300, {.forwards = false, .minSpeed = 70, .earlyExitRange = 7}, false);
     loader.retract();
     c_lemlib.moveToPoint(2.58_tiles, -1_tiles, 1300, {.forwards = false, .minSpeed = 70, .earlyExitRange = 6}, false);
+    lemlibDistReset({&right_beam});
 
     // swing around into goal
-    c_lemlib.moveToPoint(2_tiles, -1.64_tiles, 950, {.forwards = false}, false);
+    c_lemlib.moveToPoint(2_tiles, -1.64_tiles, 1100, {.forwards = false}, false);
     c_danielib.turnToHeading(180, 580);
     lemlibDistReset({&left_beam});
 
