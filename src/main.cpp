@@ -242,7 +242,7 @@ void initialize() {
     optical_top.set_led_pwm(0);
 
     // skills things
-    // calibrate_all();
+    calibrate_all();
     // autonomous();
 
     pros::Task selector(auton_selector);
