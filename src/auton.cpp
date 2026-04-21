@@ -1478,12 +1478,13 @@ void auton_skills() {
     top.move(65);
 
     // realign inside goal and wait until global timeout
-    c_lemlib.moveToPoint(-2.05_tiles, 22, 2000, {.forwards = false, .maxSpeed = 70}, true);
+    // c_lemlib.moveToPoint(-2.05_tiles, 22, 2000, {.forwards = false, .maxSpeed = 70}, true);
+    c_danielib.async().driveForDistance(-12, 2000, 50);
     waitUntilCondition(millis() >= startTime + 27400 || millis() >= score2LStart + 1800);
     top.move(127);
     bottom.move(127);
     delay(100);
-    c_lemlib.cancelMotion();
+    c_danielib.stopMovement();
 
     // dist reset
     c_lemlib.setPose(-2_tiles, 27, 0);
