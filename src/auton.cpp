@@ -1497,9 +1497,9 @@ void auton_skills() {
     // drive to park
     loader.retract();
     score();
-    c_lemlib.moveToPose(-15, 63.5, 80, 1500, {.horizontalDrift = 3.5, .lead = 0.54, .minSpeed = 30, .earlyExitRange = 8}, false);
-    c_lemlib.moveToPoint(-18, 63, 1000, {.maxSpeed = 90}, false);
-    c_lemlib.turnToHeading(105, 300, {}, false);
+    c_lemlib.moveToPose(-15, 64, 80, 1500, {.horizontalDrift = 3.5, .lead = 0.53, .minSpeed = 30, .earlyExitRange = 8}, false);
+    c_lemlib.moveToPoint(-18, 64, 1000, {.maxSpeed = 90}, false);
+    // c_lemlib.turnToHeading(97, 300, {}, false);
 
     // drive in
     store();
@@ -1507,19 +1507,23 @@ void auton_skills() {
     delay(150);
     lemlibDistReset({&left_beam});
     store();
-    c_lemlib.moveToPoint(1.5, 63, 1500, {.maxSpeed = 80, .minSpeed = 65, .earlyExitRange = 4}, false);
-    loader.extend();
-
+    c_lemlib.moveToPoint(1.5, 64, 1500, {.maxSpeed = 80, .minSpeed = 65, .earlyExitRange = 4}, false);
+    
     // drive thru
     odom_lift.retract();
     lemlibDistReset({&left_beam});
-    c_lemlib.moveToPoint(16, 63, 1200, {.maxSpeed = 95, .minSpeed = 55, .earlyExitRange = 4}, false);
-    c_lemlib.moveToPoint(30, 63, 1200, {.minSpeed = 30, .earlyExitRange = 4}, true);
-    delay(500);
-    loader.retract();
+    c_lemlib.moveToPoint(16, 64, 1200, {.maxSpeed = 95, .minSpeed = 55, .earlyExitRange = 4}, true);
+    delay(200);
     c_lemlib.waitUntilDone();
-    c_lemlib.turnToHeading(0, 250);
-    c_lemlib.swingToHeading(0, DriveSide::LEFT, 600, {.minSpeed = 30}, false);
+    c_lemlib.moveToPoint(29, 64, 1200, {}, true);
+    delay(550);
+    lemlibDistReset({&front_beam, &right_beam});
+    auto parkPose3 = c_lemlib.getPose();
+    c_lemlib.setPose(parkPose3.x - 26, parkPose3.y, parkPose3.theta);
+    c_lemlib.waitUntilDone();
+    c_lemlib.swingToHeading(120, DriveSide::RIGHT, 300, {.minSpeed = 30}, false);
+    c_danielib.turnToHeading(0, 500);
+    c_danielib.driveForDistance(6, 500);
     
     // reset on wall
     lemlibDistReset({&front_beam, &right_beam});
