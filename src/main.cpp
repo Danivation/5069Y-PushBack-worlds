@@ -26,26 +26,22 @@ void run_auton(int index) {
     }
 
     // sawps
-    else if (index == 1)    auton_sawp_counter_nowing();    // TUNED
-    else if (index == 2)    auton_sawp_counter_wing();      // TUNED
-    // else if (index == 3)    auton_sawp_low_mid();
+    else if (index == 1)    auton_sawp_counter_wing();      // TUNED
+    else if (index == 2)    auton_sawp_counter_nowing();    // TUNED
 
     // left sides
-    else if (index == 4)    auton_left_split();             // TUNED
-    else if (index == 5)    auton_left_4ball_loader();      // TUNED
-    else if (index == 6)    auton_left_4ball_stack();       // TUNED
-    else if (index == 7)    auton_left_7ball();             // TUNED
-    else if (index == 8)    auton_left_7ball_counter();     // TUNED
+    else if (index == 7)    auton_left_split();             // TUNED
+    else if (index == 8)    auton_left_4ball_loader();      // TUNED
+    else if (index == 9)    auton_left_4ball_stack();       // TUNED
+    else if (index == 10)    auton_left_7ball();             // TUNED
+    else if (index == 11)    auton_left_7ball_counter();     // TUNED
 
     // right sides
-    else if (index == 9)    auton_right_split();            // TUNED 
-    else if (index == 10)   auton_right_4ball_loader();     // TUNED
-    else if (index == 11)   auton_right_4ball_stack();      // TUNED
-    else if (index == 12)   auton_right_7ball();            // TUNED
-    else if (index == 13)   auton_right_7ball_counter();    // TUNED
-
-    // misc autos
-    // else if (index == 14)   auton_all_mid();
+    else if (index == 12)    auton_right_split();            // TUNED 
+    else if (index == 13)   auton_right_4ball_loader();     // TUNED
+    else if (index == 14)   auton_right_4ball_stack();      // TUNED
+    else if (index == 15)   auton_right_7ball();            // TUNED
+    else if (index == 16)   auton_right_7ball_counter();    // TUNED
 }
 
 std::pair<std::string, std::string> get_auton_name(int index) {
@@ -54,10 +50,10 @@ std::pair<std::string, std::string> get_auton_name(int index) {
     // sawps
     else if (index == 1)    return {"CSAWP + W", ""};
     else if (index == 2)    return {"CSAWP - W", "All loaders"};
-    else if (index == 3)    return {"CSAWP - W", "Left loader"};
-    else if (index == 4)    return {"CSAWP - W", "Right loader"};
-    else if (index == 5)    return {"CSAWP - W", "No loaders"};
-    else if (index == 6)    return {"Helper SAWP", "Right loader setup"};
+    // else if (index == 3)    return {"CSAWP - W", "Left loader"};
+    // else if (index == 4)    return {"CSAWP - W", "Right loader"};
+    // else if (index == 5)    return {"CSAWP - W", "No loaders"};
+    // else if (index == 6)    return {"Helper SAWP", "Right loader setup"};
 
     // left sides
     else if (index == 7)    return {"Left split", "Stack"};
