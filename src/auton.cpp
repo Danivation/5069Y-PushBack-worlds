@@ -1543,7 +1543,7 @@ void auton_skills() {
     loader.retract();
     c_lemlib.moveToPoint(0.4_tiles, 1.85_tiles, 1000, {.forwards = false, .minSpeed = 30, .earlyExitRange = 2}, false);
     c_lemlib.turnToHeading(180-45, 300, {}, false);
-    c_lemlib.moveToPoint(15.2, 30.6, 1000, {}, true);
+    c_lemlib.moveToPoint(15.5, 30, 1000, {}, true);
     delay(200);
     bottom.move(-127);
     delay(100);
@@ -1736,13 +1736,14 @@ void auton_skills() {
     /*                                              PARK                                              */
     /* ---------------------------------------------------------------------------------------------- */
 
-    // drive to park
     loader.retract();
-    stop();
-    c_lemlib.moveToPose(10, -63, -100, 1500, {.horizontalDrift = 3.5, .lead = 0.52, .minSpeed = 30, .earlyExitRange = 5}, false);
+    score();
+    c_lemlib.moveToPose(15, -63, -90, 1500, {.horizontalDrift = 3.5, .lead = 0.55, .minSpeed = 30, .earlyExitRange = 8.5}, false);
+    lemlibDistReset({&left_beam});
+    c_lemlib.moveToPoint(17, -62.5, 1000, {.maxSpeed = 90}, false);
 
     // drive in
-    odom_lift.extend();
     store();
-    c_lemlib.moveToPoint(-1, -63, 1500, {.minSpeed = 60}, false);
+    odom_lift.extend();
+    c_lemlib.moveToPoint(0, -64, 1500, {.maxSpeed = 95}, false);
 }
