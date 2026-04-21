@@ -80,6 +80,15 @@ void outtake() {
     bottom.move(-127);
     top.move(-127);
 }
+void unjam_block() {
+    bottom.move(-127);
+    delay(150);
+    top.move(127);
+    bottom.brake();
+    delay(200);
+    top.brake();
+    bottom.brake();
+}
 
 /* ---------------------------------------------------------------------------------------------- */
 /*                                        NONE (TEST AUTO)                                        */
@@ -153,15 +162,15 @@ void auton_sawp_counter_nowing() {
     score();
 
     // grab both stacks
-    c_lemlib.moveToPoint(0.7_tiles, -0.89_tiles, 1000, {.maxSpeed = 100, .minSpeed = 10, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(0.7_tiles, -0.89_tiles, 1000, {.maxSpeed = 100, .minSpeed = 70, .earlyExitRange = 7}, false);
     store();
-    c_lemlib.moveToPoint(-0.78_tiles, -0.94_tiles, 1300, {.maxSpeed = 100, .minSpeed = 10, .earlyExitRange = 7}, true);
+    c_lemlib.moveToPoint(-0.78_tiles, -0.94_tiles, 1300, {.maxSpeed = 100, .minSpeed = 70, .earlyExitRange = 7}, true);
     delay(700);
     loader.extend();
     c_lemlib.waitUntilDone();
 
     // setup for left side
-    c_lemlib.moveToPoint(-1.8_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 1.2}, false);
+    c_lemlib.moveToPoint(-1.8_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2.5}, false);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                         LEFT LONG GOAL                                         */
@@ -172,7 +181,7 @@ void auton_sawp_counter_nowing() {
     delay(560);
     score();
     int score2Start = millis();
-    waitUntilCondition(millis() >= score2Start + 800);
+    waitUntilCondition(millis() >= score2Start + 500);
     c_lemlib.cancelMotion();
     lemlibDistReset({&right_beam});
 
@@ -181,15 +190,14 @@ void auton_sawp_counter_nowing() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive into loader
-    stop();
     top.move(-127);
     bottom.move(-127);
-    c_lemlib.moveToPoint(-1.96_tiles, -55, 1300, {.maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 6.5}, true);
-    delay(250);
+    c_lemlib.moveToPoint(-1.97_tiles, -55, 1300, {.maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 6.5}, true);
+    delay(200);
     store();
     c_lemlib.waitUntilDone();
     int loader2Start = millis();
-    c_lemlib.moveToPoint(-1.96_tiles, -70, 1000, {.maxSpeed = 45}, true);
+    c_lemlib.moveToPoint(-1.97_tiles, -70, 1000, {.maxSpeed = 45}, true);
     waitUntilCondition(millis() >= loader2Start + 1300);
     c_lemlib.cancelMotion();
 
@@ -198,30 +206,26 @@ void auton_sawp_counter_nowing() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // move to mid goal
-    c_lemlib.moveToPoint(-2_tiles, -1.9_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 6}, false);
-    c_lemlib.moveToPoint(-12, -14, 1700, {.forwards = false, .minSpeed = 10, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(-2_tiles, -1.9_tiles, 1000, {.forwards = false, .minSpeed = 80, .earlyExitRange = 6}, false);
+    c_lemlib.moveToPoint(-12, -14, 1700, {.forwards = false, .minSpeed = 50, .earlyExitRange = 7}, false);
     c_lemlib.moveToPoint(-8, -10.5, 700, {.forwards = false, .maxSpeed = 80}, true);
     
-    delay(300);
-    top.move(-96);
-    bottom.move(85);
+    delay(60);
+    outtake();
+    delay(100);
+    top.move(-80);
+    bottom.move(70);
     
     // color sensor timeout
-    waitUntilColor(&optical_top, WrongColor, startTime + 16000);
-    delay(70); // mid color timer
+    waitUntilColor(&optical_top, WrongColor, startTime + 14600);
     stop();
+    // delay(40); // mid color timer
     c_lemlib.cancelMotion();
 
     // macro and descore
+    delay(100);
     loader.retract();
-    delay(500);
-    bottom.move(-127);
-    delay(150);
-    top.move(127);
-    bottom.brake();
-    delay(200);
-    top.brake();
-    bottom.brake();
+    unjam_block();
 }
 
 void auton_sawp_counter_wing() {
@@ -284,9 +288,9 @@ void auton_sawp_counter_wing() {
     score();
 
     // grab both stacks
-    c_lemlib.moveToPoint(0.7_tiles, -0.89_tiles, 1000, {.maxSpeed = 100, .minSpeed = 10, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(0.7_tiles, -0.89_tiles, 1000, {.maxSpeed = 100, .minSpeed = 70, .earlyExitRange = 7}, false);
     store();
-    c_lemlib.moveToPoint(-0.78_tiles, -0.94_tiles, 1300, {.maxSpeed = 100, .minSpeed = 10, .earlyExitRange = 7}, true);
+    c_lemlib.moveToPoint(-0.78_tiles, -0.94_tiles, 1300, {.maxSpeed = 100, .minSpeed = 70, .earlyExitRange = 7}, true);
     delay(700);
     loader.extend();
     c_lemlib.waitUntilDone();
