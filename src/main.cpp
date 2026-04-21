@@ -202,7 +202,7 @@ void wait_for_bypass() {
     while (!comp_started) {
         if (!competition::is_connected() && master.get_digital(DIGITAL_X) && master.get_digital(DIGITAL_A)) {
             waitUntilCondition(!master.get_digital(DIGITAL_X) && !master.get_digital(DIGITAL_A));
-            // calibrate_all();
+            calibrate_all();
             printing = false;
             selecting = false;
             autonomous();
@@ -285,7 +285,7 @@ void autonomous() {
             finished = true;
         });
 
-        waitUntilCondition(millis() > startTime + 60000 || finished);
+        waitUntilCondition(millis() > startTime + 15000 || finished);
         if (!finished) {
             test_auto.remove();
             c_lemlib.cancelAllMotions();
