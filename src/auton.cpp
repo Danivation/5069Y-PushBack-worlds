@@ -1205,8 +1205,8 @@ void auton_right_7ball_counter() {
 
 void auton_skills() {
     int startTime = millis();
-    c_danielib.setPose(17, -63, -90);
-    c_lemlib.setPose(17, -63, -90);
+    c_danielib.setPose(17, -63.5, -90);
+    c_lemlib.setPose(17, -63.5, -90);
     wing.extend();
     odom_lift.extend();
     store();
@@ -1219,10 +1219,10 @@ void auton_skills() {
     lemlibDistReset({&left_beam});
     c_lemlib.moveToPoint(-1.5, -64, 1500, {.maxSpeed = 95, .minSpeed = 65, .earlyExitRange = 4}, false);
 
-    lemlibDistReset({&left_beam});
     
     // drive through and a little bit out
-    c_lemlib.moveToPoint(-16, -64, 1200, {.maxSpeed = 127, .minSpeed = 55, .earlyExitRange = 4}, true);
+    lemlibDistReset({&left_beam});
+    c_lemlib.moveToPoint(-16, -64, 1200, {.maxSpeed = 100, .minSpeed = 55, .earlyExitRange = 4}, true);
     odom_lift.retract();
     loader.extend();    //"sidih is the goat"!!!!!
     c_lemlib.waitUntilDone();
@@ -1237,9 +1237,9 @@ void auton_skills() {
     c_lemlib.waitUntilDone();
 
     // swing and scoop
-    c_lemlib.swingToHeading(180+135, DriveSide::RIGHT, 400, {}, false);
-    c_danielib.turnToHeading(0, 500);
-    c_danielib.driveForDistance(6, 500);
+    // c_lemlib.swingToHeading(180+135, DriveSide::RIGHT, 400, {}, false);
+    // c_danielib.turnToHeading(180, 500);
+    // c_danielib.driveForDistance(6, 300);
     
     // reset on wall
     lemlibDistReset({&front_beam, &right_beam});
@@ -1255,7 +1255,7 @@ void auton_skills() {
     c_lemlib.turnToHeading(60, 400, {}, false);
 
     // unjam during movement
-    c_lemlib.moveToPoint(15.9, -30, 1800, {}, true);
+    c_lemlib.moveToPoint(15.5, -30, 1800, {}, true);
     delay(200);
     bottom.move(-127);
     delay(150);
@@ -1293,7 +1293,7 @@ void auton_skills() {
                 delay(300);
 
     // back up
-    c_lemlib.moveToPoint(0.8_tiles, -0.8_tiles, 1000, {.forwards = false, .minSpeed = 20, .earlyExitRange = 3}, true);
+    c_lemlib.moveToPoint(0.8_tiles, -0.7_tiles, 1000, {.forwards = false, .minSpeed = 20, .earlyExitRange = 3}, true);
     delay(500);
     intake_raise.retract();
     stop();
@@ -1306,13 +1306,13 @@ void auton_skills() {
 
     // intake 4 left stack
     store();
-    c_lemlib.moveToPoint(-0.82_tiles, -0.93_tiles, 1000, {.minSpeed = 70, .earlyExitRange = 7}, true);
-    delay(730);
+    c_lemlib.moveToPoint(-0.8_tiles, -0.93_tiles, 1000, {.minSpeed = 70, .earlyExitRange = 7}, true);
+    delay(750);
     loader.extend();
     c_lemlib.waitUntilDone();
 
     // setup for left side
-    c_lemlib.moveToPoint(-1.9_tiles, -1.55_tiles, 850, {.maxSpeed = 90, .minSpeed = 30, .earlyExitRange = 2}, false);
+    c_lemlib.moveToPoint(-2_tiles, -1.55_tiles, 1000, {}, false);
     c_danielib.turnToHeading(180, 400);
     lemlibDistReset({&right_beam});
 
@@ -1470,7 +1470,7 @@ void auton_skills() {
     lemlibDistReset({&left_beam});
     
     // drive through and a little bit out
-    c_lemlib.moveToPoint(16, 64, 1200, {.maxSpeed = 127, .minSpeed = 55, .earlyExitRange = 4}, true);
+    c_lemlib.moveToPoint(16, 64, 1200, {.maxSpeed = 100, .minSpeed = 55, .earlyExitRange = 4}, true);
     odom_lift.retract();
     loader.extend();    //"sidih is the goat"!!!!!
     c_lemlib.waitUntilDone();
@@ -1487,7 +1487,7 @@ void auton_skills() {
     // swing and scoop
     c_lemlib.swingToHeading(135, DriveSide::RIGHT, 400, {}, false);
     c_danielib.turnToHeading(0, 500);
-    c_danielib.driveForDistance(6, 500);
+    c_danielib.driveForDistance(6, 300);
     
     // reset on wall
     lemlibDistReset({&front_beam, &right_beam});
