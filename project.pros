@@ -660,7 +660,8 @@
     },
     "upload_options": {
       "description": "5069Y competition code for Push Back",
-      "icon": "pros"
+      "icon": "pros",
+      "slot": 1
     },
     "use_early_access": false
   }
