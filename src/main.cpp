@@ -255,7 +255,7 @@ void competition_initialize() {
     selecting = false;
 
     pros::lcd::print(0, "Calibrating...");
-    calibrate_all();
+    // calibrate_all();
     pros::Task logger(print_info);
 }
 
@@ -269,7 +269,8 @@ void autonomous() {
     printing = true;
     pros::Task printer(print_info);
 
-    /**/
+    auton_skills();
+    /**
     if (competition::is_connected()) {
         run_auton(auton_index);
     } else {
