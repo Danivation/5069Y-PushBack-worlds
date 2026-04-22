@@ -97,7 +97,7 @@ void IntakeControl() {
                 top.move(-30);
                 delay(300);
 
-                bottom.move_velocity(-57);
+                bottom.move_velocity(-55);
                 delay(400);
 
                 bottom.move_velocity(-52);
@@ -120,8 +120,13 @@ void IntakeControl() {
                 driving = true;
             
             }};
-            pros::delay(10);
-            waitUntilCondition(driving || DeadBand(THROTTLE_AXIS, 2) > 1 || DeadBand(TURN_AXIS, 2) > 1);
+            pros::delay(50);
+            waitUntilCondition(driving || fabs(DeadBand(THROTTLE_AXIS, 2)) > 1 || 
+                                        fabs(DeadBand(TURN_AXIS, 2)) > 1 ||
+                                        master.get_digital(INTAKE_TO_LOW_GOAL) ||
+                                        master.get_digital(INTAKE_TO_HIGH_GOAL) ||
+                                        master.get_digital(INTAKE_TO_MID_GOAL)
+            );
             if (!driving) {
                 lowMacro.remove();
                 bottom.brake();
@@ -161,8 +166,8 @@ void IntakeControl() {
                 bottom.move_velocity(58);
                 delay(1000);
 
-                top.move_velocity(-77);
-                bottom.move_velocity(85);
+                top.move_velocity(-60);
+                bottom.move_velocity(60);
                 delay(1100);
 
                 c_danielib.driveForDistance(-5, 350, 15);
@@ -173,14 +178,18 @@ void IntakeControl() {
 
                 bottom.brake();
                 top.brake();
-                c_danielib.driveForDistance(-5, 350, 15);
 
                 // START DRIVING
 
                 driving = true;
             }};
             pros::delay(10);
-            waitUntilCondition(driving || DeadBand(THROTTLE_AXIS, 2) > 1 || DeadBand(TURN_AXIS, 2) > 1);
+            waitUntilCondition(driving || fabs(DeadBand(THROTTLE_AXIS, 2)) > 1 || 
+                                        fabs(DeadBand(TURN_AXIS, 2)) > 1 ||
+                                        master.get_digital(INTAKE_TO_LOW_GOAL) ||
+                                        master.get_digital(INTAKE_TO_HIGH_GOAL) ||
+                                        master.get_digital(INTAKE_TO_MID_GOAL)
+            );
             if (!driving) {
                 midMacro.remove();
                 bottom.brake();

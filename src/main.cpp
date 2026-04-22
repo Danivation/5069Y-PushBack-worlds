@@ -241,7 +241,7 @@ void initialize() {
     optical_top.set_led_pwm(0);
 
     // skills things
-    calibrate_all();
+    // calibrate_all();
     // autonomous();
 
     pros::Task selector(auton_selector);
@@ -254,8 +254,13 @@ void competition_initialize() {
     printing = true;
     selecting = false;
 
+    left_mg.set_brake_mode_all(MotorBrake::hold);
+    right_mg.set_brake_mode_all(MotorBrake::hold);
+    bottom.set_brake_mode(MotorBrake::brake);
+    top.set_brake_mode(MotorBrake::brake);
+
     pros::lcd::print(0, "Calibrating...");
-    // calibrate_all();
+    calibrate_all();
     pros::Task logger(print_info);
 }
 
