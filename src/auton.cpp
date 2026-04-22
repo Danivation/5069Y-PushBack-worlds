@@ -1505,7 +1505,7 @@ void auton_skills() {
     c_lemlib.moveToPoint(-1.8_tiles, 2.2_tiles, 1000, {.minSpeed = 75, .earlyExitRange = 6}, false);
     c_lemlib.moveToPoint(-1.1_tiles, 2.5_tiles, 1000, {.minSpeed = 75, .earlyExitRange = 6}, false);
     lemlibDistReset({&left_beam});
-    c_lemlib.moveToPoint(-16, 64, 1000, {}, false);
+    c_lemlib.moveToPoint(-16, 63.5, 1000, {}, false);
 
     // START drive in
     store();
