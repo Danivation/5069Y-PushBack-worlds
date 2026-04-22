@@ -1335,10 +1335,12 @@ void auton_skills() {
 
                 // BRAKE AND START DRIVING
 
-                c_danielib.driveForDistance(-5, 500);
+                c_danielib.driveForDistance(-4, 500);
 
     // back up
-    c_lemlib.moveToPoint(0.8_tiles, -0.8_tiles, 1000, {.forwards = false, .maxSpeed = 80, .minSpeed = 20, .earlyExitRange = 3}, true);
+    c_lemlib.swingToHeading(10, DriveSide::LEFT, 500, {}, false);
+    
+    c_lemlib.moveToPoint(0.35_tiles, -0.8_tiles, 1000, {.forwards = false, .maxSpeed = 90, .minSpeed = 20, .earlyExitRange = 3}, true);
     delay(200);
     intake_raise.retract();
     bottom.move(-100);
@@ -1417,9 +1419,9 @@ void auton_skills() {
     lemlibDistReset({&right_beam});
 
     // swing around into goal
-    c_lemlib.moveToPoint(-2.05_tiles, 1.77_tiles, 1100, {.forwards = false, .maxSpeed = 90}, false);
+    c_lemlib.moveToPoint(-2_tiles, 1.77_tiles, 1100, {.forwards = false, .maxSpeed = 90}, false);
     c_danielib.turnToHeading(0, 600);
-    lemlibDistReset({&left_beam});
+    lemlibDistReset({&left_beam, &front_beam});
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                       FAR LEFT SCORE - 2                                       */
@@ -1469,7 +1471,7 @@ void auton_skills() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive backwards to goal
-    c_lemlib.moveToPoint(-2.03_tiles, 26, 1300, {.forwards = false, .maxSpeed = 90}, true);
+    c_lemlib.moveToPoint(-2.03_tiles, 24, 1300, {.forwards = false, .maxSpeed = 90}, true);
     delay(400);
     stop();
     delay(200);
@@ -1522,7 +1524,7 @@ void auton_skills() {
     c_lemlib.waitUntilDone();
 
     // drive all the way out
-    c_lemlib.moveToPoint(27.2, 64, 1200, {.minSpeed = 40, .earlyExitRange = 3}, true);
+    c_lemlib.moveToPoint(26.5, 64, 1200, {.minSpeed = 40, .earlyExitRange = 3}, true);
     delay(220);
 
     // dist reset in the middle
@@ -1666,9 +1668,9 @@ void auton_skills() {
     lemlibDistReset({&right_beam});
 
     // swing around into goal
-    c_lemlib.moveToPoint(2.05_tiles, -1.77_tiles, 1100, {.forwards = false, .maxSpeed = 90}, false);
+    c_lemlib.moveToPoint(2_tiles, -1.77_tiles, 1100, {.forwards = false, .maxSpeed = 90}, false);
     c_danielib.turnToHeading(180, 600);
-    lemlibDistReset({&left_beam});
+    lemlibDistReset({&left_beam, &front_beam});
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                      CLOSE RIGHT SCORE - 4                                     */
