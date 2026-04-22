@@ -1228,21 +1228,21 @@ void auton_skills() {
     c_lemlib.waitUntilDone();
 
     // drive all the way out
-    c_lemlib.moveToPoint(-27.2, -64, 1200, {}, true);
-    delay(220);
+    c_lemlib.moveToPoint(-27.2, -64, 1200, {.minSpeed = 60, .earlyExitRange = 3}, true);
+    delay(200);
 
     // dist reset in the middle
     lemlibDistReset({&front_beam, &left_beam});
     loader.retract();
     c_lemlib.waitUntilDone();
 
-    // swing and scoop
-    // c_lemlib.swingToHeading(180+135, DriveSide::RIGHT, 400, {}, false);
-    // c_danielib.turnToHeading(180, 500);
-    // c_danielib.driveForDistance(6, 300);
+    // BETTER swing and scoop
+    c_lemlib.moveToPoint(-2_tiles, -2.2_tiles, 1200, {.minSpeed = 40, .earlyExitRange = 5}, false);
+    c_lemlib.moveToPoint(-2.4_tiles, -2.2_tiles, 800, {}, false);
+    c_danielib.turnToHeading(-90, 350);
     
     // reset on wall
-    lemlibDistReset({&front_beam, &right_beam});
+    lemlibDistReset({&front_beam, &left_beam});
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                          HIGH MID GOAL                                         */
@@ -1250,8 +1250,7 @@ void auton_skills() {
 
     // get block
     store();
-    loader.retract();
-    c_lemlib.moveToPoint(-0.4_tiles, -1.85_tiles, 1000, {.forwards = false, .minSpeed = 30, .earlyExitRange = 2}, false);
+    c_lemlib.moveToPoint(-0.4_tiles, -1.85_tiles, 1500, {.forwards = false, .minSpeed = 30, .earlyExitRange = 2}, false);
     c_lemlib.turnToHeading(60, 400, {}, false);
 
     // unjam during movement
