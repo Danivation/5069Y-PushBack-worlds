@@ -4,7 +4,7 @@
 /*                                        GLOBAL VARIABLES                                        */
 /* ---------------------------------------------------------------------------------------------- */
 
-const bool skillsSlow = false;
+const bool skillsSlow = true;
 const bool autoForDriver = false;
 
 pros::Color WrongColor = Color::red;

@@ -93,24 +93,27 @@ void IntakeControl() {
                 // START MACRO
 
                 // outtake
-                bottom.move_velocity(-66);
+                bottom.move_velocity(-60);
                 top.move(-30);
                 delay(300);
 
-                bottom.move_velocity(-60);
-                delay(300);
+                bottom.move_velocity(-57);
+                delay(400);
 
-                bottom.move_velocity(-50);
+                bottom.move_velocity(-52);
                 top.brake();
-                delay(600);
-                c_danielib.async().driveForDistance(-2.0, 500);
-                delay(300);
+                delay(500);
+                c_danielib.async().driveForDistance(-2.3, 500);
+                delay(500);
 
-                bottom.move_velocity(-43);
-                delay(650);
-                c_danielib.driveForDistance(5, 300, 18);
+                bottom.move_velocity(-40);
+                delay(400);
+                // bottom.move_velocity(-40);
+                delay(500);
 
                 // BRAKE AND START DRIVING
+
+                c_danielib.driveForDistance(-5, 500);
 
                 bottom.brake();
                 top.brake();
@@ -141,12 +144,12 @@ void IntakeControl() {
 
                 
                 // score mid goal
-                c_danielib.async().driveForDistance(-8, 500, 15);
+                c_danielib.async().driveForDistance(-4, 500, 10);
                 bottom.move(-100);
                 top.move(-30);
                 delay(130);
 
-                top.move_velocity(-95);
+                top.move_velocity(-105);
                 bottom.move_velocity(90);
                 delay(450);
 
@@ -158,8 +161,8 @@ void IntakeControl() {
                 bottom.move_velocity(58);
                 delay(1000);
 
-                top.move_velocity(-85);
-                bottom.move_velocity(95);
+                top.move_velocity(-77);
+                bottom.move_velocity(85);
                 delay(1100);
 
                 c_danielib.driveForDistance(-5, 350, 15);

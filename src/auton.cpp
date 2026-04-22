@@ -1565,31 +1565,31 @@ void auton_skills() {
     c_lemlib.moveToPoint(11, 16, 1000, {.forwards = false, .minSpeed = 30, .earlyExitRange = 3}, false);
     c_lemlib.moveToPose(6.5, 6, 45, 850, {.forwards = false, .horizontalDrift = 4, .lead = 0.4}, false);
 
-    // score mid goal
-    c_danielib.async().driveForDistance(-4, 500, 10);
-    bottom.move(-100);
-    top.move(-30);
-    delay(130);
+                // score mid goal
+                c_danielib.async().driveForDistance(-4, 500, 10);
+                bottom.move(-100);
+                top.move(-30);
+                delay(130);
 
-    top.move_velocity(-95);
-    bottom.move_velocity(90);
-    delay(450);
+                top.move_velocity(-95);
+                bottom.move_velocity(90);
+                delay(450);
 
-    top.move_velocity(-90);
-    bottom.move_velocity(65);
-    delay(850);
+                top.move_velocity(-90);
+                bottom.move_velocity(65);
+                delay(850);
 
-    top.move_velocity(-85);
-    bottom.move_velocity(58);
-    delay(1000);
+                top.move_velocity(-85);
+                bottom.move_velocity(58);
+                delay(1000);
 
-    top.move_velocity(-77);
-    bottom.move_velocity(90);
-    delay(1100);
+                top.move_velocity(-77);
+                bottom.move_velocity(90);
+                delay(1100);
 
-    c_danielib.driveForDistance(-5, 350, 15);
-    top.brake();
-    bottom.brake();
+                c_danielib.driveForDistance(-5, 350, 15);
+                top.brake();
+                bottom.brake();
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                       FAR RIGHT STACK - 3                                      */
@@ -1756,7 +1756,7 @@ void auton_skills() {
     c_lemlib.moveToPoint(1.23_tiles, -2.5_tiles, 1000, {.minSpeed = 75, .earlyExitRange = 6}, false);
     lemlibDistReset({&left_beam});
     c_lemlib.moveToPoint(16, -64, 1000, {}, false);
-    
+
 
     // drive in
     store();
