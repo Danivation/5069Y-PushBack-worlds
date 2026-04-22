@@ -497,7 +497,7 @@ void auton_right_split() {
 
     // drive backwards towards match loader
     store();
-    c_lemlib.moveToPoint(1.98_tiles, -1.95_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 2}, true);
+    c_lemlib.moveToPoint(2.05_tiles, -1.95_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 2}, true);
     delay(200);
     loader.extend();
     c_lemlib.waitUntilDone();
@@ -564,15 +564,16 @@ void auton_right_split() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // front wing
-    c_lemlib.moveToPoint(2_tiles-0.53_tiles, -1.4_tiles, 1100, {.forwards = false, .minSpeed = 10, .earlyExitRange = 2}, false);
+    c_lemlib.moveToPoint(2_tiles-0.49_tiles, -1.4_tiles, 1100, {.forwards = false, .minSpeed = 10, .earlyExitRange = 2}, false);
     stop();
     intake_raise.retract();
     c_lemlib.turnToHeading(0, 400, {}, false);
     left_mg.set_brake_mode_all(MotorBrake::hold);
     left_mg.set_brake_mode_all(MotorBrake::hold);
-    c_lemlib.moveToPoint(2_tiles-0.45_tiles, -1.05_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 7}, false);
-    c_lemlib.moveToPoint(2_tiles-0.4_tiles, -7, 1000, {}, false);
-    c_lemlib.turnToHeading(-15, 5000, {}, false);
+
+    c_lemlib.moveToPoint(2_tiles-0.42_tiles, -1_tiles, 1000, {.forwards = true, .minSpeed = 80, .earlyExitRange = 5}, false);
+    c_lemlib.moveToPoint(2_tiles-0.42_tiles, -8, 1000, {.forwards = true, .maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 4}, false);
+    c_lemlib.swingToHeading(-20, DriveSide::LEFT, 400, {}, false);
 }
 
 /* ---------------------------------------------------------------------------------------------- */
