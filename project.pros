@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "driver skills",
+    "project_name": "auto skills",
     "target": "v5",
     "templates": {
       "LemLib": {
@@ -661,7 +661,7 @@
     "upload_options": {
       "description": "5069Y competition code for Push Back",
       "icon": "pros",
-      "slot": 3
+      "slot": 2
     },
     "use_early_access": false
   }
