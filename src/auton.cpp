@@ -650,7 +650,7 @@ void auton_right_4ball_loader() {
 
     // drive backwards towards match loader
     store();
-    c_lemlib.moveToPoint(1.98_tiles, -1.95_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 2}, true);
+    c_lemlib.moveToPoint(2.05_tiles, -1.95_tiles, 1000, {.forwards = false, .minSpeed = 10, .earlyExitRange = 2}, true);
     delay(200);
     loader.extend();
     c_lemlib.waitUntilDone();
