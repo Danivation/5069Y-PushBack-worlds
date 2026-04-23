@@ -213,7 +213,7 @@ void auton_sawp_counter_nowing() {
     delay(60);
     outtake();
     delay(100);
-    top.move(-80);
+    top.move(-55);
     bottom.move(70);
     
     // color sensor timeout
