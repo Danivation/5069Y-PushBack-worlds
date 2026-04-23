@@ -1260,10 +1260,11 @@ void auton_skills() {
     c_lemlib.turnToHeading(180+5, 100);
     c_lemlib.turnToHeading(180-5, 100, {}, false);
     c_danielib.driveForDistance(-5, 250, 100, 0, true);
-    bottom.move(-127);
-    delay(200);
-    store();
-    delay(30);
+    // bottom.move(-127);
+    // delay(200);
+    // store();
+    // delay(30);
+    c_danielib.waitUntilDone();
     c_danielib.driveForDistance(7, 150, 120, 0, false);
 
     // back out
@@ -1380,7 +1381,7 @@ void auton_skills() {
     delay(350);
     int score1Start = millis();
     score();
-    waitUntilCondition(millis() >= score1Start + 600);
+    waitUntilCondition(millis() >= score1Start + 500);
     c_lemlib.cancelAllMotions();
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -1484,7 +1485,7 @@ void auton_skills() {
     top.move(-15);
     bottom.move(-20);
     loader.retract();
-    delay(400);
+    delay(300);
     int score2LStart = millis();
     // bottom.move(70);
     // top.move(65);
@@ -1492,7 +1493,7 @@ void auton_skills() {
 
     // realign inside goal and wait until global timeout
     c_lemlib.moveToPoint(-2.03_tiles, 22, 2000, {.forwards = false, .maxSpeed = 70}, true);
-    waitUntilCondition(millis() >= startTime + 27700 || millis() >= score2LStart + 1800);
+    waitUntilCondition(millis() >= startTime + 28000 || millis() >= score2LStart + 2000);
     c_lemlib.cancelAllMotions();
 
     // dist reset
@@ -1580,15 +1581,15 @@ void auton_skills() {
                 delay(450);
 
                 top.move_velocity(-90);
-                bottom.move_velocity(65);
+                bottom.move_velocity(80);
                 delay(850);
 
-                top.move_velocity(-85);
-                bottom.move_velocity(58);
+                top.move_velocity(-75);
+                bottom.move_velocity(80);
                 delay(1000);
 
-                top.move_velocity(-60);
-                bottom.move_velocity(60);
+                top.move_velocity(-50);
+                bottom.move_velocity(80);
                 delay(1100);
 
                 c_danielib.driveForDistance(-5, 350, 15);
@@ -1631,17 +1632,17 @@ void auton_skills() {
     score();
 
     // wait until done
-    waitUntilCondition(millis() >= score3Start + 600);
+    waitUntilCondition(millis() >= score3Start + 550);
     c_lemlib.cancelAllMotions();
-    bottom.move(127);
-    top.move(-127);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                      FAR RIGHT LOADER - 3                                      */
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive into loader
-    c_lemlib.moveToPoint(1.99_tiles, 54, 1300, {.maxSpeed = 80, .minSpeed = 10, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(1.99_tiles, 54, 1300, {.maxSpeed = 80, .minSpeed = 10, .earlyExitRange = 7}, true);
+    unjam();
+    c_lemlib.waitUntilDone();
     int loader3Start = millis();
     store();
     c_lemlib.moveToPoint(1.99_tiles, 70, 1000, {.maxSpeed = 35}, true);
@@ -1688,13 +1689,13 @@ void auton_skills() {
     hood.extend();
     top.move(-15);
     bottom.move(-20);
-    delay(350);
+    delay(250);
     int score4Start = millis();
     score();
 
     // realign inside goal
     c_lemlib.moveToPoint(2.05_tiles, -22, 2000, {.forwards = false, .maxSpeed = 70}, true);
-    waitUntilCondition(millis() >= score4Start + 1100);
+    waitUntilCondition(millis() >= score4Start + 1050);
     c_lemlib.cancelAllMotions();
 
     // dist reset
@@ -1735,15 +1736,13 @@ void auton_skills() {
     hood.extend();
     top.move(-15);
     bottom.move(-20);
-    delay(400);
+    delay(280);
     int score4LStart = millis();
-    // bottom.move(70);
-    // top.move(65);
     score();
 
     // realign inside goal and wait until global timeout
     c_lemlib.moveToPoint(2.02_tiles, -22, 2000, {.forwards = false, .maxSpeed = 70}, true);
-    waitUntilCondition(millis() >= startTime + 56700 || millis() >= score4LStart + 1700);
+    waitUntilCondition(millis() >= startTime + 56700 || millis() >= score4LStart + 200);
     // top.move(127);
     // bottom.move(127);
     score();
