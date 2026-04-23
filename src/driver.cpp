@@ -41,8 +41,8 @@ void IntakeControl() {
             hood.retract();
             intake_raise.retract();
             if (skillsSlow) {
-                bottom.move(35);
-                top.move(-40);
+                bottom.move_velocity(55);
+                top.move_velocity(-30);
             } else {
                 bottom.move(127);
                 top.move(-127);
@@ -92,7 +92,6 @@ void IntakeControl() {
 
                 // START MACRO
 
-                // outtake
                 bottom.move_velocity(-60);
                 top.move(-30);
                 delay(300);
@@ -107,9 +106,7 @@ void IntakeControl() {
                 delay(500);
 
                 bottom.move_velocity(-40);
-                delay(400);
-                // bottom.move_velocity(-40);
-                delay(500);
+                delay(900);
 
                 // BRAKE AND START DRIVING
 
@@ -148,27 +145,26 @@ void IntakeControl() {
                 // START MACRO
 
                 
-                // score mid goal
                 c_danielib.async().driveForDistance(-4, 500, 10);
                 bottom.move(-100);
                 top.move(-30);
-                delay(130);
+                delay(170);
 
                 top.move_velocity(-105);
                 bottom.move_velocity(90);
                 delay(450);
 
                 top.move_velocity(-90);
-                bottom.move_velocity(65);
+                bottom.move_velocity(80);
                 delay(850);
 
-                top.move_velocity(-85);
-                bottom.move_velocity(58);
+                top.move_velocity(-75);
+                bottom.move_velocity(80);
                 delay(1000);
 
-                top.move_velocity(-60);
-                bottom.move_velocity(60);
-                delay(1100);
+                top.move_velocity(-50);
+                bottom.move_velocity(80);
+                delay(700);
 
                 c_danielib.driveForDistance(-5, 350, 15);
                 top.brake();

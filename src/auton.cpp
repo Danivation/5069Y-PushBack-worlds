@@ -1260,10 +1260,10 @@ void auton_skills() {
     c_lemlib.turnToHeading(180+5, 100);
     c_lemlib.turnToHeading(180-5, 100, {}, false);
     c_danielib.driveForDistance(-5, 250, 100, 0, true);
-    // bottom.move(-127);
-    // delay(200);
-    // store();
-    // delay(30);
+    bottom.move(-127);
+    delay(120);
+    store();
+    delay(30);
     c_danielib.waitUntilDone();
     c_danielib.driveForDistance(7, 150, 120, 0, false);
 
@@ -1334,16 +1334,11 @@ void auton_skills() {
                 delay(500);
 
                 bottom.move_velocity(-40);
-                delay(400);
-                // bottom.move_velocity(-40);
-                delay(500);
+                delay(900);
 
                 // BRAKE AND START DRIVING
 
-                // c_danielib.driveForDistance(-2, 500);
-
     // back up
-    // c_lemlib.swingToHeading(30, DriveSide::LEFT, 650, {}, false);
     c_lemlib.turnToHeading(30, 500, {}, false);
     stop();
     c_lemlib.moveToPoint(0.2_tiles, -1_tiles, 1000, {.forwards = false}, false);
@@ -1358,7 +1353,7 @@ void auton_skills() {
     // intake 4 left stack
     store();
     c_lemlib.moveToPoint(-0.78_tiles, -0.93_tiles, 1000, {.minSpeed = 30, .earlyExitRange = 7}, true);
-    delay(260);
+    delay(150);
     loader.extend();
     c_lemlib.waitUntilDone();
 
@@ -1493,7 +1488,7 @@ void auton_skills() {
 
     // realign inside goal and wait until global timeout
     c_lemlib.moveToPoint(-2.03_tiles, 22, 2000, {.forwards = false, .maxSpeed = 70}, true);
-    waitUntilCondition(millis() >= startTime + 28400 || millis() >= score2LStart + 2000);
+    waitUntilCondition(millis() >= startTime + 28000 || millis() >= score2LStart + 2000);
     c_lemlib.cancelAllMotions();
 
     // dist reset
@@ -1554,11 +1549,11 @@ void auton_skills() {
     store();
     loader.retract();
     c_lemlib.moveToPoint(0.42_tiles, 1.82_tiles, 1000, {.forwards = false, .minSpeed = 30, .earlyExitRange = 2}, false);
-    c_lemlib.turnToHeading(180-45, 300, {}, false);
-    c_lemlib.moveToPoint(15.5, 30, 1000, {}, true);
-    delay(200);
+    c_lemlib.turnToHeading(180-45, 250, {}, false);
+    c_lemlib.moveToPoint(15.8, 29.6, 1000, {}, true);
+    delay(300);
     bottom.move(-127);
-    delay(100);
+    delay(140);
     store();
     c_lemlib.waitUntilDone();
 
