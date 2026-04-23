@@ -1376,7 +1376,7 @@ void auton_skills() {
     delay(350);
     int score1Start = millis();
     score();
-    waitUntilCondition(millis() >= score1Start + 550);
+    waitUntilCondition(millis() >= score1Start + 600);
     c_lemlib.cancelAllMotions();
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -1439,7 +1439,7 @@ void auton_skills() {
 
     // realign inside goal
     c_lemlib.moveToPoint(-2.05_tiles, 22, 2000, {.forwards = false, .maxSpeed = 70}, true);
-    waitUntilCondition(millis() >= score2Start + 1050);
+    waitUntilCondition(millis() >= score2Start + 1250);
     c_lemlib.cancelAllMotions();
 
     c_lemlib.setPose(-2_tiles, 28, c_lemlib.getPose().theta);
@@ -1488,7 +1488,7 @@ void auton_skills() {
 
     // realign inside goal and wait until global timeout
     c_lemlib.moveToPoint(-2.03_tiles, 22, 2000, {.forwards = false, .maxSpeed = 70}, true);
-    waitUntilCondition(millis() >= startTime + 28000 || millis() >= score2LStart + 2000);
+    waitUntilCondition(millis() >= startTime + 28000 || millis() >= score2LStart + 1500);
     c_lemlib.cancelAllMotions();
 
     // dist reset
@@ -1627,7 +1627,7 @@ void auton_skills() {
     score();
 
     // wait until done
-    waitUntilCondition(millis() >= score3Start + 550);
+    waitUntilCondition(millis() >= score3Start + 600);
     c_lemlib.cancelAllMotions();
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -1690,7 +1690,7 @@ void auton_skills() {
 
     // realign inside goal
     c_lemlib.moveToPoint(2.05_tiles, -22, 2000, {.forwards = false, .maxSpeed = 70}, true);
-    waitUntilCondition(millis() >= score4Start + 1050);
+    waitUntilCondition(millis() >= score4Start + 1250);
     c_lemlib.cancelAllMotions();
 
     // dist reset
@@ -1737,11 +1737,7 @@ void auton_skills() {
 
     // realign inside goal and wait until global timeout
     c_lemlib.moveToPoint(2.02_tiles, -22, 2000, {.forwards = false, .maxSpeed = 70}, true);
-    waitUntilCondition(millis() >= startTime + 56700 || millis() >= score4LStart + 200);
-    // top.move(127);
-    // bottom.move(127);
-    score();
-    delay(100);
+    waitUntilCondition(millis() >= startTime + 56600 || millis() >= score4LStart + 1500);
     c_lemlib.cancelAllMotions();
 
     // dist reset
@@ -1756,7 +1752,7 @@ void auton_skills() {
     c_lemlib.moveToPoint(1.8_tiles, -1.9_tiles, 1000, {.minSpeed = 75, .earlyExitRange = 6}, false);
     c_lemlib.moveToPoint(1.23_tiles, -2.5_tiles, 1000, {.minSpeed = 75, .earlyExitRange = 6}, false);
     lemlibDistReset({&left_beam});
-    c_lemlib.moveToPoint(16, -63.5, 1000, {}, false);
+    c_lemlib.moveToPoint(16, -63.5, 800, {}, false);
 
     // START drive in
     store();
