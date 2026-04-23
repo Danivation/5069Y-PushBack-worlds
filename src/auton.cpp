@@ -1281,17 +1281,17 @@ void auton_skills() {
     left_mg.set_brake_mode_all(MotorBrake::brake);
     right_mg.set_brake_mode_all(MotorBrake::brake);
     odom_lift.retract();
-    lemlibDistReset({&left_beam, &right_beam}, 10, 10);
     lemlibDistReset({&front_beam}, 8, 8);
+    lemlibDistReset({&left_beam, &right_beam}, 10, 10);
 
     // HEADING RESET - NEW
     auto redPose1 = c_lemlib.getPose();
-    c_danielib.driveForDistance(8, 500, 30);
+    c_danielib.driveForDistance(7, 500, 25);
     auto redPose = c_lemlib.getPose();
     if (redPose.y > -48.0f && redPose.y < -44.5f && redPose.theta < 195 && redPose.theta > 165) {
         c_lemlib.setPose(redPose.x, redPose.y, 180);
-        lemlibDistReset({&left_beam, &right_beam}, 10, 10);
         lemlibDistReset({&front_beam}, 8, 8);
+        lemlibDistReset({&left_beam, &right_beam}, 10, 10);
     }
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -1349,7 +1349,7 @@ void auton_skills() {
     // back up
     c_lemlib.swingToHeading(30, DriveSide::LEFT, 650, {}, false);
     stop();
-    c_lemlib.moveToPoint(0.2_tiles, -1_tiles, 9000, {.forwards = false}, false);
+    c_lemlib.moveToPoint(0.2_tiles, -1_tiles, 1000, {.forwards = false}, false);
     intake_raise.retract();
     c_lemlib.turnToHeading(270, 400, {}, false);
 
@@ -1359,13 +1359,13 @@ void auton_skills() {
 
     // intake 4 left stack
     store();
-    c_lemlib.moveToPoint(-0.82_tiles, -0.93_tiles, 1000, {.minSpeed = 70, .earlyExitRange = 7}, true);
+    c_lemlib.moveToPoint(-0.78_tiles, -0.93_tiles, 1000, {.minSpeed = 70, .earlyExitRange = 7}, true);
     delay(730);
     loader.extend();
     c_lemlib.waitUntilDone();
 
     // setup for left side
-    c_lemlib.moveToPoint(-1.9_tiles, -1.55_tiles, 850, {.maxSpeed = 90, .minSpeed = 30, .earlyExitRange = 2}, false);
+    c_lemlib.moveToPoint(-2_tiles, -1.55_tiles, 850, {.maxSpeed = 90}, false);
     c_danielib.turnToHeading(180, 400);
     lemlibDistReset({&right_beam});
 
@@ -1528,7 +1528,7 @@ void auton_skills() {
     c_lemlib.waitUntilDone();
 
     // drive all the way out
-    c_lemlib.moveToPoint(26, 64, 1200, {.minSpeed = 40, .earlyExitRange = 3}, true);
+    c_lemlib.moveToPoint(25.3, 64, 1200, {.minSpeed = 40, .earlyExitRange = 3}, true);
     delay(250);
 
     // dist reset in the middle
