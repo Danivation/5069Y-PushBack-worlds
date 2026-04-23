@@ -219,7 +219,7 @@ void auton_sawp_counter_nowing() {
     // color sensor timeout
     waitUntilColor(&optical_top, WrongColor, startTime + 14600);
     stop();
-    // delay(40); // mid color timer
+    delay(40); // mid color timer
     c_lemlib.cancelMotion();
 
     // macro and descore

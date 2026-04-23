@@ -68,6 +68,7 @@ void IntakeControl() {
                 top.move(-127);
             }
         } else if (master.get_digital_new_press(INTAKE_UNJAM_MACRO)) {
+            hood.retract();
             bottom.move(-127);
             delay(150);
             top.move(127);
