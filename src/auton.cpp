@@ -1281,18 +1281,13 @@ void auton_skills() {
     left_mg.set_brake_mode_all(MotorBrake::brake);
     right_mg.set_brake_mode_all(MotorBrake::brake);
     odom_lift.retract();
-    lemlibDistReset({&left_beam, &right_beam}, 10, 10);
-    lemlibDistReset({&front_beam}, 8, 8);
 
     // HEADING RESET - NEW
-    auto redPose1 = c_lemlib.getPose();
     c_danielib.driveForDistance(8, 500, 30);
     auto redPose = c_lemlib.getPose();
-    if (/* redPose.y > -48.0f && redPose.y < -44.5f && redPose.theta < 195 && redPose.theta > 165 */true) {
-        c_lemlib.setPose(redPose.x, redPose.y, 180);
-        lemlibDistReset({&left_beam, &right_beam}, 10, 10);
-        lemlibDistReset({&front_beam}, 8, 8);
-    }
+    c_lemlib.setPose(redPose.x, redPose.y, 180);
+    lemlibDistReset({&left_beam, &right_beam}, 10, 10);
+    lemlibDistReset({&front_beam}, 8, 8);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                            LOW GOAL                                            */
@@ -1353,6 +1348,7 @@ void auton_skills() {
     c_lemlib.moveToPoint(0.2_tiles, -1_tiles, 1000, {.forwards = false}, false);
     intake_raise.retract();
     c_lemlib.turnToHeading(270, 400, {}, false);
+    lemlibDistReset({&left_beam});
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                      CLOSE LEFT STACK - 1                                      */
@@ -1360,8 +1356,8 @@ void auton_skills() {
 
     // intake 4 left stack
     store();
-    c_lemlib.moveToPoint(-0.78_tiles, -0.93_tiles, 1000, {.minSpeed = 70, .earlyExitRange = 7}, true);
-    delay(730);
+    c_lemlib.moveToPoint(-0.78_tiles, -0.93_tiles, 1000, {.minSpeed = 30, .earlyExitRange = 7}, true);
+    delay(260);
     loader.extend();
     c_lemlib.waitUntilDone();
 
@@ -1427,7 +1423,7 @@ void auton_skills() {
     // swing around into goal
     c_lemlib.moveToPoint(-2_tiles, 1.77_tiles, 1100, {.forwards = false, .maxSpeed = 90}, false);
     c_danielib.turnToHeading(0, 600);
-    lemlibDistReset({&left_beam, &front_beam});
+    lemlibDistReset({&left_beam});
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                       FAR LEFT SCORE - 2                                       */
@@ -1450,7 +1446,8 @@ void auton_skills() {
     waitUntilCondition(millis() >= score2Start + 1100);
     c_lemlib.cancelAllMotions();
 
-    lemlibDistReset({&left_beam});
+    c_lemlib.setPose(-2_tiles, 28, c_lemlib.getPose().theta);
+    lemlibDistReset({&left_beam, &front_beam}, 6, 3);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                       FAR LEFT LOADER - 2                                      */
@@ -1677,7 +1674,7 @@ void auton_skills() {
     // swing around into goal
     c_lemlib.moveToPoint(2.05_tiles, -1.77_tiles, 1100, {.forwards = false, .maxSpeed = 90}, false);
     c_danielib.turnToHeading(180, 600);
-    lemlibDistReset({&left_beam, &front_beam});
+    lemlibDistReset({&left_beam});
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                      CLOSE RIGHT SCORE - 4                                     */
@@ -1701,7 +1698,8 @@ void auton_skills() {
     c_lemlib.cancelAllMotions();
 
     // dist reset
-    lemlibDistReset({&left_beam});
+    c_lemlib.setPose(2_tiles, -28, c_lemlib.getPose().theta);
+    lemlibDistReset({&left_beam, &front_beam}, 6, 3);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                     CLOSE RIGHT LOADER - 4                                     */
