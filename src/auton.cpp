@@ -1569,7 +1569,7 @@ void auton_skills() {
                 c_danielib.async().driveForDistance(-4, 500, 10);
                 bottom.move(-100);
                 top.move(-30);
-                delay(130);
+                delay(170);
 
                 top.move_velocity(-105);
                 bottom.move_velocity(90);
