@@ -1381,7 +1381,7 @@ void auton_skills() {
     delay(350);
     int score1Start = millis();
     score();
-    waitUntilCondition(millis() >= score1Start + 500);
+    waitUntilCondition(millis() >= score1Start + 550);
     c_lemlib.cancelAllMotions();
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -1405,7 +1405,7 @@ void auton_skills() {
     c_danielib.driveForDistance(3, 100);
     c_lemlib.turnToHeading(180-5, 100, {}, false);
     c_danielib.driveForDistance(3, 100);
-    waitUntilCondition(millis() >= loader1Start + 2000);
+    waitUntilCondition(millis() >= loader1Start + 1900);
     c_lemlib.cancelAllMotions();
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -1438,13 +1438,13 @@ void auton_skills() {
     hood.extend();
     top.move(-15);
     bottom.move(-20);
-    delay(350);
+    delay(250);
     int score2Start = millis();
     score();
 
     // realign inside goal
     c_lemlib.moveToPoint(-2.05_tiles, 22, 2000, {.forwards = false, .maxSpeed = 70}, true);
-    waitUntilCondition(millis() >= score2Start + 1100);
+    waitUntilCondition(millis() >= score2Start + 1050);
     c_lemlib.cancelAllMotions();
 
     c_lemlib.setPose(-2_tiles, 28, c_lemlib.getPose().theta);
@@ -1469,7 +1469,7 @@ void auton_skills() {
     c_danielib.driveForDistance(3, 100);
     c_lemlib.turnToHeading(0-5, 100, {}, false);
     c_danielib.driveForDistance(3, 100);
-    waitUntilCondition(millis() >= loader2Start + 2000);
+    waitUntilCondition(millis() >= loader2Start + 1900);
     c_lemlib.cancelAllMotions();
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -1485,7 +1485,7 @@ void auton_skills() {
     top.move(-15);
     bottom.move(-20);
     loader.retract();
-    delay(300);
+    delay(250);
     int score2LStart = millis();
     // bottom.move(70);
     // top.move(65);
@@ -1493,7 +1493,7 @@ void auton_skills() {
 
     // realign inside goal and wait until global timeout
     c_lemlib.moveToPoint(-2.03_tiles, 22, 2000, {.forwards = false, .maxSpeed = 70}, true);
-    waitUntilCondition(millis() >= startTime + 28000 || millis() >= score2LStart + 2000);
+    waitUntilCondition(millis() >= startTime + 28400 || millis() >= score2LStart + 2000);
     c_lemlib.cancelAllMotions();
 
     // dist reset
@@ -1590,7 +1590,7 @@ void auton_skills() {
 
                 top.move_velocity(-50);
                 bottom.move_velocity(80);
-                delay(1100);
+                delay(700);
 
                 c_danielib.driveForDistance(-5, 350, 15);
                 top.brake();
@@ -1656,7 +1656,7 @@ void auton_skills() {
     c_danielib.driveForDistance(3, 100);
     c_lemlib.turnToHeading(0-5, 100, {}, false);
     c_danielib.driveForDistance(3, 100);
-    waitUntilCondition(millis() >= loader3Start + 2000);
+    waitUntilCondition(millis() >= loader3Start + 1900);
     c_lemlib.cancelAllMotions();
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -1721,7 +1721,7 @@ void auton_skills() {
     c_danielib.driveForDistance(3, 100);
     c_lemlib.turnToHeading(180-5, 100, {}, false);
     c_danielib.driveForDistance(3, 100);
-    waitUntilCondition(millis() >= loader4Start + 2000);
+    waitUntilCondition(millis() >= loader4Start + 1900);
     c_lemlib.cancelAllMotions();
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -1736,7 +1736,7 @@ void auton_skills() {
     hood.extend();
     top.move(-15);
     bottom.move(-20);
-    delay(280);
+    delay(250);
     int score4LStart = millis();
     score();
 
