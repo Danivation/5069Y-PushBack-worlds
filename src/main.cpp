@@ -65,7 +65,7 @@ std::pair<std::string, std::string> get_auton_name(int index) {
 
     // right sides
     else if (index == 12)   return {"Right split", "Loader"};
-    else if (index == 13)   return {"Right 4 ball", "Loader"};
+    else if (index == 13)   return {"Right 4 ball BAD", "Loader"};
     else if (index == 14)   return {"Right 4 ball", "Stack"};
     else if (index == 15)   return {"Right 7 ball", "Stack"};
     else if (index == 16)   return {"Right 7 counter", "Loader"};
