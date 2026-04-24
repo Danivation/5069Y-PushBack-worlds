@@ -1203,8 +1203,8 @@ void auton_left_7ball_counter() {
 
     // drive backwards to goal
     store();
-    c_lemlib.turnToHeading(180, 400, {.minSpeed = 10, .earlyExitRange = 5}, false);
-    c_lemlib.moveToPoint(-2.03_tiles, -23, 1500, {.forwards = false}, true);
+    c_lemlib.turnToHeading(180, 300, {}, false);
+    c_lemlib.moveToPoint(-2_tiles, -23, 1500, {.forwards = false}, true);
     delay(700);
     score();
     int score1Start = millis();
