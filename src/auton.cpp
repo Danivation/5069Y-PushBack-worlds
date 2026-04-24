@@ -1378,7 +1378,7 @@ void auton_left_all_mid() {
     store();
     int loader1Start = millis();
     c_lemlib.moveToPoint(-1.99_tiles, -70, 1000, {.maxSpeed = 45}, true);
-    waitUntilCondition(millis() >= loader1Start + 670);
+    waitUntilCondition(millis() >= loader1Start + 600);
     c_lemlib.cancelMotion();
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -1386,28 +1386,67 @@ void auton_left_all_mid() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // grab 3 stack
-    c_lemlib.moveToPoint(-2_tiles, -2_tiles, 1000, {.minSpeed = 40, .earlyExitRange = 3}, false);
+    c_lemlib.moveToPoint(-2_tiles, -2_tiles, 1000, {.forwards = false, .minSpeed = 80, .earlyExitRange = 3}, false);
     loader.retract();
-    c_lemlib.turnToHeading(80, 300, {}, false);
-    c_lemlib.moveToPoint(0.9_tiles, -0.94_tiles, 2000, {.minSpeed = 30, .earlyExitRange = 2}, false);
+    c_lemlib.turnToHeading(90, 300, {}, false);
+    c_lemlib.moveToPoint(0_tiles, -1.5_tiles, 2000, {.minSpeed = 70, .earlyExitRange = 6}, false);
+    c_lemlib.moveToPoint(0.9_tiles, -0.94_tiles, 2000, {.minSpeed = 30, .earlyExitRange = 2}, true);
+    delay(200);
+    loader.extend();
+    c_lemlib.waitUntilDone();
 
     // score low
-    c_lemlib.turnToHeading(-45, 400, {}, false);
+    c_lemlib.turnToHeading(-45, 400, {}, true);
+    bottom.move(-127);
+    delay(130);
+    store();
+    c_lemlib.waitUntilDone();
+    loader.retract();
     c_lemlib.moveToPoint(9, -9, 1000, {.maxSpeed = 60}, true);
     delay(500);
     intake_raise.extend();
     c_lemlib.waitUntilDone();
 
+    waitUntilCondition(millis() >= startTime + 10500);
+
     // intake raise and score
-    bottom.move(-90);
+    bottom.move(-80);
     top.move(-40);
-    delay(1500);
+    delay(550);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                          HIGH MID GOAL                                         */
     /* ---------------------------------------------------------------------------------------------- */
 
-    c_lemlib.swingToHeading(180+45, DriveSide::LEFT, 1000, {.direction = AngularDirection::CW_CLOCKWISE}, false);
+    store();
+    c_lemlib.moveToPoint(0.6_tiles, -0.8_tiles, 1000, {.forwards = false, .minSpeed = 30, .earlyExitRange = 3}, false);
+    intake_raise.retract();
+    store();
+    c_lemlib.turnToHeading(-90, 300, {}, false);
+    c_lemlib.moveToPoint(-1_tiles, -1_tiles, 1000, {}, true);
+    delay(600);
+    loader.extend();
+    c_lemlib.waitUntilDone();
+
+
+    // score mid
+    c_lemlib.moveToPoint(-8, -8, 1200, {.forwards = false, .maxSpeed = 80}, true);
+    outtake();
+    delay(100);
+    stop();
+    delay(550);
+
+    // score mid goal kinda slow
+    int midScoreStart = millis();
+    score_mid();
+
+    // color sensor timeout
+    waitUntilColor(&optical_top, WrongColor, midScoreStart + 550);
+    delay(30); // mid color timer
+    c_lemlib.cancelMotion();
+    loader.retract();
+
+
 }
 
 /* ---------------------------------------------------------------------------------------------- */
