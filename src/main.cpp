@@ -277,16 +277,16 @@ void autonomous() {
             startTime = millis();
             run_auton(auton_index);
             endTime = millis();
-            finished = true;
+            // finished = true;
         });
 
-        waitUntilCondition(millis() > startTime + 15000 || finished);
-        if (!finished) {
-            test_auto.remove();
-            c_lemlib.cancelAllMotions();
-            c_danielib.stopAllMovements();
-            endTime = millis();
-        }
+        waitUntilCondition(millis() > startTime + 15000 /* || finished */);
+        // if (!finished) {
+        //     test_auto.remove();
+        //     c_lemlib.cancelAllMotions();
+        //     c_danielib.stopAllMovements();
+        //     endTime = millis();
+        // }
         top.brake();
         bottom.brake();
         left_mg.brake();

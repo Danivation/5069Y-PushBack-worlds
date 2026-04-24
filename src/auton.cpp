@@ -529,6 +529,7 @@ void auton_left_split() {
     int startTime = millis();
     c_danielib.setPose(-14, -47, 0);
     c_lemlib.setPose(-14, -47, 0);
+    wing.extend();
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                              STACK                                             */
@@ -596,6 +597,7 @@ void auton_left_split() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // move to wing position
+    wing.retract();
     stop();
     delay(250);
     loader.retract();
@@ -615,6 +617,8 @@ void auton_left_split() {
     c_lemlib.moveToPoint(-2_tiles+0.45_tiles, -0.9_tiles, 1000, {.forwards = false, .minSpeed = 80, .earlyExitRange = 5}, false);
     c_lemlib.moveToPoint(-2_tiles+0.45_tiles, -11, 1000, {.forwards = false, .maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 3}, false);
     c_lemlib.swingToHeading(195, DriveSide::LEFT, 400, {}, false);
+
+    outtake();
 }
 
 // right side tuned
