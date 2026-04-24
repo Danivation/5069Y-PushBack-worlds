@@ -8,11 +8,11 @@
 #define INTAKE_TO_SLOW_MID_GOAL DIGITAL_X
 #define INTAKE_TO_MID_GOAL      DIGITAL_L2
 #define INTAKE_TO_HIGH_GOAL     DIGITAL_L1
-#define INTAKE_UNJAM_MACRO      DIGITAL_LEFT
+#define INTAKE_UNJAM_MACRO      DIGITAL_B
 #define LOADER_TOGGLE           master.get_digital(DIGITAL_DOWN)
 #define DESCORE_MID_TOGGLE      master.get_digital(DIGITAL_RIGHT)
 #define DESCORE_WING_TOGGLE     master.get_digital(DIGITAL_Y)
-#define INTAKE_RAISE_TOGGLE     master.get_digital(DIGITAL_B)
+#define INTAKE_RAISE_TOGGLE     master.get_digital(DIGITAL_LEFT)
 
 std::atomic<bool> driving = true;
 void DrivetrainControl() {

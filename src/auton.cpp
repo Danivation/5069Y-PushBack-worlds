@@ -207,19 +207,22 @@ void auton_sawp_counter_nowing() {
 
     // move to mid goal
     c_lemlib.moveToPoint(-2_tiles, -1.9_tiles, 1000, {.forwards = false, .minSpeed = 80, .earlyExitRange = 6}, false);
-    c_lemlib.moveToPoint(-12, -14, 1700, {.forwards = false, .minSpeed = 50, .earlyExitRange = 7}, false);
-    c_lemlib.moveToPoint(-8, -10.5, 700, {.forwards = false, .maxSpeed = 80}, true);
+    c_lemlib.moveToPoint(-12, -12, 1700, {.forwards = false, .minSpeed = 50, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(-8, -7.5, 1500, {.forwards = false, .maxSpeed = 60}, true);
     
     delay(60);
     outtake();
-    delay(100);
-    top.move(-55);
+    delay(150);
+    top.move(-80);
+    bottom.move(80);
+    delay(350);
+    top.move(-50);
     bottom.move(70);
     
     // color sensor timeout
-    waitUntilColor(&optical_top, WrongColor, startTime + 14600);
+    waitUntilColor(&optical_top, WrongColor, startTime + 14700);
     stop();
-    delay(40); // mid color timer
+    delay(80); // mid color timer
     c_lemlib.cancelMotion();
 
     // macro and descore
