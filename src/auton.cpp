@@ -615,7 +615,7 @@ void auton_left_split() {
     // back up into wing
     left_mg.set_brake_mode_all(MotorBrake::hold);
     left_mg.set_brake_mode_all(MotorBrake::hold);
-    c_lemlib.moveToPoint(-2_tiles+0.45_tiles, -0.9_tiles, 1000, {.forwards = false, .minSpeed = 80, .earlyExitRange = 5}, false);
+    c_lemlib.moveToPoint(-2_tiles+0.45_tiles, -0.85_tiles, 1000, {.forwards = false, .minSpeed = 80, .earlyExitRange = 5}, false);
     c_lemlib.moveToPoint(-2_tiles+0.45_tiles, -11, 1000, {.forwards = false, .maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 3}, false);
     c_lemlib.swingToHeading(195, DriveSide::LEFT, 400, {}, false);
 
@@ -773,7 +773,7 @@ void auton_left_4ball_loader() {
     left_mg.set_brake_mode_all(MotorBrake::hold);
     left_mg.set_brake_mode_all(MotorBrake::hold);
     c_lemlib.turnToHeading(180, 170, {}, false);
-    c_lemlib.moveToPoint(-2_tiles+0.4_tiles, -0.9_tiles, 1000, {.forwards = false, .minSpeed = 80, .earlyExitRange = 5}, false);
+    c_lemlib.moveToPoint(-2_tiles+0.45_tiles, -0.85_tiles, 1000, {.forwards = false, .minSpeed = 80, .earlyExitRange = 5}, false);
     c_lemlib.moveToPoint(-2_tiles+0.4_tiles, -11, 1000, {.forwards = false, .maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 3}, false);
     c_lemlib.swingToHeading(195, DriveSide::LEFT, 400, {}, false);
 
@@ -892,7 +892,7 @@ void auton_left_4ball_stack() {
     left_mg.set_brake_mode_all(MotorBrake::hold);
     left_mg.set_brake_mode_all(MotorBrake::hold);
     c_lemlib.turnToHeading(180, 170, {}, false);
-    c_lemlib.moveToPoint(-2_tiles+0.4_tiles, -0.9_tiles, 1000, {.forwards = false, .minSpeed = 80, .earlyExitRange = 5}, false);
+    c_lemlib.moveToPoint(-2_tiles+0.45_tiles, -0.85_tiles, 1000, {.forwards = false, .minSpeed = 80, .earlyExitRange = 5}, false);
     c_lemlib.moveToPoint(-2_tiles+0.4_tiles, -11, 1000, {.forwards = false, .maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 3}, false);
     c_lemlib.swingToHeading(195, DriveSide::LEFT, 400, {}, false);
 }
@@ -1022,7 +1022,7 @@ void auton_left_7ball() {
     left_mg.set_brake_mode_all(MotorBrake::hold);
     left_mg.set_brake_mode_all(MotorBrake::hold);
     c_lemlib.turnToHeading(180, 170, {}, false);
-    c_lemlib.moveToPoint(-2_tiles+0.4_tiles, -0.9_tiles, 1000, {.forwards = false, .minSpeed = 80, .earlyExitRange = 5}, false);
+    c_lemlib.moveToPoint(-2_tiles+0.45_tiles, -0.85_tiles, 1000, {.forwards = false, .minSpeed = 80, .earlyExitRange = 5}, false);
     c_lemlib.moveToPoint(-2_tiles+0.4_tiles, -11, 1000, {.forwards = false, .maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 3}, false);
     c_lemlib.swingToHeading(195, DriveSide::LEFT, 400, {}, false);
 
@@ -1164,7 +1164,7 @@ void auton_left_7ball_counter() {
     score_mid();
 
     // color sensor timeout
-    waitUntilColor(&optical_top, WrongColor, midScoreStart + 550);
+    waitUntilColor(&optical_top, WrongColor, midScoreStart + 580);
     delay(30); // mid color timer
     c_lemlib.cancelMotion();
 
@@ -1232,7 +1232,7 @@ void auton_left_7ball_counter() {
     left_mg.set_brake_mode_all(MotorBrake::hold);
     left_mg.set_brake_mode_all(MotorBrake::hold);
     c_lemlib.turnToHeading(180, 170, {}, false);
-    c_lemlib.moveToPoint(-2_tiles+0.4_tiles, -0.9_tiles, 1000, {.forwards = false, .minSpeed = 80, .earlyExitRange = 5}, false);
+    c_lemlib.moveToPoint(-2_tiles+0.45_tiles, -0.85_tiles, 1000, {.forwards = false, .minSpeed = 80, .earlyExitRange = 5}, false);
     c_lemlib.moveToPoint(-2_tiles+0.4_tiles, -11, 1000, {.forwards = false, .maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 3}, false);
     c_lemlib.swingToHeading(195, DriveSide::LEFT, 400, {}, false);
 
