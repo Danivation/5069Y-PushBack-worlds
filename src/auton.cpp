@@ -196,12 +196,12 @@ void auton_sawp_counter_nowing() {
     // drive into loader
     top.move(-127);
     bottom.move(-127);
-    c_lemlib.moveToPoint(-1.99_tiles, -55, 1300, {.maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 6.5}, true);
+    c_lemlib.moveToPoint(-1.98_tiles, -55, 1300, {.maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 6.5}, true);
     delay(200);
     store();
     c_lemlib.waitUntilDone();
     int loader2Start = millis();
-    c_lemlib.moveToPoint(-1.99_tiles, -70, 1000, {.maxSpeed = 45}, true);
+    c_lemlib.moveToPoint(-1.98_tiles, -70, 1000, {.maxSpeed = 45}, true);
     waitUntilCondition(millis() >= loader2Start + 1300);
     c_lemlib.cancelMotion();
 
