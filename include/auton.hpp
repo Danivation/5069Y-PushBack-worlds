@@ -6,6 +6,7 @@ extern pros::Color WrongColor;
 void auton_none();
 
 void auton_sawp_counter_nowing();
+void auton_sawp_counter_nowing_left_noclear();
 void auton_sawp_counter_wing();
 void auton_sawp_standard();
 void auton_sawp_low_mid();

@@ -198,6 +198,135 @@ void auton_sawp_counter_nowing() {
     c_lemlib.waitUntilDone();
     int loader2Start = millis();
     c_lemlib.moveToPoint(-1.99_tiles, -70, 1000, {.maxSpeed = 45}, true);
+    waitUntilCondition(millis() >= loader2Start + 1300);
+    c_lemlib.cancelMotion();
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                            MID GOAL                                            */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // move to mid goal
+    c_lemlib.moveToPoint(-2_tiles, -1.9_tiles, 1000, {.forwards = false, .minSpeed = 80, .earlyExitRange = 6}, false);
+    c_lemlib.moveToPoint(-12, -12, 1700, {.forwards = false, .minSpeed = 50, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(-8, -7.5, 1500, {.forwards = false, .maxSpeed = 60}, true);
+    
+    delay(60);
+    outtake();
+    delay(150);
+    top.move(-80);
+    bottom.move(80);
+    delay(350);
+    top.move(-50);
+    bottom.move(70);
+    
+    // color sensor timeout
+    waitUntilColor(&optical_top, WrongColor, startTime + 14700);
+    stop();
+    delay(80); // mid color timer
+    c_lemlib.cancelMotion();
+
+    // macro and descore
+    delay(100);
+    loader.retract();
+    unjam_block();
+}
+
+void auton_sawp_counter_nowing_left_noclear() {
+    int startTime = millis();
+    c_danielib.setPose(1.75, -47, 270);
+    c_lemlib.setPose(1.75, -47, 270);
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                     PUSH AND STEAL PRELOAD                                     */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // steal preload
+    store();
+    c_danielib.driveForDistance(9, 400);
+
+    // drive backwards towards match loader
+    c_lemlib.moveToPoint(2_tiles, -1.95_tiles, 1300, {.forwards = false, .minSpeed = 10, .earlyExitRange = 2}, true);
+    delay(700);
+    loader.extend();
+    c_lemlib.waitUntilDone();
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                          RIGHT LOADER                                          */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // drive into loader
+    c_lemlib.moveToPoint(1.99_tiles, -56, 1300, {.maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 6.5}, false);
+    store();
+    int loader1Start = millis();
+    c_lemlib.moveToPoint(1.99_tiles, -70, 1000, {.maxSpeed = 45}, true);
+    waitUntilCondition(millis() >= loader1Start + 1300);
+    c_lemlib.cancelMotion();
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                         RIGHT LONG GOAL                                        */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // drive backwards to goal
+    c_lemlib.moveToPoint(2.03_tiles, -23, 1100, {.forwards = false}, true);
+    delay(800);
+    score();
+    int score1Start = millis();
+    bool colorStopped = waitUntilColor(&optical_top, WrongColor, score1Start + 850);
+    if (colorStopped) {
+        delayLong();
+        hood.retract();
+        stop();
+    }
+    c_lemlib.cancelMotion();
+    lemlibDistReset({&left_beam});
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                           MID STACKS                                           */
+    /* ---------------------------------------------------------------------------------------------- */
+    
+    // swing out of long goal
+    loader.retract();
+    wing.extend();
+    c_danielib.turnToHeading(270, 500);
+    score();
+
+    // grab both stacks
+    c_lemlib.moveToPoint(0.7_tiles, -0.89_tiles, 1000, {.maxSpeed = 100, .minSpeed = 70, .earlyExitRange = 7}, false);
+    store();
+    c_lemlib.moveToPoint(-0.78_tiles, -0.94_tiles, 1300, {.maxSpeed = 100, .minSpeed = 70, .earlyExitRange = 7}, true);
+    delay(700);
+    loader.extend();
+    c_lemlib.waitUntilDone();
+
+    // setup for left side
+    c_lemlib.moveToPoint(-1.8_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2}, false);
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                         LEFT LONG GOAL                                         */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // drive backwards to goal
+    c_lemlib.moveToPoint(-2_tiles, -23, 1100, {.forwards = false}, true);
+    delay(560);
+    score();
+    int score2Start = millis();
+    waitUntilCondition(millis() >= score2Start + 550);
+    c_lemlib.cancelMotion();
+    lemlibDistReset({&right_beam});
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                           LEFT LOADER                                          */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // drive into loader
+    top.move(-127);
+    bottom.move(-127);
+    c_lemlib.moveToPoint(-1.99_tiles, -55, 1300, {.maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 6.5}, true);
+    delay(200);
+    store();
+    c_lemlib.waitUntilDone();
+    int loader2Start = millis();
+    c_lemlib.moveToPoint(-1.99_tiles, -70, 1000, {.maxSpeed = 45}, true);
     waitUntilCondition(millis() >= loader2Start + 700);
     c_lemlib.cancelMotion();
 

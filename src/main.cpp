@@ -28,6 +28,7 @@ void run_auton(int index) {
     // sawps
     else if (index == 1)    auton_sawp_counter_wing();      // TUNED
     else if (index == 2)    auton_sawp_counter_nowing();    // TUNED
+    else if (index == 3)    auton_sawp_counter_nowing_left_noclear();    // TUNED
 
     // left sides
     else if (index == 7)    auton_left_split();             // TUNED
@@ -50,7 +51,7 @@ std::pair<std::string, std::string> get_auton_name(int index) {
     // sawps
     else if (index == 1)    return {"CSAWP + W", ""};
     else if (index == 2)    return {"CSAWP - W", "All loaders"};
-    // else if (index == 3)    return {"CSAWP - W", "Left loader"};
+    else if (index == 3)    return {"CSAWP - W", "No left clear"};
     // else if (index == 4)    return {"CSAWP - W", "Right loader"};
     // else if (index == 5)    return {"CSAWP - W", "No loaders"};
     // else if (index == 6)    return {"Helper SAWP", "Right loader setup"};
