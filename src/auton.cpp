@@ -977,13 +977,14 @@ void auton_left_7ball() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive into loader
-    c_lemlib.moveToPoint(-1.97_tiles, -57, 800, {.maxSpeed = 100, .minSpeed = 10, .earlyExitRange = 6.5}, true);
+    c_lemlib.moveToPoint(-1.95_tiles, -57, 800, {.maxSpeed = 100, .minSpeed = 10, .earlyExitRange = 6.5}, true);
+    delay(200);
     outtake();
     delay(150);
     store();
     c_lemlib.waitUntilDone();
     int loader1Start = millis();
-    c_lemlib.moveToPoint(-1.97_tiles, -70, 1500, {.maxSpeed = 45}, true);
+    c_lemlib.moveToPoint(-1.95_tiles, -70, 1500, {.maxSpeed = 45}, true);
     waitUntilCondition(millis() >= loader1Start + 900);
     c_lemlib.cancelMotion();
 
@@ -997,7 +998,7 @@ void auton_left_7ball() {
     delay(800);
     score();
     int score1Start = millis();
-    bool colorStopped = waitUntilColor(&optical_top, WrongColor, score1Start + 1300);
+    bool colorStopped = waitUntilColor(&optical_top, WrongColor, score1Start + 1100);
     if (colorStopped) {
         delayLong();
         hood.retract();
