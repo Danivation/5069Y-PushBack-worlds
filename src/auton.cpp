@@ -165,7 +165,9 @@ void auton_sawp_counter_nowing() {
     c_lemlib.moveToPoint(0.7_tiles, -0.89_tiles, 1000, {.maxSpeed = 100, .minSpeed = 70, .earlyExitRange = 7}, false);
     store();
     c_lemlib.moveToPoint(-0.78_tiles, -0.94_tiles, 1300, {.maxSpeed = 100, .minSpeed = 70, .earlyExitRange = 7}, true);
-    delay(700);
+    delay(100);
+    store();
+    delay(600);
     loader.extend();
     c_lemlib.waitUntilDone();
 
@@ -215,12 +217,12 @@ void auton_sawp_counter_nowing() {
     delay(150);
     top.move(-80);
     bottom.move(80);
-    delay(350);
+    delay(200);
     top.move(-50);
     bottom.move(70);
     
     // color sensor timeout
-    waitUntilColor(&optical_top, WrongColor, startTime + 14700);
+    waitUntilColor(&optical_top, WrongColor, startTime + 14500);
     stop();
     delay(80); // mid color timer
     c_lemlib.cancelMotion();
@@ -229,6 +231,7 @@ void auton_sawp_counter_nowing() {
     delay(100);
     loader.retract();
     unjam_block();
+    outtake();
 }
 
 void auton_sawp_counter_nowing_left_noclear() {
@@ -292,9 +295,10 @@ void auton_sawp_counter_nowing_left_noclear() {
 
     // grab both stacks
     c_lemlib.moveToPoint(0.7_tiles, -0.89_tiles, 1000, {.maxSpeed = 100, .minSpeed = 70, .earlyExitRange = 7}, false);
-    store();
     c_lemlib.moveToPoint(-0.78_tiles, -0.94_tiles, 1300, {.maxSpeed = 100, .minSpeed = 70, .earlyExitRange = 7}, true);
-    delay(700);
+    delay(100);
+    store();
+    delay(600);
     loader.extend();
     c_lemlib.waitUntilDone();
 
