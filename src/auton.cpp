@@ -1153,12 +1153,11 @@ void auton_left_7ball_counter() {
 
     // score mid goal kinda slow
     int midScoreStart = millis();
-    top.move(-96);
-    bottom.move(85);
+    score_mid();
 
     // color sensor timeout
     waitUntilColor(&optical_top, WrongColor, midScoreStart + 550);
-    delay(70); // mid color timer
+    delay(30); // mid color timer
     c_lemlib.cancelMotion();
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -1221,7 +1220,7 @@ void auton_left_7ball_counter() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // swing out
-    loader.retract();
+    loader.retract();//danny is high af rn"no danny boy"-prajual "shut the fuck up and do ur shit code" - also prajual
     wing.retract();
     c_lemlib.moveToPoint(-2_tiles+0.4_tiles, -1.5_tiles, 800, {.minSpeed = 50, .earlyExitRange = 4}, false);
     hood.retract();
