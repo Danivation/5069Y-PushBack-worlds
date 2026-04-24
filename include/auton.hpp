@@ -23,7 +23,7 @@ void auton_right_4ball_stack();
 void auton_right_7ball();
 void auton_right_7ball_counter();
 
-void auton_all_mid();
+void auton_left_all_mid();
 
 
 
