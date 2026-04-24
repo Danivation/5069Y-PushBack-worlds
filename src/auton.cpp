@@ -778,8 +778,8 @@ void auton_left_4ball_loader() {
     left_mg.set_brake_mode_all(MotorBrake::hold);
     left_mg.set_brake_mode_all(MotorBrake::hold);
     c_lemlib.turnToHeading(180, 230, {}, false);
-    c_lemlib.moveToPoint(-2_tiles+0.45_tiles, -0.9_tiles, 1000, {.forwards = false, .minSpeed = 80, .earlyExitRange = 5}, false);
-    c_lemlib.moveToPoint(-2_tiles+0.42_tiles, -11, 1000, {.forwards = false, .maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 3}, false);
+    c_lemlib.moveToPoint(-2_tiles+0.4_tiles, -0.9_tiles, 1000, {.forwards = false, .minSpeed = 80, .earlyExitRange = 5}, false);
+    c_lemlib.moveToPoint(-2_tiles+0.4_tiles, -11, 1000, {.forwards = false, .maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 3}, false);
     c_lemlib.swingToHeading(195, DriveSide::LEFT, 400, {}, false);
 }
 
@@ -857,13 +857,13 @@ void auton_left_4ball_stack() {
     /* ---------------------------------------------------------------------------------------------- */
 
     store();
-    c_lemlib.moveToPoint(-1.05_tiles, -0.88_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2}, true);
-    delay(160);
+    c_lemlib.moveToPoint(-1.08_tiles, -0.85_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2}, true);
+    delay(100);
     loader.extend();
 
     // js get in the goal somehow ig
-    c_lemlib.moveToPoint(-1.77_tiles, -1_tiles, 700, {.forwards = false, .minSpeed = 95, .earlyExitRange = 4}, false);
-    c_lemlib.swingToHeading(160, lemlib::DriveSide::LEFT, 200, {}, false);
+    c_lemlib.moveToPoint(-1.8_tiles, -1_tiles, 700, {.forwards = false, .minSpeed = 95, .earlyExitRange = 4}, false);
+    c_lemlib.swingToHeading(160, lemlib::DriveSide::LEFT, 250, {}, false);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                            LONG GOAL                                           */
@@ -873,7 +873,7 @@ void auton_left_4ball_stack() {
     c_lemlib.moveToPoint(-2_tiles, -20, 1000, {.forwards = false, .minSpeed = 127}, true);
     score();
     int score1Start = millis();
-    waitUntilCondition(millis() >= score1Start + 500);
+    waitUntilCondition(millis() >= score1Start + 550);
     c_lemlib.cancelMotion();
     lemlibDistReset({&right_beam});
 
@@ -884,16 +884,16 @@ void auton_left_4ball_stack() {
     // swing out
     loader.retract();
     wing.retract();
-    c_lemlib.moveToPoint(-2_tiles+0.4_tiles, -1.5_tiles, 900, {.minSpeed = 10, .earlyExitRange = 3.5}, false);
+    c_lemlib.moveToPoint(-2_tiles+0.4_tiles, -1.5_tiles, 800, {.minSpeed = 50, .earlyExitRange = 4}, false);
     hood.retract();
     stop();
 
     // back up into wing
     left_mg.set_brake_mode_all(MotorBrake::hold);
     left_mg.set_brake_mode_all(MotorBrake::hold);
-    c_lemlib.turnToHeading(180, 230, {}, false);
-    c_lemlib.moveToPoint(-2_tiles+0.45_tiles, -0.9_tiles, 1000, {.forwards = false, .minSpeed = 80, .earlyExitRange = 5}, false);
-    c_lemlib.moveToPoint(-2_tiles+0.42_tiles, -11, 1000, {.forwards = false, .maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 3}, false);
+    c_lemlib.turnToHeading(180, 170, {}, false);
+    c_lemlib.moveToPoint(-2_tiles+0.4_tiles, -0.9_tiles, 1000, {.forwards = false, .minSpeed = 80, .earlyExitRange = 5}, false);
+    c_lemlib.moveToPoint(-2_tiles+0.4_tiles, -11, 1000, {.forwards = false, .maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 3}, false);
     c_lemlib.swingToHeading(195, DriveSide::LEFT, 400, {}, false);
 }
 
