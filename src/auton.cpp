@@ -1132,13 +1132,14 @@ void auton_left_7ball_counter() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive into loader
-    c_lemlib.moveToPoint(-1.97_tiles, -57, 800, {.maxSpeed = 100, .minSpeed = 10, .earlyExitRange = 6.5}, true);
+    c_lemlib.moveToPoint(-1.95_tiles, -57, 800, {.maxSpeed = 100, .minSpeed = 10, .earlyExitRange = 6.5}, true);
+    delay(200);
     outtake();
     delay(150);
     store();
     c_lemlib.waitUntilDone();
     int loader1Start = millis();
-    c_lemlib.moveToPoint(-1.97_tiles, -70, 1500, {.maxSpeed = 45}, true);
+    c_lemlib.moveToPoint(-1.95_tiles, -70, 1500, {.maxSpeed = 45}, true);
     waitUntilCondition(millis() >= loader1Start + 900);
     c_lemlib.cancelMotion();
 
@@ -1417,7 +1418,7 @@ void auton_left_all_mid() {
     delay(300);
     stop();
 
-    waitUntilCondition(millis() >= startTime + 10700);
+    waitUntilCondition(millis() >= startTime + 10400);
 
     // intake raise and score
     bottom.move(-60);
