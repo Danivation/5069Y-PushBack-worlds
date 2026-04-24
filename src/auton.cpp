@@ -1385,7 +1385,7 @@ void auton_left_all_mid() {
     store();
     int loader1Start = millis();
     c_lemlib.moveToPoint(-1.99_tiles, -70, 1000, {.maxSpeed = 45}, true);
-    waitUntilCondition(millis() >= loader1Start + 600);
+    waitUntilCondition(millis() >= loader1Start + 640);
     c_lemlib.cancelMotion();
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -1414,12 +1414,15 @@ void auton_left_all_mid() {
     intake_raise.extend();
     c_lemlib.waitUntilDone();
 
-    waitUntilCondition(millis() >= startTime + 10500);
+    delay(300);
+    stop();
+
+    waitUntilCondition(millis() >= startTime + 10700);
 
     // intake raise and score
-    bottom.move(-80);
+    bottom.move(-60);
     top.move(-40);
-    delay(550);
+    delay(800);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                          HIGH MID GOAL                                         */
@@ -1430,9 +1433,10 @@ void auton_left_all_mid() {
     intake_raise.retract();
     store();
     c_lemlib.turnToHeading(-90, 300, {}, false);
-    c_lemlib.moveToPoint(-1_tiles, -1_tiles, 1000, {}, true);
+    c_lemlib.moveToPoint(-1_tiles, -1_tiles, 1200, {}, true);
     delay(600);
     loader.extend();
+    delay(800);
     c_lemlib.waitUntilDone();
 
 
@@ -1445,7 +1449,8 @@ void auton_left_all_mid() {
 
     // score mid goal kinda slow
     int midScoreStart = millis();
-    score_mid();
+    bottom.move(80);
+    top.move(-80);
 
     // color sensor timeout
     waitUntilColor(&optical_top, WrongColor, midScoreStart + 550);
