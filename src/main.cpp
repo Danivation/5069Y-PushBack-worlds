@@ -7,7 +7,7 @@
 const bool skillsSlow = false;
 const bool autoForDriver = false;
 
-pros::Color WrongColor = Color::blue;
+pros::Color WrongColor = Color::red;
 bool comp_started = false;
 bool printing = false;
 bool logging = false;
@@ -22,7 +22,7 @@ float testAutonDuration = 0;
 void run_auton(int index) {
     // default auto to run when no auto is selected, also runs in test mode
     if (index == 0) {
-        auton_left_all_mid();
+        auton_left_7ball();
     }
 
     // sawps
@@ -43,6 +43,9 @@ void run_auton(int index) {
     else if (index == 14)   auton_right_4ball_stack();      // TUNED
     else if (index == 15)   auton_right_7ball();            // TUNED
     else if (index == 16)   auton_right_7ball_counter();    // TUNED
+
+    // all mid
+    else if (index == 17)   auton_left_all_mid();    // TUNED
 }
 
 std::pair<std::string, std::string> get_auton_name(int index) {
@@ -69,6 +72,8 @@ std::pair<std::string, std::string> get_auton_name(int index) {
     else if (index == 14)   return {"Right 4 ball", "Stack"};
     else if (index == 15)   return {"Right 7 ball", "Stack"};
     else if (index == 16)   return {"Right 7 counter", "Loader"};
+
+    else if (index == 17)   return {"Left all mid", "Loader"};
 
     else return {"Invalid auto", ""};
 }
