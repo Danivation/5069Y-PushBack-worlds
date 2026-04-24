@@ -963,17 +963,15 @@ void auton_left_7ball() {
     /*                                              STACK                                             */
     /* ---------------------------------------------------------------------------------------------- */
 
-    // intake 3 stack
     store();
-    wing.extend();
-    c_lemlib.moveToPoint(-1.05_tiles, -0.88_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2}, true);
-    delay(240);
+    c_lemlib.moveToPoint(-1.08_tiles, -0.85_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2}, true);
+    delay(100);
     loader.extend();
 
     // setup movement
-    c_lemlib.turnToHeading(-150, 550, {}, false);
-    c_lemlib.moveToPoint(-1.86_tiles, -1.7_tiles, 1300, {.minSpeed = 50, .earlyExitRange = 5}, false);
-    c_lemlib.turnToHeading(180, 200, {.earlyExitRange = 5}, false);
+    c_lemlib.turnToHeading(-160, 550, {}, false);
+    c_lemlib.moveToPoint(-1.7_tiles, -1.7_tiles, 1300, {.minSpeed = 70, .earlyExitRange = 6}, false);
+    // c_lemlib.turnToHeading(180, 200, {.earlyExitRange = 5}, false);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                             LOADER                                             */
@@ -987,7 +985,7 @@ void auton_left_7ball() {
     c_lemlib.waitUntilDone();
     int loader1Start = millis();
     c_lemlib.moveToPoint(-1.97_tiles, -70, 1500, {.maxSpeed = 45}, true);
-    waitUntilCondition(millis() >= loader1Start + 1000);
+    waitUntilCondition(millis() >= loader1Start + 900);
     c_lemlib.cancelMotion();
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -1016,15 +1014,16 @@ void auton_left_7ball() {
     // swing out
     loader.retract();
     wing.retract();
-    c_lemlib.moveToPoint(-2_tiles+0.41_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 3.5}, false);
+    c_lemlib.moveToPoint(-2_tiles+0.4_tiles, -1.5_tiles, 800, {.minSpeed = 50, .earlyExitRange = 4}, false);
     hood.retract();
     stop();
 
     // back up into wing
     left_mg.set_brake_mode_all(MotorBrake::hold);
     left_mg.set_brake_mode_all(MotorBrake::hold);
-    c_lemlib.moveToPoint(-2_tiles+0.45_tiles, -1_tiles, 1000, {.forwards = false, .minSpeed = 80, .earlyExitRange = 5}, false);
-    c_lemlib.moveToPoint(-2_tiles+0.42_tiles, -11, 1000, {.forwards = false, .maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 3}, false);
+    c_lemlib.turnToHeading(180, 170, {}, false);
+    c_lemlib.moveToPoint(-2_tiles+0.4_tiles, -0.9_tiles, 1000, {.forwards = false, .minSpeed = 80, .earlyExitRange = 5}, false);
+    c_lemlib.moveToPoint(-2_tiles+0.4_tiles, -11, 1000, {.forwards = false, .maxSpeed = 90, .minSpeed = 10, .earlyExitRange = 3}, false);
     c_lemlib.swingToHeading(195, DriveSide::LEFT, 400, {}, false);
 }
 
