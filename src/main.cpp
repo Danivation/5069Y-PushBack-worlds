@@ -22,49 +22,45 @@ float testAutonDuration = 0;
 void run_auton(int index) {
     // default auto to run when no auto is selected, also runs in test mode
     if (index == 0) {
-        auton_left_4ball_stack();
+        auton_left_7ball_counter();
     }
 
-    // sawps
-    else if (index == 1)    auton_sawp_counter_wing();      // TUNED
-    else if (index == 2)    auton_sawp_counter_nowing();    // TUNED
-    else if (index == 3)    auton_sawp_counter_nowing_left_noclear();    // TUNED
-
     // left sides
-    else if (index == 7)    auton_left_split();             // TUNED
-    else if (index == 8)    auton_left_4ball_loader();      // TUNED
-    else if (index == 9)    auton_left_4ball_stack();       // TUNED
-    else if (index == 10)    auton_left_7ball();             // TUNED
-    else if (index == 11)    auton_left_7ball_counter();     // TUNED
+    else if (index == 1)    auton_left_split();             // TUNED
+    else if (index == 2)    auton_left_4ball_loader();      // TUNED
+    else if (index == 3)    auton_left_4ball_stack();       // TUNED
+    else if (index == 4)    auton_left_7ball();             // TUNED
+    else if (index == 5)    auton_left_7ball_counter();     // TUNED
+    else if (index == 6)    auton_left_all_mid();    // TUNED
+
+    // sawps
+    else if (index == 8)    auton_sawp_counter_wing();      // TUNED
+    else if (index == 9)    auton_sawp_counter_nowing();    // TUNED
+    else if (index == 10)   auton_sawp_counter_nowing_left_noclear();    // TUNED
 
     // right sides
-    else if (index == 12)    auton_right_split();            // TUNED 
+    else if (index == 12)   auton_right_split();            // TUNED 
     else if (index == 13)   auton_right_4ball_loader();     // TUNED
     else if (index == 14)   auton_right_4ball_stack();      // TUNED
     else if (index == 15)   auton_right_7ball();            // TUNED
     else if (index == 16)   auton_right_7ball_counter();    // TUNED
-
-    // all mid
-    else if (index == 17)   auton_left_all_mid();    // TUNED
 }
 
 std::pair<std::string, std::string> get_auton_name(int index) {
     if (index == 0) return {"None", ""};
+ 
+    // left sides
+    else if (index == 1)    return {"Left split", "Stack"};
+    else if (index == 2)    return {"Left 4 ball", "Loader"};
+    else if (index == 3)    return {"Left 4 ball", "Stack"};
+    else if (index == 4)    return {"Left 7 ball", "Stack"};
+    else if (index == 5)    return {"Left 7 counter", "Stack"};
+    else if (index == 6)    return {"Left all mid", "Loader"};
 
     // sawps
-    else if (index == 1)    return {"CSAWP + W", ""};
-    else if (index == 2)    return {"CSAWP - W", "All loaders"};
-    else if (index == 3)    return {"CSAWP - W", "No left clear"};
-    // else if (index == 4)    return {"CSAWP - W", "Right loader"};
-    // else if (index == 5)    return {"CSAWP - W", "No loaders"};
-    // else if (index == 6)    return {"Helper SAWP", "Right loader setup"};
-
-    // left sides
-    else if (index == 7)    return {"Left split", "Stack"};
-    else if (index == 8)    return {"Left 4 ball", "Loader"};
-    else if (index == 9)    return {"Left 4 ball", "Stack"};
-    else if (index == 10)   return {"Left 7 ball", "Stack"};
-    else if (index == 11)   return {"Left 7 counter", "Stack"};
+    else if (index == 8)    return {"CSAWP + W", ""};
+    else if (index == 9)    return {"CSAWP - W", "All loaders"};
+    else if (index == 10)   return {"CSAWP - W", "No left clear"};
 
     // right sides
     else if (index == 12)   return {"Right split", "Loader"};
@@ -72,8 +68,6 @@ std::pair<std::string, std::string> get_auton_name(int index) {
     else if (index == 14)   return {"Right 4 ball", "Stack"};
     else if (index == 15)   return {"Right 7 ball", "Stack"};
     else if (index == 16)   return {"Right 7 counter", "Loader"};
-
-    else if (index == 17)   return {"Left all mid", "Loader"};
 
     else return {"Invalid auto", ""};
 }
