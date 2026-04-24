@@ -172,7 +172,9 @@ void auton_sawp_counter_nowing() {
     c_lemlib.waitUntilDone();
 
     // setup for left side
-    c_lemlib.moveToPoint(-1.8_tiles, -1.7_tiles, 1000, {.minSpeed = 10, .earlyExitRange = 2}, false);
+    c_lemlib.moveToPoint(-1.9_tiles, -1.7_tiles, 1000, {}, false);
+    c_lemlib.turnToHeading(180, 250, {}, false);
+    lemlibDistReset({&right_beam});
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                         LEFT LONG GOAL                                         */
@@ -185,7 +187,7 @@ void auton_sawp_counter_nowing() {
     int score2Start = millis();
     waitUntilCondition(millis() >= score2Start + 550);
     c_lemlib.cancelMotion();
-    lemlibDistReset({&right_beam});
+    // lemlibDistReset({&right_beam});
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                           LEFT LOADER                                          */
@@ -208,23 +210,23 @@ void auton_sawp_counter_nowing() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // move to mid goal
-    c_lemlib.moveToPoint(-2_tiles, -1.9_tiles, 1000, {.forwards = false, .minSpeed = 80, .earlyExitRange = 6}, false);
-    c_lemlib.moveToPoint(-12, -12, 1700, {.forwards = false, .minSpeed = 50, .earlyExitRange = 7}, false);
-    c_lemlib.moveToPoint(-8, -7.5, 1500, {.forwards = false, .maxSpeed = 60}, true);
+    c_lemlib.moveToPoint(-2_tiles, -2.05_tiles, 1000, {.forwards = false, .minSpeed = 80, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(-14, -14, 1700, {.forwards = false, .minSpeed = 50, .earlyExitRange = 7}, false);
+    c_lemlib.moveToPoint(-8, -8, 1500, {.forwards = false, .maxSpeed = 60}, true);
     
     delay(60);
     outtake();
-    delay(150);
-    top.move(-80);
+    delay(200);
+    top.move(-65);
     bottom.move(80);
     delay(200);
-    top.move(-50);
+    top.move(-55);
     bottom.move(70);
-    
+    //sidh got touched by a guy and he liked it, but will not admit it. he is in denial and there is a reason he is not reporting him. this is because he circumcises to peer pressure easily and loves when boys touch is petite, tight, juicy, left cheek
     // color sensor timeout
     waitUntilColor(&optical_top, WrongColor, startTime + 14500);
     stop();
-    delay(80); // mid color timer
+    delay(100); // mid color timer
     c_lemlib.cancelMotion();
 
     // macro and descore
