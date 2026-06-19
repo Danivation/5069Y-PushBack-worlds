@@ -6,20 +6,28 @@
 /* ---------------------------------------------------------------------------------------------- */
 
 pros::Controller master(pros::E_CONTROLLER_MASTER);
-pros::MotorGroup left_mg({13, -12, -11}, pros::MotorGears::blue);
-pros::MotorGroup right_mg({-18, 19, 20}, pros::MotorGears::blue);
+pros::MotorGroup left_mg({1, 2, 3}, pros::MotorGears::blue);
+pros::MotorGroup right_mg({-8, -9, -10}, pros::MotorGears::blue);
 
-pros::MotorGroup bottom({7, 10}, pros::MotorGears::rpm_200);
-pros::Motor top(1, pros::MotorGears::rpm_200);
+pros::MotorGroup roller({4, -5}, pros::MotorGears::rpm_200);
+pros::MotorGroup lift({6, -7}, pros::MotorGears::rpm_200);
+pros::Motor intake(11, pros::MotorGears::blue);
 
-CustomImu imu_1(15, 360.0f/356.6f);
-pros::Rotation vertical_rotation(-17);
-pros::Rotation horizontal_rotation(14);
+pros::adi::Pneumatics claw('A', false);
 
-pros::Optical optical_top(6);
-pros::Distance distance_front(8);
-pros::Distance distance_left(3);
-pros::Distance distance_right(9);
+
+
+
+
+
+CustomImu imu_1(22, 360.0f/356.6f);
+pros::Rotation vertical_rotation(22);
+pros::Rotation horizontal_rotation(22);
+
+pros::Optical optical_top(22);
+pros::Distance distance_front(22);
+pros::Distance distance_left(22);
+pros::Distance distance_right(22);
 
 pros::adi::Pneumatics odom_lift('B', false);
 pros::adi::Pneumatics hood('C', false);

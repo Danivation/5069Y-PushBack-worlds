@@ -49,12 +49,20 @@ extern const bool autoForDriver;
 extern pros::Controller master;
 extern pros::MotorGroup left_mg;
 extern pros::MotorGroup right_mg;
+
+extern pros::MotorGroup roller;
+extern pros::MotorGroup lift;
+extern pros::Motor intake;
+
+extern pros::adi::Pneumatics claw;
+
+
+
+
 extern pros::Rotation horizontal_rotation;
 extern pros::Rotation vertical_rotation;
 extern CustomImu imu_1;
 // extern pros::Imu imu_2;
-extern pros::MotorGroup bottom;
-extern pros::Motor top;
 extern pros::Optical optical_top;
 extern pros::Distance distance_left;
 extern pros::Distance distance_right;

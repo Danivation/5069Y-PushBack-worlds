@@ -21,29 +21,29 @@ float testAutonDuration = 0;
 
 void run_auton(int index) {
     // default auto to run when no auto is selected, also runs in test mode
-    if (index == 0) {
-        auton_left_7ball_counter();
-    }
+    // if (index == 0) {
+    //     auton_left_7ball_counter();
+    // }
 
-    // left sides
-    else if (index == 1)    auton_left_split();             // TUNED
-    else if (index == 2)    auton_left_4ball_loader();      // TUNED
-    else if (index == 3)    auton_left_4ball_stack();       // TUNED
-    else if (index == 4)    auton_left_7ball();             // TUNED
-    else if (index == 5)    auton_left_7ball_counter();     // TUNED
-    else if (index == 6)    auton_left_all_mid();    // TUNED
+    // // left sides
+    // else if (index == 1)    auton_left_split();             // TUNED
+    // else if (index == 2)    auton_left_4ball_loader();      // TUNED
+    // else if (index == 3)    auton_left_4ball_stack();       // TUNED
+    // else if (index == 4)    auton_left_7ball();             // TUNED
+    // else if (index == 5)    auton_left_7ball_counter();     // TUNED
+    // else if (index == 6)    auton_left_all_mid();    // TUNED
 
-    // sawps
-    else if (index == 8)    auton_sawp_counter_wing();      // TUNED
-    else if (index == 9)    auton_sawp_counter_nowing();    // TUNED
-    else if (index == 10)   auton_sawp_counter_nowing_left_noclear();    // TUNED
+    // // sawps
+    // else if (index == 8)    auton_sawp_counter_wing();      // TUNED
+    // else if (index == 9)    auton_sawp_counter_nowing();    // TUNED
+    // else if (index == 10)   auton_sawp_counter_nowing_left_noclear();    // TUNED
 
-    // right sides
-    else if (index == 12)   auton_right_split();            // TUNED 
-    else if (index == 13)   auton_right_4ball_loader();     // TUNED
-    else if (index == 14)   auton_right_4ball_stack();      // TUNED
-    else if (index == 15)   auton_right_7ball();            // TUNED
-    else if (index == 16)   auton_right_7ball_counter();    // TUNED
+    // // right sides
+    // else if (index == 12)   auton_right_split();            // TUNED 
+    // else if (index == 13)   auton_right_4ball_loader();     // TUNED
+    // else if (index == 14)   auton_right_4ball_stack();      // TUNED
+    // else if (index == 15)   auton_right_7ball();            // TUNED
+    // else if (index == 16)   auton_right_7ball_counter();    // TUNED
 }
 
 std::pair<std::string, std::string> get_auton_name(int index) {
@@ -144,8 +144,8 @@ void print_info() {
 
         auto left_temps = left_mg.get_temperature_all();
         auto right_temps = right_mg.get_temperature_all();
-        auto bottom_temps = bottom.get_temperature_all();
-        auto top_temp = top.get_temperature();
+        // auto bottom_temps = bottom.get_temperature_all();
+        // auto top_temp = top.get_temperature();
 
         std::string left_status = "OK";
         if (left_temps[0] >= 50.0f || left_temps[1] >= 50.0f || left_temps[2] >= 50.0f) left_status = "WARM";
@@ -157,16 +157,16 @@ void print_info() {
         if (right_temps[0] >= 60.0f || right_temps[1] >= 60.0f || right_temps[2] >= 60.0f) right_status = "1/4";
         if (right_temps[0] >= 65.0f || right_temps[1] >= 65.0f || right_temps[2] >= 65.0f) right_status = "1/8";
         if (right_temps[0] >= 70.0f || right_temps[1] >= 70.0f || right_temps[2] >= 70.0f) right_status = "OFF";
-        std::string bottom_status = "OK";
-        if (bottom_temps[0] >= 50.0f || bottom_temps[1] >= 50.0f) bottom_status = "WARM";
-        if (bottom_temps[0] >= 60.0f || bottom_temps[1] >= 60.0f) bottom_status = "1/4";
-        if (bottom_temps[0] >= 65.0f || bottom_temps[1] >= 65.0f) bottom_status = "1/8";
-        if (bottom_temps[0] >= 70.0f || bottom_temps[1] >= 70.0f) bottom_status = "OFF";
-        std::string top_status = "OK";
-        if (top_temp >= 50.0f) top_status = "WARM";
-        if (top_temp >= 60.0f) top_status = "1/4";
-        if (top_temp >= 65.0f) top_status = "1/8";
-        if (top_temp >= 70.0f) top_status = "OFF";
+        // std::string bottom_status = "OK";
+        // if (bottom_temps[0] >= 50.0f || bottom_temps[1] >= 50.0f) bottom_status = "WARM";
+        // if (bottom_temps[0] >= 60.0f || bottom_temps[1] >= 60.0f) bottom_status = "1/4";
+        // if (bottom_temps[0] >= 65.0f || bottom_temps[1] >= 65.0f) bottom_status = "1/8";
+        // if (bottom_temps[0] >= 70.0f || bottom_temps[1] >= 70.0f) bottom_status = "OFF";
+        // std::string top_status = "OK";
+        // if (top_temp >= 50.0f) top_status = "WARM";
+        // if (top_temp >= 60.0f) top_status = "1/4";
+        // if (top_temp >= 65.0f) top_status = "1/8";
+        // if (top_temp >= 70.0f) top_status = "OFF";
 
         pros::lcd::print(4, "L: %.0f %.0f %.0f (%s)",
             left_temps[0], left_temps[1], left_temps[2], left_status.c_str()
@@ -174,12 +174,12 @@ void print_info() {
         pros::lcd::print(5, "R: %.0f %.0f %.0f (%s)",
             right_temps[0], right_temps[1], right_temps[2], right_status.c_str()
         );
-        pros::lcd::print(6, "B: %.0f %.0f (%s) %.1f %.1f", 
-            bottom_temps[0], bottom_temps[1], bottom_status.c_str(), bottom.get_power(0), bottom.get_power(1)
-        );
-        pros::lcd::print(7, "T: %.0f (%s) %.1f",
-            top_temp, top_status.c_str(), top.get_power()
-        );
+        // pros::lcd::print(6, "B: %.0f %.0f (%s) %.1f %.1f", 
+        //     bottom_temps[0], bottom_temps[1], bottom_status.c_str(), bottom.get_power(0), bottom.get_power(1)
+        // );
+        // pros::lcd::print(7, "T: %.0f (%s) %.1f",
+        //     top_temp, top_status.c_str(), top.get_power()
+        // );
         /**/
 
         // print to controller
@@ -227,15 +227,17 @@ void initialize() {
     // initialize devices
     pros::lcd::initialize();
     master.clear();
-    imu_1.set_data_rate(5);
-    horizontal_rotation.set_data_rate(5);
-    vertical_rotation.set_data_rate(5);
+    // imu_1.set_data_rate(5);
+    // horizontal_rotation.set_data_rate(5);
+    // vertical_rotation.set_data_rate(5);
+    // optical_top.set_integration_time(5);
+    // optical_top.set_led_pwm(0);
     left_mg.set_brake_mode_all(MotorBrake::coast);
     right_mg.set_brake_mode_all(MotorBrake::coast);
-    bottom.set_brake_mode(MotorBrake::brake);
-    top.set_brake_mode(MotorBrake::brake);
-    optical_top.set_integration_time(5);
-    optical_top.set_led_pwm(0);
+    intake.set_brake_mode(MotorBrake::brake);
+    lift.set_brake_mode_all(MotorBrake::hold);
+    roller.set_brake_mode_all(MotorBrake::brake);
+    claw.retract();
 
     // skills things
     // calibrate_all();
@@ -266,7 +268,7 @@ void autonomous() {
     printing = true;
     pros::Task printer(print_info);
 
-    /**/
+    /**
     if (competition::is_connected()) {
         run_auton(auton_index);
     } else {
@@ -280,20 +282,20 @@ void autonomous() {
             // finished = true;
         });
 
-        waitUntilCondition(millis() > startTime + 15000 /* || finished */);
+        waitUntilCondition(millis() > startTime + 15000);
         // if (!finished) {
         //     test_auto.remove();
         //     c_lemlib.cancelAllMotions();
         //     c_danielib.stopAllMovements();
         //     endTime = millis();
         // }
-        top.brake();
-        bottom.brake();
+        // top.brake();
+        // bottom.brake();
         left_mg.brake();
         right_mg.brake();
         testAutonDuration = (float)(endTime - startTime)/(1000.0f);
     }
-    /**/
+    **/
     comp_started = true;
 }
 
@@ -308,38 +310,38 @@ void opcontrol() {
     selecting = false;
     master.rumble("..");
 
-    if (autoForDriver) {
-        left_mg.set_brake_mode_all(MotorBrake::brake);
-        right_mg.set_brake_mode_all(MotorBrake::brake);
+    // if (autoForDriver) {
+    //     left_mg.set_brake_mode_all(MotorBrake::brake);
+    //     right_mg.set_brake_mode_all(MotorBrake::brake);
 
-        pros::Task skills(auton_skills);
+    //     pros::Task skills(auton_skills);
 
-        waitUntilCondition(master.get_digital(DIGITAL_UP) && master.get_digital(DIGITAL_X));
-        waitUntilCondition(!master.get_digital(DIGITAL_UP) && !master.get_digital(DIGITAL_X));
+    //     waitUntilCondition(master.get_digital(DIGITAL_UP) && master.get_digital(DIGITAL_X));
+    //     waitUntilCondition(!master.get_digital(DIGITAL_UP) && !master.get_digital(DIGITAL_X));
 
-        skills.remove();
-        c_lemlib.cancelAllMotions();
-        c_danielib.stopAllMovements();
-        top.brake();
-        bottom.brake();
-        left_mg.brake();
-        right_mg.brake();
-    }
+    //     skills.remove();
+    //     c_lemlib.cancelAllMotions();
+    //     c_danielib.stopAllMovements();
+    //     top.brake();
+    //     bottom.brake();
+    //     left_mg.brake();
+    //     right_mg.brake();
+    // }
 
-    odom_lift.extend();
+    master.clear();
     left_mg.set_brake_mode_all(MotorBrake::coast);
     right_mg.set_brake_mode_all(MotorBrake::coast);
-    bottom.set_brake_mode_all(MotorBrake::brake);
-    top.set_brake_mode_all(MotorBrake::brake);
-    optical_top.set_led_pwm(0);
-    master.clear();
+    intake.set_brake_mode(MotorBrake::brake);
+    lift.set_brake_mode_all(MotorBrake::hold);
+    roller.set_brake_mode_all(MotorBrake::brake);
+    // odom_lift.extend();
+    // optical_top.set_led_pwm(0);
 
     pros::Task d_drivetrain_control     (DrivetrainControl);
     pros::Task d_intake_control         (IntakeControl);
-    pros::Task d_loader_control         (LoaderControl);
-    pros::Task d_descore_wing_control   (DescoreWingControl);
-    pros::Task d_mid_descore_control    (MidDescoreControl);
-    pros::Task d_intake_raise_control   (IntakeRaiseControl);
+    pros::Task d_lift_control         (LiftControl);
+    pros::Task d_roller_control         (RollerControl);
+    pros::Task d_claw_control         (ClawControl);
 
     printing = false;
     pros::lcd::shutdown();

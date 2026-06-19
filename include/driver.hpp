@@ -2,8 +2,6 @@
 
 void DrivetrainControl();
 void IntakeControl();
-void LoaderControl();
-
-void DescoreWingControl();
-void MidDescoreControl();
-void IntakeRaiseControl();
+void LiftControl();
+void RollerControl();
+void ClawControl();
