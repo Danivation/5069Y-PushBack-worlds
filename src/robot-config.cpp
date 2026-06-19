@@ -6,12 +6,12 @@
 /* ---------------------------------------------------------------------------------------------- */
 
 pros::Controller master(pros::E_CONTROLLER_MASTER);
-pros::MotorGroup left_mg({1, 2, 3}, pros::MotorGears::blue);
-pros::MotorGroup right_mg({-8, -9, -10}, pros::MotorGears::blue);
+pros::MotorGroup left_mg({11, -12, -13}, pros::MotorGears::blue);
+pros::MotorGroup right_mg({-1, 2, 3}, pros::MotorGears::blue);
 
-pros::MotorGroup roller({4, -5}, pros::MotorGears::rpm_200);
-pros::MotorGroup lift({6, -7}, pros::MotorGears::rpm_200);
-pros::Motor intake(11, pros::MotorGears::blue);
+pros::MotorGroup roller({4, -14}, pros::MotorGears::rpm_200);
+pros::MotorGroup lift({-5, 15}, pros::MotorGears::rpm_200);
+pros::Motor intake(20, pros::MotorGears::blue);
 
 pros::adi::Pneumatics claw('A', false);
 
