@@ -7,6 +7,7 @@
 #define ROLLER_DOWN             DIGITAL_RIGHT
 
 #define CLAW_TOGGLE             DIGITAL_B
+#define PISTON2_TOGGLE          DIGITAL_Y
 
 #define INTAKE                  DIGITAL_R1
 #define OUTTAKE                 DIGITAL_R2
@@ -84,6 +85,15 @@ void ClawControl() {
         waitUntilCondition(!CLAW_TOGGLE);
         waitUntilCondition(CLAW_TOGGLE);
         claw.toggle();
+        delay(10);
+    }
+}
+
+void Piston2Control() {
+    while (true) {
+        waitUntilCondition(!PISTON2_TOGGLE);
+        waitUntilCondition(PISTON2_TOGGLE);
+        piston2.toggle();
         delay(10);
     }
 }

@@ -14,6 +14,7 @@ pros::MotorGroup lift({-5, 15}, pros::MotorGears::rpm_200);
 pros::Motor intake(20, pros::MotorGears::blue);
 
 pros::adi::Pneumatics claw('A', false);
+pros::adi::Pneumatics piston2('B', false);
 
 
 
@@ -29,7 +30,7 @@ pros::Distance distance_front(22);
 pros::Distance distance_left(22);
 pros::Distance distance_right(22);
 
-pros::adi::Pneumatics odom_lift('B', false);
+pros::adi::Pneumatics odom_lift('H', false);
 pros::adi::Pneumatics hood('C', false);
 pros::adi::Pneumatics wing('D', false);
 pros::adi::Pneumatics intake_raise('E', false);
