@@ -234,9 +234,9 @@ void initialize() {
     // optical_top.set_led_pwm(0);
     left_mg.set_brake_mode_all(MotorBrake::coast);
     right_mg.set_brake_mode_all(MotorBrake::coast);
-    intake.set_brake_mode(MotorBrake::brake);
     lift.set_brake_mode_all(MotorBrake::hold);
-    roller.set_brake_mode_all(MotorBrake::brake);
+    intake.set_brake_mode(MotorBrake::brake);
+    cone.set_brake_mode(MotorBrake::coast);
     claw.retract();
 
     // skills things
@@ -331,16 +331,16 @@ void opcontrol() {
     master.clear();
     left_mg.set_brake_mode_all(MotorBrake::coast);
     right_mg.set_brake_mode_all(MotorBrake::coast);
-    intake.set_brake_mode(MotorBrake::brake);
     lift.set_brake_mode_all(MotorBrake::hold);
-    roller.set_brake_mode_all(MotorBrake::brake);
+    intake.set_brake_mode(MotorBrake::brake);
+    cone.set_brake_mode(MotorBrake::coast);
     // odom_lift.extend();
     // optical_top.set_led_pwm(0);
 
     pros::Task d_drivetrain_control     (DrivetrainControl);
     pros::Task d_intake_control         (IntakeControl);
     pros::Task d_lift_control           (LiftControl);
-    pros::Task d_roller_control         (RollerControl);
+    // pros::Task d_roller_control         (RollerControl);
     pros::Task d_claw_control           (ClawControl);
     pros::Task d_piston2_control        (Piston2Control);
 

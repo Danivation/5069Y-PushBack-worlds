@@ -3,6 +3,6 @@
 void DrivetrainControl();
 void IntakeControl();
 void LiftControl();
-void RollerControl();
+// void RollerControl();
 void ClawControl();
 void Piston2Control();
