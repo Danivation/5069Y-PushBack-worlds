@@ -56,16 +56,16 @@ void IntakeControl() {
 void LiftControl() {
     while (true) {
         if (master.get_digital(LIFT_UP)) {
-            liftL.move(127);
-            liftR.move(127);
+            lift.move(127);
+            // liftR.move(127);
         }
         if (master.get_digital(LIFT_DOWN)) {
-            liftL.move(-127);
-            liftR.move(-127);
+            lift.move(-127);
+            // liftR.move(-127);
         }
         if (!master.get_digital(LIFT_UP) && !master.get_digital(LIFT_DOWN)) {
-            liftL.brake();
-            liftR.brake();
+            lift.brake();
+            // liftR.brake();
         }
         delay(10);
     }
