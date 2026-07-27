@@ -15,7 +15,7 @@ pros::MotorGroup lift({7, -17}, pros::MotorGears::green);
 pros::Motor cone(-8, pros::MotorGears::rpm_200);
 pros::Motor intake(-16, pros::MotorGears::rpm_200);
 
-pros::adi::Pneumatics claw('H', false);
+pros::adi::Pneumatics claw('A', false);
 
 
 
