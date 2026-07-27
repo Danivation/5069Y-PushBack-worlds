@@ -53,11 +53,8 @@ extern pros::MotorGroup right_mg;
 extern pros::Motor cone;
 extern pros::Motor intake;
 extern pros::MotorGroup lift;
-extern pros::Motor liftL;
-extern pros::Motor liftR;
 
 extern pros::adi::Pneumatics claw;
-extern pros::adi::Pneumatics piston2;
 
 
 

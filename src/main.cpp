@@ -340,9 +340,7 @@ void opcontrol() {
     pros::Task d_drivetrain_control     (DrivetrainControl);
     pros::Task d_intake_control         (IntakeControl);
     pros::Task d_lift_control           (LiftControl);
-    // pros::Task d_roller_control         (RollerControl);
     pros::Task d_claw_control           (ClawControl);
-    pros::Task d_piston2_control        (Piston2Control);
 
     printing = false;
     pros::lcd::shutdown();

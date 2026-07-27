@@ -6,17 +6,16 @@
 /* ---------------------------------------------------------------------------------------------- */
 
 pros::Controller master(pros::E_CONTROLLER_MASTER);
-pros::MotorGroup left_mg({11, -12, -13}, pros::MotorGears::blue);
-pros::MotorGroup right_mg({-1, 2, 3}, pros::MotorGears::blue);
 
-pros::MotorGroup lift({19, -10}, pros::MotorGears::green);
-pros::Motor liftL(19, pros::MotorGears::green);
-pros::Motor liftR(-10, pros::MotorGears::green);
+// DRIVE GEAR LAYOUT: O-m--M-MO
+pros::MotorGroup left_mg({1, -9, -10}, pros::MotorGears::blue);       // 1: 5.5W, 9/10: 11W
+pros::MotorGroup right_mg({-11, 18, 19}, pros::MotorGears::blue);      // 11: 5.5W, 18/19: 11W
+
+pros::MotorGroup lift({7, -17}, pros::MotorGears::green);
 pros::Motor cone(-8, pros::MotorGears::rpm_200);
-pros::Motor intake(-9, pros::MotorGears::rpm_200);
+pros::Motor intake(-16, pros::MotorGears::rpm_200);
 
-pros::adi::Pneumatics claw('B', false);
-pros::adi::Pneumatics piston2('C', false);
+pros::adi::Pneumatics claw('H', false);
 
 
 

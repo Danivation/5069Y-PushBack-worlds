@@ -57,15 +57,12 @@ void LiftControl() {
     while (true) {
         if (master.get_digital(LIFT_UP)) {
             lift.move(127);
-            // liftR.move(127);
         }
         if (master.get_digital(LIFT_DOWN)) {
             lift.move(-127);
-            // liftR.move(-127);
         }
         if (!master.get_digital(LIFT_UP) && !master.get_digital(LIFT_DOWN)) {
             lift.brake();
-            // liftR.brake();
         }
         delay(10);
     }
@@ -91,15 +88,6 @@ void ClawControl() {
         waitUntilCondition(!CLAW_TOGGLE);
         waitUntilCondition(CLAW_TOGGLE);
         claw.toggle();
-        delay(10);
-    }
-}
-
-void Piston2Control() {
-    while (true) {
-        waitUntilCondition(!PISTON2_TOGGLE);
-        waitUntilCondition(PISTON2_TOGGLE);
-        piston2.toggle();
         delay(10);
     }
 }
