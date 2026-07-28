@@ -7,7 +7,7 @@
 const bool skillsSlow = false;
 const bool autoForDriver = false;
 
-pros::Color WrongColor = Color::red;
+pros::Color WrongColor = Color::blue;
 bool comp_started = false;
 bool printing = false;
 bool logging = false;
@@ -117,7 +117,7 @@ void auton_selector() {
         if (master.get_digital_new_press(DIGITAL_LEFT)) {
             auton_index--;
         }
-        if (master.get_digital_new_press(DIGITAL_UP)) {
+        if (master.get_digital_new_press(DIGITAL_A)) {
             if (WrongColor == Color::red) {
                 WrongColor = Color::blue;
             } else {

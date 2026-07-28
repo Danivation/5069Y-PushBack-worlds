@@ -7,16 +7,18 @@
 // #define TRAFFIC_CONE_IN         DIGITAL_DOWN
 // #define TRAFFIC_CONE_OUT        DIGITAL_RIGHT
 
-#define CLAW_TOGGLE             master.get_digital(DIGITAL_B)
+#define CLAW_TOGGLE             master.get_digital(DIGITAL_X)
 
 #define INTAKE                  DIGITAL_R1
 #define OUTTAKE                 DIGITAL_R2
 
 #define LIFT_UP                 DIGITAL_L1
 #define LIFT_DOWN               DIGITAL_L2
-#define LIFT_LOAD_MACRO         DIGITAL_Y
+#define LIFT_LOAD_MACRO         DIGITAL_B
+#define LIFT_FLIP_MACRO         DIGITAL_Y
 
-std::atomic<bool> driving = true;
+std::atomic<bool> driving = false;
+std::atomic<bool> intake_control = true;
 void DrivetrainControl() {
     float throttle;
     float turn;
@@ -53,7 +55,7 @@ void moveLiftToPosition(float target, int timeout) {
     liftExit.reset();
 
     std::uint32_t time = pros::millis();
-    while (pros::millis() < startTime + timeout) {
+    while (pros::millis() < startTime + timeout && !liftExit.isDone()) {
         currentPosition = getLiftPosition();
         error = target - currentPosition;
         power = liftPID.update(error);
@@ -74,17 +76,19 @@ void moveLiftToPosition(float target, int timeout) {
 
 void IntakeControl() {
     while (true) {
-        if (master.get_digital(INTAKE)) {
-            intake.move(127);
-            cone.move(127);
-        }
-        else if (master.get_digital(OUTTAKE)) {
-            intake.move(-127);
-            cone.move(-127);
-        }
-        else {
-            intake.brake();
-            cone.brake();
+        if (intake_control) {
+            if (master.get_digital(INTAKE)) {
+                intake.move(127);
+                cone.move(127);
+            }
+            else if (master.get_digital(OUTTAKE)) {
+                intake.move(-127);
+                cone.move(-127);
+            }
+            else {
+                intake.brake();
+                cone.brake();
+            }
         }
         delay(10);
     }
@@ -93,7 +97,26 @@ void IntakeControl() {
 void LiftControl() {
     while (true) {
         if (master.get_digital(LIFT_LOAD_MACRO)) {
-            moveLiftToPosition(990, 5000);
+            moveLiftToPosition(1075);
+            claw.extend();
+            waitUntilCondition(!master.get_digital(LIFT_LOAD_MACRO));
+        }
+        else if (master.get_digital(LIFT_FLIP_MACRO)) {
+            intake_control = false;
+            delay(20);
+            intake.move(127);
+            cone.move(127);
+            delay(300);
+            moveLiftToPosition(1450);
+            moveLiftToPosition(1230, 2000);
+            delay(200);
+            // delay(1000);
+            claw.retract();
+            moveLiftToPosition(1500);
+            intake.brake();
+            cone.brake();
+            intake_control = true;
+            waitUntilCondition(!master.get_digital(LIFT_FLIP_MACRO));
         }
         else if (master.get_digital(LIFT_UP)) {
             lift.move(127);
