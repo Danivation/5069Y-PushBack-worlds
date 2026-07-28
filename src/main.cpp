@@ -184,7 +184,8 @@ void print_info() {
 
         // print to controller
         if (cycle % 5 == 0) {
-            master.print(0, 0, "(%.1f, %.1f, %.1f)    ", pose.x, pose.y, d_reduce_to_0_360(pose.theta));
+            // master.print(0, 0, "(%.1f, %.1f, %.1f)    ", pose.x, pose.y, d_reduce_to_0_360(pose.theta));
+            master.print(0, 0, "Lift pos: %.2f     ", getLiftPosition());
             delay(50);
             master.print(2, 0, "Time: %.2f    ", testAutonDuration);
         }
@@ -238,6 +239,9 @@ void initialize() {
     intake.set_brake_mode(MotorBrake::brake);
     cone.set_brake_mode(MotorBrake::brake);
     claw.retract();
+
+    // reset lift encoders
+    lift.tare_position_all();
 
     // skills things
     // calibrate_all();

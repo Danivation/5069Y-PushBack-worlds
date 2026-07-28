@@ -56,6 +56,8 @@ extern pros::MotorGroup lift;
 
 extern pros::adi::Pneumatics claw;
 
+extern danielib::PID liftPID;
+
 
 
 

@@ -1,4 +1,5 @@
 #include "main.h"
+#include "pros/abstract_motor.hpp"
 
 
 /* ---------------------------------------------------------------------------------------------- */
@@ -11,7 +12,7 @@ pros::Controller master(pros::E_CONTROLLER_MASTER);
 pros::MotorGroup left_mg({1, -9, -10}, pros::MotorGears::blue);       // 1: 5.5W, 9/10: 11W
 pros::MotorGroup right_mg({-11, 18, 19}, pros::MotorGears::blue);      // 11: 5.5W, 18/19: 11W
 
-pros::MotorGroup lift({7, -17}, pros::MotorGears::green);
+pros::MotorGroup lift({-7, 17}, pros::MotorGears::green, pros::MotorEncoderUnits::degrees);
 pros::Motor cone(-8, pros::MotorGears::rpm_200);
 pros::Motor intake(-16, pros::MotorGears::rpm_200);
 
@@ -41,6 +42,9 @@ pros::adi::Pneumatics loader('G', false);
 /* ---------------------------------------------------------------------------------------------- */
 /*                                              PIDS                                              */
 /* ---------------------------------------------------------------------------------------------- */
+
+// CASCADE LIFT PID
+danielib::PID liftPID(0.35, 0, 0, 0, 0, 0, 0);
 
 // LEMLIB LINEAR PID - very good for mtp, no tip
 lemlib::ControllerSettings lateral_controller(7.5, 0, 33, 0, 1, 100, 2.5, 300, 7.5);

@@ -1,3 +1,4 @@
+#include "danielib/exit.hpp"
 #include "main.h"
 
 #define THROTTLE_AXIS           master.get_analog(ANALOG_LEFT_Y)
@@ -7,18 +8,13 @@
 // #define TRAFFIC_CONE_OUT        DIGITAL_RIGHT
 
 #define CLAW_TOGGLE             master.get_digital(DIGITAL_B)
-#define PISTON2_TOGGLE          master.get_digital(DIGITAL_Y)
 
 #define INTAKE                  DIGITAL_R1
 #define OUTTAKE                 DIGITAL_R2
 
 #define LIFT_UP                 DIGITAL_L1
 #define LIFT_DOWN               DIGITAL_L2
-
-#define LOADER_TOGGLE           master.get_digital(DIGITAL_DOWN)
-#define DESCORE_MID_TOGGLE      master.get_digital(DIGITAL_RIGHT)
-#define DESCORE_WING_TOGGLE     master.get_digital(DIGITAL_Y)
-#define INTAKE_RAISE_TOGGLE     master.get_digital(DIGITAL_LEFT)
+#define LIFT_LOAD_MACRO         DIGITAL_Y
 
 std::atomic<bool> driving = true;
 void DrivetrainControl() {
@@ -35,17 +31,58 @@ void DrivetrainControl() {
     }
 }
 
+// right (17) returns posiitive, left (7) returns negative when winding clockwise
+float getLiftPosition() {
+    float leftMotorPosition = lift.get_position(0);
+    float rightMotorPosition = lift.get_position(1);
+
+    float avgPosition = (leftMotorPosition + rightMotorPosition) / 2;
+
+    return avgPosition;
+}
+
+void moveLiftToPosition(float target, int timeout) {
+    const int startTime = pros::millis();
+    danielib::ExitCondition liftExit(liftPID.exitRange, liftPID.exitTime);
+
+    float power = 0;
+    float currentPosition = getLiftPosition();
+    float error = 0;
+
+    liftPID.reset();
+    liftExit.reset();
+
+    std::uint32_t time = pros::millis();
+    while (pros::millis() < startTime + timeout) {
+        currentPosition = getLiftPosition();
+        error = target - currentPosition;
+        power = liftPID.update(error);
+        liftExit.update(error);
+
+        // clamp power
+        // power = std::clamp(power, -127.0f, 127.0f);
+
+        // move motors
+        lift.move(power);
+
+        // delay
+        pros::Task::delay_until(&time, 10);
+    }
+
+    lift.brake();
+}
+
 void IntakeControl() {
     while (true) {
         if (master.get_digital(INTAKE)) {
             intake.move(127);
             cone.move(127);
         }
-        if (master.get_digital(OUTTAKE)) {
+        else if (master.get_digital(OUTTAKE)) {
             intake.move(-127);
             cone.move(-127);
         }
-        if (!master.get_digital(INTAKE) && !master.get_digital(OUTTAKE)) {
+        else {
             intake.brake();
             cone.brake();
         }
@@ -55,33 +92,21 @@ void IntakeControl() {
 
 void LiftControl() {
     while (true) {
-        if (master.get_digital(LIFT_UP)) {
+        if (master.get_digital(LIFT_LOAD_MACRO)) {
+            moveLiftToPosition(990, 5000);
+        }
+        else if (master.get_digital(LIFT_UP)) {
             lift.move(127);
         }
-        if (master.get_digital(LIFT_DOWN)) {
+        else if (master.get_digital(LIFT_DOWN)) {
             lift.move(-127);
         }
-        if (!master.get_digital(LIFT_UP) && !master.get_digital(LIFT_DOWN)) {
+        else {
             lift.brake();
         }
         delay(10);
     }
 }
-
-// void RollerControl() {
-//     while (true) {
-//         if (master.get_digital_new_press(ROLLER_UP)) {
-//             roller.move(127);
-//         }
-//         if (master.get_digital_new_press(ROLLER_DOWN)) {
-//             roller.move(-127);
-//         }
-//         if (!master.get_digital(ROLLER_UP) && !master.get_digital(ROLLER_DOWN)) {
-//             roller.brake();
-//         }
-//         delay(10);
-//     }
-// }
 
 void ClawControl() {
     while (true) {
