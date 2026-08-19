@@ -12,13 +12,17 @@
 #define INTAKE                  DIGITAL_R1
 #define OUTTAKE                 DIGITAL_R2
 
+#define WRIST_UP                DIGITAL_UP
+#define WRIST_DOWN              DIGITAL_DOWN
+
 #define LIFT_UP                 DIGITAL_L1
 #define LIFT_DOWN               DIGITAL_L2
 #define LIFT_LOAD_MACRO         DIGITAL_B
 #define LIFT_FLIP_MACRO         DIGITAL_Y
 
-std::atomic<bool> driving = false;
+std::atomic<bool> driving = true;
 std::atomic<bool> intake_control = true;
+std::atomic<bool> wrist_control = true;
 void DrivetrainControl() {
     float throttle;
     float turn;
@@ -94,10 +98,27 @@ void IntakeControl() {
     }
 }
 
+void WristControl() {
+    while (true) {
+        if (wrist_control) {
+            if (master.get_digital(WRIST_UP)) {
+                wrist.move(127);
+            }
+            else if (master.get_digital(WRIST_DOWN)) {
+                wrist.move(-127);
+            }
+            else {
+                wrist.brake();
+            }
+        }
+        delay(10);
+    }
+}
+
 void LiftControl() {
     while (true) {
         if (master.get_digital(LIFT_LOAD_MACRO)) {
-            moveLiftToPosition(1075);
+            moveLiftToPosition(1150);
             claw.extend();
             waitUntilCondition(!master.get_digital(LIFT_LOAD_MACRO));
         }

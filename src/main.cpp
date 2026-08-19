@@ -238,6 +238,7 @@ void initialize() {
     lift.set_brake_mode_all(MotorBrake::brake);
     intake.set_brake_mode(MotorBrake::brake);
     cone.set_brake_mode(MotorBrake::brake);
+    wrist.set_brake_mode(MotorBrake::brake);
     claw.retract();
 
     // reset lift encoders
@@ -338,11 +339,13 @@ void opcontrol() {
     lift.set_brake_mode_all(MotorBrake::brake);
     intake.set_brake_mode(MotorBrake::brake);
     cone.set_brake_mode(MotorBrake::brake);
+    wrist.set_brake_mode(MotorBrake::brake);
     // odom_lift.extend();
     // optical_top.set_led_pwm(0);
 
     pros::Task d_drivetrain_control     (DrivetrainControl);
     pros::Task d_intake_control         (IntakeControl);
+    pros::Task d_wrist_control          (WristControl);
     pros::Task d_lift_control           (LiftControl);
     pros::Task d_claw_control           (ClawControl);
 

@@ -12,8 +12,9 @@ pros::Controller master(pros::E_CONTROLLER_MASTER);
 pros::MotorGroup left_mg({1, -9, -10}, pros::MotorGears::blue);       // 1: 5.5W, 9/10: 11W
 pros::MotorGroup right_mg({-11, 18, 19}, pros::MotorGears::blue);      // 11: 5.5W, 18/19: 11W
 
-pros::MotorGroup lift({-7, 17}, pros::MotorGears::green, pros::MotorEncoderUnits::degrees);
-pros::Motor cone(-8, pros::MotorGears::rpm_200);
+pros::MotorGroup lift({7, 17}, pros::MotorGears::green, pros::MotorEncoderUnits::degrees);
+pros::Motor cone(8, pros::MotorGears::rpm_200);
+pros::Motor wrist(-6, pros::MotorGears::rpm_200);
 pros::Motor intake(-16, pros::MotorGears::rpm_200);
 
 pros::adi::Pneumatics claw('A', false);

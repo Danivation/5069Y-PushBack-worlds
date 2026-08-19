@@ -51,6 +51,7 @@ extern pros::MotorGroup left_mg;
 extern pros::MotorGroup right_mg;
 
 extern pros::Motor cone;
+extern pros::Motor wrist;
 extern pros::Motor intake;
 extern pros::MotorGroup lift;
 
