@@ -58,6 +58,7 @@ extern pros::MotorGroup lift;
 extern pros::adi::Pneumatics claw;
 
 extern danielib::PID liftPID;
+extern danielib::PID wristPID;
 
 
 
@@ -66,6 +67,9 @@ extern pros::Rotation horizontal_rotation;
 extern pros::Rotation vertical_rotation;
 extern CustomImu imu_1;
 // extern pros::Imu imu_2;
+extern pros::Rotation lift_rot;
+extern pros::Rotation wrist_rot;
+
 extern pros::Optical optical_top;
 extern pros::Distance distance_left;
 extern pros::Distance distance_right;

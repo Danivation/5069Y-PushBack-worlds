@@ -20,6 +20,8 @@
 #define LIFT_LOAD_MACRO         DIGITAL_B
 #define LIFT_FLIP_MACRO         DIGITAL_Y
 
+#define WRIST_LOAD_MACRO         DIGITAL_UP
+
 std::atomic<bool> driving = true;
 std::atomic<bool> intake_control = true;
 std::atomic<bool> wrist_control = true;
@@ -78,6 +80,48 @@ void moveLiftToPosition(float target, int timeout) {
     lift.brake();
 }
 
+// right (17) returns posiitive, left (7) returns negative when winding clockwise
+float getWristPosition() {
+    // float leftMotorPosition = lift.get_position(0);
+    // float rightMotorPosition = lift.get_position(1);
+
+    // float avgPosition = (leftMotorPosition + rightMotorPosition) / 2;
+
+    // return avgPosition;
+    return (float)(wrist_rot.get_position())/100.0f;
+}
+
+void moveWristToPosition(float target, int timeout) {
+    const int startTime = pros::millis();
+    danielib::ExitCondition wristExit(wristPID.exitRange, wristPID.exitTime);
+
+    float power = 0;
+    float currentPosition = getWristPosition();
+    float error = 0;
+
+    wristPID.reset();
+    wristExit.reset();
+
+    std::uint32_t time = pros::millis();
+    while (pros::millis() < startTime + timeout && !wristExit.isDone()) {
+        currentPosition = getWristPosition();
+        error = target - currentPosition;
+        power = wristPID.update(error);
+        wristExit.update(error);
+
+        // clamp power
+        // power = std::clamp(power, -127.0f, 127.0f);
+
+        // move motors
+        wrist.move(power);
+
+        // delay
+        pros::Task::delay_until(&time, 10);
+    }
+
+    wrist.brake();
+}
+
 void IntakeControl() {
     while (true) {
         if (intake_control) {
@@ -101,12 +145,15 @@ void IntakeControl() {
 void WristControl() {
     while (true) {
         if (wrist_control) {
-            if (master.get_digital(WRIST_UP)) {
-                wrist.move(127);
+            if (master.get_digital(WRIST_LOAD_MACRO)) {
+                moveWristToPosition(310, 9999999);
             }
-            else if (master.get_digital(WRIST_DOWN)) {
-                wrist.move(-127);
-            }
+            // else if (master.get_digital(WRIST_UP)) {
+            //     wrist.move(50);
+            // }
+            // else if (master.get_digital(WRIST_DOWN)) {
+            //     wrist.move(-50);
+            // }
             else {
                 wrist.brake();
             }

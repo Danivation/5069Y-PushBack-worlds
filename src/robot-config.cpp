@@ -6,28 +6,30 @@
 /*                                          DEVICE PORTS                                          */
 /* ---------------------------------------------------------------------------------------------- */
 
+// MASTER CONTROLLER
 pros::Controller master(pros::E_CONTROLLER_MASTER);
 
 // DRIVE GEAR LAYOUT: O-m--M-MO
-pros::MotorGroup left_mg({1, -9, -10}, pros::MotorGears::blue);       // 1: 5.5W, 9/10: 11W
-pros::MotorGroup right_mg({-11, 18, 19}, pros::MotorGears::blue);      // 11: 5.5W, 18/19: 11W
+pros::MotorGroup left_mg({6, -7, -8}, pros::MotorGears::blue);      // 6: 5.5W, 7/8: 11W
+pros::MotorGroup right_mg({-3, 4, 5}, pros::MotorGears::blue);    // 1: 3: 5.5W, 4/5: 11W
 
-pros::MotorGroup lift({7, 17}, pros::MotorGears::green, pros::MotorEncoderUnits::degrees);
-pros::Motor cone(8, pros::MotorGears::rpm_200);
-pros::Motor wrist(-6, pros::MotorGears::rpm_200);
-pros::Motor intake(-16, pros::MotorGears::rpm_200);
+// MECHANISM MOTORS
+pros::MotorGroup lift({-10, 9}, pros::MotorGears::green, pros::MotorEncoderUnits::degrees);
+pros::Motor cone(-1, pros::MotorGears::rpm_200);
+pros::Motor wrist(2, pros::MotorGears::rpm_200);
+pros::Motor intake(19, pros::MotorGears::rpm_200);
 
+// PNEUMATICS
 pros::adi::Pneumatics claw('A', false);
 
-
-
-
-
-
+// ODOMETRY SENSORS
 CustomImu imu_1(22, 360.0f/356.6f);
 pros::Rotation vertical_rotation(22);
 pros::Rotation horizontal_rotation(22);
 
+// OTHER SENSORS
+pros::Rotation lift_rot(12);
+pros::Rotation wrist_rot(13);
 pros::Optical optical_top(22);
 pros::Distance distance_front(22);
 pros::Distance distance_left(22);
@@ -40,12 +42,18 @@ pros::adi::Pneumatics intake_raise('E', false);
 pros::adi::Pneumatics mid_descore('F', false);
 pros::adi::Pneumatics loader('G', false);
 
+
+
 /* ---------------------------------------------------------------------------------------------- */
 /*                                              PIDS                                              */
 /* ---------------------------------------------------------------------------------------------- */
 
 // CASCADE LIFT PID
 danielib::PID liftPID(1.6, 0.25, 0, 0, 50, 500, 0);
+
+
+// CASCADE LIFT PID
+danielib::PID wristPID(0.5, 0, 0, 0, 0, 0, 0);
 
 // LEMLIB LINEAR PID - very good for mtp, no tip
 lemlib::ControllerSettings lateral_controller(7.5, 0, 33, 0, 1, 100, 2.5, 300, 7.5);

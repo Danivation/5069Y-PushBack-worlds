@@ -144,7 +144,7 @@ void print_info() {
 
         auto left_temps = left_mg.get_temperature_all();
         auto right_temps = right_mg.get_temperature_all();
-        // auto bottom_temps = bottom.get_temperature_all();
+        auto lift_temps = lift.get_temperature_all();
         // auto top_temp = top.get_temperature();
 
         std::string left_status = "OK";
@@ -157,11 +157,11 @@ void print_info() {
         if (right_temps[0] >= 60.0f || right_temps[1] >= 60.0f || right_temps[2] >= 60.0f) right_status = "1/4";
         if (right_temps[0] >= 65.0f || right_temps[1] >= 65.0f || right_temps[2] >= 65.0f) right_status = "1/8";
         if (right_temps[0] >= 70.0f || right_temps[1] >= 70.0f || right_temps[2] >= 70.0f) right_status = "OFF";
-        // std::string bottom_status = "OK";
-        // if (bottom_temps[0] >= 50.0f || bottom_temps[1] >= 50.0f) bottom_status = "WARM";
-        // if (bottom_temps[0] >= 60.0f || bottom_temps[1] >= 60.0f) bottom_status = "1/4";
-        // if (bottom_temps[0] >= 65.0f || bottom_temps[1] >= 65.0f) bottom_status = "1/8";
-        // if (bottom_temps[0] >= 70.0f || bottom_temps[1] >= 70.0f) bottom_status = "OFF";
+        std::string lift_status = "OK";
+        if (lift_status[0] >= 50.0f || lift_status[1] >= 50.0f) lift_status = "WARM";
+        if (lift_status[0] >= 60.0f || lift_status[1] >= 60.0f) lift_status = "1/4";
+        if (lift_status[0] >= 65.0f || lift_status[1] >= 65.0f) lift_status = "1/8";
+        if (lift_status[0] >= 70.0f || lift_status[1] >= 70.0f) lift_status = "OFF";
         // std::string top_status = "OK";
         // if (top_temp >= 50.0f) top_status = "WARM";
         // if (top_temp >= 60.0f) top_status = "1/4";
@@ -174,9 +174,9 @@ void print_info() {
         pros::lcd::print(5, "R: %.0f %.0f %.0f (%s)",
             right_temps[0], right_temps[1], right_temps[2], right_status.c_str()
         );
-        // pros::lcd::print(6, "B: %.0f %.0f (%s) %.1f %.1f", 
-        //     bottom_temps[0], bottom_temps[1], bottom_status.c_str(), bottom.get_power(0), bottom.get_power(1)
-        // );
+        pros::lcd::print(6, "B: %.0f %.0f (%s) %.1f %.1f", 
+            lift_temps[0], lift_temps[1], lift_status.c_str(), lift.get_power(0), lift.get_power(1)
+        );
         // pros::lcd::print(7, "T: %.0f (%s) %.1f",
         //     top_temp, top_status.c_str(), top.get_power()
         // );
@@ -235,10 +235,10 @@ void initialize() {
     // optical_top.set_led_pwm(0);
     left_mg.set_brake_mode_all(MotorBrake::coast);
     right_mg.set_brake_mode_all(MotorBrake::coast);
-    lift.set_brake_mode_all(MotorBrake::brake);
+    lift.set_brake_mode_all(MotorBrake::hold);
     intake.set_brake_mode(MotorBrake::brake);
-    cone.set_brake_mode(MotorBrake::brake);
-    wrist.set_brake_mode(MotorBrake::brake);
+    cone.set_brake_mode(MotorBrake::hold);
+    wrist.set_brake_mode(MotorBrake::hold);
     claw.retract();
 
     // reset lift encoders
@@ -339,7 +339,7 @@ void opcontrol() {
     lift.set_brake_mode_all(MotorBrake::brake);
     intake.set_brake_mode(MotorBrake::brake);
     cone.set_brake_mode(MotorBrake::brake);
-    wrist.set_brake_mode(MotorBrake::brake);
+    wrist.set_brake_mode(MotorBrake::hold);
     // odom_lift.extend();
     // optical_top.set_led_pwm(0);
 
