@@ -50,34 +50,36 @@ float getLiftPosition() {
 }
 
 void moveLiftToPosition(float target, int timeout) {
-    const int startTime = pros::millis();
-    danielib::ExitCondition liftExit(liftPID.exitRange, liftPID.exitTime);
+    pros::Task liftPIDTask {[&] {
+        const int startTime = pros::millis();
+        danielib::ExitCondition liftExit(liftPID.exitRange, liftPID.exitTime);
 
-    float power = 0;
-    float currentPosition = getLiftPosition();
-    float error = 0;
+        float power = 0;
+        float currentPosition = getLiftPosition();
+        float error = 0;
 
-    liftPID.reset();
-    liftExit.reset();
+        liftPID.reset();
+        liftExit.reset();
 
-    std::uint32_t time = pros::millis();
-    while (pros::millis() < startTime + timeout && !liftExit.isDone()) {
-        currentPosition = getLiftPosition();
-        error = target - currentPosition;
-        power = liftPID.update(error);
-        liftExit.update(error);
+        std::uint32_t time = pros::millis();
+        while (pros::millis() < startTime + timeout && !liftExit.isDone()) {
+            currentPosition = getLiftPosition();
+            error = target - currentPosition;
+            power = liftPID.update(error);
+            liftExit.update(error);
 
-        // clamp power
-        // power = std::clamp(power, -127.0f, 127.0f);
+            // clamp power
+            // power = std::clamp(power, -127.0f, 127.0f);
 
-        // move motors
-        lift.move(power);
+            // move motors
+            lift.move(power);
 
-        // delay
-        pros::Task::delay_until(&time, 10);
-    }
+            // delay
+            pros::Task::delay_until(&time, 10);
+        }
 
-    lift.brake();
+        lift.brake();
+    }};
 }
 
 // right (17) returns posiitive, left (7) returns negative when winding clockwise
@@ -92,34 +94,36 @@ float getWristPosition() {
 }
 
 void moveWristToPosition(float target, int timeout) {
-    const int startTime = pros::millis();
-    danielib::ExitCondition wristExit(wristPID.exitRange, wristPID.exitTime);
+    pros::Task wristPIDTask {[&] {
+        const int startTime = pros::millis();
+        danielib::ExitCondition wristExit(wristPID.exitRange, wristPID.exitTime);
 
-    float power = 0;
-    float currentPosition = getWristPosition();
-    float error = 0;
+        float power = 0;
+        float currentPosition = getWristPosition();
+        float error = 0;
 
-    wristPID.reset();
-    wristExit.reset();
+        wristPID.reset();
+        wristExit.reset();
 
-    std::uint32_t time = pros::millis();
-    while (pros::millis() < startTime + timeout && !wristExit.isDone()) {
-        currentPosition = getWristPosition();
-        error = target - currentPosition;
-        power = wristPID.update(error);
-        wristExit.update(error);
+        std::uint32_t time = pros::millis();
+        while (pros::millis() < startTime + timeout && !wristExit.isDone()) {
+            currentPosition = getWristPosition();
+            error = target - currentPosition;
+            power = wristPID.update(error);
+            wristExit.update(error);
 
-        // clamp power
-        // power = std::clamp(power, -127.0f, 127.0f);
+            // clamp power
+            // power = std::clamp(power, -127.0f, 127.0f);
 
-        // move motors
-        wrist.move(power);
+            // move motors
+            wrist.move(power);
 
-        // delay
-        pros::Task::delay_until(&time, 10);
-    }
+            // delay
+            pros::Task::delay_until(&time, 10);
+        }
 
-    wrist.brake();
+        wrist.brake();
+    }};
 }
 
 void IntakeControl() {
@@ -145,15 +149,9 @@ void IntakeControl() {
 void WristControl() {
     while (true) {
         if (wrist_control) {
-            if (master.get_digital(WRIST_LOAD_MACRO)) {
+            if (master.get_digital_new_press(WRIST_LOAD_MACRO)) {
                 moveWristToPosition(310, 9999999);
-            }
-            // else if (master.get_digital(WRIST_UP)) {
-            //     wrist.move(50);
-            // }
-            // else if (master.get_digital(WRIST_DOWN)) {
-            //     wrist.move(-50);
-            // }
+            } else if (master.get_digital_new_press())
             else {
                 wrist.brake();
             }
