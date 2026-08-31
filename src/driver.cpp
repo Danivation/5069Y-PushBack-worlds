@@ -4,27 +4,29 @@
 #define THROTTLE_AXIS           master.get_analog(ANALOG_LEFT_Y)
 #define TURN_AXIS               master.get_analog(ANALOG_RIGHT_X)
 
-// #define TRAFFIC_CONE_IN         DIGITAL_DOWN
-// #define TRAFFIC_CONE_OUT        DIGITAL_RIGHT
-
-#define CLAW_TOGGLE             master.get_digital(DIGITAL_X)
-
 #define INTAKE                  DIGITAL_R1
 #define OUTTAKE                 DIGITAL_R2
 
-#define WRIST_UP                DIGITAL_UP
-#define WRIST_DOWN              DIGITAL_DOWN
-
 #define LIFT_UP                 DIGITAL_L1
 #define LIFT_DOWN               DIGITAL_L2
-#define LIFT_LOAD_MACRO         DIGITAL_B
-#define LIFT_FLIP_MACRO         DIGITAL_Y
 
-#define WRIST_LOAD_MACRO         DIGITAL_UP
+#define INTAKE_MACRO            DIGITAL_B
+#define MATCHLOAD_MACRO         DIGITAL_DOWN
+#define SCORING_MACRO           DIGITAL_Y
+
+#define WRIST_UP_MANUAL         DIGITAL_UP
+#define WRIST_DOWN_MANUAL       DIGITAL_LEFT
+
+pros::Task* liftPIDTask = nullptr;
+pros::Task* wristPIDTask = nullptr;
+
+float liftCurrentTarget = 0;
+float wristCurrentTarget = 0;
 
 std::atomic<bool> driving = true;
 std::atomic<bool> intake_control = true;
 std::atomic<bool> wrist_control = true;
+std::atomic<bool> lift_has_pid_control = false;
 void DrivetrainControl() {
     float throttle;
     float turn;
@@ -39,18 +41,21 @@ void DrivetrainControl() {
     }
 }
 
-// right (17) returns posiitive, left (7) returns negative when winding clockwise
+
+/* ---------------------------------------------------------------------------------------------- */
+/*                                        LIFT CONTROL PIDS                                       */
+/* ---------------------------------------------------------------------------------------------- */
+
 float getLiftPosition() {
-    float leftMotorPosition = lift.get_position(0);
-    float rightMotorPosition = lift.get_position(1);
-
-    float avgPosition = (leftMotorPosition + rightMotorPosition) / 2;
-
-    return avgPosition;
+    return (float)(lift_rot.get_position())/100.0f;
 }
 
-void moveLiftToPosition(float target, int timeout) {
-    pros::Task liftPIDTask {[&] {
+float getWristPosition() {
+    return (float)(wrist_rot.get_position())/100.0f;
+}
+
+void startLiftWristPIDS() {
+    liftPIDTask = new pros::Task {[&] {
         const int startTime = pros::millis();
         danielib::ExitCondition liftExit(liftPID.exitRange, liftPID.exitTime);
 
@@ -62,17 +67,14 @@ void moveLiftToPosition(float target, int timeout) {
         liftExit.reset();
 
         std::uint32_t time = pros::millis();
-        while (pros::millis() < startTime + timeout && !liftExit.isDone()) {
+        while (/* pros::millis() < startTime + timeout && !liftExit.isDone() */ true) {
             currentPosition = getLiftPosition();
-            error = target - currentPosition;
-            power = liftPID.update(error);
+            error = liftCurrentTarget - currentPosition;
+            power = -liftPID.update(error);
             liftExit.update(error);
 
-            // clamp power
-            // power = std::clamp(power, -127.0f, 127.0f);
-
             // move motors
-            lift.move(power);
+            if (lift_has_pid_control) lift.move(power);
 
             // delay
             pros::Task::delay_until(&time, 10);
@@ -80,21 +82,8 @@ void moveLiftToPosition(float target, int timeout) {
 
         lift.brake();
     }};
-}
 
-// right (17) returns posiitive, left (7) returns negative when winding clockwise
-float getWristPosition() {
-    // float leftMotorPosition = lift.get_position(0);
-    // float rightMotorPosition = lift.get_position(1);
-
-    // float avgPosition = (leftMotorPosition + rightMotorPosition) / 2;
-
-    // return avgPosition;
-    return (float)(wrist_rot.get_position())/100.0f;
-}
-
-void moveWristToPosition(float target, int timeout) {
-    pros::Task wristPIDTask {[&] {
+    wristPIDTask = new pros::Task {[&] {
         const int startTime = pros::millis();
         danielib::ExitCondition wristExit(wristPID.exitRange, wristPID.exitTime);
 
@@ -106,14 +95,11 @@ void moveWristToPosition(float target, int timeout) {
         wristExit.reset();
 
         std::uint32_t time = pros::millis();
-        while (pros::millis() < startTime + timeout && !wristExit.isDone()) {
+        while (/* pros::millis() < startTime + timeout && !wristExit.isDone() */ true) {
             currentPosition = getWristPosition();
-            error = target - currentPosition;
+            error = wristCurrentTarget - currentPosition;
             power = wristPID.update(error);
             wristExit.update(error);
-
-            // clamp power
-            // power = std::clamp(power, -127.0f, 127.0f);
 
             // move motors
             wrist.move(power);
@@ -125,6 +111,25 @@ void moveWristToPosition(float target, int timeout) {
         wrist.brake();
     }};
 }
+
+void setLiftTo(float target) {
+    lift_has_pid_control = true;
+    liftCurrentTarget = target;
+}
+
+void setWristTo(float target) {
+    // wrist_has_pid_control; true
+    wristCurrentTarget = target;
+}
+
+
+
+
+/* ---------------------------------------------------------------------------------------------- */
+/*                                    INTAKE AND WRIST CONTROLS                                   */
+/* ---------------------------------------------------------------------------------------------- */
+
+
 
 void IntakeControl() {
     while (true) {
@@ -149,11 +154,28 @@ void IntakeControl() {
 void WristControl() {
     while (true) {
         if (wrist_control) {
-            if (master.get_digital_new_press(WRIST_LOAD_MACRO)) {
-                moveWristToPosition(310, 9999999);
-            } else if (master.get_digital_new_press())
-            else {
+            if (master.get_digital_new_press(INTAKE_MACRO)) {
+                setLiftTo(335);
+                // delay(1000);
+                setWristTo(0);
+            } else if (master.get_digital_new_press(MATCHLOAD_MACRO)) {
+                setLiftTo(334);
+                // delay(1000);
+                setWristTo(360);
+            } else if (master.get_digital_new_press(SCORING_MACRO)) {
+                setLiftTo(329.50);
+                // delay(100);
+                setWristTo(407);
+            } else if (master.get_digital(WRIST_UP_MANUAL)) {
+                wrist.move(50);
+                waitUntilCondition(!master.get_digital(WRIST_UP_MANUAL));
                 wrist.brake();
+            } else if (master.get_digital(WRIST_DOWN_MANUAL)) {
+                wrist.move(-50);
+                waitUntilCondition(!master.get_digital(WRIST_DOWN_MANUAL));
+                wrist.brake();
+            } else {
+                // wrist.brake();
             }
         }
         delay(10);
@@ -162,46 +184,36 @@ void WristControl() {
 
 void LiftControl() {
     while (true) {
-        if (master.get_digital(LIFT_LOAD_MACRO)) {
-            moveLiftToPosition(1150);
-            claw.extend();
-            waitUntilCondition(!master.get_digital(LIFT_LOAD_MACRO));
-        }
-        else if (master.get_digital(LIFT_FLIP_MACRO)) {
-            intake_control = false;
-            delay(20);
-            intake.move(127);
-            cone.move(127);
-            delay(300);
-            moveLiftToPosition(1450);
-            moveLiftToPosition(1230, 2000);
-            delay(200);
-            // delay(1000);
-            claw.retract();
-            moveLiftToPosition(1500);
-            intake.brake();
-            cone.brake();
-            intake_control = true;
-            waitUntilCondition(!master.get_digital(LIFT_FLIP_MACRO));
-        }
-        else if (master.get_digital(LIFT_UP)) {
+        if (master.get_digital(LIFT_UP)) {
+            lift_has_pid_control = false;
+            delay(10);
             lift.move(127);
+            waitUntilCondition(!master.get_digital(LIFT_UP));
+            lift.brake();
+            setLiftTo(getLiftPosition());
+            lift_has_pid_control = true;
         }
         else if (master.get_digital(LIFT_DOWN)) {
+            lift_has_pid_control = false;
+            delay(10);
             lift.move(-127);
+            waitUntilCondition(!master.get_digital(LIFT_DOWN));
+            lift.brake();
+            setLiftTo(getLiftPosition());
+            lift_has_pid_control = true;
         }
         else {
-            lift.brake();
+            // lift.brake();
         }
         delay(10);
     }
 }
 
-void ClawControl() {
-    while (true) {
-        waitUntilCondition(!CLAW_TOGGLE);
-        waitUntilCondition(CLAW_TOGGLE);
-        claw.toggle();
-        delay(10);
-    }
-}
+// void ClawControl() {
+//     while (true) {
+//         waitUntilCondition(!CLAW_TOGGLE);
+//         waitUntilCondition(CLAW_TOGGLE);
+//         claw.toggle();
+//         delay(10);
+//     }
+// }

@@ -1,4 +1,5 @@
-#include "main.h" // IWYU pragma: keep
+#include "danielib/exit.hpp"
+#include "main.h"
 
 /* ---------------------------------------------------------------------------------------------- */
 /*                                        GLOBAL VARIABLES                                        */
@@ -187,6 +188,8 @@ void print_info() {
             // master.print(0, 0, "(%.1f, %.1f, %.1f)    ", pose.x, pose.y, d_reduce_to_0_360(pose.theta));
             master.print(0, 0, "Lift pos: %.2f     ", getLiftPosition());
             delay(50);
+            master.print(1, 0, "Wrist pos: %.2f     ", getWristPosition());
+            delay(50);
             master.print(2, 0, "Time: %.2f    ", testAutonDuration);
         }
 
@@ -315,23 +318,7 @@ void opcontrol() {
     selecting = false;
     master.rumble("..");
 
-    // if (autoForDriver) {
-    //     left_mg.set_brake_mode_all(MotorBrake::brake);
-    //     right_mg.set_brake_mode_all(MotorBrake::brake);
 
-    //     pros::Task skills(auton_skills);
-
-    //     waitUntilCondition(master.get_digital(DIGITAL_UP) && master.get_digital(DIGITAL_X));
-    //     waitUntilCondition(!master.get_digital(DIGITAL_UP) && !master.get_digital(DIGITAL_X));
-
-    //     skills.remove();
-    //     c_lemlib.cancelAllMotions();
-    //     c_danielib.stopAllMovements();
-    //     top.brake();
-    //     bottom.brake();
-    //     left_mg.brake();
-    //     right_mg.brake();
-    // }
 
     master.clear();
     left_mg.set_brake_mode_all(MotorBrake::coast);
@@ -339,15 +326,19 @@ void opcontrol() {
     lift.set_brake_mode_all(MotorBrake::brake);
     intake.set_brake_mode(MotorBrake::brake);
     cone.set_brake_mode(MotorBrake::brake);
-    wrist.set_brake_mode(MotorBrake::hold);
+    wrist.set_brake_mode(MotorBrake::brake);
     // odom_lift.extend();
     // optical_top.set_led_pwm(0);
 
+    setWristTo(getWristPosition());
+    setLiftTo(getLiftPosition());
+
+
+    pros::Task d_pids                   (startLiftWristPIDS);
     pros::Task d_drivetrain_control     (DrivetrainControl);
     pros::Task d_intake_control         (IntakeControl);
     pros::Task d_wrist_control          (WristControl);
     pros::Task d_lift_control           (LiftControl);
-    pros::Task d_claw_control           (ClawControl);
 
     printing = false;
     pros::lcd::shutdown();

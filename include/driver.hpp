@@ -1,4 +1,5 @@
 #pragma once
+#include "main.h"
 
 void DrivetrainControl();
 void IntakeControl();
@@ -6,5 +7,11 @@ void LiftControl();
 void ClawControl();
 void WristControl();
 
+float getWristPosition();
 float getLiftPosition();
-void moveLiftToPosition(float target, int timeout = 5000);
+void startLiftWristPIDS();
+void setLiftTo(float target);
+void setWristTo(float target);
+
+extern pros::Task* liftPIDTask;
+extern pros::Task* wristPIDTask;
