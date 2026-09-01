@@ -27,6 +27,7 @@ std::atomic<bool> driving = true;
 std::atomic<bool> intake_control = true;
 std::atomic<bool> wrist_control = true;
 std::atomic<bool> lift_has_pid_control = false;
+std::atomic<bool> wrist_has_pid_control = false;
 void DrivetrainControl() {
     float throttle;
     float turn;
@@ -102,7 +103,7 @@ void startLiftWristPIDS() {
             wristExit.update(error);
 
             // move motors
-            wrist.move(power);
+            if (wrist_has_pid_control) wrist.move(power);
 
             // delay
             pros::Task::delay_until(&time, 10);
@@ -118,7 +119,7 @@ void setLiftTo(float target) {
 }
 
 void setWristTo(float target) {
-    // wrist_has_pid_control; true
+    wrist_has_pid_control = true;
     wristCurrentTarget = target;
 }
 
@@ -153,30 +154,36 @@ void IntakeControl() {
 
 void WristControl() {
     while (true) {
-        if (wrist_control) {
-            if (master.get_digital_new_press(INTAKE_MACRO)) {
-                setLiftTo(335);
-                // delay(1000);
-                setWristTo(0);
-            } else if (master.get_digital_new_press(MATCHLOAD_MACRO)) {
-                setLiftTo(334);
-                // delay(1000);
-                setWristTo(360);
-            } else if (master.get_digital_new_press(SCORING_MACRO)) {
-                setLiftTo(329.50);
-                // delay(100);
-                setWristTo(407);
-            } else if (master.get_digital(WRIST_UP_MANUAL)) {
-                wrist.move(50);
-                waitUntilCondition(!master.get_digital(WRIST_UP_MANUAL));
-                wrist.brake();
-            } else if (master.get_digital(WRIST_DOWN_MANUAL)) {
-                wrist.move(-50);
-                waitUntilCondition(!master.get_digital(WRIST_DOWN_MANUAL));
-                wrist.brake();
-            } else {
-                // wrist.brake();
-            }
+        if (master.get_digital_new_press(INTAKE_MACRO)) {
+            setLiftTo(335);
+            // delay(1000);
+            setWristTo(0);
+        } else if (master.get_digital_new_press(MATCHLOAD_MACRO)) {
+            setLiftTo(334);
+            // delay(1000);
+            setWristTo(360);
+        } else if (master.get_digital_new_press(SCORING_MACRO)) {
+            setLiftTo(329.50);
+            // delay(100);
+            setWristTo(400);
+        } else if (master.get_digital(WRIST_UP_MANUAL)) {
+            wrist_has_pid_control = false;
+            delay(10);
+            wrist.move(50);
+            waitUntilCondition(!master.get_digital(WRIST_UP_MANUAL));
+            wrist.brake();
+            setWristTo(getWristPosition());
+            wrist_has_pid_control = true;
+        } else if (master.get_digital(WRIST_DOWN_MANUAL)) {
+            wrist_has_pid_control = false;
+            delay(10);
+            wrist.move(-50);
+            waitUntilCondition(!master.get_digital(WRIST_DOWN_MANUAL));
+            wrist.brake();
+            setWristTo(getWristPosition());
+            wrist_has_pid_control = true;
+        } else {
+            // wrist.brake();
         }
         delay(10);
     }
