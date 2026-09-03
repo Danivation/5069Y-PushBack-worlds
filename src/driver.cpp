@@ -163,25 +163,25 @@ void WristControl() {
             // delay(1000);
             setWristTo(360);
         } else if (master.get_digital_new_press(SCORING_MACRO)) {
-            setLiftTo(329.50);
+            // setLiftTo(329.50);
             // delay(100);
-            setWristTo(400);
+            setWristTo(407);
         } else if (master.get_digital(WRIST_UP_MANUAL)) {
             wrist_has_pid_control = false;
             delay(10);
             wrist.move(50);
             waitUntilCondition(!master.get_digital(WRIST_UP_MANUAL));
             wrist.brake();
-            setWristTo(getWristPosition());
-            wrist_has_pid_control = true;
+            // setWristTo(getWristPosition());
+            // wrist_has_pid_control = true;
         } else if (master.get_digital(WRIST_DOWN_MANUAL)) {
             wrist_has_pid_control = false;
             delay(10);
             wrist.move(-50);
             waitUntilCondition(!master.get_digital(WRIST_DOWN_MANUAL));
             wrist.brake();
-            setWristTo(getWristPosition());
-            wrist_has_pid_control = true;
+            // setWristTo(getWristPosition());
+            // wrist_has_pid_control = true;
         } else {
             // wrist.brake();
         }

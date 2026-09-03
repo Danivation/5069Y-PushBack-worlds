@@ -175,10 +175,10 @@ void print_info() {
         pros::lcd::print(5, "R: %.0f %.0f %.0f (%s)",
             right_temps[0], right_temps[1], right_temps[2], right_status.c_str()
         );
-        pros::lcd::print(6, "B: %.0f %.0f (%s) %.1f %.1f", 
-            lift_temps[0], lift_temps[1], lift_status.c_str(), lift.get_power(0), lift.get_power(1)
+        pros::lcd::print(6, "Lift: %.0f %.0f (%s)", 
+            lift_temps[0], lift_temps[1], lift_status.c_str()
         );
-        // pros::lcd::print(7, "T: %.0f (%s) %.1f",
+        // pros::lcd::print(7, "W/C: %.0f / %.0f (%s)",
         //     top_temp, top_status.c_str(), top.get_power()
         // );
         /**/
@@ -212,10 +212,10 @@ void wait_for_bypass() {
             comp_started = true;
             break;
         } else if (master.get_digital(DIGITAL_DOWN) && master.get_digital(DIGITAL_B)) {
+            waitUntilCondition(!(master.get_digital(DIGITAL_DOWN) && master.get_digital(DIGITAL_B)));
             printing = false;
             selecting = false;
             calibrate_all();
-            waitUntilCondition(!(master.get_digital(DIGITAL_DOWN) && master.get_digital(DIGITAL_B)));
         }
         pros::delay(10);
     }
@@ -238,14 +238,11 @@ void initialize() {
     // optical_top.set_led_pwm(0);
     left_mg.set_brake_mode_all(MotorBrake::coast);
     right_mg.set_brake_mode_all(MotorBrake::coast);
-    lift.set_brake_mode_all(MotorBrake::hold);
+    lift.set_brake_mode_all(MotorBrake::brake);
     intake.set_brake_mode(MotorBrake::brake);
-    cone.set_brake_mode(MotorBrake::hold);
-    wrist.set_brake_mode(MotorBrake::hold);
+    cone.set_brake_mode(MotorBrake::brake);
+    wrist.set_brake_mode(MotorBrake::brake);
     claw.retract();
-
-    // reset lift encoders
-    lift.tare_position_all();
 
     // skills things
     // calibrate_all();
