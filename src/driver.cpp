@@ -10,8 +10,8 @@
 #define LIFT_UP                 DIGITAL_L1
 #define LIFT_DOWN               DIGITAL_L2
 
-#define INTAKE_MACRO            DIGITAL_B
 #define MATCHLOAD_MACRO         DIGITAL_DOWN
+#define INTAKE_MACRO            DIGITAL_B
 #define SCORING_MACRO           DIGITAL_Y
 
 #define WRIST_UP_MANUAL         DIGITAL_UP
@@ -154,18 +154,17 @@ void IntakeControl() {
 
 void WristControl() {
     while (true) {
-        if (master.get_digital_new_press(INTAKE_MACRO)) {
-            setLiftTo(335);
-            // delay(1000);
-            setWristTo(0);
-        } else if (master.get_digital_new_press(MATCHLOAD_MACRO)) {
-            setLiftTo(334);
-            // delay(1000);
-            setWristTo(360);
+        if (master.get_digital_new_press(MATCHLOAD_MACRO)) {
+            setLiftTo(35);
+            delay(100);
+            setWristTo(277);
+        } else if (master.get_digital_new_press(INTAKE_MACRO)) {
+            setLiftTo(32);
+            delay(250);
+            setWristTo(-90);
+            setLiftTo(37.5);
         } else if (master.get_digital_new_press(SCORING_MACRO)) {
-            // setLiftTo(329.50);
-            // delay(100);
-            setWristTo(407);
+            setWristTo(356);
         } else if (master.get_digital(WRIST_UP_MANUAL)) {
             wrist_has_pid_control = false;
             delay(10);
@@ -197,8 +196,8 @@ void LiftControl() {
             lift.move(127);
             waitUntilCondition(!master.get_digital(LIFT_UP));
             lift.brake();
-            setLiftTo(getLiftPosition());
-            lift_has_pid_control = true;
+            // setLiftTo(getLiftPosition());
+            // lift_has_pid_control = true;
         }
         else if (master.get_digital(LIFT_DOWN)) {
             lift_has_pid_control = false;
@@ -206,8 +205,8 @@ void LiftControl() {
             lift.move(-127);
             waitUntilCondition(!master.get_digital(LIFT_DOWN));
             lift.brake();
-            setLiftTo(getLiftPosition());
-            lift_has_pid_control = true;
+            // setLiftTo(getLiftPosition());
+            // lift_has_pid_control = true;
         }
         else {
             // lift.brake();

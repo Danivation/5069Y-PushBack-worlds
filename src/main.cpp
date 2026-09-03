@@ -1,4 +1,4 @@
-#include "danielib/exit.hpp"
+#include "danielib/exit.hpp" // IWYU pragma: keep
 #include "main.h"
 
 /* ---------------------------------------------------------------------------------------------- */
@@ -238,7 +238,7 @@ void initialize() {
     // optical_top.set_led_pwm(0);
     left_mg.set_brake_mode_all(MotorBrake::coast);
     right_mg.set_brake_mode_all(MotorBrake::coast);
-    lift.set_brake_mode_all(MotorBrake::brake);
+    lift.set_brake_mode_all(MotorBrake::hold);
     intake.set_brake_mode(MotorBrake::brake);
     cone.set_brake_mode(MotorBrake::brake);
     wrist.set_brake_mode(MotorBrake::brake);
@@ -320,7 +320,7 @@ void opcontrol() {
     master.clear();
     left_mg.set_brake_mode_all(MotorBrake::coast);
     right_mg.set_brake_mode_all(MotorBrake::coast);
-    lift.set_brake_mode_all(MotorBrake::brake);
+    lift.set_brake_mode_all(MotorBrake::hold);
     intake.set_brake_mode(MotorBrake::brake);
     cone.set_brake_mode(MotorBrake::brake);
     wrist.set_brake_mode(MotorBrake::brake);

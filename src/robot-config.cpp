@@ -48,10 +48,10 @@ pros::adi::Pneumatics loader('G', false);
 /* ---------------------------------------------------------------------------------------------- */
 
 // CASCADE LIFT PID
-danielib::PID liftPID(6, 0.8, 0, 0, 0, 0, 0);
+danielib::PID liftPID(8.3, 0, 4, 0, 0, 0, 0);
 
 // WRIST PID
-danielib::PID wristPID(1.5, 0.3, 5.3, 0, 0, 0, 0);
+danielib::PID wristPID(1.33, 0, 4.4, 0, 0, 0, 0);
 
 // LEMLIB LINEAR PID - very good for mtp, no tip
 lemlib::ControllerSettings lateral_controller(7.5, 0, 33, 0, 1, 100, 2.5, 300, 7.5);
