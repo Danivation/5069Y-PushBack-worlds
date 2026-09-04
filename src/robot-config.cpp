@@ -48,7 +48,7 @@ pros::adi::Pneumatics loader('G', false);
 /* ---------------------------------------------------------------------------------------------- */
 
 // CASCADE LIFT PID
-danielib::PID liftPID(4, 0, 20, 0, 0, 0, 10);
+danielib::PID liftPID(4.8, 0.25, 65, 3, 0, 0, 15);
 
 // WRIST PID
 danielib::PID wristPID(1.33, 0, 4.4, 0, 0, 0, 0);
