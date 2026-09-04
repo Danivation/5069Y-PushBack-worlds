@@ -157,22 +157,48 @@ void IntakeControl() {
 }
 
 void WristControl() {
+    bool inPinPosition = false;
+
+    // CHECK FOR INTAKE POSITION FIRST
+    pros::Task cupIntakeTask {[&] {
+        while (true) {
+            if (inPinPosition) {
+                if (pin_dist.get_distance() < 150) {
+                    // wait 50 ms before checking again
+                    delay(200);
+                    if (pin_dist.get_distance() < 150) {
+                        inPinPosition = false;
+                        setWristTo(-77);
+                        setLiftTo(18.5);
+                    }
+                }
+            }
+            delay(10);
+        }
+    }};
+
+
     while (true) {
+
+        // MAIN BUTTON LOGIC
         if (master.get_digital_new_press(MATCHLOAD_MACRO)) {
+            inPinPosition = false;
             setLiftTo(16.8);
             setWristTo(-2);
         } else if (master.get_digital_new_press(INTAKE_MACRO)) {
+
+            // PIN LOADING POSITION
             setWristTo(-132);
             setLiftTo(16.5);
+            int startTime = pros::millis();
+            waitUntilCondition((getWristPosition() > -140 && getWristPosition() < -125 && getLiftPosition() > 5 && getLiftPosition() < 25) || pros::millis() + 500 > startTime);
+            inPinPosition = true;
 
-            waitUntilCondition(pin_dist <= )
-
-            // CUP GROUPING
-            setWristTo(-74.5);
-            setLiftTo(21.5);
         } else if (master.get_digital_new_press(SCORING_MACRO)) {
+            inPinPosition = false;
             setWristTo(4);
         } else if (master.get_digital(WRIST_UP_MANUAL)) {
+            inPinPosition = false;
             wrist_has_pid_control = false;
             delay(10);
             wrist.move(50);
@@ -181,6 +207,7 @@ void WristControl() {
             // setWristTo(getWristPosition());
             // wrist_has_pid_control = true;
         } else if (master.get_digital(WRIST_DOWN_MANUAL)) {
+            inPinPosition = false;
             wrist_has_pid_control = false;
             delay(10);
             wrist.move(-50);
