@@ -159,10 +159,10 @@ void print_info() {
         if (right_temps[0] >= 65.0f || right_temps[1] >= 65.0f || right_temps[2] >= 65.0f) right_status = "1/8";
         if (right_temps[0] >= 70.0f || right_temps[1] >= 70.0f || right_temps[2] >= 70.0f) right_status = "OFF";
         std::string lift_status = "OK";
-        if (lift_status[0] >= 50.0f || lift_status[1] >= 50.0f) lift_status = "WARM";
-        if (lift_status[0] >= 60.0f || lift_status[1] >= 60.0f) lift_status = "1/4";
-        if (lift_status[0] >= 65.0f || lift_status[1] >= 65.0f) lift_status = "1/8";
-        if (lift_status[0] >= 70.0f || lift_status[1] >= 70.0f) lift_status = "OFF";
+        if (lift_temps[0] >= 50.0f || lift_temps[1] >= 50.0f) lift_status = "WARM";
+        if (lift_temps[0] >= 60.0f || lift_temps[1] >= 60.0f) lift_status = "1/4";
+        if (lift_temps[0] >= 65.0f || lift_temps[1] >= 65.0f) lift_status = "1/8";
+        if (lift_temps[0] >= 70.0f || lift_temps[1] >= 70.0f) lift_status = "OFF";
         // std::string top_status = "OK";
         // if (top_temp >= 50.0f) top_status = "WARM";
         // if (top_temp >= 60.0f) top_status = "1/4";

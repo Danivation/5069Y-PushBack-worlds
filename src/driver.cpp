@@ -71,7 +71,7 @@ void startLiftWristPIDS() {
         while (/* pros::millis() < startTime + timeout && !liftExit.isDone() */ true) {
             currentPosition = getLiftPosition();
             error = liftCurrentTarget - currentPosition;
-            power = -liftPID.update(error);
+            power = liftPID.update(error);
             liftExit.update(error);
 
             // move motors
@@ -155,9 +155,20 @@ void IntakeControl() {
 void WristControl() {
     while (true) {
         if (master.get_digital_new_press(MATCHLOAD_MACRO)) {
-            setLiftTo(35);
-            delay(100);
-            setWristTo(277);
+            // TEST MACRO
+
+
+            setLiftTo(50);
+
+
+
+
+
+
+
+            // setLiftTo(35);
+            // delay(100);
+            // setWristTo(277);
         } else if (master.get_digital_new_press(INTAKE_MACRO)) {
             setLiftTo(32);
             delay(250);
@@ -193,7 +204,7 @@ void LiftControl() {
         if (master.get_digital(LIFT_UP)) {
             lift_has_pid_control = false;
             delay(10);
-            lift.move(127);
+            lift.move(70);
             waitUntilCondition(!master.get_digital(LIFT_UP));
             lift.brake();
             // setLiftTo(getLiftPosition());
@@ -202,7 +213,7 @@ void LiftControl() {
         else if (master.get_digital(LIFT_DOWN)) {
             lift_has_pid_control = false;
             delay(10);
-            lift.move(-127);
+            lift.move(-70);
             waitUntilCondition(!master.get_digital(LIFT_DOWN));
             lift.brake();
             // setLiftTo(getLiftPosition());

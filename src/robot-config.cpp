@@ -14,7 +14,7 @@ pros::MotorGroup left_mg({6, -7, -8}, pros::MotorGears::blue);      // 6: 5.5W, 
 pros::MotorGroup right_mg({-3, 4, 5}, pros::MotorGears::blue);    // 1: 3: 5.5W, 4/5: 11W
 
 // MECHANISM MOTORS
-pros::MotorGroup lift({-10, 9}, pros::MotorGears::green, pros::MotorEncoderUnits::degrees);
+pros::MotorGroup lift({-14, 9}, pros::MotorGears::green, pros::MotorEncoderUnits::degrees);
 pros::Motor cone(-1, pros::MotorGears::rpm_200);
 pros::Motor wrist(2, pros::MotorGears::rpm_200);
 pros::Motor intake(19, pros::MotorGears::rpm_200);
@@ -48,7 +48,7 @@ pros::adi::Pneumatics loader('G', false);
 /* ---------------------------------------------------------------------------------------------- */
 
 // CASCADE LIFT PID
-danielib::PID liftPID(8.3, 0, 4, 0, 0, 0, 0);
+danielib::PID liftPID(4, 0, 20, 0, 0, 0, 10);
 
 // WRIST PID
 danielib::PID wristPID(1.33, 0, 4.4, 0, 0, 0, 0);
