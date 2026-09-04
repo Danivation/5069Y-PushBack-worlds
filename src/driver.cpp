@@ -52,7 +52,7 @@ float getLiftPosition() {
 }
 
 float getWristPosition() {
-    return (float)(wrist_rot.get_position())/100.0f;
+    return (float)(wrist_rot.get_position())/300.0f;
 }
 
 void startLiftWristPIDS() {
@@ -158,7 +158,14 @@ void WristControl() {
             // TEST MACRO
 
 
-            setLiftTo(50);
+
+
+            setWristTo(0);
+
+
+
+
+            // setLiftTo(50);
 
 
 

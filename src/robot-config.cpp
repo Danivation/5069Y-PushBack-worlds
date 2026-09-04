@@ -51,7 +51,8 @@ pros::adi::Pneumatics loader('G', false);
 danielib::PID liftPID(5.05, 0.25, 58, 3, 0, 0, 5);
 
 // WRIST PID
-danielib::PID wristPID(1.33, 0, 4.4, 0, 0, 0, 0);
+danielib::PID wristPID(1.4, 0.05, 0, 5, 0, 0, 0);
+// danielib::PID wristStaticPID(1.4, 0.05, 0, 5, 0, 0, 0);
 
 // LEMLIB LINEAR PID - very good for mtp, no tip
 lemlib::ControllerSettings lateral_controller(7.5, 0, 33, 0, 1, 100, 2.5, 300, 7.5);

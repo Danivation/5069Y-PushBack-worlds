@@ -236,13 +236,16 @@ void initialize() {
     // vertical_rotation.set_data_rate(5);
     // optical_top.set_integration_time(5);
     // optical_top.set_led_pwm(0);
+
+    lift_rot.set_data_rate(5);
+    wrist_rot.set_data_rate(5);
+
     left_mg.set_brake_mode_all(MotorBrake::coast);
     right_mg.set_brake_mode_all(MotorBrake::coast);
     lift.set_brake_mode_all(MotorBrake::hold);
+    wrist.set_brake_mode(MotorBrake::hold);
     intake.set_brake_mode(MotorBrake::brake);
     cone.set_brake_mode(MotorBrake::brake);
-    wrist.set_brake_mode(MotorBrake::brake);
-    claw.retract();
 
     // skills things
     // calibrate_all();
@@ -314,18 +317,16 @@ void opcontrol() {
     comp_started = true;
     selecting = false;
     master.rumble("..");
-
-
-
     master.clear();
+
+    // SETUP MOTORS
+
     left_mg.set_brake_mode_all(MotorBrake::coast);
     right_mg.set_brake_mode_all(MotorBrake::coast);
     lift.set_brake_mode_all(MotorBrake::hold);
+    wrist.set_brake_mode(MotorBrake::brake);
     intake.set_brake_mode(MotorBrake::brake);
     cone.set_brake_mode(MotorBrake::brake);
-    wrist.set_brake_mode(MotorBrake::brake);
-    // odom_lift.extend();
-    // optical_top.set_led_pwm(0);
 
     setWristTo(getWristPosition());
     setLiftTo(getLiftPosition());
