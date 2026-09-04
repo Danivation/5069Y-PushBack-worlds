@@ -324,7 +324,7 @@ void opcontrol() {
     left_mg.set_brake_mode_all(MotorBrake::coast);
     right_mg.set_brake_mode_all(MotorBrake::coast);
     lift.set_brake_mode_all(MotorBrake::hold);
-    wrist.set_brake_mode(MotorBrake::brake);
+    wrist.set_brake_mode(MotorBrake::hold);
     intake.set_brake_mode(MotorBrake::brake);
     cone.set_brake_mode(MotorBrake::brake);
 

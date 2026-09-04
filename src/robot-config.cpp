@@ -30,6 +30,8 @@ pros::Rotation horizontal_rotation(22);
 // OTHER SENSORS
 pros::Rotation lift_rot(12);
 pros::Rotation wrist_rot(13);
+pros::Distance pin_dist(15);
+
 pros::Optical optical_top(22);
 pros::Distance distance_front(22);
 pros::Distance distance_left(22);
@@ -48,10 +50,10 @@ pros::adi::Pneumatics loader('G', false);
 /* ---------------------------------------------------------------------------------------------- */
 
 // CASCADE LIFT PID
-danielib::PID liftPID(5.05, 0.25, 58, 3, 0, 0, 5);
+danielib::PID liftPID(5.2, 0.25, 58, 5, 0, 0, 5);
 
 // WRIST PID
-danielib::PID wristPID(1.4, 0.05, 0, 5, 0, 0, 0);
+danielib::PID wristPID(1.5, 0.08, 0, 10, 0, 0, 0);
 // danielib::PID wristStaticPID(1.4, 0.05, 0, 5, 0, 0, 0);
 
 // LEMLIB LINEAR PID - very good for mtp, no tip

@@ -1,6 +1,10 @@
 #include "danielib/exit.hpp"
 #include "main.h"
 
+/* ---------------------------------------------------------------------------------------------- */
+/*                                       BUTTON ASSIGNMENTS                                       */
+/* ---------------------------------------------------------------------------------------------- */
+
 #define THROTTLE_AXIS           master.get_analog(ANALOG_LEFT_Y)
 #define TURN_AXIS               master.get_analog(ANALOG_RIGHT_X)
 
@@ -28,6 +32,7 @@ std::atomic<bool> intake_control = true;
 std::atomic<bool> wrist_control = true;
 std::atomic<bool> lift_has_pid_control = false;
 std::atomic<bool> wrist_has_pid_control = false;
+
 void DrivetrainControl() {
     float throttle;
     float turn;
@@ -41,7 +46,6 @@ void DrivetrainControl() {
         }
     }
 }
-
 
 /* ---------------------------------------------------------------------------------------------- */
 /*                                        LIFT CONTROL PIDS                                       */
@@ -155,34 +159,19 @@ void IntakeControl() {
 void WristControl() {
     while (true) {
         if (master.get_digital_new_press(MATCHLOAD_MACRO)) {
-            // TEST MACRO
-
-
-
-
-            setWristTo(0);
-
-
-
-
-            // setLiftTo(50);
-
-
-
-
-
-
-
-            // setLiftTo(35);
-            // delay(100);
-            // setWristTo(277);
+            setLiftTo(16.8);
+            setWristTo(-2);
         } else if (master.get_digital_new_press(INTAKE_MACRO)) {
-            setLiftTo(32);
-            delay(250);
-            setWristTo(-90);
-            setLiftTo(37.5);
+            setWristTo(-132);
+            setLiftTo(16.5);
+
+            waitUntilCondition(pin_dist <= )
+
+            // CUP GROUPING
+            setWristTo(-74.5);
+            setLiftTo(21.5);
         } else if (master.get_digital_new_press(SCORING_MACRO)) {
-            setWristTo(356);
+            setWristTo(4);
         } else if (master.get_digital(WRIST_UP_MANUAL)) {
             wrist_has_pid_control = false;
             delay(10);
@@ -232,12 +221,3 @@ void LiftControl() {
         delay(10);
     }
 }
-
-// void ClawControl() {
-//     while (true) {
-//         waitUntilCondition(!CLAW_TOGGLE);
-//         waitUntilCondition(CLAW_TOGGLE);
-//         claw.toggle();
-//         delay(10);
-//     }
-// }

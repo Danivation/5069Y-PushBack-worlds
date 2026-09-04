@@ -69,6 +69,7 @@ extern CustomImu imu_1;
 // extern pros::Imu imu_2;
 extern pros::Rotation lift_rot;
 extern pros::Rotation wrist_rot;
+extern pros::Distance pin_dist;
 
 extern pros::Optical optical_top;
 extern pros::Distance distance_left;

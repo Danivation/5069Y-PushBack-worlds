@@ -1,5 +1,5 @@
 #pragma once
-#include "main.h"
+#include "pros/rtos.hpp"
 
 void DrivetrainControl();
 void IntakeControl();
