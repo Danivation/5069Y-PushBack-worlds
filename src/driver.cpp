@@ -140,8 +140,9 @@ void IntakeControl() {
     while (true) {
         if (intake_control) {
             if (master.get_digital(INTAKE)) {
-                intake.move(127);
                 cone.move(127);
+                if (getLiftPosition() < 28) intake.move(127);
+                else intake.brake();
             }
             else if (master.get_digital(OUTTAKE)) {
                 intake.move(-127);
@@ -164,12 +165,16 @@ void WristControl() {
         while (true) {
             if (inPinPosition) {
                 if (pin_dist.get_distance() < 150) {
-                    // wait 50 ms before checking again
-                    delay(200);
+                    // wait 300 ms to make sure the pins still there
+                    delay(300);
                     if (pin_dist.get_distance() < 150) {
-                        inPinPosition = false;
-                        setWristTo(-77);
-                        setLiftTo(18.5);
+                        // wait 50 ms to double check
+                        delay(50);
+                        if (pin_dist.get_distance() < 150) {
+                            inPinPosition = false;
+                            setWristTo(-77);
+                            setLiftTo(18.5);
+                        }
                     }
                 }
             }
