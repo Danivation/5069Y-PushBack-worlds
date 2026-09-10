@@ -231,11 +231,9 @@ void initialize() {
     // initialize devices
     pros::lcd::initialize();
     master.clear();
-    // imu_1.set_data_rate(5);
-    // horizontal_rotation.set_data_rate(5);
-    // vertical_rotation.set_data_rate(5);
-    // optical_top.set_integration_time(5);
-    // optical_top.set_led_pwm(0);
+    imu_1.set_data_rate(5);
+    horizontal_rotation.set_data_rate(5);
+    vertical_rotation.set_data_rate(5);
 
     lift_rot.set_data_rate(5);
     wrist_rot.set_data_rate(5);
@@ -248,8 +246,8 @@ void initialize() {
     cone.set_brake_mode(MotorBrake::brake);
 
     // skills things
-    // calibrate_all();
-    // autonomous();
+    calibrate_all();
+    autonomous();
 
     pros::Task selector(auton_selector);
     pros::Task bypass(wait_for_bypass);
@@ -275,6 +273,10 @@ void autonomous() {
     optical_top.set_led_pwm(100);
     printing = true;
     pros::Task printer(print_info);
+
+
+    // c_danielib.driveForDistance(1_tiles, 1000);
+    c_danielib.turnToHeading(45);
 
     /**
     if (competition::is_connected()) {

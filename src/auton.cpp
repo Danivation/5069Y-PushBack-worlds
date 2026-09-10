@@ -50,9 +50,3 @@ void delayMid() {
 void delayLong() {
     pros::delay(20);
 }
-constexpr double operator""_tiles(long double value) {
-    return value * 23.622;
-}
-constexpr double operator""_tiles(unsigned long long value) {
-    return static_cast<double>(value) * 23.622;
-}
