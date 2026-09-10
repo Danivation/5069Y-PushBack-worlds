@@ -81,9 +81,9 @@ danielib::PID mtpAngularPID(3.45, 0, 15, 0, 0, 0, 0); // tuned?
 
 // drivetrain settings
 lemlib::Drivetrain drivetrain(&left_mg, &right_mg, 12.0, lemlib::Omniwheel::NEW_275, 450, 2);
-lemlib::TrackingWheel vertical_tracking_wheel(&vertical_rotation, 2, 0.0);
-lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_rotation, 2, 1.0);
-lemlib::OdomSensors sensors(&vertical_tracking_wheel, nullptr, &horizontal_tracking_wheel, nullptr, &imu_1);
+lemlib::TrackingWheel vt_lemlib(&vertical_rotation, 2, 0.0);
+lemlib::TrackingWheel ht_lemlib(&horizontal_rotation, 2, 1.31);
+lemlib::OdomSensors sensors(&vt_lemlib, nullptr, &ht_lemlib, nullptr, &imu_1);
 
 // create the chassis
 lemlib::Chassis c_lemlib(drivetrain, lateral_controller, angular_controller, sensors);
@@ -98,11 +98,11 @@ danielib::Beam right_beam(90, 4.5, -2.25, distance_right);
 danielib::Beam front_beam(0, 4.7, 3.7, distance_front);
 
 // + offset is right or front, - offset is left or back
-danielib::TrackerWheel vertical_tracker_danielib(vertical_rotation, 2, 0.0);
-danielib::TrackerWheel horizontal_tracker_danielib(horizontal_rotation, 2, 1.0);
+danielib::TrackerWheel vt_danielib(vertical_rotation, 2, 0.0);
+danielib::TrackerWheel ht_danielib(horizontal_rotation, 2, 1.31);
 danielib::Inertial inertial(imu_1);
 
 danielib::Localization mcl({left_beam, right_beam, front_beam});
-danielib::Sensors sensors_danielib(vertical_tracker_danielib, horizontal_tracker_danielib, inertial, mcl);
+danielib::Sensors sensors_danielib(vt_danielib, ht_danielib, inertial, mcl);
 
 danielib::Drivetrain c_danielib(left_mg, right_mg, sensors_danielib, 12.0, 2.75, 450, linearPID, angularPID, mtpLinearPID, mtpAngularPID, swingAngularPID);
