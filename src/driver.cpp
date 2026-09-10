@@ -194,7 +194,7 @@ void WristControl() {
 
             // PIN LOADING POSITION
             setWristTo(-132);
-            setLiftTo(16.5);
+            setLiftTo(15.6);
             int startTime = pros::millis();
             waitUntilCondition((getWristPosition() > -140 && getWristPosition() < -125 && getLiftPosition() > 5 && getLiftPosition() < 25) || pros::millis() + 500 > startTime);
             inPinPosition = true;

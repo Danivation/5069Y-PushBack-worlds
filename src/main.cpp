@@ -246,8 +246,8 @@ void initialize() {
     cone.set_brake_mode(MotorBrake::brake);
 
     // skills things
-    calibrate_all();
-    autonomous();
+    // calibrate_all();
+    // autonomous();
 
     pros::Task selector(auton_selector);
     pros::Task bypass(wait_for_bypass);
@@ -275,11 +275,8 @@ void autonomous() {
     pros::Task printer(print_info);
 
 
-    // c_danielib.driveForDistance(1_tiles, 5000);
-    // c_lemlib.moveToPoint(1_tiles, 2_tiles, 5000, {}, false);
-    c_danielib.turnToHeading(90);
-    c_lemlib.waitUntilDone();
-    c_danielib.waitUntilDone();
+    
+
 
     /**
     if (competition::is_connected()) {

@@ -1,5 +1,5 @@
-#include "auton.hpp"
-#include "lemlib-helpers.hpp"
+#include "auton.hpp" // IWYU pragma: keep
+#include "lemlib-helpers.hpp" // IWYU pragma: keep
 #include "main.h"
 using namespace pros;
 
