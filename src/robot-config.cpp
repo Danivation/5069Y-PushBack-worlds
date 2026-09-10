@@ -22,7 +22,7 @@ pros::Motor intake(19, pros::MotorGears::rpm_200);
 // ODOMETRY SENSORS
 CustomImu imu_1(18, 360.0f/358.95f);
 pros::Rotation vertical_rotation(20);
-pros::Rotation horizontal_rotation(17);
+pros::Rotation horizontal_rotation(-17);
 
 // OTHER SENSORS
 pros::Rotation lift_rot(12);
@@ -51,18 +51,18 @@ pros::adi::Pneumatics loader('G', false);
 /*                                              PIDS                                              */
 /* ---------------------------------------------------------------------------------------------- */
 
-// CASCADE LIFT PID
+// DR6B LIFT PID
 danielib::PID liftPID(5.2, 0.25, 58, 5, 0, 0, 5);
-
 // WRIST PID
 danielib::PID wristPID(1.5, 0.08, 0, 10, 0, 0, 0);
-// danielib::PID wristStaticPID(1.4, 0.05, 0, 5, 0, 0, 0);
+
+
 
 // LEMLIB LINEAR PID - very good for mtp, no tip
-lemlib::ControllerSettings lateral_controller(7.9, 0, 30, 0, 1, 100, 2.5, 300, 9);
+lemlib::ControllerSettings lateral_controller(7.95, 0, 28.5, 0, 1, 100, 2.5, 300, 5);
 
 // LEMLIB ANGULAR PID - good for mtp, little end turning, but may not be good for normal turns
-lemlib::ControllerSettings angular_controller(5.95, 0, 38, 0, 1, 85, 3, 300, 0);
+lemlib::ControllerSettings angular_controller(5.95, 0, 36, 0, 1, 85, 3, 300, 0);
 
 // DANIELIB ANGULAR PID - tuned for normal turns
 danielib::PID angularPID(3.76, 0.15, 16.5, 5, 1.5, 130, 0);
@@ -73,7 +73,7 @@ danielib::PID linearPID(8.2, 0, 22, 0, 1, 200, 8);
 
 // DANIELIB MTP - somewhat tuned, but not very optimal
 danielib::PID mtpLinearPID(7.95, 0, 23.5, 0, 1, 100, 9);
-danielib::PID mtpAngularPID(3.3, 0, 15, 0, 0, 0, 0); // tuned?
+danielib::PID mtpAngularPID(3.45, 0, 15, 0, 0, 0, 0); // tuned?
 
 /* ---------------------------------------------------------------------------------------------- */
 /*                                          LEMLIB CONFIG                                         */
@@ -81,8 +81,8 @@ danielib::PID mtpAngularPID(3.3, 0, 15, 0, 0, 0, 0); // tuned?
 
 // drivetrain settings
 lemlib::Drivetrain drivetrain(&left_mg, &right_mg, 12.0, lemlib::Omniwheel::NEW_275, 450, 2);
-lemlib::TrackingWheel vertical_tracking_wheel(&vertical_rotation, 2, 0);
-lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_rotation, 2, 2.25);
+lemlib::TrackingWheel vertical_tracking_wheel(&vertical_rotation, 2, 0.0);
+lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_rotation, 2, 1.0);
 lemlib::OdomSensors sensors(&vertical_tracking_wheel, nullptr, &horizontal_tracking_wheel, nullptr, &imu_1);
 
 // create the chassis
@@ -98,8 +98,8 @@ danielib::Beam right_beam(90, 4.5, -2.25, distance_right);
 danielib::Beam front_beam(0, 4.7, 3.7, distance_front);
 
 // + offset is right or front, - offset is left or back
-danielib::TrackerWheel vertical_tracker_danielib(vertical_rotation, 2, 0);
-danielib::TrackerWheel horizontal_tracker_danielib(horizontal_rotation, 2, 2.25);
+danielib::TrackerWheel vertical_tracker_danielib(vertical_rotation, 2, 0.0);
+danielib::TrackerWheel horizontal_tracker_danielib(horizontal_rotation, 2, 1.0);
 danielib::Inertial inertial(imu_1);
 
 danielib::Localization mcl({left_beam, right_beam, front_beam});
