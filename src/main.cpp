@@ -276,7 +276,7 @@ void autonomous() {
 
 
     // c_danielib.driveForDistance(1_tiles, 1000);
-    c_danielib.turnToHeading(45);
+    c_danielib.turnToHeading(90);
 
     /**
     if (competition::is_connected()) {
