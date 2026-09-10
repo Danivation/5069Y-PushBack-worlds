@@ -232,7 +232,7 @@ void LiftControl() {
         if (master.get_digital(LIFT_UP)) {
             lift_has_pid_control = false;
             delay(10);
-            lift.move(70);
+            lift.move(127);
             waitUntilCondition(!master.get_digital(LIFT_UP));
             lift.brake();
             // setLiftTo(getLiftPosition());
@@ -241,7 +241,7 @@ void LiftControl() {
         else if (master.get_digital(LIFT_DOWN)) {
             lift_has_pid_control = false;
             delay(10);
-            lift.move(-70);
+            lift.move(-127);
             waitUntilCondition(!master.get_digital(LIFT_DOWN));
             lift.brake();
             // setLiftTo(getLiftPosition());

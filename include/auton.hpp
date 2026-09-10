@@ -3,7 +3,7 @@
 
 extern pros::Color WrongColor;
 
-// void auton_none();
+void auton_none();
 
 // void auton_sawp_counter_nowing();
 // void auton_sawp_counter_nowing_left_noclear();

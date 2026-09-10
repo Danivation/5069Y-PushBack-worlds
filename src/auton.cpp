@@ -50,3 +50,30 @@ void delayMid() {
 void delayLong() {
     pros::delay(20);
 }
+
+
+void intake_pin() {
+    // PIN LOADING POSITION
+            setWristTo(-132);
+            setLiftTo(15.6);
+}
+
+
+void auton_none() {
+    
+    c_lemlib.setPose(5.75, -2_tiles-14, 180);
+    c_danielib.setPose(5.75, -2_tiles-14, 180);
+
+    intake_pin();
+
+    c_danielib.driveForDistance(-6, 500);
+    c_danielib.driveForDistance(3, 800);
+    c_danielib.driveForDistance(-6, 500);
+
+    // pin intake and drive away
+
+    intake.move(127);
+    c_lemlib.moveToPoint(0, -1.5_tiles, 2000);
+    
+
+}

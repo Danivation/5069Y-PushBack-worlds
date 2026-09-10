@@ -275,7 +275,7 @@ void autonomous() {
     pros::Task printer(print_info);
 
 
-    
+    auton_none();
 
 
     /**
