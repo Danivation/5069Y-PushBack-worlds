@@ -15,3 +15,7 @@ void setWristTo(float target);
 
 extern pros::Task* liftPIDTask;
 extern pros::Task* wristPIDTask;
+
+
+extern std::atomic<bool> lift_has_pid_control;
+extern std::atomic<bool> wrist_has_pid_control;

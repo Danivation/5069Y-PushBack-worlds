@@ -172,7 +172,7 @@ void WristControl() {
                         delay(50);
                         if (pin_dist.get_distance() < 150) {
                             inPinPosition = false;
-                            setWristTo(-88);
+                            setWristTo(-88+120);
                             setLiftTo(18.5);
                         }
                     }
@@ -189,11 +189,11 @@ void WristControl() {
         if (master.get_digital_new_press(MATCHLOAD_MACRO)) {
             inPinPosition = false;
             setLiftTo(16.8);
-            setWristTo(-2);
+            setWristTo(-2+120);
         } else if (master.get_digital_new_press(INTAKE_MACRO)) {
 
             // PIN LOADING POSITION
-            setWristTo(-132);
+            setWristTo(-132+120);
             setLiftTo(15.6);
             int startTime = pros::millis();
             waitUntilCondition((getWristPosition() > -140 && getWristPosition() < -125 && getLiftPosition() > 5 && getLiftPosition() < 25) || pros::millis() + 500 > startTime);
@@ -201,7 +201,7 @@ void WristControl() {
 
         } else if (master.get_digital_new_press(SCORING_MACRO)) {
             inPinPosition = false;
-            setWristTo(4);
+            setWristTo(4+120);
         } else if (master.get_digital(WRIST_UP_MANUAL)) {
             inPinPosition = false;
             wrist_has_pid_control = false;

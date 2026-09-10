@@ -273,7 +273,7 @@ void autonomous() {
     optical_top.set_led_pwm(100);
     printing = true;
     pros::Task printer(print_info);
-
+    pros::Task a_pids (startLiftWristPIDS);
 
     auton_none();
 

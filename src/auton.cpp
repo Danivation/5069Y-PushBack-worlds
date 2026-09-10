@@ -1,4 +1,5 @@
 #include "auton.hpp" // IWYU pragma: keep
+#include "driver.hpp"
 #include "lemlib-helpers.hpp" // IWYU pragma: keep
 #include "main.h"
 using namespace pros;
@@ -44,36 +45,52 @@ bool waitUntilColor(pros::Optical* sensor, pros::Color color, int stopTime) {
     if (millis() >= stopTime) return false;
     else return true;
 }
-void delayMid() {
-    pros::delay(60);
-}
-void delayLong() {
-    pros::delay(20);
-}
 
 
 void intake_pin() {
     // PIN LOADING POSITION
-            setWristTo(-132);
-            setLiftTo(15.6);
+    setWristTo(-132+120);
+    setLiftTo(15.6);
+}
+
+void score_stack() {
+    setWristTo(4+120);
 }
 
 
 void auton_none() {
-    
-    c_lemlib.setPose(5.75, -2_tiles-14, 180);
-    c_danielib.setPose(5.75, -2_tiles-14, 180);
+    c_danielib.setPose(5.75, -2_tiles-13.25, 180);
+    c_lemlib.setPose(5.75, -2_tiles-13.25, 180);
 
-    intake_pin();
+    // WRIST OUT OF WAY
+    score_stack();
+    cone.move(127);
+    setLiftTo(0);
+    delay(400);
 
-    c_danielib.driveForDistance(-6, 500);
-    c_danielib.driveForDistance(3, 800);
-    c_danielib.driveForDistance(-6, 500);
+    // DOUBLE TOGGLE
+    c_danielib.driveForDistance(6, 500);
 
-    // pin intake and drive away
+    lift_has_pid_control = false;
+    delay(10);
+    lift.move(127);
+    delay(1000);
+    setLiftTo(40);
 
-    intake.move(127);
-    c_lemlib.moveToPoint(0, -1.5_tiles, 2000);
-    
+    // GOAL
+    c_lemlib.turnToHeading(230, 400);
+    c_lemlib.moveToPoint(0.75_tiles, -2.1_tiles, 2000, {.forwards = false});
+    delay(700);
+    setWristTo(110);
+    setLiftTo(0);
+    c_lemlib.waitUntilDone();
+    cone.move(-60);
+    delay(500);
 
+    // MID STACK
+    setLiftTo(20);
+    delay(150);
+    c_lemlib.moveToPoint(0, -2.3_tiles, 1000);
+    c_lemlib.moveToPoint(2, -30, 2500, {.forwards = false});
+    c_lemlib.waitUntilDone();
 }
