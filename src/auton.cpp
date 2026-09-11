@@ -116,19 +116,19 @@ void auton_none() {
     setWristTo(130);
     setLiftTo(20);
     delay(150);
-    c_lemlib.moveToPoint(0_tiles, -2_tiles, 1200, {.minSpeed = 20, .earlyExitRange = 4});
+    c_lemlib.moveToPoint(0, -2_tiles, 1200, {.minSpeed = 20, .earlyExitRange = 4});
     c_lemlib.turnToHeading(180, 400);
     intake.brake();
     stack_pos();
-    c_lemlib.moveToPoint(-0.2, -31.5, 1200, {.forwards = false, .minSpeed = 5, .earlyExitRange = 1.5});
+    c_lemlib.moveToPoint(-0.2, -31.6, 1200, {.forwards = false, .minSpeed = 5, .earlyExitRange = 1.5});
     
     // GRAB DIAMOND R/B STACK
     c_lemlib.waitUntilDone();
     cone.move(127);
     clasp_pos();
-    delay(300);
-    c_danielib.async().driveForDistance(-3, 1000, 15);
     delay(200);
+    c_danielib.async().driveForDistance(-3, 1000, 15);
+    delay(300);
     c_danielib.stopMovement();
 
     // LIFT UP AND MOVE TO NEUTRAL
@@ -156,15 +156,15 @@ void auton_none() {
     c_danielib.turnToHeading(-85, 1000);
     lemlibDistReset({&left_beam, &back_beam}, 10, 10);
     stack_pos();
-    c_lemlib.moveToPoint(14.5, -1_tiles, 1300, {.forwards = false, .minSpeed = 5, .earlyExitRange = 1.5});
+    c_lemlib.moveToPoint(14.4, -1_tiles, 1300, {.forwards = false, .minSpeed = 5, .earlyExitRange = 1.5});
 
     // GRAB Y/Y STACK
     c_lemlib.waitUntilDone();
     cone.move(127);
     clasp_pos();
-    delay(300);
-    c_danielib.async().driveForDistance(-3, 1000, 15);
     delay(200);
+    c_danielib.async().driveForDistance(-3, 1000, 15);
+    delay(300);
     c_danielib.stopMovement();
     
     // LIFT UP AND MOVE TO ALLIANCE
@@ -188,17 +188,17 @@ void auton_none() {
     c_lemlib.moveToPoint(0.9_tiles, -1.2_tiles, 1000, {.minSpeed = 30, .earlyExitRange = 6});
 
     // MOVE TO Y/Y STACK
-    c_lemlib.turnToHeading(-50, 350);
+    c_lemlib.turnToHeading(-40, 400);
     stack_pos();
-    c_lemlib.moveToPoint(1.75_tiles, -1.91_tiles, 1500, {.forwards = false, .minSpeed = 5, .earlyExitRange = 1.5});
+    c_lemlib.moveToPoint(40.5, -44.7, 1500, {.forwards = false, .minSpeed = 5, .earlyExitRange = 1.5});
 
     // GRAB Y/Y STACK
     c_lemlib.waitUntilDone();
     cone.move(127);
     clasp_pos();
-    delay(300);
-    c_danielib.async().driveForDistance(-3, 1000, 15);
     delay(200);
+    c_danielib.async().driveForDistance(-3, 1000, 15);
+    delay(300);
     c_danielib.stopMovement();
 
     // LIFT UP AND MOVE TO NEUTRAL
