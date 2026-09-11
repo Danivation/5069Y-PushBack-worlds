@@ -111,6 +111,7 @@ void auton_none() {
     delay(150);
     cone.move(-40);
     delay(300);
+    c_lemlib.cancelMotion();
 
     // MOVE TO R/B CENTER DIAMOND STACK
     setWristTo(130);
@@ -139,8 +140,8 @@ void auton_none() {
 
     // SCORE R/B ON NEUTRAL
     c_lemlib.waitUntilDone();
-    setLiftTo(20);
-    delay(500);
+    setLiftTo(15);
+    delay(600);
 
     // LIFT OFF NEUTRAL
     setLiftTo(40);
@@ -172,12 +173,42 @@ void auton_none() {
 
     // SCORE Y/Y ON ALLIANCE
     c_lemlib.waitUntilDone();
+    c_lemlib.swingToHeading(0, DriveSide::LEFT, 500);
     setLiftTo(15);
-    delay(500);
+    delay(600);
 
-    // LIFT OFF NEUTRAL
+    // LIFT OFF AND MOVE
     setLiftTo(40);
     cone.move(-50);
     delay(300);
+    c_lemlib.cancelMotion();
+    c_lemlib.moveToPoint(1_tiles, -1.2_tiles, 1000);
+
+    // MOVE TO Y/Y STACK
+    c_lemlib.turnToHeading(-50, 500);
+    stack_pos();
+    c_lemlib.moveToPoint(1.75_tiles, -1.75_tiles, 1500, {.forwards = false});
+
+    // GRAB Y/Y STACK
+    c_lemlib.waitUntilDone();
+    c_danielib.async().driveForDistance(-3, 1000, 15);
+    cone.move(127);
+    // delay(100);
+    clasp_pos();
+    delay(600);
+    c_danielib.stopMovement();
+
+    // LIFT UP AND MOVE TO NEUTRAL
+    setLiftTo(45);
+    score_pos();
+    delay(50);
+    c_lemlib.turnToHeading(-170, 650);
+    c_lemlib.moveToPoint(2.02_tiles, -1.22_tiles, 1200, {.forwards = false});
+
+    // SCORE Y/Y ON NEUTRAL
+    c_lemlib.waitUntilDone();
+    setLiftTo(15);
+    delay(800);
+    
 
 }
