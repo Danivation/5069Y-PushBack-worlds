@@ -47,24 +47,28 @@ bool waitUntilColor(pros::Optical* sensor, pros::Color color, int stopTime) {
 }
 
 
+// wrist and lift in pin loading position
 void intake_pin_pos() {
     // PIN LOADING POSITION
-    setWristTo(-132+120);
+    setWristTo(-12);
     setLiftTo(15.6);
 }
 
+// wrist to scoring angle (where stack is vertical)
 void score_pos() {
-    setWristTo(124);
+    setWristTo(124.5);
 }
 
+// wrist and lift to "matchload" position (for standing stacks)
 void stack_pos() {
-    setLiftTo(17.5);
     setWristTo(117);
+    setLiftTo(17.5);
 }
 
+// wrist and lift clasp in and lower (to grab standing stacks)
 void clasp_pos() {
-    setLiftTo(0);
     setWristTo(100);
+    setLiftTo(0);
 }
 
 
@@ -92,6 +96,7 @@ void auton_none() {
     // MOVE TO FIRST ALLIANCE GOAL
     c_lemlib.turnToHeading(230, 400);
     c_lemlib.moveToPoint(0.8_tiles, -2.1_tiles, 1000, {.forwards = false});
+    setLiftTo(33);
     delay(350);
     score_pos();
     setLiftTo(25);
@@ -112,13 +117,14 @@ void auton_none() {
     c_lemlib.turnToHeading(180, 450);
     stack_pos();
     c_lemlib.moveToPoint(-0, -30, 1600, {.forwards = false});
+    
+    // GRAB DIAMOND R/B STACK
     c_lemlib.waitUntilDone();
-
-    // GRAB DIAMOND R/B PIN WHILE REVERSING SLOW
     c_danielib.async().driveForDistance(-5, 1000, 15);
+    delay(100);
     cone.move(127);
     clasp_pos();
-    delay(350);
+    delay(600);
     c_danielib.stopMovement();
 
     // LIFT UP AND MOVE TO NEUTRAL
@@ -127,5 +133,30 @@ void auton_none() {
     delay(50);
     c_lemlib.turnToHeading(75, 300);
     c_lemlib.moveToPoint(-0.85_tiles, -1.88_tiles, 1600, {.forwards = false});
+
+    // SCORE R/B ON NEUTRAL
+    c_lemlib.waitUntilDone();
+    setLiftTo(20);
+    delay(500);
+
+    // LIFT OFF NEUTRAL + MOVE TO Y/Y STACK
+    setLiftTo(40);
+    cone.move(-50);
+    delay(300);
+
+    c_lemlib.moveToPoint(0.25_tiles, -0.8_tiles, 2000);
+    c_lemlib.turnToHeading(-60, 500);
+    stack_pos();
+
+    c_lemlib.moveToPoint(0.67_tiles, -0.92_tiles, 1000, {.forwards = false});
+
+    // GRAB Y/Y STACK
+    c_lemlib.waitUntilDone();
+    c_danielib.async().driveForDistance(-5, 1000, 15);
+    cone.move(127);
+    delay(100);
+    clasp_pos();
+    delay(600);
+    c_danielib.stopMovement();
 
 }
