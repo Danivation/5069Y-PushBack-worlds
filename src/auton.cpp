@@ -73,27 +73,23 @@ void clasp_pos() {
 
 
 void auton_none() {
-    c_danielib.setPose(5.75, -2_tiles-13.25, 180);
-    c_lemlib.setPose(5.75, -2_tiles-13.25, 180);
+    c_danielib.setPose(8.6, -58.4, 16);
+    c_lemlib.setPose(8.6, -58.4, 16);
 
     // WRIST OUT OF WAY
-    score_pos();
-    cone.move(127);
-    setLiftTo(0);
-    delay(400);
+    intake_pin_pos();
 
     // DOUBLE TOGGLE
-    c_danielib.driveForDistance(5, 500);
-    lift_has_pid_control = false;
-    delay(10);
-    lift.move(127);
-    delay(300);
-    c_danielib.async().driveForDistance(-0.5, 300);
-    delay(300);
-    c_danielib.stopMovement();
-    setLiftTo(40);
+    c_danielib.driveForDistance(-7, 500, 100, 0, false);
+    c_lemlib.swingToHeading(0, DriveSide::RIGHT, 300);
+    c_lemlib.waitUntilDone();
 
     // MOVE TO FIRST ALLIANCE GOAL
+    intake.move(127);
+    cone.move(127);
+    c_danielib.driveForDistance(12, 600);
+    setLiftTo(10);
+    score_pos();
     c_lemlib.turnToHeading(230, 400);
     c_lemlib.moveToPoint(0.8_tiles, -2.1_tiles, 1000, {.forwards = false});
     setLiftTo(33);
@@ -106,11 +102,11 @@ void auton_none() {
     c_lemlib.swingToHeading(270, DriveSide::LEFT, 500);
     setWristTo(131);
     setLiftTo(0);
-    delay(440);
-    setWristTo(95);
-    delay(150);
-    cone.move(-40);
     delay(300);
+    setWristTo(95);
+    delay(100);
+    cone.move(-40);
+    delay(200);
     c_lemlib.cancelMotion();
 
     // MOVE TO R/B CENTER DIAMOND STACK
@@ -120,7 +116,7 @@ void auton_none() {
     c_lemlib.moveToPoint(0_tiles, -2_tiles, 1000);
     c_lemlib.turnToHeading(180, 450);
     stack_pos();
-    c_lemlib.moveToPoint(-0, -30, 1600, {.forwards = false});
+    c_lemlib.moveToPoint(-0.2, -30.5, 1500, {.forwards = false});
     
     // GRAB DIAMOND R/B STACK
     c_lemlib.waitUntilDone();
@@ -149,9 +145,11 @@ void auton_none() {
     delay(300);
 
     // MOVE TO Y/Y STACK
-    c_lemlib.moveToPoint(0.25_tiles, -1_tiles, 1600);
+    c_lemlib.moveToPoint(0.1_tiles, -1_tiles, 1600);
+    delay(500);
+    stack_pos();
     c_lemlib.waitUntilDone();
-    c_danielib.turnToHeading(-90, 800);
+    c_danielib.turnToHeading(-88, 1000);
     stack_pos();
     c_lemlib.moveToPoint(0.75_tiles, -1_tiles, 1300, {.forwards = false});
 
@@ -187,7 +185,7 @@ void auton_none() {
     // MOVE TO Y/Y STACK
     c_lemlib.turnToHeading(-50, 500);
     stack_pos();
-    c_lemlib.moveToPoint(1.75_tiles, -1.75_tiles, 1500, {.forwards = false});
+    c_lemlib.moveToPoint(1.75_tiles, -1.82_tiles, 1500, {.forwards = false});
 
     // GRAB Y/Y STACK
     c_lemlib.waitUntilDone();
@@ -209,6 +207,4 @@ void auton_none() {
     c_lemlib.waitUntilDone();
     setLiftTo(15);
     delay(800);
-    
-
 }
