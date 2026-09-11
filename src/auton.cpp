@@ -56,13 +56,13 @@ void intake_pin_pos() {
 
 // wrist to scoring angle (where stack is vertical)
 void score_pos() {
-    setWristTo(124.5);
+    setWristTo(125.2);
 }
 
 // wrist and lift to "matchload" position (for standing stacks)
 void stack_pos() {
     setWristTo(117);
-    setLiftTo(17.5);
+    setLiftTo(18);
 }
 
 // wrist and lift clasp in and lower (to grab standing stacks)
@@ -104,15 +104,18 @@ void auton_none() {
     // ON ALLIANCE GOAL, SCORE R/Y
     c_lemlib.waitUntilDone();
     c_lemlib.swingToHeading(270, DriveSide::LEFT, 500);
-    setWristTo(130);
+    setWristTo(131);
     setLiftTo(0);
+    delay(440);
+    setWristTo(95);
     delay(150);
-    cone.move(-20);
+    cone.move(-40);
     delay(300);
 
     // MOVE TO R/B CENTER DIAMOND STACK
+    setWristTo(130);
     setLiftTo(20);
-    delay(150);
+    delay(200);
     c_lemlib.moveToPoint(0_tiles, -2_tiles, 1000);
     c_lemlib.turnToHeading(180, 450);
     stack_pos();
@@ -120,9 +123,9 @@ void auton_none() {
     
     // GRAB DIAMOND R/B STACK
     c_lemlib.waitUntilDone();
-    c_danielib.async().driveForDistance(-5, 1000, 15);
-    delay(100);
+    c_danielib.async().driveForDistance(-3, 1000, 15);
     cone.move(127);
+    // delay(100);
     clasp_pos();
     delay(600);
     c_danielib.stopMovement();
@@ -144,17 +147,17 @@ void auton_none() {
     cone.move(-50);
     delay(300);
 
-    c_lemlib.moveToPoint(0.25_tiles, -0.8_tiles, 2000);
-    c_lemlib.turnToHeading(-60, 500);
+    c_lemlib.moveToPoint(0.25_tiles, -1_tiles, 1600);
+    c_lemlib.turnToHeading(-90, 700);
     stack_pos();
 
-    c_lemlib.moveToPoint(0.67_tiles, -0.92_tiles, 1000, {.forwards = false});
+    c_lemlib.moveToPoint(0.72_tiles, -1.05_tiles, 1000, {.forwards = false});
 
     // GRAB Y/Y STACK
     c_lemlib.waitUntilDone();
-    c_danielib.async().driveForDistance(-5, 1000, 15);
+    c_danielib.async().driveForDistance(-3, 1000, 15);
     cone.move(127);
-    delay(100);
+    // delay(100);
     clasp_pos();
     delay(600);
     c_danielib.stopMovement();
