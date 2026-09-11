@@ -142,16 +142,17 @@ void auton_none() {
     setLiftTo(20);
     delay(500);
 
-    // LIFT OFF NEUTRAL + MOVE TO Y/Y STACK
+    // LIFT OFF NEUTRAL
     setLiftTo(40);
     cone.move(-50);
     delay(300);
 
+    // MOVE TO Y/Y STACK
     c_lemlib.moveToPoint(0.25_tiles, -1_tiles, 1600);
-    c_lemlib.turnToHeading(-90, 700);
+    c_lemlib.waitUntilDone();
+    c_danielib.turnToHeading(-90, 800);
     stack_pos();
-
-    c_lemlib.moveToPoint(0.72_tiles, -1.05_tiles, 1000, {.forwards = false});
+    c_lemlib.moveToPoint(0.75_tiles, -1_tiles, 1300, {.forwards = false});
 
     // GRAB Y/Y STACK
     c_lemlib.waitUntilDone();
@@ -161,5 +162,22 @@ void auton_none() {
     clasp_pos();
     delay(600);
     c_danielib.stopMovement();
+    
+    // LIFT UP AND MOVE TO ALLIANCE
+    setLiftTo(35);
+    score_pos();
+    delay(50);
+    c_lemlib.turnToHeading(-20, 400);
+    c_lemlib.moveToPoint(0.95_tiles, -1.88_tiles, 1200, {.forwards = false});
+
+    // SCORE Y/Y ON ALLIANCE
+    c_lemlib.waitUntilDone();
+    setLiftTo(15);
+    delay(500);
+
+    // LIFT OFF NEUTRAL
+    setLiftTo(40);
+    cone.move(-50);
+    delay(300);
 
 }
