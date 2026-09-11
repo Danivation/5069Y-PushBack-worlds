@@ -59,7 +59,7 @@ danielib::PID wristPID(1.5, 0.08, 0, 10, 0, 0, 0);
 
 
 // LEMLIB LINEAR PID - very good for mtp, no tip
-lemlib::ControllerSettings lateral_controller(7.95, 0, 28.5, 0, 1, 100, 2.5, 300, 5);
+lemlib::ControllerSettings lateral_controller(7.95, 0, 28.5, 0, 1, 100, 2.5, 300, 4);
 
 // LEMLIB ANGULAR PID - good for mtp, little end turning, but may not be good for normal turns
 lemlib::ControllerSettings angular_controller(5.95, 0, 36, 0, 1, 85, 3, 300, 0);

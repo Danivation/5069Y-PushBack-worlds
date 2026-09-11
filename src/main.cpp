@@ -185,10 +185,9 @@ void print_info() {
 
         // print to controller
         if (cycle % 5 == 0) {
-            // master.print(0, 0, "(%.1f, %.1f, %.1f)    ", pose.x, pose.y, d_reduce_to_0_360(pose.theta));
-            master.print(0, 0, "Lift pos: %.2f     ", getLiftPosition());
+            master.print(0, 0, "(%.1f, %.1f, %.1f)    ", pose.x, pose.y, d_reduce_to_0_360(pose.theta));
             delay(50);
-            master.print(1, 0, "Wrist pos: %.2f     ", getWristPosition());
+            master.print(1, 0, "LP: %.2f   WP: %.2f", getLiftPosition(), getWristPosition());
             delay(50);
             master.print(2, 0, "Time: %.2f    ", testAutonDuration);
         }
@@ -276,6 +275,9 @@ void autonomous() {
     pros::Task a_pids (startLiftWristPIDS);
 
     auton_none();
+
+    c_lemlib.waitUntilDone();
+    c_danielib.waitUntilDone();
 
 
     /**

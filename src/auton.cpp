@@ -47,14 +47,24 @@ bool waitUntilColor(pros::Optical* sensor, pros::Color color, int stopTime) {
 }
 
 
-void intake_pin() {
+void intake_pin_pos() {
     // PIN LOADING POSITION
     setWristTo(-132+120);
     setLiftTo(15.6);
 }
 
-void score_stack() {
-    setWristTo(4+120);
+void score_pos() {
+    setWristTo(124);
+}
+
+void stack_pos() {
+    setLiftTo(17.5);
+    setWristTo(117);
+}
+
+void clasp_pos() {
+    setLiftTo(0);
+    setWristTo(100);
 }
 
 
@@ -63,34 +73,59 @@ void auton_none() {
     c_lemlib.setPose(5.75, -2_tiles-13.25, 180);
 
     // WRIST OUT OF WAY
-    score_stack();
+    score_pos();
     cone.move(127);
     setLiftTo(0);
     delay(400);
 
     // DOUBLE TOGGLE
-    c_danielib.driveForDistance(6, 500);
-
+    c_danielib.driveForDistance(5, 500);
     lift_has_pid_control = false;
     delay(10);
     lift.move(127);
-    delay(1000);
+    delay(300);
+    c_danielib.async().driveForDistance(-0.5, 300);
+    delay(300);
+    c_danielib.stopMovement();
     setLiftTo(40);
 
-    // GOAL
+    // MOVE TO FIRST ALLIANCE GOAL
     c_lemlib.turnToHeading(230, 400);
-    c_lemlib.moveToPoint(0.75_tiles, -2.1_tiles, 2000, {.forwards = false});
-    delay(700);
-    setWristTo(110);
-    setLiftTo(0);
-    c_lemlib.waitUntilDone();
-    cone.move(-60);
-    delay(500);
+    c_lemlib.moveToPoint(0.8_tiles, -2.1_tiles, 1000, {.forwards = false});
+    delay(350);
+    score_pos();
+    setLiftTo(25);
 
-    // MID STACK
+    // ON ALLIANCE GOAL, SCORE R/Y
+    c_lemlib.waitUntilDone();
+    c_lemlib.swingToHeading(270, DriveSide::LEFT, 500);
+    setWristTo(130);
+    setLiftTo(0);
+    delay(150);
+    cone.move(-20);
+    delay(300);
+
+    // MOVE TO R/B CENTER DIAMOND STACK
     setLiftTo(20);
     delay(150);
-    c_lemlib.moveToPoint(0, -2.3_tiles, 1000);
-    c_lemlib.moveToPoint(2, -30, 2500, {.forwards = false});
+    c_lemlib.moveToPoint(0_tiles, -2_tiles, 1000);
+    c_lemlib.turnToHeading(180, 450);
+    stack_pos();
+    c_lemlib.moveToPoint(-0, -30, 1600, {.forwards = false});
     c_lemlib.waitUntilDone();
+
+    // GRAB DIAMOND R/B PIN WHILE REVERSING SLOW
+    c_danielib.async().driveForDistance(-5, 1000, 15);
+    cone.move(127);
+    clasp_pos();
+    delay(350);
+    c_danielib.stopMovement();
+
+    // LIFT UP AND MOVE TO NEUTRAL
+    setLiftTo(35);
+    score_pos();
+    delay(50);
+    c_lemlib.turnToHeading(75, 300);
+    c_lemlib.moveToPoint(-0.85_tiles, -1.88_tiles, 1600, {.forwards = false});
+
 }
