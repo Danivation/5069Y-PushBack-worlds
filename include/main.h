@@ -75,6 +75,7 @@ extern pros::Optical optical_top;
 extern pros::Distance distance_left;
 extern pros::Distance distance_right;
 extern pros::Distance distance_front;
+extern pros::Distance distance_back;
 
 extern pros::adi::Pneumatics loader;
 extern pros::adi::Pneumatics wing;
@@ -88,6 +89,7 @@ extern danielib::Drivetrain c_danielib;
 extern danielib::Beam left_beam;
 extern danielib::Beam right_beam;
 extern danielib::Beam front_beam;
+extern danielib::Beam back_beam;
 
 #define waitUntilCondition(condition)    \
   do {                          \

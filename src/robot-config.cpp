@@ -93,8 +93,10 @@ lemlib::Chassis c_lemlib(drivetrain, lateral_controller, angular_controller, sen
 /* ---------------------------------------------------------------------------------------------- */
 
 // STILL USED FOR DISTANCE RESETS
-danielib::Beam left_beam(-90, -4.5, -2.25, distance_left);
-danielib::Beam right_beam(90, 4.5, -2.25, distance_right);
+danielib::Beam left_beam(-90, -4.65, -5.8, distance_left);
+danielib::Beam right_beam(90, 5.15, -4.8, distance_right);
+danielib::Beam back_beam(180, -4.45, -6.3, distance_back);
+
 danielib::Beam front_beam(0, 4.7, 3.7, distance_front);
 
 // + offset is right or front, - offset is left or back

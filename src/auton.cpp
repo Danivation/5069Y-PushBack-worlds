@@ -80,9 +80,13 @@ void auton_none() {
     intake_pin_pos();
 
     // DOUBLE TOGGLE
-    c_danielib.driveForDistance(-7, 500, 100, 0, false);
-    c_lemlib.swingToHeading(0, DriveSide::RIGHT, 300);
-    c_lemlib.waitUntilDone();
+    // c_danielib.driveForDistance(-7, 500, 100, 0, false);
+    // c_lemlib.swingToHeading(0, DriveSide::RIGHT, 300);
+    left_mg.move(-127);
+    right_mg.move(-127);
+    delay(800);
+    left_mg.brake();
+    right_mg.brake();
 
     // MOVE TO FIRST ALLIANCE GOAL
     intake.move(127);
@@ -122,7 +126,6 @@ void auton_none() {
     c_lemlib.waitUntilDone();
     c_danielib.async().driveForDistance(-3, 1000, 15);
     cone.move(127);
-    // delay(100);
     clasp_pos();
     delay(600);
     c_danielib.stopMovement();
@@ -149,15 +152,15 @@ void auton_none() {
     delay(500);
     stack_pos();
     c_lemlib.waitUntilDone();
-    c_danielib.turnToHeading(-88, 1000);
+    c_danielib.turnToHeading(-85, 1000);
+    lemlibDistReset({&left_beam, &back_beam});
     stack_pos();
-    c_lemlib.moveToPoint(0.75_tiles, -1_tiles, 1300, {.forwards = false});
+    c_lemlib.moveToPoint(0.72_tiles, -1_tiles, 1300, {.forwards = false});
 
     // GRAB Y/Y STACK
     c_lemlib.waitUntilDone();
-    c_danielib.async().driveForDistance(-3, 1000, 15);
+    // c_danielib.async().driveForDistance(-3, 1000, 15);
     cone.move(127);
-    // delay(100);
     clasp_pos();
     delay(600);
     c_danielib.stopMovement();
@@ -191,7 +194,6 @@ void auton_none() {
     c_lemlib.waitUntilDone();
     c_danielib.async().driveForDistance(-3, 1000, 15);
     cone.move(127);
-    // delay(100);
     clasp_pos();
     delay(600);
     c_danielib.stopMovement();
