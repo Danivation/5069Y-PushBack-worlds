@@ -22,9 +22,9 @@ float testAutonDuration = 0;
 
 void run_auton(int index) {
     // default auto to run when no auto is selected, also runs in test mode
-    // if (index == 0) {
-    //     auton_left_7ball_counter();
-    // }
+    if (index == 0) {
+        auton_none();
+    }
 
     // // left sides
     // else if (index == 1)    auton_left_split();             // TUNED
@@ -274,40 +274,16 @@ void autonomous() {
     pros::Task printer(print_info);
     pros::Task a_pids (startLiftWristPIDS);
 
-    auton_none();
-
-    // c_lemlib.waitUntilDone();
-    // c_danielib.waitUntilDone();
-
-
-    /**
     if (competition::is_connected()) {
         run_auton(auton_index);
     } else {
-        int startTime;
-        int endTime;
-        bool finished = false;
-        pros::Task test_auto ([&] {
-            startTime = millis();
-            run_auton(auton_index);
-            endTime = millis();
-            // finished = true;
-        });
-
-        waitUntilCondition(millis() > startTime + 15000);
-        // if (!finished) {
-        //     test_auto.remove();
-        //     c_lemlib.cancelAllMotions();
-        //     c_danielib.stopAllMovements();
-        //     endTime = millis();
-        // }
-        // top.brake();
-        // bottom.brake();
+        int startTime = millis();
+        run_auton(auton_index);
+        int endTime = millis();
         left_mg.brake();
         right_mg.brake();
         testAutonDuration = (float)(endTime - startTime)/(1000.0f);
     }
-    **/
     comp_started = true;
 }
 
