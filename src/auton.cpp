@@ -62,7 +62,7 @@ void cup_task() {
                     delay(50);
                     if (pin_dist.get_distance() < 150) {
                         inPinPosition = false;
-                        setLiftTo(18.5);
+                        setLiftTo(16.8);
                         setWristTo(32);
                     }
                 }
@@ -122,10 +122,10 @@ void auton_none() {
 
     // MOVE TO Y/Y STACK
     c_lemlib.turnToHeading(-130, 500);
-    c_lemlib.moveToPoint(43, -51.5, 1000, {.forwards = false, .maxSpeed = 90, .minSpeed = 15, .earlyExitRange = 2.5});
+    c_lemlib.moveToPoint(43, -51.5, 1000, {.forwards = false, .maxSpeed = 90, .minSpeed = 15, .earlyExitRange = 3});
     c_lemlib.waitUntilDone();
-    c_danielib.driveForDistance(-6, 500, 15);
-    c_danielib.driveForDistance(2, 500);
+    c_danielib.driveForDistance(-6, 400, 15);
+    c_danielib.driveForDistance(2, 300);
     
     // GRAB Y/Y STACK
     cone.move(127);
@@ -159,11 +159,11 @@ void auton_none() {
     // c_lemlib.turnToHeading(30, 400);
     c_lemlib.moveToPoint(1.7_tiles, -1.8_tiles, 1000, {.minSpeed = 20, .earlyExitRange = 4});
     c_lemlib.turnToHeading(140, 400);
-    c_lemlib.moveToPoint(29, -29, 1000, {.forwards = false, .maxSpeed = 90, .minSpeed = 15, .earlyExitRange = 2.5});
+    c_lemlib.moveToPoint(29, -29, 1000, {.forwards = false, .maxSpeed = 90, .minSpeed = 15, .earlyExitRange = 3});
     stack_pos();
     c_lemlib.waitUntilDone();
-    c_danielib.driveForDistance(-6, 500, 15);
-    c_danielib.driveForDistance(2, 500);
+    c_danielib.driveForDistance(-6, 400, 15);
+    c_danielib.driveForDistance(2, 300);
     
     // GRAB Y/Y STACK
     cone.move(127);
@@ -190,41 +190,46 @@ void auton_none() {
 
 
     /* ---------------------------------------------------------------------------------------------- */
-    /*                                     PART 3: INTAKE RED PIN                                     */
+    /*                                      PART 3: INTAKE STACK                                      */
     /* ---------------------------------------------------------------------------------------------- */
 
     // MOVE TO FLOWER
-    c_lemlib.moveToPoint(0, -1.6_tiles, 2000, {.minSpeed = 50, .earlyExitRange = 8});
-    c_lemlib.moveToPoint(-15, -25, 1500, {.maxSpeed = 70});
+    c_lemlib.moveToPoint(4, -1.5_tiles, 2000, {.minSpeed = 50, .earlyExitRange = 9});
+    c_lemlib.moveToPoint(-15, -25, 2000, {.maxSpeed = 70});
     intake_pin_pos();
-    cup_task();
     intake.move(127);
     cone.move(127);
     c_lemlib.waitUntilDone();
     delay(200);
+    
+    // GRAB FREE CUP
+    c_lemlib.moveToPoint(-12, -35, 1000, {.forwards = false, .minSpeed = 20, .earlyExitRange = 4});
+    c_lemlib.turnToHeading(50, 400);
+    cup_task();
+    intake.move(127);
+    cone.move(127);
+    c_lemlib.moveToPoint(-2, -25, 2000, {.maxSpeed = 50, .minSpeed = 5, .earlyExitRange = 8});
+    c_lemlib.waitUntilDone();
+    c_danielib.driveForDistance(12, 1000, 15);
+    inPinPosition = false;
+    setWristTo(-5);
+    
+    // LIFT UP AND MOVE TO GOAL
+    c_lemlib.turnToHeading(80, 300);
+    c_lemlib.moveToPoint(-21, -43, 1500, {.forwards = false, .maxSpeed = 80});
+    delay(200);
+    setLiftTo(36);
+    score_pos();
 
-    // // GRAB FREE CUP
-    // c_lemlib.turnToHeading(90, 300);
-    // c_lemlib.moveToPoint(0, -1_tiles, 1000);
-    // c_lemlib.waitUntilDone();
-    // intake_cup_pos();
-    // delay(300);
+    // SCORE R/Y ON GOAL
+    c_lemlib.waitUntilDone();
+    setLiftTo(15);
+    delay(550);
 
-    // // LIFT UP AND MOVE TO GOAL
-    // c_lemlib.moveToPoint(-21, -43, 1000, {.forwards = false});
-    // delay(200);
-    // setLiftTo(40);
-    // score_pos();
-
-    // // SCORE R/Y ON GOAL
-    // c_lemlib.waitUntilDone();
-    // setLiftTo(25);
-    // delay(550);
-
-    // // LIFT OFF GOAL
-    // setLiftTo(40);
-    // cone.move(-50);
-    // delay(300);
+    // LIFT OFF GOAL
+    setLiftTo(40);
+    cone.move(-50);
+    delay(300);
 }
 
 void auton_POSSIBLE_4PIN() {

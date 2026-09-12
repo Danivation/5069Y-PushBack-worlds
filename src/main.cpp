@@ -130,6 +130,24 @@ void auton_selector() {
     }
 }
 
+// Maps the highest temperature to its status string
+std::string get_status(float max_temp) {
+    if (max_temp >= 70.0f) return "OFF";
+    if (max_temp >= 65.0f) return "1/8";
+    if (max_temp >= 60.0f) return "1/4";
+    if (max_temp >= 50.0f) return "WARM";
+    return "OK";
+}
+
+// Helper overload for standard containers (vectors, arrays, etc.)
+template <typename Container>
+requires requires(Container c) { std::begin(c); std::end(c); }
+std::string get_status(const Container& temps) {
+    if (temps.empty()) return "OK";
+    float max_temp = *std::max_element(temps.begin(), temps.end());
+    return get_status(static_cast<float>(max_temp));
+}
+
 void print_info() {
     int cycle = 0;
     while (printing) {
@@ -143,45 +161,33 @@ void print_info() {
         // print temps
         pros::lcd::print(3, "Temps");
 
-        auto left_temps = left_mg.get_temperature_all();
+        auto left_temps  = left_mg.get_temperature_all();
         auto right_temps = right_mg.get_temperature_all();
-        auto lift_temps = lift.get_temperature_all();
-        // auto top_temp = top.get_temperature();
+        auto lift_temps  = lift.get_temperature_all();
+        auto wrist_temp  = wrist.get_temperature();
+        auto intake_temp = intake.get_temperature();
+        auto cone_temp   = cone.get_temperature();
 
-        std::string left_status = "OK";
-        if (left_temps[0] >= 50.0f || left_temps[1] >= 50.0f || left_temps[2] >= 50.0f) left_status = "WARM";
-        if (left_temps[0] >= 60.0f || left_temps[1] >= 60.0f || left_temps[2] >= 60.0f) left_status = "1/4";
-        if (left_temps[0] >= 65.0f || left_temps[1] >= 65.0f || left_temps[2] >= 65.0f) left_status = "1/8";
-        if (left_temps[0] >= 70.0f || left_temps[1] >= 70.0f || left_temps[2] >= 70.0f) left_status = "OFF";
-        std::string right_status = "OK";
-        if (right_temps[0] >= 50.0f || right_temps[1] >= 50.0f || right_temps[2] >= 50.0f) right_status = "WARM";
-        if (right_temps[0] >= 60.0f || right_temps[1] >= 60.0f || right_temps[2] >= 60.0f) right_status = "1/4";
-        if (right_temps[0] >= 65.0f || right_temps[1] >= 65.0f || right_temps[2] >= 65.0f) right_status = "1/8";
-        if (right_temps[0] >= 70.0f || right_temps[1] >= 70.0f || right_temps[2] >= 70.0f) right_status = "OFF";
-        std::string lift_status = "OK";
-        if (lift_temps[0] >= 50.0f || lift_temps[1] >= 50.0f) lift_status = "WARM";
-        if (lift_temps[0] >= 60.0f || lift_temps[1] >= 60.0f) lift_status = "1/4";
-        if (lift_temps[0] >= 65.0f || lift_temps[1] >= 65.0f) lift_status = "1/8";
-        if (lift_temps[0] >= 70.0f || lift_temps[1] >= 70.0f) lift_status = "OFF";
-        // std::string top_status = "OK";
-        // if (top_temp >= 50.0f) top_status = "WARM";
-        // if (top_temp >= 60.0f) top_status = "1/4";
-        // if (top_temp >= 65.0f) top_status = "1/8";
-        // if (top_temp >= 70.0f) top_status = "OFF";
+        // Evaluate statuses directly via helper overloads
+        std::string left_status   = get_status(left_temps);
+        std::string right_status  = get_status(right_temps);
+        std::string lift_status   = get_status(lift_temps);
+        std::string wrist_status  = get_status(wrist_temp);
+        std::string intake_status = get_status(intake_temp);
+        std::string cone_status   = get_status(cone_temp);
 
+        // LCD Printing
         pros::lcd::print(4, "L: %.0f %.0f %.0f (%s)",
-            left_temps[0], left_temps[1], left_temps[2], left_status.c_str()
-        );
+            left_temps[0], left_temps[1], left_temps[2], left_status.c_str());
+
         pros::lcd::print(5, "R: %.0f %.0f %.0f (%s)",
-            right_temps[0], right_temps[1], right_temps[2], right_status.c_str()
-        );
-        pros::lcd::print(6, "Lift: %.0f %.0f (%s)", 
-            lift_temps[0], lift_temps[1], lift_status.c_str()
-        );
-        // pros::lcd::print(7, "W/C: %.0f / %.0f (%s)",
-        //     top_temp, top_status.c_str(), top.get_power()
-        // );
-        /**/
+            right_temps[0], right_temps[1], right_temps[2], right_status.c_str());
+
+        pros::lcd::print(6, "Lift: %.0f %.0f (%s)    Wrist: %.0f (%s)", 
+            lift_temps[0], lift_temps[1], lift_status.c_str(), wrist_temp, wrist_status.c_str());
+
+        pros::lcd::print(7, "Intake: %.0f (%s)    Cone: %.0f (%s)",
+            intake_temp, intake_status.c_str(), cone_temp, cone_status.c_str());
 
         // print to controller
         if (cycle % 5 == 0) {
