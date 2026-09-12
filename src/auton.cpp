@@ -56,12 +56,12 @@ void intake_pin_pos() {
 
 // wrist to scoring angle (where stack is vertical)
 void score_pos() {
-    setWristTo(125.2);
+    setWristTo(118);
 }
 
 // wrist and lift to "matchload" position (for standing stacks)
 void stack_pos() {
-    setWristTo(111);
+    setWristTo(126);
     setLiftTo(21);
 }
 
@@ -72,8 +72,20 @@ void clasp_pos() {
     setLiftTo(0);
 }
 
-
 void auton_none() {
+    c_danielib.setPose(30.9, -61.6, 0);
+    c_lemlib.setPose(30.9, -61.6, 0);
+
+    // SCORE R/Y IN ALLIANCE GOAL
+    // setLiftTo(0);
+    // c_lemlib.turnToHeading(-13, 200);
+    // c_lemlib.moveToPoint(26.5, -57, 1000, {.minSpeed = 5, .earlyExitRange = 1});
+    // c_lemlib.waitUntilDone();
+    // setLiftTo(10);
+    // delay(300);
+}
+
+void auton_none_sawp_impossible() {
     c_danielib.setPose(5, -59.2, 0);
     c_lemlib.setPose(5, -59.2, 0);
 
