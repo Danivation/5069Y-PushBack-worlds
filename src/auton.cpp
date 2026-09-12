@@ -54,6 +54,13 @@ void intake_pin_pos() {
     setWristTo(-12);
 }
 
+// wrist and lift in cup loading position
+void intake_cup_pos() {
+    // CUP LOADING POSITION
+    setLiftTo(18.5);
+    setWristTo(32);
+}
+
 // wrist to scoring angle (where stack is vertical)
 void score_pos() {
     setWristTo(122);
@@ -102,7 +109,7 @@ void auton_none() {
     delay(500);
 
     // LIFT UP AND MOVE TO GOAL
-    setLiftTo(33);
+    setLiftTo(30);
     score_pos();
     delay(50);
     c_lemlib.turnToHeading(90, 500);
@@ -114,7 +121,7 @@ void auton_none() {
     delay(550);
 
     // LIFT OFF GOAL
-    setLiftTo(40);
+    setLiftTo(33);
     cone.move(-50);
     delay(300);
 
@@ -126,7 +133,7 @@ void auton_none() {
 
     // MOVE TO Y/Y STACK
     // c_lemlib.turnToHeading(30, 400);
-    c_lemlib.moveToPoint(2.7_tiles, -1.8_tiles, 1000, {.minSpeed = 20, .earlyExitRange = 4});
+    c_lemlib.moveToPoint(1.7_tiles, -1.8_tiles, 1000, {.minSpeed = 20, .earlyExitRange = 4});
     c_lemlib.turnToHeading(140, 400);
     c_lemlib.moveToPoint(28, -28, 1000, {.forwards = false, .maxSpeed = 90, .minSpeed = 15, .earlyExitRange = 2.5});
     stack_pos();
@@ -143,7 +150,7 @@ void auton_none() {
     setLiftTo(33);
     score_pos();
     delay(50);
-    c_lemlib.moveToPoint(-21, -45, 2000, {.forwards = false});
+    c_lemlib.moveToPoint(-20, -43, 2000, {.forwards = false});
 
     // SCORE Y/Y ON GOAL
     c_lemlib.waitUntilDone();
@@ -155,6 +162,43 @@ void auton_none() {
     cone.move(-50);
     delay(300);
 
+
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                     PART 3: INTAKE RED PIN                                     */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // MOVE TO FLOWER
+    c_lemlib.turnToHeading(0, 400);
+    c_lemlib.moveToPoint(-0.8_tiles, -1_tiles, 1000);
+    intake_pin_pos();
+    intake.move(127);
+    cone.move(127);
+    c_lemlib.waitUntilDone();
+    delay(200);
+
+    // GRAB FREE CUP
+    c_lemlib.turnToHeading(90, 300);
+    c_lemlib.moveToPoint(0, -1_tiles, 1000);
+    c_lemlib.waitUntilDone();
+    intake_cup_pos();
+    delay(300);
+
+    // LIFT UP AND MOVE TO GOAL
+    c_lemlib.moveToPoint(-21, -43, 1000, {.forwards = false});
+    delay(200);
+    setLiftTo(40);
+    score_pos();
+
+    // SCORE R/Y ON GOAL
+    c_lemlib.waitUntilDone();
+    setLiftTo(25);
+    delay(550);
+
+    // LIFT OFF GOAL
+    setLiftTo(40);
+    cone.move(-50);
+    delay(300);
 }
 
 void auton_none_sawp_impossible() {

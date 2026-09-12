@@ -172,7 +172,7 @@ void WristControl() {
                         delay(50);
                         if (pin_dist.get_distance() < 150) {
                             inPinPosition = false;
-                            setWristTo(-88+120);
+                            setWristTo(32);
                             setLiftTo(18.5);
                         }
                     }
@@ -196,8 +196,8 @@ void WristControl() {
         } else if (master.get_digital_new_press(INTAKE_MACRO)) {
 
             // PIN LOADING POSITION
-            setWristTo(-12);
             setLiftTo(15.6);
+            setWristTo(-12);
             int startTime = pros::millis();
             waitUntilCondition((getWristPosition() > -140 && getWristPosition() < -125 && getLiftPosition() > 5 && getLiftPosition() < 25) || pros::millis() + 500 > startTime);
             inPinPosition = true;
