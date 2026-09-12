@@ -77,7 +77,7 @@ void cup_task() {
 void intake_pin_pos() {
     // PIN LOADING POSITION
     setLiftTo(15.6);
-    setWristTo(-12);
+    setWristTo(-15);
     inPinPosition = true;
 }
 
@@ -194,23 +194,23 @@ void auton_none() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // MOVE TO FLOWER
-    c_lemlib.moveToPoint(3, -1.4_tiles, 2000, {.minSpeed = 40, .earlyExitRange = 8});
-    c_lemlib.moveToPoint(-15, -26, 2000, {.maxSpeed = 70});
+    c_lemlib.moveToPoint(3, -1.37_tiles, 2000, {.minSpeed = 40, .earlyExitRange = 8});
+    c_lemlib.moveToPoint(-14.5, -25, 2000, {.maxSpeed = 70});
     intake_pin_pos();
     intake.move(127);
     cone.move(127);
     c_lemlib.waitUntilDone();
-    cup_task();
     delay(200);
+    cup_task();
     
     // GRAB FREE CUP
     c_lemlib.moveToPoint(-12, -35, 1000, {.forwards = false, .minSpeed = 20, .earlyExitRange = 4});
     c_lemlib.turnToHeading(50, 400);
     intake.move(127);
     cone.move(127);
-    c_lemlib.moveToPoint(-2, -25, 2000, {.maxSpeed = 50, .minSpeed = 5, .earlyExitRange = 8});
-    // c_lemlib.waitUntilDone();
-    // c_danielib.driveForDistance(12, 1000, 15);
+    c_lemlib.moveToPoint(1, -22, 2000, {.maxSpeed = 85});
+    c_lemlib.waitUntilDone();
+    delay(300);
     inPinPosition = false;
     setWristTo(-5);
     
@@ -230,6 +230,21 @@ void auton_none() {
     setLiftTo(40);
     cone.move(-50);
     delay(300);
+
+
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                      PART 4: DOUBLE TOGGLE                                     */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    c_lemlib.moveToPoint(-15, -33, 1000, {.minSpeed = 20, .earlyExitRange = 4});
+    c_lemlib.turnToHeading(-10, 300);
+    setLiftTo(0);
+    setWristTo(20);
+    intake.brake();
+    cone.brake();
+    c_lemlib.moveToPoint(-18, -2.25_tiles, 1500, {.forwards = false, .minSpeed = 60, .earlyExitRange = 7});
+    c_lemlib.moveToPoint(-0, -3_tiles, 1500, {.forwards = false});
 }
 
 void auton_POSSIBLE_4PIN() {
