@@ -194,23 +194,23 @@ void auton_none() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // MOVE TO FLOWER
-    c_lemlib.moveToPoint(4, -1.5_tiles, 2000, {.minSpeed = 50, .earlyExitRange = 9});
-    c_lemlib.moveToPoint(-15, -25, 2000, {.maxSpeed = 70});
+    c_lemlib.moveToPoint(3, -1.4_tiles, 2000, {.minSpeed = 40, .earlyExitRange = 8});
+    c_lemlib.moveToPoint(-15, -26, 2000, {.maxSpeed = 70});
     intake_pin_pos();
     intake.move(127);
     cone.move(127);
     c_lemlib.waitUntilDone();
+    cup_task();
     delay(200);
     
     // GRAB FREE CUP
     c_lemlib.moveToPoint(-12, -35, 1000, {.forwards = false, .minSpeed = 20, .earlyExitRange = 4});
     c_lemlib.turnToHeading(50, 400);
-    cup_task();
     intake.move(127);
     cone.move(127);
     c_lemlib.moveToPoint(-2, -25, 2000, {.maxSpeed = 50, .minSpeed = 5, .earlyExitRange = 8});
-    c_lemlib.waitUntilDone();
-    c_danielib.driveForDistance(12, 1000, 15);
+    // c_lemlib.waitUntilDone();
+    // c_danielib.driveForDistance(12, 1000, 15);
     inPinPosition = false;
     setWristTo(-5);
     
