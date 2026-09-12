@@ -187,21 +187,27 @@ void WristControl() {
 
         // MAIN BUTTON LOGIC
         if (master.get_digital_new_press(MATCHLOAD_MACRO)) {
+
+            // MATCH LOAD POSITION
             inPinPosition = false;
             setLiftTo(16.8);
-            setWristTo(-2+120);
+            setWristTo(126);
+
         } else if (master.get_digital_new_press(INTAKE_MACRO)) {
 
             // PIN LOADING POSITION
-            setWristTo(-132+120);
+            setWristTo(-12);
             setLiftTo(15.6);
             int startTime = pros::millis();
             waitUntilCondition((getWristPosition() > -140 && getWristPosition() < -125 && getLiftPosition() > 5 && getLiftPosition() < 25) || pros::millis() + 500 > startTime);
             inPinPosition = true;
 
         } else if (master.get_digital_new_press(SCORING_MACRO)) {
+
+            // SCORING (VERTICAL)
             inPinPosition = false;
-            setWristTo(4+120);
+            setWristTo(118);
+
         } else if (master.get_digital(WRIST_UP_MANUAL)) {
             inPinPosition = false;
             wrist_has_pid_control = false;
@@ -232,7 +238,7 @@ void LiftControl() {
         if (master.get_digital(LIFT_UP)) {
             lift_has_pid_control = false;
             delay(10);
-            lift.move(127);
+            lift.move(100);
             waitUntilCondition(!master.get_digital(LIFT_UP));
             lift.brake();
             // setLiftTo(getLiftPosition());
@@ -241,7 +247,7 @@ void LiftControl() {
         else if (master.get_digital(LIFT_DOWN)) {
             lift_has_pid_control = false;
             delay(10);
-            lift.move(-127);
+            lift.move(-60);
             waitUntilCondition(!master.get_digital(LIFT_DOWN));
             lift.brake();
             // setLiftTo(getLiftPosition());
