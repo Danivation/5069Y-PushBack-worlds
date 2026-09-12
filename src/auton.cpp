@@ -152,6 +152,130 @@ void auton_none() {
 
 
     /* ---------------------------------------------------------------------------------------------- */
+    /*                                   PART 2: OTHER ALLIANCE GOAL                                  */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // MOVE TO Y/Y STACK
+    // c_lemlib.turnToHeading(30, 400);
+    c_lemlib.moveToPoint(1.7_tiles, -1.8_tiles, 1000, {.minSpeed = 20, .earlyExitRange = 4});
+    c_lemlib.turnToHeading(140, 400);
+    c_lemlib.moveToPoint(29, -29, 1000, {.forwards = false, .maxSpeed = 90, .minSpeed = 15, .earlyExitRange = 2.5});
+    stack_pos();
+    c_lemlib.waitUntilDone();
+    c_danielib.driveForDistance(-6, 500, 15);
+    c_danielib.driveForDistance(2, 500);
+    
+    // GRAB Y/Y STACK
+    cone.move(127);
+    clasp_pos();
+    delay(500);
+
+    // LIFT UP AND MOVE TO GOAL
+    setLiftTo(30);
+    score_pos();
+    delay(50);
+    c_lemlib.turnToHeading(-90, 400);
+    c_lemlib.moveToPoint(45, -24, 1000, {.forwards = false});
+
+    // SCORE Y/Y ON GOAL
+    c_lemlib.waitUntilDone();
+    setLiftTo(15);
+    delay(550);
+
+    // LIFT OFF GOAL
+    setLiftTo(33);
+    cone.move(-50);
+    delay(300);
+
+
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                     PART 3: INTAKE RED PIN                                     */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // MOVE TO FLOWER
+    c_lemlib.moveToPoint(0, -1.6_tiles, 2000, {.minSpeed = 50, .earlyExitRange = 8});
+    c_lemlib.moveToPoint(-15, -25, 1500, {.maxSpeed = 70});
+    intake_pin_pos();
+    cup_task();
+    intake.move(127);
+    cone.move(127);
+    c_lemlib.waitUntilDone();
+    delay(200);
+
+    // // GRAB FREE CUP
+    // c_lemlib.turnToHeading(90, 300);
+    // c_lemlib.moveToPoint(0, -1_tiles, 1000);
+    // c_lemlib.waitUntilDone();
+    // intake_cup_pos();
+    // delay(300);
+
+    // // LIFT UP AND MOVE TO GOAL
+    // c_lemlib.moveToPoint(-21, -43, 1000, {.forwards = false});
+    // delay(200);
+    // setLiftTo(40);
+    // score_pos();
+
+    // // SCORE R/Y ON GOAL
+    // c_lemlib.waitUntilDone();
+    // setLiftTo(25);
+    // delay(550);
+
+    // // LIFT OFF GOAL
+    // setLiftTo(40);
+    // cone.move(-50);
+    // delay(300);
+}
+
+void auton_POSSIBLE_4PIN() {
+    c_danielib.setPose(32.7, -59.9, 340.2);
+    c_lemlib.setPose(32.7, -59.9, 340.2);
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                      PART 1: ALLIANCE GOAL                                     */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // SCORE R/Y IN ALLIANCE GOAL
+    setLiftTo(0);
+    // c_lemlib.moveToPoint(26.5, -57, 1000, {.minSpeed = 5, .earlyExitRange = 1});
+    // c_lemlib.waitUntilDone();
+    c_danielib.driveForDistance(5.7, 700, 100, 0, false);
+    stack_pos();
+    delay(150);
+    c_danielib.driveForDistance(-8, 100, 100, 0, false);
+
+    // MOVE TO Y/Y STACK
+    c_lemlib.turnToHeading(-130, 500);
+    c_lemlib.moveToPoint(43, -51.5, 1000, {.forwards = false, .maxSpeed = 90, .minSpeed = 15, .earlyExitRange = 2.5});
+    c_lemlib.waitUntilDone();
+    c_danielib.driveForDistance(-6, 500, 15);
+    c_danielib.driveForDistance(2, 500);
+    
+    // GRAB Y/Y STACK
+    cone.move(127);
+    clasp_pos();
+    delay(500);
+
+    // LIFT UP AND MOVE TO GOAL
+    setLiftTo(30);
+    score_pos();
+    delay(50);
+    c_lemlib.turnToHeading(90, 500);
+    c_lemlib.moveToPoint(30, -48, 1000, {.forwards = false});
+
+    // SCORE Y/Y ON GOAL
+    c_lemlib.waitUntilDone();
+    setLiftTo(15);
+    delay(550);
+
+    // LIFT OFF GOAL
+    setLiftTo(33);
+    cone.move(-50);
+    delay(300);
+
+
+
+    /* ---------------------------------------------------------------------------------------------- */
     /*                                      PART 2: NEUTRAL GOAL                                      */
     /* ---------------------------------------------------------------------------------------------- */
 
@@ -226,7 +350,7 @@ void auton_none() {
     // delay(300);
 }
 
-void auton_none_sawp_impossible() {
+void auton_bad_3pin() {
     c_danielib.setPose(5, -59.2, 0);
     c_lemlib.setPose(5, -59.2, 0);
 
