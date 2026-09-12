@@ -50,19 +50,19 @@ bool waitUntilColor(pros::Optical* sensor, pros::Color color, int stopTime) {
 // wrist and lift in pin loading position
 void intake_pin_pos() {
     // PIN LOADING POSITION
-    setWristTo(-12);
     setLiftTo(15.6);
+    setWristTo(-12);
 }
 
 // wrist to scoring angle (where stack is vertical)
 void score_pos() {
-    setWristTo(118);
+    setWristTo(122);
 }
 
 // wrist and lift to "matchload" position (for standing stacks)
 void stack_pos() {
-    setWristTo(126);
     setLiftTo(21);
+    setWristTo(126);
 }
 
 // wrist and lift clasp in and lower (to grab standing stacks)
@@ -73,16 +73,88 @@ void clasp_pos() {
 }
 
 void auton_none() {
-    c_danielib.setPose(30.9, -61.6, 0);
-    c_lemlib.setPose(30.9, -61.6, 0);
+    c_danielib.setPose(32.7, -59.9, 340.2);
+    c_lemlib.setPose(32.7, -59.9, 340.2);
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                      PART 1: ALLIANCE GOAL                                     */
+    /* ---------------------------------------------------------------------------------------------- */
 
     // SCORE R/Y IN ALLIANCE GOAL
-    // setLiftTo(0);
-    // c_lemlib.turnToHeading(-13, 200);
+    setLiftTo(0);
     // c_lemlib.moveToPoint(26.5, -57, 1000, {.minSpeed = 5, .earlyExitRange = 1});
     // c_lemlib.waitUntilDone();
-    // setLiftTo(10);
-    // delay(300);
+    c_danielib.driveForDistance(5.7, 700, 100, 0, false);
+    stack_pos();
+    delay(150);
+    c_danielib.driveForDistance(-8, 100, 100, 0, false);
+
+    // MOVE TO Y/Y STACK
+    c_lemlib.turnToHeading(-130, 500);
+    c_lemlib.moveToPoint(43, -51.5, 1000, {.forwards = false, .maxSpeed = 90, .minSpeed = 15, .earlyExitRange = 2.5});
+    c_lemlib.waitUntilDone();
+    c_danielib.driveForDistance(-6, 500, 15);
+    c_danielib.driveForDistance(2, 500);
+    
+    // GRAB Y/Y STACK
+    cone.move(127);
+    clasp_pos();
+    delay(500);
+
+    // LIFT UP AND MOVE TO GOAL
+    setLiftTo(33);
+    score_pos();
+    delay(50);
+    c_lemlib.turnToHeading(90, 500);
+    c_lemlib.moveToPoint(30, -48, 1000, {.forwards = false});
+
+    // SCORE Y/Y ON GOAL
+    c_lemlib.waitUntilDone();
+    setLiftTo(15);
+    delay(550);
+
+    // LIFT OFF GOAL
+    setLiftTo(40);
+    cone.move(-50);
+    delay(300);
+
+
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                      PART 2: NEUTRAL GOAL                                      */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // MOVE TO Y/Y STACK
+    // c_lemlib.turnToHeading(30, 400);
+    c_lemlib.moveToPoint(2.7_tiles, -1.8_tiles, 1000, {.minSpeed = 20, .earlyExitRange = 4});
+    c_lemlib.turnToHeading(140, 400);
+    c_lemlib.moveToPoint(28, -28, 1000, {.forwards = false, .maxSpeed = 90, .minSpeed = 15, .earlyExitRange = 2.5});
+    stack_pos();
+    c_lemlib.waitUntilDone();
+    c_danielib.driveForDistance(-6, 500, 15);
+    c_danielib.driveForDistance(2, 500);
+    
+    // GRAB Y/Y STACK
+    cone.move(127);
+    clasp_pos();
+    delay(500);
+
+    // LIFT UP AND MOVE TO GOAL
+    setLiftTo(33);
+    score_pos();
+    delay(50);
+    c_lemlib.moveToPoint(-21, -45, 2000, {.forwards = false});
+
+    // SCORE Y/Y ON GOAL
+    c_lemlib.waitUntilDone();
+    setLiftTo(15);
+    delay(550);
+
+    // LIFT OFF GOAL
+    setLiftTo(40);
+    cone.move(-50);
+    delay(300);
+
 }
 
 void auton_none_sawp_impossible() {

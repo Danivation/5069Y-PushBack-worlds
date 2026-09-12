@@ -276,8 +276,8 @@ void autonomous() {
 
     auton_none();
 
-    c_lemlib.waitUntilDone();
-    c_danielib.waitUntilDone();
+    // c_lemlib.waitUntilDone();
+    // c_danielib.waitUntilDone();
 
 
     /**

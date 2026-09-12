@@ -206,7 +206,7 @@ void WristControl() {
 
             // SCORING (VERTICAL)
             inPinPosition = false;
-            setWristTo(118);
+            setWristTo(120);
 
         } else if (master.get_digital(WRIST_UP_MANUAL)) {
             inPinPosition = false;
