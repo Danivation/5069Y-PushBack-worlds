@@ -108,76 +108,45 @@ void auton_none() {
     c_lemlib.setPose(-10.2, -63.25, 90);
     lemlibDistReset({&back_beam}, 10, 10);
 
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                        PART 1: WALL CUP                                        */
+    /* ---------------------------------------------------------------------------------------------- */
+
     intake.brake();
     cone.move(127);
     setWristTo(92);
     setLiftTo(23);
 
+    // SCOOP WALL CUP
     c_danielib.turnToHeading(98, 150, 120, false);
     c_lemlib.moveToPoint(-26, -61, 950, {.forwards = false, .maxSpeed = 60});
-    c_lemlib.waitUntilDone();
 
+    // CUP GRAB SEQUENCE
+    delay(950);
     setLiftTo(0);
     delay(200);
-    setWristTo(65);
-    delay(200);
-    setWristTo(130);
-    delay(100);
+    setWristTo(40);
+    delay(350);
     setWristTo(150);
     setLiftTo(15);
+    delay(250);
 
+    // LIFT UP AND MOVE TO GOAL
+    setLiftTo(30);
+    score_pos();
+    delay(50);
+    c_lemlib.moveToPoint(-8, -51, 1000, {.minSpeed = 20, .earlyExitRange = 3});
+    c_lemlib.moveToPoint(-19, -49, 1000, {.forwards = false});
 
-    delay(500);
+    // SCORE PIN ON GOAL
+    c_lemlib.waitUntilDone();
+    setLiftTo(15);
+    delay(550);
 
-
-
-
-
-    /* ---------------------------------------------------------------------------------------------- */
-    /*                                       PART 1: WALL STACK                                       */
-    /* ---------------------------------------------------------------------------------------------- */
-
-    // // SIDE TOGGLE UP
-    // intake.brake();
-    // cone.move(127);
-    // setWristTo(150);
-    // setLiftTo(40);
-    // delay(800);
-
-    // // BACK INTO CUP
-    // c_danielib.async().driveForDistance(-20, 1000, 90);
-    // delay(200);
-    // setLiftTo(20);
-    // setWristTo(103);
-    // c_danielib.waitUntilDone();
-    // c_danielib.driveForDistance(2, 300);
-    
-    // // PUT PIN INTO CUP
-    // cone.move(127);
-    // setWristTo(95);
-    // setLiftTo(0);
-    // delay(500);
-    // setWristTo(50);
-    // delay(300);
-    // setWristTo(130);
-    // delay(200);
-
-    // // LIFT UP AND MOVE TO GOAL
-    // setLiftTo(30);
-    // score_pos();
-    // delay(50);
-    // c_lemlib.moveToPoint(-8, -51, 1000, {.minSpeed = 20, .earlyExitRange = 3});
-    // c_lemlib.moveToPoint(-19, -49, 1000, {.forwards = false});
-
-    // // SCORE PIN ON GOAL
-    // c_lemlib.waitUntilDone();
-    // setLiftTo(15);
-    // delay(550);
-
-    // // LIFT OFF GOAL
-    // setLiftTo(40);
-    // cone.move(-50);
-    // delay(300);
+    // LIFT OFF GOAL
+    setLiftTo(40);
+    cone.move(-50);
+    delay(300);
 
 }
 
