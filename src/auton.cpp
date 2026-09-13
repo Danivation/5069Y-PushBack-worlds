@@ -106,6 +106,24 @@ void clasp_pos() {
     setLiftTo(0);
 }
 
+enum GoalType {alliance, neutral, center};
+
+void fast_drop_prime(GoalType goalType) {
+    cone.move(127);
+    setWristTo(150);
+    if (goalType == alliance) {
+        setLiftTo(20.80);
+    } else if (goalType == neutral) {
+        setLiftTo(26.65);
+    }
+}
+
+void fast_drop(int liftPos) {
+    cone.move(-127);
+    setWristTo(120);
+    setLiftTo(liftPos);
+}
+
 
 
 
@@ -114,9 +132,22 @@ void clasp_pos() {
 /* ---------------------------------------------------------------------------------------------- */
 
 
-
-
 void auton_none() {
+    c_danielib.setPose(0, -2_tiles, 90);
+    c_lemlib.setPose(0, -2_tiles, 90);
+
+    fast_drop_prime(neutral);
+    delay(2000);
+    c_lemlib.moveToPoint(-1_tiles, -2_tiles, 1500, {.forwards = false, .minSpeed = 15, .earlyExitRange = 9.5});
+    c_lemlib.waitUntilDone();
+    fast_drop(40);
+    c_danielib.driveForDistance(24, 1500);
+    c_danielib.waitUntilDone();
+}
+
+
+
+void auton_possible_4pin() {
     c_danielib.setPose(-10.5, -63.25, 90);
     c_lemlib.setPose(-10.5, -63.25, 90);
     lemlibDistReset({&back_beam}, 10, 10);
