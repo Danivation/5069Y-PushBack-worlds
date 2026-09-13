@@ -114,39 +114,51 @@ void auton_none() {
 
     intake.brake();
     cone.move(127);
-    setWristTo(92);
+    setWristTo(96);
     setLiftTo(23);
 
     // SCOOP WALL CUP
     c_danielib.turnToHeading(98, 150, 120, false);
-    c_lemlib.moveToPoint(-26, -61, 950, {.forwards = false, .maxSpeed = 60});
+    c_lemlib.moveToPoint(-26, -61, 1050, {.forwards = false, .maxSpeed = 60});
 
     // CUP GRAB SEQUENCE
-    delay(950);
+    delay(1050);
     setLiftTo(0);
     delay(200);
     setWristTo(40);
     delay(350);
     setWristTo(150);
-    setLiftTo(15);
-    delay(250);
+    setLiftTo(31.5);
+    delay(150);
 
     // LIFT UP AND MOVE TO GOAL
-    setLiftTo(30);
     score_pos();
-    delay(50);
-    c_lemlib.moveToPoint(-8, -51, 1000, {.minSpeed = 20, .earlyExitRange = 3});
-    c_lemlib.moveToPoint(-19, -49, 1000, {.forwards = false});
+    c_lemlib.moveToPoint(-8, -55, 1000, {.minSpeed = 20, .earlyExitRange = 3});
+    c_lemlib.moveToPoint(-19, -48, 1000, {.forwards = false});
 
     // SCORE PIN ON GOAL
-    c_lemlib.waitUntilDone();
+    delay(850);
     setLiftTo(15);
-    delay(550);
+    delay(300);
 
     // LIFT OFF GOAL
-    setLiftTo(40);
-    cone.move(-50);
+    cone.move(-127);
+    setLiftTo(36);
     delay(300);
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                               PART 2: FLOOR PIN -> ALLIANCE GOAL                               */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // MOVE TO FLOWER
+    c_lemlib.turnToHeading(0, 250);
+    c_lemlib.moveToPoint(-10, -30, 1500);
+    delay(400);
+    intake_pin_pos();
+    intake.move(127);
+    cone.move(127);
+    c_lemlib.waitUntilDone();
+    delay(500);
 
 }
 
