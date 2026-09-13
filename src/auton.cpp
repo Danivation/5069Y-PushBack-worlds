@@ -104,6 +104,59 @@ void clasp_pos() {
 }
 
 void auton_none() {
+    c_danielib.setPose(-10.2, -63.25, 90);
+    c_lemlib.setPose(-10.2, -63.25, 90);
+    lemlibDistReset({&back_beam}, 10, 10);
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                       PART 1: WALL STACK                                       */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // SIDE TOGGLE UP
+    intake.brake();
+    cone.move(127);
+    setWristTo(150);
+    setLiftTo(40);
+    delay(800);
+
+    // BACK INTO CUP
+    c_danielib.async().driveForDistance(-20, 1000, 90);
+    delay(200);
+    setLiftTo(20);
+    setWristTo(103);
+    c_danielib.waitUntilDone();
+    c_danielib.driveForDistance(2, 300);
+    
+    // PUT PIN INTO CUP
+    cone.move(127);
+    setWristTo(95);
+    setLiftTo(0);
+    delay(500);
+    setWristTo(50);
+    delay(300);
+    setWristTo(130);
+    delay(200);
+
+    // LIFT UP AND MOVE TO GOAL
+    setLiftTo(30);
+    score_pos();
+    delay(50);
+    c_lemlib.moveToPoint(-8, -51, 1000, {.minSpeed = 20, .earlyExitRange = 3});
+    c_lemlib.moveToPoint(-19, -49, 1000, {.forwards = false});
+
+    // SCORE PIN ON GOAL
+    c_lemlib.waitUntilDone();
+    setLiftTo(15);
+    delay(550);
+
+    // LIFT OFF GOAL
+    setLiftTo(40);
+    cone.move(-50);
+    delay(300);
+
+}
+
+void auton_4PIN_2() {
     c_danielib.setPose(32.7, -59.9, 340.2);
     c_lemlib.setPose(32.7, -59.9, 340.2);
 
@@ -194,7 +247,7 @@ void auton_none() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // MOVE TO FLOWER
-    c_lemlib.moveToPoint(3, -1.37_tiles, 2000, {.minSpeed = 40, .earlyExitRange = 8});
+    c_lemlib.moveToPoint(4, -1.38_tiles, 2000, {.minSpeed = 40, .earlyExitRange = 8});
     c_lemlib.moveToPoint(-14.5, -25, 2000, {.maxSpeed = 70});
     intake_pin_pos();
     intake.move(127);
@@ -237,14 +290,15 @@ void auton_none() {
     /*                                      PART 4: DOUBLE TOGGLE                                     */
     /* ---------------------------------------------------------------------------------------------- */
 
-    c_lemlib.moveToPoint(-15, -33, 1000, {.minSpeed = 20, .earlyExitRange = 4});
+    c_lemlib.moveToPoint(-12, -28, 1000, {.minSpeed = 20, .earlyExitRange = 4});
     c_lemlib.turnToHeading(-10, 300);
-    setLiftTo(0);
-    setWristTo(20);
+    setLiftTo(3);
+    setWristTo(60);
     intake.brake();
     cone.brake();
-    c_lemlib.moveToPoint(-18, -2.25_tiles, 1500, {.forwards = false, .minSpeed = 60, .earlyExitRange = 7});
-    c_lemlib.moveToPoint(-0, -3_tiles, 1500, {.forwards = false});
+    c_lemlib.moveToPoint(-15, -2.25_tiles, 1500, {.forwards = false, .minSpeed = 60, .earlyExitRange = 7});
+    c_lemlib.moveToPoint(0, -3_tiles, 1500, {.forwards = false});
+    c_lemlib.waitUntilDone();
 }
 
 void auton_POSSIBLE_4PIN() {
