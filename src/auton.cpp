@@ -108,15 +108,26 @@ void auton_none() {
     c_lemlib.setPose(-10.2, -63.25, 90);
     lemlibDistReset({&back_beam}, 10, 10);
 
+    intake.brake();
+    cone.move(127);
+    setWristTo(92);
+    setLiftTo(23);
 
-    // intake.brake();
-    // cone.move(127);
-    // setWristTo(150);
-    // setLiftTo(40);
-
-    c_danielib.turnToHeading(98, 150, 100, false);
-    c_lemlib.moveToPoint(-30, -61, 1000, {.forwards = false, .maxSpeed = 60});
+    c_danielib.turnToHeading(98, 150, 120, false);
+    c_lemlib.moveToPoint(-26, -61, 950, {.forwards = false, .maxSpeed = 60});
     c_lemlib.waitUntilDone();
+
+    setLiftTo(0);
+    delay(200);
+    setWristTo(65);
+    delay(200);
+    setWristTo(130);
+    delay(100);
+    setWristTo(150);
+    setLiftTo(15);
+
+
+    delay(500);
 
 
 
