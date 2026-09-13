@@ -136,8 +136,8 @@ void auton_none() {
     c_lemlib.moveToPoint(-8, -55, 1000, {.minSpeed = 20, .earlyExitRange = 3});
     c_lemlib.moveToPoint(-19, -48, 1000, {.forwards = false});
 
-    // SCORE PIN ON GOAL
-    delay(850);
+    // SCORE STACK
+    delay(800);
     setLiftTo(15);
     delay(300);
 
@@ -145,20 +145,33 @@ void auton_none() {
     cone.move(-127);
     setLiftTo(36);
     delay(300);
+    c_lemlib.cancelAllMotions();
 
     /* ---------------------------------------------------------------------------------------------- */
-    /*                               PART 2: FLOOR PIN -> ALLIANCE GOAL                               */
+    /*                          PART 2: FLOOR PIN -> TOGGLE -> ALLIANCE GOAL                          */
     /* ---------------------------------------------------------------------------------------------- */
 
     // MOVE TO FLOWER
     c_lemlib.turnToHeading(0, 250);
-    c_lemlib.moveToPoint(-10, -30, 1500);
+    c_lemlib.moveToPoint(-12, -26, 1500);
     delay(400);
     intake_pin_pos();
     intake.move(127);
     cone.move(127);
     c_lemlib.waitUntilDone();
     delay(500);
+    cup_task();
+
+    // TOGGLE
+    c_lemlib.moveToPoint(-12, -2.6_tiles, 2000, {.forwards = false, .minSpeed = 30, .earlyExitRange = 6});
+    c_lemlib.turnToHeading(-30, 400);
+    c_lemlib.waitUntilDone();
+    c_danielib.driveForDistance(-20, 800, 100, 0, false);
+
+    // ALLIANCE GOAL
+    c_lemlib.moveToPoint(5, -2_tiles, 1000, {.minSpeed = 20, .earlyExitRange = 3});
+    c_lemlib.turnToHeading(-90, 300);
+    c_lemlib.moveToPoint(19, -48, 1000, {.forwards = false});
 
 }
 
