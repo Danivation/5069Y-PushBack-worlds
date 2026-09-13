@@ -108,51 +108,65 @@ void auton_none() {
     c_lemlib.setPose(-10.2, -63.25, 90);
     lemlibDistReset({&back_beam}, 10, 10);
 
+
+    // intake.brake();
+    // cone.move(127);
+    // setWristTo(150);
+    // setLiftTo(40);
+
+    c_danielib.turnToHeading(98, 150, 100, false);
+    c_lemlib.moveToPoint(-30, -61, 1000, {.forwards = false, .maxSpeed = 60});
+    c_lemlib.waitUntilDone();
+
+
+
+
+
     /* ---------------------------------------------------------------------------------------------- */
     /*                                       PART 1: WALL STACK                                       */
     /* ---------------------------------------------------------------------------------------------- */
 
-    // SIDE TOGGLE UP
-    intake.brake();
-    cone.move(127);
-    setWristTo(150);
-    setLiftTo(40);
-    delay(800);
+    // // SIDE TOGGLE UP
+    // intake.brake();
+    // cone.move(127);
+    // setWristTo(150);
+    // setLiftTo(40);
+    // delay(800);
 
-    // BACK INTO CUP
-    c_danielib.async().driveForDistance(-20, 1000, 90);
-    delay(200);
-    setLiftTo(20);
-    setWristTo(103);
-    c_danielib.waitUntilDone();
-    c_danielib.driveForDistance(2, 300);
+    // // BACK INTO CUP
+    // c_danielib.async().driveForDistance(-20, 1000, 90);
+    // delay(200);
+    // setLiftTo(20);
+    // setWristTo(103);
+    // c_danielib.waitUntilDone();
+    // c_danielib.driveForDistance(2, 300);
     
-    // PUT PIN INTO CUP
-    cone.move(127);
-    setWristTo(95);
-    setLiftTo(0);
-    delay(500);
-    setWristTo(50);
-    delay(300);
-    setWristTo(130);
-    delay(200);
+    // // PUT PIN INTO CUP
+    // cone.move(127);
+    // setWristTo(95);
+    // setLiftTo(0);
+    // delay(500);
+    // setWristTo(50);
+    // delay(300);
+    // setWristTo(130);
+    // delay(200);
 
-    // LIFT UP AND MOVE TO GOAL
-    setLiftTo(30);
-    score_pos();
-    delay(50);
-    c_lemlib.moveToPoint(-8, -51, 1000, {.minSpeed = 20, .earlyExitRange = 3});
-    c_lemlib.moveToPoint(-19, -49, 1000, {.forwards = false});
+    // // LIFT UP AND MOVE TO GOAL
+    // setLiftTo(30);
+    // score_pos();
+    // delay(50);
+    // c_lemlib.moveToPoint(-8, -51, 1000, {.minSpeed = 20, .earlyExitRange = 3});
+    // c_lemlib.moveToPoint(-19, -49, 1000, {.forwards = false});
 
-    // SCORE PIN ON GOAL
-    c_lemlib.waitUntilDone();
-    setLiftTo(15);
-    delay(550);
+    // // SCORE PIN ON GOAL
+    // c_lemlib.waitUntilDone();
+    // setLiftTo(15);
+    // delay(550);
 
-    // LIFT OFF GOAL
-    setLiftTo(40);
-    cone.move(-50);
-    delay(300);
+    // // LIFT OFF GOAL
+    // setLiftTo(40);
+    // cone.move(-50);
+    // delay(300);
 
 }
 
