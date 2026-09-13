@@ -46,8 +46,6 @@ bool waitUntilColor(pros::Optical* sensor, pros::Color color, int stopTime) {
     else return true;
 }
 
-
-
 bool inPinPosition = false;
 void cup_task() {
 
@@ -72,7 +70,6 @@ void cup_task() {
     }};
 }
 
-
 // wrist and lift in pin loading position
 void intake_pin_pos() {
     // PIN LOADING POSITION
@@ -87,7 +84,6 @@ void intake_cup_pos() {
     setWristTo(32);
     inPinPosition = false;
 }
-
 
 // wrist to scoring angle (where stack is vertical)
 void score_pos() {
@@ -110,9 +106,19 @@ void clasp_pos() {
     setLiftTo(0);
 }
 
+
+
+
+/* ---------------------------------------------------------------------------------------------- */
+/*                                             AUTONS                                             */
+/* ---------------------------------------------------------------------------------------------- */
+
+
+
+
 void auton_none() {
-    c_danielib.setPose(-10.2, -63.25, 90);
-    c_lemlib.setPose(-10.2, -63.25, 90);
+    c_danielib.setPose(-10.5, -63.25, 90);
+    c_lemlib.setPose(-10.5, -63.25, 90);
     lemlibDistReset({&back_beam}, 10, 10);
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -121,32 +127,32 @@ void auton_none() {
 
     intake.brake();
     cone.move(127);
-    setWristTo(96);
+    setWristTo(92);
     setLiftTo(23);
 
     // SCOOP WALL CUP
-    c_danielib.turnToHeading(99, 150, 120, false);
-    c_lemlib.moveToPoint(-26, -62, 1100, {.forwards = false, .maxSpeed = 60});
+    // c_danielib.turnToHeading(99, 150, 120, false);
+    c_lemlib.moveToPoint(-27, -61, 1050, {.forwards = false, .maxSpeed = 60});
 
     // CUP GRAB SEQUENCE
-    delay(1050);
+    delay(1000);
     setLiftTo(0);
     delay(200);
     setWristTo(40);
-    delay(350);
+    delay(300);
 
     // LIFT UP
-    setWristTo(150);
-    setLiftTo(31.5);
-    delay(150);
+    setLiftTo(32);
+    score_pos();
+    delay(50);
 
     // MOVE TO GOAL
-    score_pos();
-    c_lemlib.moveToPoint(-8, -55, 1000, {.minSpeed = 20, .earlyExitRange = 3});
-    c_lemlib.moveToPoint(-19, -48, 1000, {.forwards = false});
+    c_lemlib.moveToPoint(-8.5, -54, 1000, {.minSpeed = 20, .earlyExitRange = 5});
+    c_lemlib.turnToHeading(135, 100);
+    c_lemlib.moveToPoint(-19, -49.5, 1000, {.forwards = false});
 
     // SCORE STACK
-    delay(800);
+    delay(700);
     setLiftTo(15);
     delay(300);
 
@@ -162,12 +168,12 @@ void auton_none() {
 
     // MOVE TO FLOWER
     c_lemlib.turnToHeading(0, 250);
-    c_lemlib.moveToPoint(-12, -26, 1500);
+    c_lemlib.moveToPoint(-12, -25, 1500);
     delay(400);
     intake_pin_pos();
     intake.move(127);
     cone.move(127);
-    delay(1200);
+    delay(1150);
     cup_task();
     c_lemlib.cancelAllMotions();
 
@@ -176,25 +182,24 @@ void auton_none() {
     c_lemlib.turnToHeading(-30, 200);
     c_lemlib.waitUntilDone();
     intake_cup_pos();
-    c_danielib.driveForDistance(-24, 700, 120, 0, false);
+    c_danielib.driveForDistance(-24, 650, 120, 0, false);
 
     // MOVE TO ALLIANCE GOAL
-    c_danielib.driveForDistance(14, 350);
+    c_danielib.driveForDistance(24, 300, 120, 0, false);
     inPinPosition = false;
     setLiftTo(10);
     score_pos();
-    c_lemlib.turnToHeading(-140, 300);
+    c_lemlib.turnToHeading(-120, 260);
     c_lemlib.moveToPoint(19, -48, 1200, {.forwards = false});
-    setLiftTo(17);
 
     // SCORE SOLO PIN
-    delay(850);
+    delay(810);
     setWristTo(131);
     setLiftTo(0);
     delay(250);
     setWristTo(95);
     cone.move(-70);
-    delay(100);
+    delay(50);
 
     // LIFT OFF
     stack_pos();
@@ -206,9 +211,10 @@ void auton_none() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // MOVE TO STACK
-    c_lemlib.moveToPoint(8, -24, 1500, {.minSpeed = 20, .earlyExitRange = 4});
-    c_lemlib.turnToHeading(-90, 200);
-    c_lemlib.moveToPoint(18, -25, 1300, {.forwards = false, .maxSpeed = 100, .minSpeed = 20, .earlyExitRange = 3});
+    // c_lemlib.moveToPoint(10, -36, 1500, {.minSpeed = 20, .earlyExitRange = 4});
+    c_danielib.driveForDistance(24, 250, 120, 0, false);
+    c_lemlib.turnToHeading(-150, 200);
+    c_lemlib.moveToPoint(18, -29, 1300, {.forwards = false, .maxSpeed = 100, .minSpeed = 20, .earlyExitRange = 3});
     intake.brake();
     cone.move(127);
     c_lemlib.waitUntilDone();
@@ -222,17 +228,20 @@ void auton_none() {
     delay(250);
 
     // LIFT UP
-    setLiftTo(30);
+    setLiftTo(28);
     score_pos();
     c_lemlib.cancelAllMotions();
 
     // MOVE TO FAR ALLIANCE GOAL
-    c_lemlib.moveToPoint(43, -24, 1000, {.forwards = false});
+    c_lemlib.turnToHeading(-90, 100);
+    c_lemlib.moveToPoint(43, -24, 1200, {.forwards = false});
 
     // SCORE STACK
-    delay(800);
+    delay(850);
     setLiftTo(10);
-    delay(300);
+    delay(100);
+    cone.move(-127);
+    delay(150);
 
     // LIFT OFF GOAL
     cone.move(-127);
@@ -262,7 +271,7 @@ void auton_none() {
     delay(250);
 
     // LIFT UP
-    setLiftTo(30);
+    setLiftTo(28);
     score_pos();
     c_lemlib.cancelAllMotions();
 
@@ -273,7 +282,9 @@ void auton_none() {
     // SCORE STACK
     delay(800);
     setLiftTo(10);
-    delay(300);
+    delay(100);
+    cone.move(-127);
+    delay(150);
 
 }
 
