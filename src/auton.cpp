@@ -118,8 +118,8 @@ void auton_none() {
     setLiftTo(23);
 
     // SCOOP WALL CUP
-    c_danielib.turnToHeading(98, 150, 120, false);
-    c_lemlib.moveToPoint(-26, -61, 1050, {.forwards = false, .maxSpeed = 60});
+    c_danielib.turnToHeading(99, 150, 120, false);
+    c_lemlib.moveToPoint(-26, -62, 1100, {.forwards = false, .maxSpeed = 60});
 
     // CUP GRAB SEQUENCE
     delay(1050);
@@ -160,16 +160,15 @@ void auton_none() {
     intake_pin_pos();
     intake.move(127);
     cone.move(127);
-    c_lemlib.waitUntilDone();
-    delay(500);
+    delay(1200);
     cup_task();
+    c_lemlib.cancelAllMotions();
 
     // TOGGLE
-    c_lemlib.moveToPoint(-5, -2.5_tiles, 2000, {.forwards = false, .minSpeed = 15, .earlyExitRange = 6});
+    c_lemlib.moveToPoint(-5, -2.4_tiles, 2000, {.forwards = false, .minSpeed = 15, .earlyExitRange = 6});
     c_lemlib.turnToHeading(-30, 200);
     c_lemlib.waitUntilDone();
-    c_danielib.driveForDistance(-20, 800, 100, 0, false);
-    // c_lemlib.moveToPoint(8, -3.3_tiles, 800, {.forwards = false});
+    c_danielib.driveForDistance(-24, 1000, 120, 0, false);
 
     // MOVE TO ALLIANCE GOAL
     c_danielib.driveForDistance(14, 350);
@@ -181,7 +180,7 @@ void auton_none() {
     setLiftTo(17);
 
     // SCORE SOLO PIN
-    delay(800);
+    delay(850);
     setWristTo(131);
     setLiftTo(0);
     delay(250);
@@ -198,12 +197,13 @@ void auton_none() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // MOVE TO STACK
-    c_lemlib.moveToPoint(6, -36, 1500, {.minSpeed = 20, .earlyExitRange = 4});
-    c_lemlib.moveToPoint(16, -28.5, 1000, {.forwards = false, .maxSpeed = 90, .minSpeed = 15, .earlyExitRange = 3});
+    c_lemlib.moveToPoint(8, -24, 1500, {.minSpeed = 20, .earlyExitRange = 4});
+    c_lemlib.turnToHeading(-90, 200);
+    c_lemlib.moveToPoint(18, -25, 1300, {.forwards = false, .maxSpeed = 100, .minSpeed = 20, .earlyExitRange = 3});
     intake.brake();
     cone.move(127);
     c_lemlib.waitUntilDone();
-    c_danielib.driveForDistance(-6, 300, 15);
+    c_danielib.driveForDistance(-10, 400, 20);
     c_danielib.async().driveForDistance(2, 300);
 
     // PICK UP STACK
