@@ -112,9 +112,9 @@ void fast_drop_prime(GoalType goalType) {
     cone.move(127);
     setWristTo(150);
     if (goalType == alliance) {
-        setLiftTo(20.65);
+        setLiftTo(21.8);
     } else if (goalType == neutral) {
-        setLiftTo(26.50);
+        setLiftTo(26.2);
     }
 }
 
@@ -162,10 +162,10 @@ void auton_none() {
 
     // SCOOP WALL CUP
     // c_danielib.turnToHeading(99, 150, 120, false);
-    c_lemlib.moveToPoint(-27, -61, 1050, {.forwards = false, .maxSpeed = 60});
+    c_lemlib.moveToPoint(-27, -61, 1100, {.forwards = false, .maxSpeed = 60});
 
     // CUP GRAB SEQUENCE
-    delay(1000);
+    delay(1050);
     setLiftTo(0);
     delay(200);
     setWristTo(40);
@@ -180,10 +180,10 @@ void auton_none() {
     c_lemlib.moveToPoint(-8.5, -54, 1000, {.minSpeed = 20, .earlyExitRange = 5});
     delay(300);
     fast_drop_prime(neutral);
-    c_lemlib.turnToHeading(120, 100);
+    c_lemlib.turnToHeading(130, 120);
     left_mg.set_brake_mode_all(MotorBrake::coast);
     right_mg.set_brake_mode_all(MotorBrake::coast);
-    c_lemlib.moveToPoint(-21, -51, 1000, {.forwards = false, .minSpeed = 15, .earlyExitRange = 6});
+    c_lemlib.moveToPoint(-21, -49, 800, {.forwards = false, .minSpeed = 15, .earlyExitRange = 6.5});
 
     // FAST DROP
     c_lemlib.waitUntilDone();
@@ -213,28 +213,29 @@ void auton_none() {
     c_lemlib.moveToPoint(-5, -2.4_tiles, 2000, {.forwards = false, .minSpeed = 15, .earlyExitRange = 6});
     c_lemlib.turnToHeading(-30, 200);
     c_lemlib.waitUntilDone();
-    intake_cup_pos();
     c_danielib.driveForDistance(-24, 650, 120, 0, false);
 
     // MOVE TO ALLIANCE GOAL
     c_danielib.driveForDistance(24, 300, 120, 0, false);
+    intake_cup_pos();
     inPinPosition = false;
+    c_lemlib.turnToHeading(-115, 250);
+    c_lemlib.moveToPoint(19, -47.5, 1200, {.forwards = false});
     setLiftTo(10);
     score_pos();
-    c_lemlib.turnToHeading(-120, 260);
-    c_lemlib.moveToPoint(19, -48, 1200, {.forwards = false});
 
     // SCORE SOLO PIN
     delay(810);
     setWristTo(131);
     setLiftTo(0);
-    delay(250);
-    setWristTo(95);
+    delay(150);
+    setWristTo(90);
+    delay(100);
     cone.move(-70);
-    delay(50);
+    delay(200);
 
     // LIFT OFF
-    stack_pos();
+    setLiftTo(30);
     delay(100);
     c_lemlib.cancelAllMotions();
 
@@ -245,9 +246,9 @@ void auton_none() {
     // MOVE TO STACK
     // c_lemlib.moveToPoint(10, -36, 1500, {.minSpeed = 20, .earlyExitRange = 4});
     c_danielib.driveForDistance(24, 250, 120, 0, false);
-    c_lemlib.turnToHeading(-140, 200);
+    c_lemlib.turnToHeading(-125, 160);
     stack_pos();
-    c_lemlib.moveToPoint(19, -30, 1300, {.forwards = false, .maxSpeed = 100, .minSpeed = 20, .earlyExitRange = 3});
+    c_lemlib.moveToPoint(18, -29, 1300, {.forwards = false, .maxSpeed = 100, .minSpeed = 20, .earlyExitRange = 3});
     intake.brake();
     cone.move(127);
     c_lemlib.waitUntilDone();
@@ -265,10 +266,10 @@ void auton_none() {
     fast_drop_prime(alliance);
 
     // MOVE TO FAR ALLIANCE GOAL
-    c_lemlib.turnToHeading(-90, 120);
+    c_lemlib.turnToHeading(-95, 200);
     left_mg.set_brake_mode_all(MotorBrake::coast);
     right_mg.set_brake_mode_all(MotorBrake::coast);
-    c_lemlib.moveToPoint(43, -25.5, 1000, {.forwards = false, .minSpeed = 15, .earlyExitRange = 4.5});
+    c_lemlib.moveToPoint(43, -23, 1000, {.forwards = false, .minSpeed = 15, .earlyExitRange = 4.5});
 
     // FAST DROP
     c_lemlib.waitUntilDone();
@@ -308,14 +309,14 @@ void auton_none() {
     c_lemlib.turnToHeading(90, 250);
     left_mg.set_brake_mode_all(MotorBrake::coast);
     right_mg.set_brake_mode_all(MotorBrake::coast);
-    c_lemlib.moveToPoint(-28, -48, 1000, {.forwards = false, .minSpeed = 15, .earlyExitRange = 6});
+    c_lemlib.moveToPoint(-28, -48, 1000, {.forwards = false, .minSpeed = 15, .earlyExitRange = 6.5});
 
     // SCORE STACK
     c_lemlib.waitUntilDone();
     left_mg.brake();
     right_mg.brake();
     fast_drop(40);
-    delay(500);
+    delay(200);
     left_mg.set_brake_mode_all(MotorBrake::brake);
     right_mg.set_brake_mode_all(MotorBrake::brake);
 }
