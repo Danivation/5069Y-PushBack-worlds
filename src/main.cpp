@@ -135,7 +135,7 @@ std::string get_status(float max_temp) {
     if (max_temp >= 70.0f) return "OFF";
     if (max_temp >= 65.0f) return "1/8";
     if (max_temp >= 60.0f) return "1/4";
-    if (max_temp >= 50.0f) return "WARM";
+    if (max_temp >= 45.0f) return "WARM";
     return "OK";
 }
 
