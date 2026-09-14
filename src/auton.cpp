@@ -267,10 +267,10 @@ void auton_none() {
     fast_drop_prime(alliance);
 
     // MOVE TO FAR ALLIANCE GOAL
-    c_lemlib.turnToHeading(-97, 200);
+    c_lemlib.turnToHeading(-94, 200);
     left_mg.set_brake_mode_all(MotorBrake::coast);
     right_mg.set_brake_mode_all(MotorBrake::coast);
-    c_lemlib.moveToPoint(43, -23.5, 1000, {.forwards = false, .minSpeed = 15, .earlyExitRange = 4.5});
+    c_lemlib.moveToPoint(43.5, -24.2, 1000, {.forwards = false, .minSpeed = 15, .earlyExitRange = 4});
 
     // FAST DROP
     c_lemlib.waitUntilDone();
@@ -289,7 +289,7 @@ void auton_none() {
     c_lemlib.moveToPoint(31, -24, 800, {.minSpeed = 20, .earlyExitRange = 4});
     c_lemlib.turnToHeading(-30, 200);
     stack_pos();
-    c_lemlib.moveToPoint(45, -43, 1500, {.forwards = false, .maxSpeed = 100, .minSpeed = 20, .earlyExitRange = 3});
+    c_lemlib.moveToPoint(42.5, -42, 1500, {.forwards = false, .maxSpeed = 100, .minSpeed = 20, .earlyExitRange = 3});
     intake.brake();
     cone.move(127);
     c_lemlib.waitUntilDone();
@@ -310,14 +310,14 @@ void auton_none() {
     c_lemlib.turnToHeading(90, 250);
     left_mg.set_brake_mode_all(MotorBrake::coast);
     right_mg.set_brake_mode_all(MotorBrake::coast);
-    c_lemlib.moveToPoint(-28, -48, 1000, {.forwards = false, .minSpeed = 15, .earlyExitRange = 6.5});
+    c_lemlib.moveToPoint(-28, -48, 850, {.forwards = false, .minSpeed = 15, .earlyExitRange = 7});
 
     // SCORE STACK
     c_lemlib.waitUntilDone();
     left_mg.brake();
     right_mg.brake();
     fast_drop(40);
-    delay(200);
+    delay(100);
     left_mg.set_brake_mode_all(MotorBrake::brake);
     right_mg.set_brake_mode_all(MotorBrake::brake);
 }

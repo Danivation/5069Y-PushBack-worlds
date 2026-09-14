@@ -226,6 +226,19 @@ void wait_for_bypass() {
     }
 }
 
+void logger() {
+    FILE* log_pose = fopen("/usd/log_pose_d.txt", "a");
+    FILE* log_horiz = fopen("/usd/log_horiz_d.txt", "a");
+    FILE* log_vert = fopen("/usd/log_vert_d.txt", "a");
+    while (true) {
+        auto pose = c_lemlib.getPose();
+        if (log_pose) fprintf(log_pose, "(%.3f,%.3f),", pose.x, pose.y);
+        if (log_horiz) fprintf(log_horiz, "(%d,%.2f),", pros::millis(), (float)horizontal_rotation.get_position()/100.0f);
+        if (log_vert) fprintf(log_vert, "(%d,%.2f),", pros::millis(), (float)vertical_rotation.get_position()/100.0f);
+        pros::delay(10);
+    }
+}
+
 /* ---------------------------------------------------------------------------------------------- */
 /*                                           COMP TASKS                                           */
 /* ---------------------------------------------------------------------------------------------- */
@@ -277,8 +290,9 @@ void autonomous() {
     master.clear();
     optical_top.set_led_pwm(100);
     printing = true;
-    pros::Task printer(print_info);
+    pros::Task printer (print_info);
     pros::Task a_pids (startLiftWristPIDS);
+    pros::Task a_log (logger);
 
     if (competition::is_connected()) {
         run_auton(auton_index);
