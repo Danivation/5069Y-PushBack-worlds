@@ -227,9 +227,9 @@ void wait_for_bypass() {
 }
 
 void logger() {
-    FILE* log_pose = fopen("/usd/log_pose_d.txt", "a");
-    FILE* log_horiz = fopen("/usd/log_horiz_d.txt", "a");
-    FILE* log_vert = fopen("/usd/log_vert_d.txt", "a");
+    FILE* log_pose = fopen("/usd/log_pose_d.txt", "w");
+    FILE* log_horiz = fopen("/usd/log_horiz_d.txt", "w");
+    FILE* log_vert = fopen("/usd/log_vert_d.txt", "w");
     while (true) {
         auto pose = c_lemlib.getPose();
         if (log_pose) fprintf(log_pose, "(%.3f,%.3f),", pose.x, pose.y);
@@ -305,6 +305,7 @@ void autonomous() {
         testAutonDuration = (float)(endTime - startTime)/(1000.0f);
     }
     comp_started = true;
+    a_log.remove();
 }
 
 void opcontrol() {

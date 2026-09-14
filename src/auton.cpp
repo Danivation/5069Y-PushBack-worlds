@@ -267,10 +267,10 @@ void auton_none() {
     fast_drop_prime(alliance);
 
     // MOVE TO FAR ALLIANCE GOAL
-    c_lemlib.turnToHeading(-94, 200);
+    c_lemlib.turnToHeading(-97, 200);
     left_mg.set_brake_mode_all(MotorBrake::coast);
     right_mg.set_brake_mode_all(MotorBrake::coast);
-    c_lemlib.moveToPoint(43.5, -24.2, 1000, {.forwards = false, .minSpeed = 15, .earlyExitRange = 4});
+    c_lemlib.moveToPoint(43.5, -22.6, 1000, {.forwards = false, .minSpeed = 15, .earlyExitRange = 4});
 
     // FAST DROP
     c_lemlib.waitUntilDone();

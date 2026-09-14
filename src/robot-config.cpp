@@ -20,7 +20,7 @@ pros::Motor wrist(2, pros::MotorGears::rpm_200);
 pros::Motor intake(19, pros::MotorGears::rpm_200);
 
 // ODOMETRY SENSORS
-CustomImu imu_1(18, 360.0f/358.95f);
+CustomImu imu_1(18, 360.0f/358.87f);
 pros::Rotation vertical_rotation(20);
 pros::Rotation horizontal_rotation(-17);
 
