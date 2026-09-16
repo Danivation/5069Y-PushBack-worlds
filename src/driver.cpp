@@ -191,7 +191,7 @@ void WristControl() {
             // MATCH LOAD POSITION
             inPinPosition = false;
             setLiftTo(16.8);
-            setWristTo(125);
+            setWristTo(120);
 
         } else if (master.get_digital_new_press(INTAKE_MACRO)) {
 

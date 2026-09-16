@@ -146,7 +146,50 @@ void auton_test() {
 }
 
 
+// 3 pin no stacks
 void auton_none() {
+    c_danielib.setPose(5, -59.2, 0);
+    c_lemlib.setPose(5, -59.2, 0);
+
+    // WRIST OUT OF WAY
+    intake_pin_pos();
+    setLiftTo(40);
+
+    // DOUBLE TOGGLE
+    c_lemlib.turnToHeading(28, 250);
+    c_lemlib.waitUntilDone();
+    left_mg.move(-127);
+    right_mg.move(-127);
+    delay(500);
+    left_mg.brake();
+    right_mg.brake();
+
+    // MOVE TO FIRST ALLIANCE GOAL
+    intake.move(127);
+    cone.move(127);
+    c_danielib.driveForDistance(14, 350);
+    setLiftTo(10);
+    score_pos();
+    c_lemlib.turnToHeading(-140, 300);
+    c_lemlib.moveToPoint(0.8_tiles, -2.05_tiles, 1000, {.forwards = false});
+    score_pos();
+    setLiftTo(17);
+
+    // ON ALLIANCE GOAL, SCORE R/Y
+    delay(550);
+    setWristTo(131);
+    setLiftTo(0);
+    delay(250);
+    c_lemlib.cancelMotion();
+    c_lemlib.swingToHeading(270, DriveSide::LEFT, 500);
+    setWristTo(95);
+    cone.move(-60);
+    delay(150);
+    c_lemlib.cancelMotion();
+}
+
+
+void auton_4pin_idk() {
     c_danielib.setPose(-10.5, -63.25, 90);
     c_lemlib.setPose(-10.5, -63.25, 90);
     lemlibDistReset({&back_beam}, 10, 0);
