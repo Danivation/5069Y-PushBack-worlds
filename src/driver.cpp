@@ -172,7 +172,7 @@ void WristControl() {
                         delay(50);
                         if (pin_dist.get_distance() < 150) {
                             inPinPosition = false;
-                            setWristTo(43);
+                            setWristTo(40);
                             setLiftTo(16.8);
                         }
                     }

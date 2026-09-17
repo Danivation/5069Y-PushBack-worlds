@@ -147,7 +147,7 @@ void auton_test() {
 }
 
 
-// 3 pin no stacks
+// 4 pin no stacks
 void auton_none() {
     c_danielib.setPose(14.7, -59.3, 19.5);
     c_lemlib.setPose(14.7, -59.3, 19.5);
@@ -163,15 +163,15 @@ void auton_none() {
     delay(150);
 
     // BACK UP AND TOGGLE
-    // c_lemlib.turnToHeading(30, 150);
-    c_lemlib.moveToPoint(-2, -2.5_tiles, 1500, {.forwards = false, .minSpeed = 50, .earlyExitRange = 5});
-    c_lemlib.turnToHeading(25, 200);
+    c_lemlib.turnToHeading(38, 400);
+    c_lemlib.moveToPoint(7, -2.5_tiles, 2000, {.forwards = false, .minSpeed = 50, .earlyExitRange = 6});
+    c_lemlib.turnToHeading(18, 300);
     c_lemlib.waitUntilDone();
     left_mg.move(-127);
-    right_mg.move(-127);
-    delay(1000);
+    delay(10);
+    left_mg.move(-127);
+    delay(2000);
     left_mg.brake();
-    right_mg.brake();
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                PART 2: FLOWER PIN 1 NEUTRAL GOAL                               */
@@ -181,11 +181,11 @@ void auton_none() {
     intake_pin_pos();
     intake.move(127);
     cone.move(127);
-    c_lemlib.moveToPoint(-0.8_tiles, -1.3_tiles, 2000);
+    c_lemlib.moveToPoint(-14, -26.8, 2000);
 
     // DRIVE BACK UP TO CUP
-    c_lemlib.moveToPoint(-0.4_tiles, -2_tiles, 1500, {.forwards = false, .minSpeed = 40, .earlyExitRange = 7});
-    c_lemlib.moveToPoint(-18, -53, 2000, {.forwards = false});
+    c_lemlib.moveToPoint(-0.44_tiles, -1.6_tiles, 1500, {.forwards = false, .minSpeed = 40, .earlyExitRange = 7});
+    c_lemlib.moveToPoint(-15, -53, 2000, {.forwards = false});
     delay(100);
     score_pos();
 
@@ -194,7 +194,7 @@ void auton_none() {
 }
 
 
-void auton_4pin_idk() {
+void auton_5pin_idk() {
     c_danielib.setPose(-10.5, -63.25, 90);
     c_lemlib.setPose(-10.5, -63.25, 90);
     lemlibDistReset({&back_beam}, 10, 0);
@@ -370,7 +370,7 @@ void auton_4pin_idk() {
     right_mg.set_brake_mode_all(MotorBrake::brake);
 }
 
-void auton_4PIN_2() {
+void auton_5PIN_2() {
     c_danielib.setPose(32.7, -59.9, 340.2);
     c_lemlib.setPose(32.7, -59.9, 340.2);
 
@@ -515,7 +515,7 @@ void auton_4PIN_2() {
     c_lemlib.waitUntilDone();
 }
 
-void auton_POSSIBLE_4PIN() {
+void auton_POSSIBLE_5PIN() {
     c_danielib.setPose(32.7, -59.9, 340.2);
     c_lemlib.setPose(32.7, -59.9, 340.2);
 
@@ -636,7 +636,7 @@ void auton_POSSIBLE_4PIN() {
     // delay(300);
 }
 
-void auton_bad_3pin() {
+void auton_bad_4pin() {
     c_danielib.setPose(5, -59.2, 0);
     c_lemlib.setPose(5, -59.2, 0);
 
