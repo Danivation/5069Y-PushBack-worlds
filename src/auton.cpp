@@ -163,15 +163,10 @@ void auton_none() {
     delay(150);
 
     // BACK UP AND TOGGLE
-    c_lemlib.turnToHeading(38, 400);
-    c_lemlib.moveToPoint(7, -2.5_tiles, 2000, {.forwards = false, .minSpeed = 50, .earlyExitRange = 6});
-    c_lemlib.turnToHeading(18, 300);
-    c_lemlib.waitUntilDone();
-    left_mg.move(-127);
-    delay(10);
-    left_mg.move(-127);
-    delay(2000);
-    left_mg.brake();
+    c_lemlib.turnToHeading(40, 400);
+    c_lemlib.moveToPoint(7, -2.3_tiles, 2000, {.forwards = false, .minSpeed = 50, .earlyExitRange = 6});
+    c_lemlib.turnToHeading(0, 400);
+    c_lemlib.moveToPoint(3, -3.2_tiles, 2000, {.forwards = false});
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                PART 2: FLOWER PIN 1 NEUTRAL GOAL                               */
