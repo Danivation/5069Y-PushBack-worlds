@@ -84,8 +84,8 @@ void intake_pin_pos() {
 // MANUAL cup position
 void intake_cup_pos() {
     // CUP LOADING POSITION
-    setWristTo(43);
-    setLiftTo(16.8);
+    setWristTo(32);
+    setLiftTo(16.5);
     inPinPosition = false;
 }
 
@@ -158,24 +158,48 @@ void auton_none() {
     /* ---------------------------------------------------------------------------------------------- */
     
     // double toggle
-    c_danielib.driveForDistance(10, 450, 120, 0, false);
+    c_danielib.driveForDistance(10, 400, 120, 0, false);
     intake_pin_pos();
     cup_task();
     isCupOrPinOnly = true;
+    intake.move(127);
+    cone.move(127);
     c_danielib.driveForDistance(-24, 1000, 120);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                     PART 1: KNOCK OVER CUP                                     */
     /* ---------------------------------------------------------------------------------------------- */
 
-    intake.move(127);
-    cone.move(127);
 
+    // knock over and intake
     c_lemlib.moveToPoint(-1, -26, 1500, {.minSpeed = 10, .earlyExitRange = 10});
     c_lemlib.moveToPoint(-1, -26, 1000, {.maxSpeed = 40});
     delay(1500);
 
+    c_lemlib.moveToPoint(-18, -43, 2000, {.forwards = false});
+    delay(200);
+    cup_task();
+    delay(300);
+    setWristTo(20);
+    delay(200);
+    setLiftTo(35);
+    score_pos();
 
+    c_lemlib.waitUntilDone();
+
+    setLiftTo(10);
+    delay(500);
+    cone.move(-127);
+    setWristTo(35);
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                   PART 2: FLOWER TO ALLIANCE                                   */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // turn out to flower
+    c_lemlib.moveToPoint(-10, -1.5_tiles, 1500, {.minSpeed = 20, .earlyExitRange = 6});
+    c_lemlib.turnToHeading(-60, 330);
+    c_lemlib.moveToPoint(-14, 24, 1500);
 
 }
 
