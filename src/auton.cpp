@@ -158,8 +158,8 @@ void auton_none() {
     /* ---------------------------------------------------------------------------------------------- */
     
     // double toggle
-    setLiftTo(70);
-    c_danielib.driveForDistance(10, 850, 120, 0, false);
+    setLiftTo(60);
+    c_danielib.driveForDistance(10, 900, 120, 0, false);
     intake_pin_pos();
     c_danielib.async().driveForDistance(-24, 1000, 120);
     delay(500);
