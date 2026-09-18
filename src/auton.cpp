@@ -182,16 +182,17 @@ void auton_none() {
     cone.move(127);
     cup_task();
     c_lemlib.waitUntilDone();
-    c_lemlib.moveToPoint(1, -24, 1000, {.maxSpeed = 50});
-    delay(150);
+    c_lemlib.moveToPoint(0.2, -23.6, 1000, {.maxSpeed = 50});
     inPinPosition = false;
     delay(10);
+    setLiftTo(23);
+    delay(150);
     intake_cup_pos();
-    delay(1100);
+    delay(1150);
 
     //  back up to goal
     c_lemlib.moveToPoint(20, -44, 1400, {.forwards = false, .maxSpeed = 100});
-    delay(200);
+    delay(250);
     setWristTo(20);
     delay(100);
     setLiftTo(38);
