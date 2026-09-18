@@ -196,7 +196,7 @@ void WristControl() {
         } else if (master.get_digital_new_press(INTAKE_MACRO)) {
 
             // PIN LOADING POSITION
-            setLiftTo(15.2);
+            setLiftTo(15.6);
             setWristTo(-6);
             int startTime = pros::millis();
             waitUntilCondition((getWristPosition() > -140 && getWristPosition() < -125 && getLiftPosition() > 5 && getLiftPosition() < 25) || pros::millis() + 500 > startTime);

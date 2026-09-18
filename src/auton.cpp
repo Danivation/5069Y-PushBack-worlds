@@ -76,7 +76,7 @@ void cup_task() {
 // wrist and lift in pin loading position
 void intake_pin_pos() {
     // PIN LOADING POSITION
-    setLiftTo(15.2);
+    setLiftTo(15.6);
     setWristTo(-6);
     inPinPosition = true;
 }
@@ -197,25 +197,28 @@ void auton_none() {
     delay(100);
 
     // go to flower
-    c_lemlib.moveToPoint(-14.5, -26, 2000);
+    intake.move(127);
+    c_lemlib.moveToPoint(-0, -27, 1500, {.minSpeed = 25, .earlyExitRange = 5});
+    c_lemlib.moveToPoint(-14, -24, 1300);
     delay(300);
     intake_pin_pos();
     inPinPosition = false;
     cone.move(127);
     c_lemlib.waitUntilDone();
 
-    delay(400);
+    delay(500);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                       PART 3: WALL CUP 1                                       */
     /* ---------------------------------------------------------------------------------------------- */
 
-    c_lemlib.moveToPoint(-0.5_tiles, -1.7_tiles, 1500, {.forwards = false, .minSpeed = 40, .earlyExitRange = 6});
-    c_lemlib.moveToPoint(-18, -60, 1500, {.forwards = false});
-    delay(100);
+    c_lemlib.turnToHeading(-30, 250);
+    c_lemlib.moveToPoint(-0.5_tiles, -1.7_tiles, 1500, {.forwards = false, .minSpeed = 20, .earlyExitRange = 4});
+    c_lemlib.moveToPoint(-18.5, -62, 1500, {.forwards = false});
+    delay(250);
     inPinPosition = false;
-    setLiftTo(25);
-    score_pos();
+    setLiftTo(23);
+    setWristTo(150);
 
     c_lemlib.waitUntilDone();
     c_lemlib.swingToHeading(-21, DriveSide::RIGHT, 500);
@@ -227,7 +230,7 @@ void auton_none() {
     setLiftTo(2);
     setWristTo(120);
     delay(500);
-    c_lemlib.turnToHeading(0, 200);
+    c_lemlib.turnToHeading(5, 200);
     cone.move(-60);
     setWristTo(100);
     delay(150);
