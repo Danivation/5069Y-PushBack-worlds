@@ -158,10 +158,11 @@ void auton_none() {
     /* ---------------------------------------------------------------------------------------------- */
     
     // double toggle
-    c_danielib.driveForDistance(10, 450, 120, 0, false);
+    setLiftTo(70);
+    c_danielib.driveForDistance(10, 850, 120, 0, false);
     intake_pin_pos();
     c_danielib.async().driveForDistance(-24, 1000, 120);
-    delay(300);
+    delay(500);
     intake.move(127);
     cone.move(127);
     c_danielib.waitUntilDone();
@@ -174,9 +175,9 @@ void auton_none() {
     // knock over and intake
     c_lemlib.moveToPoint(-1, -26, 1500, {.minSpeed = 10, .earlyExitRange = 10});
     c_lemlib.moveToPoint(-1, -26, 1000, {.maxSpeed = 40});
+    cup_task();
     intake_cup_pos();
     delay(1300);
-    cup_task();
 
     //  back up to goal
     c_lemlib.moveToPoint(-18, -43, 2000, {.forwards = false});
@@ -240,10 +241,10 @@ void auton_none() {
     delay(200);
 
     // move
-    c_lemlib.moveToPoint(5, -2_tiles, 1000, {.minSpeed = 20, .earlyExitRange = 4});
-    c_lemlib.turnToHeading(-140, 250);
+    c_lemlib.moveToPoint(5, -1.7_tiles, 1000, {.minSpeed = 20, .earlyExitRange = 4});
+    c_lemlib.turnToHeading(-130, 400);
     stack_pos();
-    c_lemlib.moveToPoint(20, -29, 1500, {.forwards = false});
+    c_lemlib.moveToPoint(22, -28, 1500, {.forwards = false, .minSpeed = 20, .earlyExitRange = 7});
 
     intake.brake();
     cone.move(127);
