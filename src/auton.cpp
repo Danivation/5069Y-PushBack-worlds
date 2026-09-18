@@ -149,9 +149,38 @@ void auton_test() {
     c_danielib.waitUntilDone();
 }
 
+void auton_none() {
+    c_danielib.setPose(-6.7, -61.5, 0);
+    c_lemlib.setPose(-6.7, -61.5, 0);
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                      PART 0: DOUBLE TOGGLE                                     */
+    /* ---------------------------------------------------------------------------------------------- */
+    
+    // double toggle
+    c_danielib.driveForDistance(10, 450, 120, 0, false);
+    intake_pin_pos();
+    cup_task();
+    isCupOrPinOnly = true;
+    c_danielib.driveForDistance(-24, 1000, 120);
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                     PART 1: KNOCK OVER CUP                                     */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    intake.move(127);
+    cone.move(127);
+
+    c_lemlib.moveToPoint(-1, -26, 1500, {.minSpeed = 10, .earlyExitRange = 10});
+    c_lemlib.moveToPoint(-1, -26, 1000, {.maxSpeed = 40});
+    delay(1500);
+
+
+
+}
 
 // 4 pin no stacks
-void auton_none() {
+void auton_bad_4_all_intake() {
     c_danielib.setPose(6.7, -61.5, 0);
     c_lemlib.setPose(6.7, -61.5, 0);
 
