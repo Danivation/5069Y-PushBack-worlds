@@ -179,6 +179,7 @@ void auton_none() {
     delay(1300);
     cup_task();
 
+    //  back up to goal
     c_lemlib.moveToPoint(-18, -43, 2000, {.forwards = false});
     delay(100);
     setWristTo(20);
@@ -188,6 +189,7 @@ void auton_none() {
 
     c_lemlib.waitUntilDone();
 
+    // score down on
     setLiftTo(10);
     delay(500);
     cone.move(-127);
@@ -229,6 +231,48 @@ void auton_none() {
     cone.move(-100);
     delay(100);
 
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                      PART 3: YELLOW STACK                                      */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // lift off
+    setWristTo(120);
+    setLiftTo(20);
+    delay(200);
+
+    // move
+    c_lemlib.moveToPoint(5, -2_tiles, 1000, {.minSpeed = 20, .earlyExitRange = 4});
+    c_lemlib.turnToHeading(-140, 200);
+    stack_pos();
+    c_lemlib.moveToPoint(19, -27, 1500, {.forwards = false});
+
+    intake.brake();
+    cone.move(127);
+    c_lemlib.waitUntilDone();
+    c_danielib.driveForDistance(-10, 400, 20);
+    c_danielib.async().driveForDistance(2.3, 300);
+
+    // pick up stack
+    delay(150);
+    cone.move(127);
+    clasp_pos();
+    delay(250);
+
+    // lift up
+    c_lemlib.cancelAllMotions();
+    setLiftTo(37);
+    score_pos();
+
+    // score
+    c_lemlib.turnToHeading(0, 400);
+    c_lemlib.moveToPoint(1_tiles, -45, 1500, {.forwards = false});
+
+    c_lemlib.waitUntilDone();
+    
+    // score down on
+    setLiftTo(10);
+    delay(500);
+    cone.move(-127);
 }
 
 // 4 pin no stacks
