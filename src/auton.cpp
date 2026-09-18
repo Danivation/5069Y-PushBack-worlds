@@ -48,6 +48,7 @@ bool waitUntilColor(pros::Optical* sensor, pros::Color color, int stopTime) {
 }
 
 bool inPinPosition = false;
+bool isCupOrPinOnly = true;
 void cup_task() {
 
     // CHECK FOR INTAKE POSITION FIRST
@@ -62,7 +63,8 @@ void cup_task() {
                     if (pin_dist.get_distance() < 150) {
                         inPinPosition = false;
                         setLiftTo(16.5);
-                        setWristTo(32);
+                        if (isCupOrPinOnly) setWristTo(32);
+                        else setWristTo(18);
                     }
                 }
             }
@@ -161,6 +163,7 @@ void auton_none() {
     c_danielib.driveForDistance(10, 450, 120, 0, false);
     intake_pin_pos();
     cup_task();
+    isCupOrPinOnly = false;
     c_danielib.driveForDistance(-24, 1000, 120);
 
     // alliance goal or smth
@@ -196,6 +199,7 @@ void auton_none() {
     c_lemlib.moveToPoint(-14.5, -26, 2000);
     delay(300);
     intake_pin_pos();
+    cone.move(127);
     c_lemlib.waitUntilDone();
 
     delay(400);
