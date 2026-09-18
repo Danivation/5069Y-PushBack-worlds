@@ -58,10 +58,10 @@ void cup_task() {
                 delay(300);
                 if (pin_dist.get_distance() < 150) {
                     // wait 50 ms to double check
-                    delay(50);
+                    delay(100);
                     if (pin_dist.get_distance() < 150) {
                         inPinPosition = false;
-                        setLiftTo(16.8);
+                        setLiftTo(16.5);
                         setWristTo(32);
                     }
                 }
@@ -74,7 +74,7 @@ void cup_task() {
 // wrist and lift in pin loading position
 void intake_pin_pos() {
     // PIN LOADING POSITION
-    setLiftTo(15.6);
+    setLiftTo(15.2);
     setWristTo(-6);
     inPinPosition = true;
 }
@@ -160,6 +160,7 @@ void auton_none() {
     // double toggle
     c_danielib.driveForDistance(10, 450, 120, 0, false);
     intake_pin_pos();
+    cup_task();
     c_danielib.driveForDistance(-24, 1000, 120);
 
     // alliance goal or smth
@@ -175,7 +176,7 @@ void auton_none() {
     c_lemlib.waitUntilDone();
 
     // score alliance goal
-    setLiftTo(5);
+    setLiftTo(0);
     delay(200);
     setWristTo(85);
     delay(150);
@@ -192,8 +193,8 @@ void auton_none() {
     delay(100);
 
     // go to flower
-    c_lemlib.moveToPoint(-19, -36, 2000);
-    delay(600);
+    c_lemlib.moveToPoint(-14.5, -26, 2000);
+    delay(300);
     intake_pin_pos();
     c_lemlib.waitUntilDone();
 
@@ -205,7 +206,7 @@ void auton_none() {
 
     c_lemlib.moveToPoint(-0.5_tiles, -1.7_tiles, 1500, {.forwards = false, .minSpeed = 40, .earlyExitRange = 6});
     c_lemlib.moveToPoint(-18, -63, 1500, {.forwards = false});
-    delay(400);
+    delay(100);
     setLiftTo(25);
     score_pos();
 
