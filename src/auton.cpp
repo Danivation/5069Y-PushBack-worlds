@@ -151,7 +151,7 @@ void auton_test() {
 
 
 // NON DRIVER SIDE AUTO
-void auton_none() {
+void auton_non_driver() {
     c_danielib.setPose(6.7, -61.5, 0);
     c_lemlib.setPose(6.7, -61.5, 0);
 
@@ -287,12 +287,14 @@ void auton_none() {
     setLiftTo(5);
     delay(300);
     cone.move(-127);
+    setLiftTo(45);
     delay(200);
 
     
 }
 
-void auton_none_mirr() {
+// FRONT AUTo
+void auton_driver() {
     c_danielib.setPose(-6.7, -61.5, 0);
     c_lemlib.setPose(-6.7, -61.5, 0);
 
@@ -301,14 +303,15 @@ void auton_none_mirr() {
     /* ---------------------------------------------------------------------------------------------- */
     
     // double toggle
-    setLiftTo(60);
-    c_danielib.driveForDistance(10, 900, 120, 0, false);
+    setLiftTo(70);
+    c_danielib.async().driveForDistance(10, 1000, 120, 0, false);
+    delay(700);
+    setLiftTo(0);
+    delay(300);
     intake_pin_pos();
-    c_danielib.async().driveForDistance(-24, 1000, 120);
-    delay(500);
+    c_danielib.async().driveForDistance(-24, 1000, 100);
+    // delay(500);
     c_danielib.waitUntilDone();
-    intake.move(127);
-    cone.move(127);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                     PART 1: KNOCK OVER CUP                                     */
@@ -317,24 +320,33 @@ void auton_none_mirr() {
 
     // knock over and intake
     c_lemlib.moveToPoint(-1, -28, 1500, {.minSpeed = 10, .earlyExitRange = 10});
-    c_lemlib.moveToPoint(-1, -26, 1000, {.maxSpeed = 40});
+    delay(180);
+    intake.move(127);
+    cone.move(127);
     cup_task();
+    c_lemlib.waitUntilDone();
+    c_lemlib.moveToPoint(-0.2, -23.6, 1000, {.maxSpeed = 50});
+    inPinPosition = false;
+    delay(10);
+    setLiftTo(23);
+    delay(150);
     intake_cup_pos();
-    delay(1300);
+    delay(1150);
 
     //  back up to goal
-    c_lemlib.moveToPoint(-18, -43, 2000, {.forwards = false});
-    delay(100);
+    c_lemlib.moveToPoint(-20, -44, 1400, {.forwards = false, .maxSpeed = 100});
+    delay(250);
     setWristTo(20);
     delay(100);
     setLiftTo(38);
     score_pos();
 
-    c_lemlib.waitUntilDone();
+    // c_lemlib.waitUntilDone();
 
-    // score down on
+    // SCIRE DOWN ON NEUTRAL
+    delay(1100);
     setLiftTo(10);
-    delay(500);
+    delay(300);
     cone.move(-127);
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -345,12 +357,13 @@ void auton_none_mirr() {
     setLiftTo(35);
     delay(150);
 
-    // turn out to flower
+    // move OFF NEUTRAL and TO FLOWER
     c_lemlib.moveToPoint(-7, -1.5_tiles, 1500, {.minSpeed = 20, .earlyExitRange = 6});
-    c_lemlib.turnToHeading(-60, 330);
+    delay(250);
     intake.move(127);
     cone.move(127);
     intake_pin_pos();
+    c_lemlib.turnToHeading(-60, 330);
     c_lemlib.moveToPoint(-13.5, -26, 1500);
 
     c_lemlib.waitUntilDone();
@@ -383,23 +396,23 @@ void auton_none_mirr() {
     setLiftTo(20);
     delay(200);
 
-    // move
+    // MOVE TO SHARED STACK!!
     c_lemlib.moveToPoint(5, -1.7_tiles, 1000, {.minSpeed = 20, .earlyExitRange = 4});
     c_lemlib.turnToHeading(-130, 400);
     stack_pos();
-    c_lemlib.moveToPoint(20, -26, 1500, {.forwards = false, .maxSpeed = 80, .minSpeed = 20, .earlyExitRange = 8});
+    c_lemlib.moveToPoint(19, -27, 1500, {.forwards = false, .maxSpeed = 70, .minSpeed = 20, .earlyExitRange = 8});
 
     intake.brake();
     cone.move(127);
     c_lemlib.waitUntilDone();
-    c_danielib.driveForDistance(-10, 400, 20);
-    c_danielib.async().driveForDistance(2.3, 300);
+    c_danielib.driveForDistance(-10, 600, 15);
+    c_danielib.async().driveForDistance(3, 400);
 
     // pick up stack
-    delay(150);
+    delay(300);
     cone.move(127);
     clasp_pos();
-    delay(250);
+    delay(400);
 
     // lift up
     c_lemlib.cancelAllMotions();
@@ -410,12 +423,15 @@ void auton_none_mirr() {
     c_lemlib.turnToHeading(0, 400);
     c_lemlib.moveToPoint(1_tiles, -45, 900, {.forwards = false});
 
-    c_lemlib.waitUntilDone();
+    // c_lemlib.waitUntilDone();
+    delay(800);
     
     // score down on
-    setLiftTo(10);
-    delay(500);
+    setLiftTo(5);
+    delay(300);
     cone.move(-127);
+    setLiftTo(45);
+    delay(200);
 }
 
 // 4 pin no stacks

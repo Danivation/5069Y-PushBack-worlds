@@ -5,6 +5,9 @@ extern pros::Color WrongColor;
 
 void auton_none();
 
+void auton_driver();
+void auton_non_driver();
+
 // void auton_sawp_counter_nowing();
 // void auton_sawp_counter_nowing_left_noclear();
 // void auton_sawp_counter_wing();
