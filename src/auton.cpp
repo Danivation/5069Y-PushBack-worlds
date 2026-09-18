@@ -173,6 +173,7 @@ void auton_none() {
     c_danielib.turnToHeading(-120, 250);
     c_lemlib.moveToPoint(19, -48, 1000, {.forwards = false});
     delay(300);
+    inPinPosition = false;
     setLiftTo(11);
     score_pos();
 
@@ -199,6 +200,7 @@ void auton_none() {
     c_lemlib.moveToPoint(-14.5, -26, 2000);
     delay(300);
     intake_pin_pos();
+    inPinPosition = false;
     cone.move(127);
     c_lemlib.waitUntilDone();
 
@@ -209,22 +211,28 @@ void auton_none() {
     /* ---------------------------------------------------------------------------------------------- */
 
     c_lemlib.moveToPoint(-0.5_tiles, -1.7_tiles, 1500, {.forwards = false, .minSpeed = 40, .earlyExitRange = 6});
-    c_lemlib.moveToPoint(-19.5, -63, 1500, {.forwards = false});
+    c_lemlib.moveToPoint(-18, -60, 1500, {.forwards = false});
     delay(100);
+    inPinPosition = false;
     setLiftTo(25);
     score_pos();
 
     c_lemlib.waitUntilDone();
-    c_lemlib.swingToHeading(-15, DriveSide::RIGHT, 500);
+    c_lemlib.swingToHeading(-21, DriveSide::RIGHT, 500);
 
     c_lemlib.waitUntilDone();
+    inPinPosition = false;
 
     // lift down into it
-    setLiftTo(5);
+    setLiftTo(2);
     setWristTo(120);
     delay(500);
+    c_lemlib.turnToHeading(0, 200);
+    cone.move(-60);
     setWristTo(100);
-    delay(300);
+    delay(150);
+    cone.move(127);
+    delay(200);
     setLiftTo(35);
     score_pos();
 
