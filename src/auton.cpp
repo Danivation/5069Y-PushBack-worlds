@@ -149,7 +149,143 @@ void auton_test() {
     c_danielib.waitUntilDone();
 }
 
+
+// NON DRIVER SIDE AUTO
 void auton_none() {
+    c_danielib.setPose(6.7, -61.5, 0);
+    c_lemlib.setPose(6.7, -61.5, 0);
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                      PART 0: DOUBLE TOGGLE                                     */
+    /* ---------------------------------------------------------------------------------------------- */
+    
+    // double toggle
+    setLiftTo(70);
+    c_danielib.async().driveForDistance(10, 1000, 120, 0, false);
+    delay(800);
+    setLiftTo(0);
+    delay(600);
+    intake_pin_pos();
+    c_danielib.async().driveForDistance(-24, 1000, 100);
+    delay(500);
+    c_danielib.waitUntilDone();
+    intake.move(127);
+    cone.move(127);
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                     PART 1: KNOCK OVER CUP                                     */
+    /* ---------------------------------------------------------------------------------------------- */
+
+
+    // knock over and intake
+    c_lemlib.moveToPoint(1, -28, 1500, {.minSpeed = 10, .earlyExitRange = 10});
+    delay(500);
+    cup_task();
+    c_lemlib.moveToPoint(1, -24, 1000, {.maxSpeed = 50});
+    inPinPosition = false;
+    delay(10);
+    intake_cup_pos();
+    delay(1250);
+
+    //  back up to goal
+    c_lemlib.moveToPoint(18, -43, 2000, {.forwards = false});
+    delay(100);
+    setWristTo(20);
+    delay(100);
+    setLiftTo(38);
+    score_pos();
+
+    c_lemlib.waitUntilDone();
+
+    // score down on
+    setLiftTo(10);
+    delay(500);
+    cone.move(-127);
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                   PART 2: FLOWER TO ALLIANCE                                   */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // lift up
+    setLiftTo(35);
+    delay(150);
+
+    // turn out to flower
+    c_lemlib.moveToPoint(7, -1.5_tiles, 1500, {.minSpeed = 20, .earlyExitRange = 6});
+    c_lemlib.turnToHeading(60, 330);
+    intake.move(127);
+    cone.move(127);
+    intake_pin_pos();
+    c_lemlib.moveToPoint(13.5, -26, 1500);
+
+    c_lemlib.waitUntilDone();
+
+    delay(200);
+
+    // back up back up!!
+    c_lemlib.moveToPoint(-20, -45, 1500, {.forwards = false});
+    inPinPosition = false;
+    delay(500);
+    setLiftTo(15);
+    score_pos();
+
+    c_lemlib.waitUntilDone();
+
+    // score alliance goal
+    setLiftTo(0);
+    delay(200);
+    setWristTo(85);
+    delay(150);
+    cone.move(-100);
+    delay(100);
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                      PART 3: YELLOW STACK                                      */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // lift off
+    setWristTo(120);
+    setLiftTo(20);
+    delay(200);
+
+    // MOVE TO SHARED STACK!!
+    c_lemlib.moveToPoint(-5, -1.7_tiles, 1000, {.minSpeed = 20, .earlyExitRange = 4});
+    c_lemlib.turnToHeading(130, 400);
+    stack_pos();
+    c_lemlib.moveToPoint(-19, -27, 1500, {.forwards = false, .maxSpeed = 70, .minSpeed = 20, .earlyExitRange = 8});
+
+    intake.brake();
+    cone.move(127);
+    c_lemlib.waitUntilDone();
+    c_danielib.driveForDistance(-10, 600, 15);
+    c_danielib.async().driveForDistance(2.3, 300);
+
+    // pick up stack
+    delay(150);
+    cone.move(127);
+    clasp_pos();
+    delay(250);
+
+    // lift up
+    c_lemlib.cancelAllMotions();
+    setLiftTo(37);
+    score_pos();
+
+    // score
+    c_lemlib.turnToHeading(0, 400);
+    c_lemlib.moveToPoint(-1_tiles, -45, 900, {.forwards = false});
+
+    c_lemlib.waitUntilDone();
+    
+    // score down on
+    setLiftTo(10);
+    delay(500);
+    cone.move(-127);
+
+    
+}
+
+void auton_none_mirr() {
     c_danielib.setPose(-6.7, -61.5, 0);
     c_lemlib.setPose(-6.7, -61.5, 0);
 
@@ -273,8 +409,6 @@ void auton_none() {
     setLiftTo(10);
     delay(500);
     cone.move(-127);
-
-    
 }
 
 // 4 pin no stacks
