@@ -163,9 +163,9 @@ void auton_none() {
     intake_pin_pos();
     c_danielib.async().driveForDistance(-24, 1000, 120);
     delay(500);
+    c_danielib.waitUntilDone();
     intake.move(127);
     cone.move(127);
-    c_danielib.waitUntilDone();
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                     PART 1: KNOCK OVER CUP                                     */
@@ -173,7 +173,7 @@ void auton_none() {
 
 
     // knock over and intake
-    c_lemlib.moveToPoint(-1, -26, 1500, {.minSpeed = 10, .earlyExitRange = 10});
+    c_lemlib.moveToPoint(-1, -28, 1500, {.minSpeed = 10, .earlyExitRange = 10});
     c_lemlib.moveToPoint(-1, -26, 1000, {.maxSpeed = 40});
     cup_task();
     intake_cup_pos();
@@ -244,7 +244,7 @@ void auton_none() {
     c_lemlib.moveToPoint(5, -1.7_tiles, 1000, {.minSpeed = 20, .earlyExitRange = 4});
     c_lemlib.turnToHeading(-130, 400);
     stack_pos();
-    c_lemlib.moveToPoint(22, -28, 1500, {.forwards = false, .minSpeed = 20, .earlyExitRange = 7});
+    c_lemlib.moveToPoint(20, -26, 1500, {.forwards = false, .maxSpeed = 80, .minSpeed = 20, .earlyExitRange = 8});
 
     intake.brake();
     cone.move(127);
