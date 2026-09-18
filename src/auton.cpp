@@ -158,13 +158,15 @@ void auton_none() {
     /* ---------------------------------------------------------------------------------------------- */
     
     // double toggle
-    c_danielib.driveForDistance(10, 400, 120, 0, false);
+    c_danielib.driveForDistance(10, 450, 120, 0, false);
     intake_pin_pos();
     cup_task();
     isCupOrPinOnly = true;
+    c_danielib.async().driveForDistance(-24, 1000, 120);
+    delay(300);
     intake.move(127);
     cone.move(127);
-    c_danielib.driveForDistance(-24, 1000, 120);
+    c_danielib.waitUntilDone();
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                     PART 1: KNOCK OVER CUP                                     */
@@ -174,15 +176,14 @@ void auton_none() {
     // knock over and intake
     c_lemlib.moveToPoint(-1, -26, 1500, {.minSpeed = 10, .earlyExitRange = 10});
     c_lemlib.moveToPoint(-1, -26, 1000, {.maxSpeed = 40});
-    delay(1500);
+    delay(1300);
+    cup_task();
 
     c_lemlib.moveToPoint(-18, -43, 2000, {.forwards = false});
-    delay(200);
-    cup_task();
-    delay(300);
+    delay(100);
     setWristTo(20);
-    delay(200);
-    setLiftTo(35);
+    delay(100);
+    setLiftTo(38);
     score_pos();
 
     c_lemlib.waitUntilDone();
@@ -190,16 +191,43 @@ void auton_none() {
     setLiftTo(10);
     delay(500);
     cone.move(-127);
-    setWristTo(35);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                   PART 2: FLOWER TO ALLIANCE                                   */
     /* ---------------------------------------------------------------------------------------------- */
 
+    // lift up
+    setLiftTo(35);
+    delay(150);
+
     // turn out to flower
-    c_lemlib.moveToPoint(-10, -1.5_tiles, 1500, {.minSpeed = 20, .earlyExitRange = 6});
+    c_lemlib.moveToPoint(-7, -1.5_tiles, 1500, {.minSpeed = 20, .earlyExitRange = 6});
     c_lemlib.turnToHeading(-60, 330);
-    c_lemlib.moveToPoint(-14, 24, 1500);
+    intake.move(127);
+    cone.move(127);
+    intake_pin_pos();
+    c_lemlib.moveToPoint(-13.5, -26, 1500);
+
+    c_lemlib.waitUntilDone();
+
+    delay(200);
+
+    // back up back up!!
+    c_lemlib.moveToPoint(20, -45, 2500, {.forwards = false});
+    inPinPosition = false;
+    delay(500);
+    setLiftTo(15);
+    score_pos();
+
+    c_lemlib.waitUntilDone();
+
+    // score alliance goal
+    setLiftTo(0);
+    delay(200);
+    setWristTo(85);
+    delay(150);
+    cone.move(-100);
+    delay(100);
 
 }
 
