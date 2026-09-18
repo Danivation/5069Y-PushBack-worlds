@@ -1,6 +1,7 @@
 #include "auton.hpp" // IWYU pragma: keep
 #include "driver.hpp"
 #include "lemlib-helpers.hpp" // IWYU pragma: keep
+#include "lemlib/chassis/chassis.hpp"
 #include "main.h"
 using namespace pros;
 
@@ -149,40 +150,67 @@ void auton_test() {
 
 // 4 pin no stacks
 void auton_none() {
-    c_danielib.setPose(14.7, -59.3, 19.5);
-    c_lemlib.setPose(14.7, -59.3, 19.5);
+    c_danielib.setPose(6.7, -61.5, 0);
+    c_lemlib.setPose(6.7, -61.5, 0);
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                PART 1: ALLIANCE GOAL FRONT DROP                                */
     /* ---------------------------------------------------------------------------------------------- */
 
-    // SCORE R/Y IN ALLIANCE GOAL
-    setLiftTo(0);
-    c_danielib.driveForDistance(5.7, 700, 100, 0, false);
-    setLiftTo(40);
-    delay(150);
-
-    // BACK UP AND TOGGLE
-    c_lemlib.turnToHeading(40, 400);
-    c_lemlib.moveToPoint(7, -2.3_tiles, 2000, {.forwards = false, .minSpeed = 50, .earlyExitRange = 6});
-    c_lemlib.turnToHeading(0, 400);
-    c_lemlib.moveToPoint(3, -3.2_tiles, 2000, {.forwards = false});
-
-    /* ---------------------------------------------------------------------------------------------- */
-    /*                                PART 2: FLOWER PIN 1 NEUTRAL GOAL                               */
-    /* ---------------------------------------------------------------------------------------------- */
-
-    // DRIVE TO FLOWER
+    // double toggle
+    c_danielib.driveForDistance(10, 450, 120, 0, false);
     intake_pin_pos();
+    c_danielib.driveForDistance(-24, 1000, 120);
+
+    // alliance goal or smth
     intake.move(127);
     cone.move(127);
-    c_lemlib.moveToPoint(-14, -26.8, 2000);
-
-    // DRIVE BACK UP TO CUP
-    c_lemlib.moveToPoint(-0.44_tiles, -1.6_tiles, 1500, {.forwards = false, .minSpeed = 40, .earlyExitRange = 7});
-    c_lemlib.moveToPoint(-15, -53, 2000, {.forwards = false});
-    delay(100);
+    c_danielib.driveForDistance(16, 400);
+    c_danielib.turnToHeading(-120, 250);
+    c_lemlib.moveToPoint(19, -48, 1000, {.forwards = false});
+    delay(300);
+    setLiftTo(11);
     score_pos();
+
+    c_lemlib.waitUntilDone();
+
+    // score alliance goal
+    setLiftTo(5);
+    delay(200);
+    setWristTo(85);
+    delay(150);
+    cone.move(-100);
+    // setWristTo(130);
+    delay(100);
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                       PART 2: FLOWER PIN                                       */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // lift off and go
+    setLiftTo(28);
+    delay(100);
+
+    // go to flower
+    c_lemlib.moveToPoint(-19, -36, 2000);
+    delay(600);
+    intake_pin_pos();
+    c_lemlib.waitUntilDone();
+
+    delay(400);
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                       PART 3: WALL CUP 1                                       */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    c_lemlib.moveToPoint(-0.5_tiles, -1.7_tiles, 1500, {.forwards = false, .minSpeed = 40, .earlyExitRange = 6});
+    c_lemlib.moveToPoint(-18, -63, 1500, {.forwards = false});
+    delay(400);
+    setLiftTo(25);
+    score_pos();
+
+    c_lemlib.waitUntilDone();
+    c_lemlib.swingToHeading(0, DriveSide::RIGHT, 300);
 
     c_lemlib.waitUntilDone();
 
