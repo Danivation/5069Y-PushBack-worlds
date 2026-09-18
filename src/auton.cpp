@@ -375,6 +375,7 @@ void auton_one_stack_flower_mir() {
     delay(500);
     setLiftTo(15);
     score_pos();
+    intake.brake();
 
     c_lemlib.waitUntilDone();
 
@@ -427,7 +428,7 @@ void auton_one_stack_flower_mir() {
     
     // score down on
     setLiftTo(5);
-    delay(300);
+    delay(350);
     cone.move(-127);
     setLiftTo(45);
     delay(200);
