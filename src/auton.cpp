@@ -160,8 +160,6 @@ void auton_none() {
     // double toggle
     c_danielib.driveForDistance(10, 450, 120, 0, false);
     intake_pin_pos();
-    cup_task();
-    isCupOrPinOnly = true;
     c_danielib.async().driveForDistance(-24, 1000, 120);
     delay(300);
     intake.move(127);
@@ -176,6 +174,7 @@ void auton_none() {
     // knock over and intake
     c_lemlib.moveToPoint(-1, -26, 1500, {.minSpeed = 10, .earlyExitRange = 10});
     c_lemlib.moveToPoint(-1, -26, 1000, {.maxSpeed = 40});
+    intake_cup_pos();
     delay(1300);
     cup_task();
 
@@ -215,7 +214,7 @@ void auton_none() {
     delay(200);
 
     // back up back up!!
-    c_lemlib.moveToPoint(20, -45, 2500, {.forwards = false});
+    c_lemlib.moveToPoint(20, -45, 1500, {.forwards = false});
     inPinPosition = false;
     delay(500);
     setLiftTo(15);
@@ -242,9 +241,9 @@ void auton_none() {
 
     // move
     c_lemlib.moveToPoint(5, -2_tiles, 1000, {.minSpeed = 20, .earlyExitRange = 4});
-    c_lemlib.turnToHeading(-140, 200);
+    c_lemlib.turnToHeading(-140, 250);
     stack_pos();
-    c_lemlib.moveToPoint(19, -27, 1500, {.forwards = false});
+    c_lemlib.moveToPoint(20, -29, 1500, {.forwards = false});
 
     intake.brake();
     cone.move(127);
@@ -265,7 +264,7 @@ void auton_none() {
 
     // score
     c_lemlib.turnToHeading(0, 400);
-    c_lemlib.moveToPoint(1_tiles, -45, 1500, {.forwards = false});
+    c_lemlib.moveToPoint(1_tiles, -45, 900, {.forwards = false});
 
     c_lemlib.waitUntilDone();
     
@@ -273,6 +272,8 @@ void auton_none() {
     setLiftTo(10);
     delay(500);
     cone.move(-127);
+
+    
 }
 
 // 4 pin no stacks
