@@ -77,7 +77,7 @@ void cup_task() {
 void intake_pin_pos() {
     // PIN LOADING POSITION
     setLiftTo(15.6);
-    setWristTo(-6);
+    setWristTo(-4);
     inPinPosition = true;
 }
 
@@ -98,7 +98,7 @@ void score_pos() {
 // wrist and lift to "matchload" position (for standing stacks)
 void stack_pos() {
     inPinPosition = false;
-    setLiftTo(20);
+    setLiftTo(22.5);
     setWristTo(120);
 }
 
@@ -299,8 +299,8 @@ void auton_one_stack_flower_mir() {
     
     // double toggle
     setLiftTo(85);
-    c_danielib.async().driveForDistance(10, 1000, 120, 0, false);
-    delay(800);
+    c_danielib.async().driveForDistance(10, 800, 120, 0, false);
+    delay(500);
     setLiftTo(0);
     delay(300);
     intake_pin_pos();
@@ -323,16 +323,18 @@ void auton_one_stack_flower_mir() {
     c_lemlib.moveToPoint(0.2, -23.6, 1000, {.maxSpeed = 50});
     inPinPosition = false;
     delay(10);
-    setLiftTo(23);
-    delay(150);
+    setLiftTo(20);
+    delay(100);
     intake_cup_pos();
     delay(1150);
 
     //  back up to goal
     c_lemlib.moveToPoint(20, -44, 1400, {.forwards = false, .maxSpeed = 100});
-    delay(250);
+    delay(175);
+
+    // grouping
     setWristTo(20);
-    delay(100);
+    delay(200);
     setLiftTo(38);
     score_pos();
 
@@ -353,13 +355,15 @@ void auton_one_stack_flower_mir() {
     delay(150);
 
     // move OFF NEUTRAL and TO FLOWER
-    c_lemlib.moveToPoint(7, -1.5_tiles, 1500, {.minSpeed = 20, .earlyExitRange = 6});
+    c_lemlib.moveToPoint(7, -1.2_tiles, 1500, {.minSpeed = 20, .earlyExitRange = 6});
     delay(250);
     intake.move(127);
     cone.move(127);
+    setLiftTo(15);
+    c_lemlib.turnToHeading(90, 330);
+    c_lemlib.waitUntilDone();
     intake_pin_pos();
-    c_lemlib.turnToHeading(60, 330);
-    c_lemlib.moveToPoint(13.5, -26, 1500);
+    c_lemlib.moveToPoint(14.1, -24.8, 1500);
 
     c_lemlib.waitUntilDone();
 
@@ -395,12 +399,12 @@ void auton_one_stack_flower_mir() {
     c_lemlib.moveToPoint(-5, -1.7_tiles, 1000, {.minSpeed = 20, .earlyExitRange = 4});
     c_lemlib.turnToHeading(130, 400);
     stack_pos();
-    c_lemlib.moveToPoint(-19, -27, 1500, {.forwards = false, .maxSpeed = 70, .minSpeed = 20, .earlyExitRange = 8});
+    c_lemlib.moveToPoint(-22.5, -26.5, 1500, {.forwards = false, .maxSpeed = 70, .minSpeed = 15, .earlyExitRange = 10});
 
     intake.brake();
     cone.move(127);
     c_lemlib.waitUntilDone();
-    c_danielib.driveForDistance(-10, 600, 15);
+    c_danielib.driveForDistance(-10, 600, 12);
     c_danielib.async().driveForDistance(3, 400);
 
     // pick up stack
