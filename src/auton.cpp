@@ -209,15 +209,26 @@ void auton_none() {
     /* ---------------------------------------------------------------------------------------------- */
 
     c_lemlib.moveToPoint(-0.5_tiles, -1.7_tiles, 1500, {.forwards = false, .minSpeed = 40, .earlyExitRange = 6});
-    c_lemlib.moveToPoint(-18, -63, 1500, {.forwards = false});
+    c_lemlib.moveToPoint(-19.5, -63, 1500, {.forwards = false});
     delay(100);
     setLiftTo(25);
     score_pos();
 
     c_lemlib.waitUntilDone();
-    c_lemlib.swingToHeading(0, DriveSide::RIGHT, 300);
+    c_lemlib.swingToHeading(-15, DriveSide::RIGHT, 500);
 
     c_lemlib.waitUntilDone();
+
+    // lift down into it
+    setLiftTo(5);
+    setWristTo(120);
+    delay(500);
+    setWristTo(100);
+    delay(300);
+    setLiftTo(35);
+    score_pos();
+
+    // score it
 
 }
 
