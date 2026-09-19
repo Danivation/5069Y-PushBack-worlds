@@ -529,7 +529,7 @@ void auton_one_stack_flower_farpin_mir() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // drive fast up to cup + intake
-    c_lemlib.moveToPoint(1, -28, 1500, {.minSpeed = 10, .earlyExitRange = 10});
+    c_lemlib.moveToPoint(1, -28, 1500, {.minSpeed = 10, .earlyExitRange = 8.5});
     delay(150);
     intake.move(127);
     cone.move(127);
@@ -543,11 +543,14 @@ void auton_one_stack_flower_farpin_mir() {
 
     // lift pin to unjam, intake cup, wait for cup
     setLiftTo(30);
+    setWristTo(36);
     delay(100);
     intake_cup_pos();
     delay(1150);
 
     // back up to right neutral goal
+    c_lemlib.turnToHeading(15, 100);
+    c_lemlib.turnToHeading(-20, 100);
     c_lemlib.moveToPoint(20, -44, 1400, {.forwards = false, .maxSpeed = 100});
     delay(175);
 
@@ -572,17 +575,17 @@ void auton_one_stack_flower_farpin_mir() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // move off neutral goal towards flower
-    c_lemlib.moveToPoint(7, -1.1_tiles, 1500, {.minSpeed = 20, .earlyExitRange = 6});
+    c_lemlib.moveToPoint(7, -1.15_tiles, 1500, {.minSpeed = 20, .earlyExitRange = 6});
     delay(250);
     intake.move(127);
     cone.move(127);
     setLiftTo(15);
 
     // turn to intake flower pin head on, wait for pin
-    c_lemlib.turnToHeading(95, 330);
+    c_lemlib.turnToHeading(90, 500);
     c_lemlib.waitUntilDone();
     intake_pin_pos();
-    c_lemlib.moveToPoint(14.1, -25.2, 1500);
+    c_lemlib.moveToPoint(13.5, -24.5, 1500);
     c_lemlib.waitUntilDone();
     delay(200);
 
@@ -596,12 +599,12 @@ void auton_one_stack_flower_farpin_mir() {
     setLiftTo(30);
     score_pos();
     delay(250);
-    setLiftTo(15);
-    delay(450);
+    setLiftTo(14);
+    delay(530);
 
     // score solo pin in alliance goal
     setLiftTo(0);
-    delay(200);
+    delay(220);
     setWristTo(85);
     delay(150);
     cone.move(-100);
@@ -626,39 +629,39 @@ void auton_one_stack_flower_farpin_mir() {
     stack_pos();
     intake.brake();
     cone.move(127);
-    c_lemlib.moveToPoint(-18, -2.5_tiles, 1000, {.forwards = false, .minSpeed = 70, .earlyExitRange = 9.5});
+    c_lemlib.moveToPoint(-18, -2.5_tiles, 1000, {.forwards = false, .minSpeed = 50, .earlyExitRange = 9.5});
     c_lemlib.turnToHeading(90, 200);
-    c_lemlib.moveToPoint(-38, -2.5_tiles, 1000, {.forwards = false, .minSpeed = 70, .earlyExitRange = 8});
-    c_lemlib.turnToHeading(125, 200);
-    c_lemlib.moveToPoint(-43, -49, 1500, {.forwards = false, .maxSpeed = 90, .minSpeed = 20, .earlyExitRange = 9});
+    c_lemlib.moveToPoint(-35, -2.5_tiles, 1000, {.forwards = false, .minSpeed = 50, .earlyExitRange = 8});
+    c_lemlib.turnToHeading(120, 200);
+    c_lemlib.moveToPoint(-43.5, -52, 1500, {.forwards = false, .maxSpeed = 90, .minSpeed = 20, .earlyExitRange = 6.5});
     c_lemlib.waitUntilDone();
 
     // align with stack cup
-    // c_danielib.driveForDistance(-10, 650, 18);
-    // c_danielib.async().driveForDistance(2.7, 300);
+    c_danielib.driveForDistance(-10, 650, 15);
+    c_danielib.async().driveForDistance(2.7, 300);
 
-    // // pick up stack
-    // delay(150);
-    // cone.move(127);
-    // clasp_pos();
-    // delay(300);
+    // pick up stack
+    delay(150);
+    cone.move(127);
+    clasp_pos();
+    delay(300);
 
-    // // lift up
-    // c_lemlib.cancelAllMotions();
-    // setLiftTo(38);
-    // score_pos();
+    // lift up
+    c_lemlib.cancelAllMotions();
+    setLiftTo(38);
+    score_pos();
 
-    // // back up to left alliance goal
-    // c_lemlib.turnToHeading(-90, 400);
-    // c_lemlib.moveToPoint(-28, -48, 1200, {.forwards = false});
-    // delay(700);
+    // back up to left alliance goal
+    c_lemlib.turnToHeading(-90, 400);
+    c_lemlib.moveToPoint(-28, -48, 1200, {.forwards = false});
+    delay(700);
     
-    // // lower stack, score, lift off alliance
-    // setLiftTo(5);
-    // delay(250);
-    // cone.move(-127);
-    // setLiftTo(60);
-    // delay(200);
+    // lower stack, score, lift off alliance
+    setLiftTo(5);
+    delay(250);
+    cone.move(-127);
+    setLiftTo(60);
+    delay(200);
 
     
 }
