@@ -597,7 +597,7 @@ void auton_one_stack_flower_farpin_mir() {
     score_pos();
     delay(250);
     setLiftTo(15);
-    delay(800);
+    delay(450);
 
     // score solo pin in alliance goal
     setLiftTo(0);
@@ -606,6 +606,7 @@ void auton_one_stack_flower_farpin_mir() {
     delay(150);
     cone.move(-100);
     delay(100);
+    c_lemlib.cancelMotion();
 
 
 
@@ -620,14 +621,14 @@ void auton_one_stack_flower_farpin_mir() {
 
     // wiggle around goal to outside yellow stack (COULD BE BETTER)
     c_lemlib.turnToHeading(90, 150);
-    c_lemlib.moveToPoint(-5, -1.9_tiles, 1000, {.minSpeed = 50, .earlyExitRange = 4});
+    c_lemlib.moveToPoint(-5, -1.9_tiles, 1000, {.minSpeed = 50, .earlyExitRange = 5});
     c_lemlib.turnToHeading(30, 300);
     stack_pos();
     intake.brake();
     cone.move(127);
-    c_lemlib.moveToPoint(-18, -2.55_tiles, 1000, {.forwards = false, .minSpeed = 70, .earlyExitRange = 10});
+    c_lemlib.moveToPoint(-18, -2.55_tiles, 1000, {.forwards = false, .minSpeed = 70, .earlyExitRange = 9});
     c_lemlib.turnToHeading(90, 200);
-    c_lemlib.moveToPoint(-26, -2.55_tiles, 1000, {.forwards = false, .minSpeed = 70, .earlyExitRange = 10});
+    c_lemlib.moveToPoint(-30, -2.55_tiles, 1000, {.forwards = false, .minSpeed = 70, .earlyExitRange = 8});
     c_lemlib.turnToHeading(125, 200);
     c_lemlib.moveToPoint(-42.5, -51.5, 1500, {.forwards = false, .maxSpeed = 90, .minSpeed = 20, .earlyExitRange = 9});
     c_lemlib.waitUntilDone();
