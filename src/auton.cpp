@@ -161,27 +161,28 @@ void auton_wesley_stacks_mir() {
     
     // double toggle
     setLiftTo(75);
-    c_danielib.async().driveForDistance(10, 1000, 120, 0, false);
-    delay(850);
+    c_danielib.async().driveForDistance(10, 800, 120, 0, false);
+    delay(600);
     setLiftTo(0);
-    delay(300);
+    c_danielib.async().driveForDistance(-24, 800, 100);
+    delay(100);
     intake_pin_pos();
-    c_danielib.async().driveForDistance(-24, 1000, 100);
     // delay(500);
     c_danielib.waitUntilDone();
 
+
     /* ---------------------------------------------------------------------------------------------- */
-    /*                                     PART 1: KNOCK OVER CUP                                     */
+    /*                                      PART 1: ALLIANCE GOAL                                     */
     /* ---------------------------------------------------------------------------------------------- */
 
 
     // knock over and intake
-    c_lemlib.moveToPoint(2, -2_tiles, 800, {.minSpeed = 40, .earlyExitRange = 8});
+    c_lemlib.moveToPoint(2, -2_tiles, 500, {.minSpeed = 40, .earlyExitRange = 8});
     delay(100);
     intake.move(127);
     cone.move(127);
     cup_task();
-    c_lemlib.turnToHeading(75, 300);
+    c_lemlib.turnToHeading(60, 350);
     inPinPosition = false;
     delay(10);
     setLiftTo(23);
@@ -189,7 +190,7 @@ void auton_wesley_stacks_mir() {
     intake_cup_pos();
 
     // back up into alliance goal
-    c_lemlib.moveToPoint(-20, -47, 1500, {.forwards = false});
+    c_lemlib.moveToPoint(-20, -48, 1000, {.forwards = false});
     inPinPosition = false;
     delay(300);
     setLiftTo(15);
@@ -218,7 +219,7 @@ void auton_wesley_stacks_mir() {
     c_lemlib.moveToPoint(-5, -1.7_tiles, 1000, {.minSpeed = 20, .earlyExitRange = 4});
     c_lemlib.turnToHeading(130, 400);
     stack_pos();
-    c_lemlib.moveToPoint(-23, -25, 1500, {.forwards = false, .maxSpeed = 70, .minSpeed = 20, .earlyExitRange = 8});
+    c_lemlib.moveToPoint(-22.5, -26.5, 1500, {.forwards = false, .maxSpeed = 70, .minSpeed = 20, .earlyExitRange = 8});
 
     intake.brake();
     cone.move(127);
@@ -227,10 +228,10 @@ void auton_wesley_stacks_mir() {
     c_danielib.async().driveForDistance(3, 400);
 
     // pick up stack
-    delay(300);
+    delay(200);
     cone.move(127);
     clasp_pos();
-    delay(400);
+    delay(300);
 
     // lift up
     c_lemlib.cancelAllMotions();
@@ -261,8 +262,8 @@ void auton_wesley_stacks_mir() {
     delay(200);
 
     // move to SECOND YELLOW STACK
-    c_lemlib.moveToPoint(-5, -1.7_tiles, 1000, {.minSpeed = 20, .earlyExitRange = 4});
-    c_lemlib.turnToHeading(120, 400);
+    c_lemlib.moveToPoint(-9, -1.2_tiles, 1000, {.minSpeed = 20, .earlyExitRange = 4});
+    c_lemlib.turnToHeading(110, 300);
     stack_pos();
     c_lemlib.moveToPoint(-34, -36, 1500, {.forwards = false, .minSpeed = 35, .earlyExitRange = 6});
     c_lemlib.moveToPoint(-46, -48, 1500, {.forwards = false, .maxSpeed = 70, .minSpeed = 20, .earlyExitRange = 8});
@@ -281,10 +282,25 @@ void auton_wesley_stacks_mir() {
 
     // lift up
     c_lemlib.cancelAllMotions();
-    setLiftTo(37);
+    setLiftTo(40);
     score_pos();
 
     // GO SCORE ON NEUTRAL
+    c_lemlib.turnToHeading(-140, 300);
+    c_lemlib.moveToPoint(-24, -36, 1500, {.forwards = false, .minSpeed = 35, .earlyExitRange = 6});
+    c_lemlib.moveToPoint(20, -46, 2000, {.forwards = false});
+
+
+    // SCOREEE
+    c_lemlib.waitUntilDone();
+    // delay(900);
+    
+    // score down on
+    setLiftTo(5);
+    delay(300);
+    cone.move(-127);
+    setLiftTo(45);
+    delay(200);
 
 }
 
