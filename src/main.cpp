@@ -24,7 +24,7 @@ float testAutonDuration = 0;
 void run_auton(int index) {
     // default auto to run when no auto is selected, also runs in test mode
     if (index == 0) {
-        auton_skills();
+        auton_one_stack_flower_mir();
     }
 
     if (index == 1) auton_wesley_stacks_mir();

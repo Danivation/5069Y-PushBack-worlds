@@ -47,75 +47,7 @@ bool waitUntilColor(pros::Optical* sensor, pros::Color color, int stopTime) {
     else return true;
 }
 
-bool inPinPosition = false;
-bool isCupOrPinOnly = true;
-void cup_task() {
 
-    // CHECK FOR INTAKE POSITION FIRST
-    pros::Task autoCupTask {[&] {
-        while (true) {
-            if (inPinPosition && pin_dist.get_distance() < 150) {
-                // wait 300 ms to make sure the pins still there
-                delay(300);
-                if (pin_dist.get_distance() < 150) {
-                    // wait 50 ms to double check
-                    delay(100);
-                    if (pin_dist.get_distance() < 150) {
-                        inPinPosition = false;
-                        setLiftTo(16.5);
-                        if (isCupOrPinOnly) setWristTo(32);
-                        else setWristTo(18);
-                    }
-                }
-            }
-            delay(10);
-        }
-    }};
-}
-
-// wrist and lift in pin loading position
-void intake_pin_pos() {
-    // PIN LOADING POSITION
-    setLiftTo(15.6);
-    setWristTo(-4);
-    inPinPosition = true;
-}
-
-// MANUAL cup position
-void intake_cup_pos() {
-    // CUP LOADING POSITION
-    setWristTo(32);
-    setLiftTo(16.5);
-    inPinPosition = false;
-}
-
-// wrist to scoring angle (where stack is vertical)
-void score_pos() {
-    inPinPosition = false;
-    setWristTo(121);
-}
-
-// wrist and lift to "matchload" position (for standing stacks)
-void stack_pos() {
-    inPinPosition = false;
-    setLiftTo(22.5);
-    setWristTo(120);
-}
-
-// wrist and lift clasp in and lower (to grab standing stacks)
-void clasp_pos() {
-    inPinPosition = false;
-    setWristTo(98);
-    delay(50);
-    setLiftTo(0);
-}
-
-void matchload_pos() {
-    
-            inPinPosition = false;
-            setLiftTo(17.5);
-            setWristTo(120);
-}
 
 enum GoalType {alliance, neutral, center};
 
@@ -134,6 +66,115 @@ void fast_drop(int liftPos) {
     setWristTo(120);
     setLiftTo(liftPos);
 }
+
+
+
+
+bool inPinPosition = false;
+bool isCupOrPinOnly = true;
+
+
+
+
+/* ---------------------------------------------------------------------------------------------- */
+/*                              MATCH LOAD POSITION - LIFT AND WRIST                              */
+/* ---------------------------------------------------------------------------------------------- */
+
+void matchload_pos() {
+    inPinPosition = false;
+    setLiftTo(17.5);
+    setWristTo(120);
+}
+
+
+/* ---------------------------------------------------------------------------------------------- */
+/*                                    INTAKE CUP DETECTION TASK                                   */
+/* ---------------------------------------------------------------------------------------------- */
+
+void cup_task() {
+    // CHECK FOR INTAKE POSITION FIRST
+    pros::Task autoCupTask {[&] {
+        while (true) {
+            
+            // first distance check
+            if (inPinPosition && pin_dist.get_distance() < 150) {
+
+            // delay 300 for pin
+            delay(300);
+
+            // second distance check
+            if (pin_dist.get_distance() < 150) {
+
+            // delay 50 to make sure its still there
+            delay(50);
+
+            // third distance check
+            if (pin_dist.get_distance() < 150) {
+                inPinPosition = false;
+                setLiftTo(16.5);
+                if (isCupOrPinOnly) setWristTo(32);
+                else setWristTo(18);
+            }
+            }
+            }
+        delay(10);
+        }
+    }};
+}
+
+/* ---------------------------------------------------------------------------------------------- */
+/*                                     MANUAL INTAKE POSITIONS                                    */
+/* ---------------------------------------------------------------------------------------------- */
+
+// wrist and lift in pin loading position
+void intake_pin_pos() {
+    // PIN LOADING POSITION
+    setLiftTo(15.6);
+    setWristTo(-4);
+    inPinPosition = true;
+}
+
+// MANUAL cup position
+void intake_cup_pos() {
+    // CUP LOADING POSITION
+    setWristTo(32);
+    setLiftTo(16.5);
+    inPinPosition = false;
+}
+
+/* ---------------------------------------------------------------------------------------------- */
+/*                                    SCORING POSITION - WRIST                                    */
+/* ---------------------------------------------------------------------------------------------- */
+
+// wrist to scoring angle (where stack is vertical)
+void score_pos() {
+    inPinPosition = false;
+    setWristTo(121);
+}
+
+/* ---------------------------------------------------------------------------------------------- */
+/*                            GRAB POSITION FOR STACKS - LIFT AND WRIST                           */
+/* ---------------------------------------------------------------------------------------------- */
+
+// wrist and lift to "matchload" position (for standing stacks)
+void stack_pos() {
+    inPinPosition = false;
+    setLiftTo(22.5);
+    setWristTo(120);
+}
+
+/* ---------------------------------------------------------------------------------------------- */
+/*                              CLASP DOWN ON STACKS - LIFT AND WRIST                             */
+/* ---------------------------------------------------------------------------------------------- */
+
+// wrist and lift clasp in and lower (to grab standing stacks)
+void clasp_pos() {
+    inPinPosition = false;
+    setWristTo(98);
+    delay(50);
+    setLiftTo(0);
+}
+
 
 
 
@@ -470,15 +511,18 @@ void auton_one_stack_flower_farpin_mir() {
     /*                                      PART 0: DOUBLE TOGGLE                                     */
     /* ---------------------------------------------------------------------------------------------- */
     
-    // double toggle
-    setLiftTo(75);
-    c_danielib.async().driveForDistance(10, 650, 120, 0, false);
-    delay(350);
+    // double toggle - drive out and lift
+    setLiftTo(65);
+    c_danielib.async().driveForDistance(10, 800, 120);
+    delay(300);
     setLiftTo(0);
+    delay(300);
+    c_danielib.stopMovement();
+
+    // double toggle - drive back
     c_danielib.async().driveForDistance(-24, 800, 100);
     delay(100);
     intake_pin_pos();
-    // delay(500);
     c_danielib.waitUntilDone();
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -486,17 +530,21 @@ void auton_one_stack_flower_farpin_mir() {
     /* ---------------------------------------------------------------------------------------------- */
 
 
-    // knock over and intake
+    // drive fast up to cup + intake
     c_lemlib.moveToPoint(1, -28, 1500, {.minSpeed = 10, .earlyExitRange = 10});
     delay(180);
     intake.move(127);
     cone.move(127);
     cup_task();
     c_lemlib.waitUntilDone();
+
+    // drive slow to intake cup
     c_lemlib.moveToPoint(0.2, -23.6, 1000, {.maxSpeed = 50});
     inPinPosition = false;
     delay(10);
-    setLiftTo(20);
+
+    // set to cup position and get the pin unstuck
+    setLiftTo(30);
     delay(100);
     intake_cup_pos();
     delay(1150);
