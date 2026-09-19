@@ -774,8 +774,6 @@ void auton_skills() {
     c_danielib.async().driveForDistance(-24, 800, 100);
     delay(100);
     intake_pin_pos();
-    intake.move(127);
-    cone.move(127);
     // delay(500);
     c_danielib.waitUntilDone();
 
@@ -793,10 +791,10 @@ void auton_skills() {
     c_lemlib.waitUntilDone();
     delay(300);
     cup_task();
-    c_lemlib.turnToHeading(-60, 350);
+    c_lemlib.turnToHeading(-50, 300);
     inPinPosition = false;
     delay(10);
-    setLiftTo(23);
+    setLiftTo(25);
     delay(150);
     intake_cup_pos();
 
@@ -804,14 +802,14 @@ void auton_skills() {
     c_lemlib.moveToPoint(20, -48, 1000, {.forwards = false});
     inPinPosition = false;
     delay(300);
-    setLiftTo(15);
+    setLiftTo(18);
     score_pos();
 
     c_lemlib.waitUntilDone();
 
     // score alliance goal
     setLiftTo(0);
-    delay(200);
+    delay(300);
     setWristTo(85);
     delay(150);
     cone.move(-100);
@@ -828,20 +826,22 @@ void auton_skills() {
 
 
     // wiggle around the goal to the stqack
+    intake.brake();
     c_lemlib.turnToHeading(-90, 150);
     c_lemlib.moveToPoint(5, -1.9_tiles, 1000, {.minSpeed = 50, .earlyExitRange = 4});
     c_lemlib.turnToHeading(-140, 300);
     stack_pos();
-    c_lemlib.moveToPoint(18, -1.45_tiles, 1000, {.forwards = false, .minSpeed = 70, .earlyExitRange = 10});
+    c_lemlib.moveToPoint(18, -1.51_tiles, 1000, {.forwards = false, .minSpeed = 70, .earlyExitRange = 7});
     c_lemlib.turnToHeading(-90, 200);
-    c_lemlib.moveToPoint(26, -1.45_tiles, 1000, {.forwards = false, .minSpeed = 70, .earlyExitRange = 10});
+    c_lemlib.moveToPoint(36, -1.51_tiles, 1000, {.forwards = false, .minSpeed = 70, .earlyExitRange = 7});
     c_lemlib.turnToHeading(-55, 200);
-    c_lemlib.moveToPoint(42.5, -44.5, 1500, {.forwards = false, .maxSpeed = 90, .minSpeed = 20, .earlyExitRange = 9});
+    c_lemlib.moveToPoint(46, -44.5, 1500, {.forwards = false, .maxSpeed = 90, .minSpeed = 20, .earlyExitRange = 9});
 
+    // back up to align cup
     intake.brake();
     cone.move(127);
     c_lemlib.waitUntilDone();
-    c_danielib.driveForDistance(-10, 500, 15);
+    c_danielib.driveForDistance(-10, 700, 15);
     c_danielib.async().driveForDistance(3, 300);
 
     // pick up stack
@@ -881,10 +881,33 @@ void auton_skills() {
     delay(150);
 
     // loader move macro
-    c_lemlib.moveToPoint(2.2_tiles, -1.8_tiles, 1500, {.minSpeed = 25, .earlyExitRange = 4});
-    c_lemlib.turnToHeading(-10, 400);
+    c_lemlib.moveToPoint(2.43_tiles, -1.8_tiles, 1500, {.minSpeed = 25, .earlyExitRange = 3});
+    c_lemlib.turnToHeading(0, 400);
+    lemlibDistReset({&right_beam});
+    matchload_pos();
+    intake.brake();
+    cone.brake();
+    c_lemlib.moveToPoint(60, -60, 2500, {.forwards = false, .maxSpeed = 60});
+    c_lemlib.waitUntilDone();
+    cone.move(127);
 
-    c_lemlib.moveToPoint(2.5_tiles, -60, 2500, {.forwards = false, .maxSpeed = 60});
+    // into the loader down
+    setLiftTo(0);
+    delay(500);
+    setLiftTo(10);
+    c_lemlib.moveToPoint(2.5_tiles, -1.6_tiles, 1500, {.minSpeed = 25, .earlyExitRange = 5});
+    c_lemlib.turnToHeading(90, 300);
+    setLiftTo(40);
+    c_lemlib.moveToPoint(28, -48, 1000, {.forwards = false});
+
+    c_lemlib.waitUntilDone();
+    
+    // score down on
+    setLiftTo(5);
+    delay(300);
+    cone.move(-127);
+    setLiftTo(45);
+    delay(200);
 
 }
 
