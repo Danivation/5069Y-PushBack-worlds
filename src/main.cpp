@@ -24,52 +24,27 @@ float testAutonDuration = 0;
 void run_auton(int index) {
     // default auto to run when no auto is selected, also runs in test mode
     if (index == 0) {
-        auton_one_stack_flower_farpin_mir();
+        auton_skills();
     }
 
-    // // left sides
-    // else if (index == 1)    auton_left_split();             // TUNED
-    // else if (index == 2)    auton_left_4ball_loader();      // TUNED
-    // else if (index == 3)    auton_left_4ball_stack();       // TUNED
-    // else if (index == 4)    auton_left_7ball();             // TUNED
-    // else if (index == 5)    auton_left_7ball_counter();     // TUNED
-    // else if (index == 6)    auton_left_all_mid();    // TUNED
+    if (index == 1) auton_wesley_stacks_mir();
+    // else if (index == 2) auton_wesley_stacks();
+    else if (index == 3) auton_one_stack_flower_mir();
+    else if (index == 4) auton_one_stack_flower();
+    else if (index == 4) auton_one_stack_flower_farpin_mir();
 
-    // // sawps
-    // else if (index == 8)    auton_sawp_counter_wing();      // TUNED
-    // else if (index == 9)    auton_sawp_counter_nowing();    // TUNED
-    // else if (index == 10)   auton_sawp_counter_nowing_left_noclear();    // TUNED
 
-    // // right sides
-    // else if (index == 12)   auton_right_split();            // TUNED 
-    // else if (index == 13)   auton_right_4ball_loader();     // TUNED
-    // else if (index == 14)   auton_right_4ball_stack();      // TUNED
-    // else if (index == 15)   auton_right_7ball();            // TUNED
-    // else if (index == 16)   auton_right_7ball_counter();    // TUNED
 }
 
 std::pair<std::string, std::string> get_auton_name(int index) {
     if (index == 0) return {"None", ""};
  
     // left sides
-    else if (index == 1)    return {"Left split", "Stack"};
-    else if (index == 2)    return {"Left 4 ball", "Loader"};
-    else if (index == 3)    return {"Left 4 ball", "Stack"};
-    else if (index == 4)    return {"Left 7 ball", "Stack"};
-    else if (index == 5)    return {"Left 7 counter", "Stack"};
-    else if (index == 6)    return {"Left all mid", "Loader"};
-
-    // sawps
-    else if (index == 8)    return {"CSAWP + W", ""};
-    else if (index == 9)    return {"CSAWP - W", "All loaders"};
-    else if (index == 10)   return {"CSAWP - W", "No left clear"};
-
-    // right sides
-    else if (index == 12)   return {"Right split", "Loader"};
-    else if (index == 13)   return {"Right 4 ball BAD", "Loader"};
-    else if (index == 14)   return {"Right 4 ball", "Stack"};
-    else if (index == 15)   return {"Right 7 ball", "Stack"};
-    else if (index == 16)   return {"Right 7 counter", "Loader"};
+    else if (index == 1)    return {"Wesley stacks 4pin", "Far"};
+    // else if (index == 2)    return {"Wesley stacks 4pin", "Close"};
+    else if (index == 3)    return {"Flower close stack 4pin", "Far"};
+    else if (index == 4)    return {"Flower close stack 4pin", "Close"};
+    else if (index == 5)    return {"Flower far stack 4pin", "Far"};
 
     else return {"Invalid auto", ""};
 }
