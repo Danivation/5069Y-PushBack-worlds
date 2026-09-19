@@ -626,39 +626,39 @@ void auton_one_stack_flower_farpin_mir() {
     stack_pos();
     intake.brake();
     cone.move(127);
-    c_lemlib.moveToPoint(-18, -2.55_tiles, 1000, {.forwards = false, .minSpeed = 70, .earlyExitRange = 9});
+    c_lemlib.moveToPoint(-18, -2.5_tiles, 1000, {.forwards = false, .minSpeed = 70, .earlyExitRange = 9.5});
     c_lemlib.turnToHeading(90, 200);
-    c_lemlib.moveToPoint(-30, -2.55_tiles, 1000, {.forwards = false, .minSpeed = 70, .earlyExitRange = 8});
+    c_lemlib.moveToPoint(-38, -2.5_tiles, 1000, {.forwards = false, .minSpeed = 70, .earlyExitRange = 8});
     c_lemlib.turnToHeading(125, 200);
-    c_lemlib.moveToPoint(-42.5, -51.5, 1500, {.forwards = false, .maxSpeed = 90, .minSpeed = 20, .earlyExitRange = 9});
+    c_lemlib.moveToPoint(-43, -49, 1500, {.forwards = false, .maxSpeed = 90, .minSpeed = 20, .earlyExitRange = 9});
     c_lemlib.waitUntilDone();
 
     // align with stack cup
-    c_danielib.driveForDistance(-10, 500, 15);
-    c_danielib.async().driveForDistance(3, 300);
+    // c_danielib.driveForDistance(-10, 650, 18);
+    // c_danielib.async().driveForDistance(2.7, 300);
 
-    // pick up stack
-    delay(150);
-    cone.move(127);
-    clasp_pos();
-    delay(300);
+    // // pick up stack
+    // delay(150);
+    // cone.move(127);
+    // clasp_pos();
+    // delay(300);
 
-    // lift up
-    c_lemlib.cancelAllMotions();
-    setLiftTo(37);
-    score_pos();
+    // // lift up
+    // c_lemlib.cancelAllMotions();
+    // setLiftTo(38);
+    // score_pos();
 
-    // back up to left alliance goal
-    c_lemlib.turnToHeading(-90, 400);
-    c_lemlib.moveToPoint(-28, -48, 900, {.forwards = false});
-    delay(700);
+    // // back up to left alliance goal
+    // c_lemlib.turnToHeading(-90, 400);
+    // c_lemlib.moveToPoint(-28, -48, 1200, {.forwards = false});
+    // delay(700);
     
-    // lower stack, score, lift off alliance
-    setLiftTo(5);
-    delay(250);
-    cone.move(-127);
-    setLiftTo(60);
-    delay(200);
+    // // lower stack, score, lift off alliance
+    // setLiftTo(5);
+    // delay(250);
+    // cone.move(-127);
+    // setLiftTo(60);
+    // delay(200);
 
     
 }
