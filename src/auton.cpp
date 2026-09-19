@@ -49,8 +49,13 @@ bool waitUntilColor(pros::Optical* sensor, pros::Color color, int stopTime) {
 
 
 
-enum GoalType {alliance, neutral, center};
+/* ---------------------------------------------------------------------------------------------- */
+/*                                         FAST DROP STUFF                                        */
+/* ---------------------------------------------------------------------------------------------- */
 
+bool inPinPosition = false;
+bool isCupOrPinOnly = true;
+enum GoalType {alliance, neutral, center};
 void fast_drop_prime(GoalType goalType) {
     cone.move(127);
     setWristTo(150);
@@ -60,19 +65,11 @@ void fast_drop_prime(GoalType goalType) {
         setLiftTo(26.2);
     }
 }
-
 void fast_drop(int liftPos) {
     cone.move(-127);
     setWristTo(120);
     setLiftTo(liftPos);
 }
-
-
-
-
-bool inPinPosition = false;
-bool isCupOrPinOnly = true;
-
 
 
 
@@ -85,7 +82,6 @@ void matchload_pos() {
     setLiftTo(17.5);
     setWristTo(120);
 }
-
 
 /* ---------------------------------------------------------------------------------------------- */
 /*                                    INTAKE CUP DETECTION TASK                                   */
@@ -170,11 +166,10 @@ void stack_pos() {
 // wrist and lift clasp in and lower (to grab standing stacks)
 void clasp_pos() {
     inPinPosition = false;
-    setWristTo(98);
+    setWristTo(120);
     delay(50);
     setLiftTo(0);
 }
-
 
 
 
@@ -502,10 +497,12 @@ void auton_one_stack_flower_mir() {
 
 
 
-// NON DRIVER SIDE AUTO
+// FAR SIDE OUTSIDE STACK
 void auton_one_stack_flower_farpin_mir() {
     c_danielib.setPose(6.7, -61.5, 0);
     c_lemlib.setPose(6.7, -61.5, 0);
+
+
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                      PART 0: DOUBLE TOGGLE                                     */
@@ -525,14 +522,15 @@ void auton_one_stack_flower_farpin_mir() {
     intake_pin_pos();
     c_danielib.waitUntilDone();
 
+
+
     /* ---------------------------------------------------------------------------------------------- */
     /*                                     PART 1: KNOCK OVER CUP                                     */
     /* ---------------------------------------------------------------------------------------------- */
 
-
     // drive fast up to cup + intake
     c_lemlib.moveToPoint(1, -28, 1500, {.minSpeed = 10, .earlyExitRange = 10});
-    delay(180);
+    delay(150);
     intake.move(127);
     cone.move(127);
     cup_task();
@@ -543,64 +541,65 @@ void auton_one_stack_flower_farpin_mir() {
     inPinPosition = false;
     delay(10);
 
-    // set to cup position and get the pin unstuck
+    // lift pin to unjam, intake cup, wait for cup
     setLiftTo(30);
     delay(100);
     intake_cup_pos();
     delay(1150);
 
-    // back up to goal
+    // back up to right neutral goal
     c_lemlib.moveToPoint(20, -44, 1400, {.forwards = false, .maxSpeed = 100});
     delay(175);
 
-    // grouping
+    // grouping, flip out, wait to score
     setWristTo(20);
     delay(200);
     setLiftTo(38);
     score_pos();
-
-    // c_lemlib.waitUntilDone();
-
-    // SCIRE DOWN ON NEUTRAL
     delay(700);
-    setLiftTo(10);
+
+    // lower stack, score, lift off neutral
+    setLiftTo(5);
     delay(300);
     cone.move(-127);
+    setLiftTo(35);
+    delay(150);
+
+
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                   PART 2: FLOWER TO ALLIANCE                                   */
     /* ---------------------------------------------------------------------------------------------- */
 
-    // lift up
-    setLiftTo(35);
-    delay(150);
-
-    // move OFF NEUTRAL and TO FLOWER
+    // move off neutral goal towards flower
     c_lemlib.moveToPoint(7, -1.1_tiles, 1500, {.minSpeed = 20, .earlyExitRange = 6});
     delay(250);
     intake.move(127);
     cone.move(127);
     setLiftTo(15);
+
+    // turn to intake flower pin head on, wait for pin
     c_lemlib.turnToHeading(95, 330);
     c_lemlib.waitUntilDone();
     intake_pin_pos();
     c_lemlib.moveToPoint(14.1, -25.2, 1500);
-
     c_lemlib.waitUntilDone();
-
     delay(200);
 
-    // back up back up!!
+    // back up to left alliance goal
     c_lemlib.moveToPoint(-20, -45, 1500, {.forwards = false});
     inPinPosition = false;
     delay(500);
-    setLiftTo(15);
-    score_pos();
+
+    // flip out, wait to score
     intake.brake();
+    setLiftTo(30);
+    score_pos();
+    delay(250);
+    setLiftTo(15);
+    delay(800);
 
-    delay(1080);
-
-    // score alliance goal
+    // score solo pin in alliance goal
     setLiftTo(0);
     delay(200);
     setWristTo(85);
@@ -608,30 +607,32 @@ void auton_one_stack_flower_farpin_mir() {
     cone.move(-100);
     delay(100);
 
+
+
     /* ---------------------------------------------------------------------------------------------- */
     /*                                      PART 3: YELLOW STACK                                      */
     /* ---------------------------------------------------------------------------------------------- */
 
-    
-    // lift off
+    // lift off alliance
     setWristTo(120);
     setLiftTo(20);
     delay(200);
 
-    // move to SECOND YELLOW STACK
+    // wiggle around goal to outside yellow stack (COULD BE BETTER)
     c_lemlib.turnToHeading(90, 150);
     c_lemlib.moveToPoint(-5, -1.9_tiles, 1000, {.minSpeed = 50, .earlyExitRange = 4});
     c_lemlib.turnToHeading(30, 300);
     stack_pos();
+    intake.brake();
+    cone.move(127);
     c_lemlib.moveToPoint(-18, -2.55_tiles, 1000, {.forwards = false, .minSpeed = 70, .earlyExitRange = 10});
     c_lemlib.turnToHeading(90, 200);
     c_lemlib.moveToPoint(-26, -2.55_tiles, 1000, {.forwards = false, .minSpeed = 70, .earlyExitRange = 10});
     c_lemlib.turnToHeading(125, 200);
     c_lemlib.moveToPoint(-42.5, -51.5, 1500, {.forwards = false, .maxSpeed = 90, .minSpeed = 20, .earlyExitRange = 9});
-
-    intake.brake();
-    cone.move(127);
     c_lemlib.waitUntilDone();
+
+    // align with stack cup
     c_danielib.driveForDistance(-10, 500, 15);
     c_danielib.async().driveForDistance(3, 300);
 
@@ -646,14 +647,12 @@ void auton_one_stack_flower_farpin_mir() {
     setLiftTo(37);
     score_pos();
 
-    // score
+    // back up to left alliance goal
     c_lemlib.turnToHeading(-90, 400);
     c_lemlib.moveToPoint(-28, -48, 900, {.forwards = false});
-
-    // c_lemlib.waitUntilDone();
     delay(700);
     
-    // score down on
+    // lower stack, score, lift off alliance
     setLiftTo(5);
     delay(250);
     cone.move(-127);
