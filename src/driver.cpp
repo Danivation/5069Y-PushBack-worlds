@@ -190,8 +190,8 @@ void WristControl() {
 
             // MATCH LOAD POSITION
             inPinPosition = false;
-            setLiftTo(17.5);
-            setWristTo(125);
+            setLiftTo(17.3);
+            setWristTo(120);
 
         } else if (master.get_digital_new_press(INTAKE_MACRO)) {
 
@@ -206,7 +206,7 @@ void WristControl() {
 
             // SCORING (VERTICAL)
             inPinPosition = false;
-            setWristTo(123);
+            setWristTo(120);
 
         } else if (master.get_digital(WRIST_UP_MANUAL)) {
             inPinPosition = false;

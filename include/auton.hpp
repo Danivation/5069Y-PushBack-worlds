@@ -16,5 +16,6 @@ void auton_one_stack_flower_farpin_mir();
 
 void auton_wesley_stacks_mir();
 
+void auton_one_stack_elims();
 
 void auton_skills();

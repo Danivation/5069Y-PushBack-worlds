@@ -24,14 +24,10 @@ float testAutonDuration = 0;
 void run_auton(int index) {
     // default auto to run when no auto is selected, also runs in test mode
     if (index == 0) {
-        auton_skills();
+        auton_one_stack_elims();
     }
 
-    if (index == 1) auton_wesley_stacks_mir();
-    // else if (index == 2) auton_wesley_stacks();
-    else if (index == 3) auton_one_stack_flower_mir();
-    else if (index == 4) auton_one_stack_flower();
-    else if (index == 4) auton_one_stack_flower_farpin_mir();
+    if (index == 1) auton_one_stack_elims();
 
 
 }
@@ -40,11 +36,7 @@ std::pair<std::string, std::string> get_auton_name(int index) {
     if (index == 0) return {"None", ""};
  
     // left sides
-    else if (index == 1)    return {"Wesley stacks 4pin", "Far"};
-    // else if (index == 2)    return {"Wesley stacks 4pin", "Close"};
-    else if (index == 3)    return {"Flower close stack 4pin", "Far"};
-    else if (index == 4)    return {"Flower close stack 4pin", "Close"};
-    else if (index == 5)    return {"Flower far stack 4pin", "Far"};
+    else if (index == 1)    return {"one stack elims", "Far"};
 
     else return {"Invalid auto", ""};
 }
