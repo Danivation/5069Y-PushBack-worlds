@@ -145,7 +145,7 @@ void intake_cup_pos() {
 // wrist to scoring angle (where stack is vertical)
 void score_pos() {
     inPinPosition = false;
-    setWristTo(121);
+    setWristTo(125);
 }
 
 /* ---------------------------------------------------------------------------------------------- */
@@ -700,7 +700,6 @@ void auton_4pin_3stack_elims_mir() {
     /*                                      PART 2: INSIDE STACK                                      */
     /* ---------------------------------------------------------------------------------------------- */
 
-    
     // lift off
     setWristTo(120);
     setLiftTo(20);
@@ -714,28 +713,28 @@ void auton_4pin_3stack_elims_mir() {
     cone.move(127);
 
     // move to inside stack backwards
-    c_lemlib.moveToPoint(-24, -26.5, 1500, {.forwards = false, .maxSpeed = 90, .minSpeed = 20, .earlyExitRange = 7});
+    c_lemlib.moveToPoint(-23, -27, 1500, {.forwards = false, .maxSpeed = 90, .minSpeed = 20, .earlyExitRange = 7.5});
     c_lemlib.waitUntilDone();
 
-    // align with stack cup
-    c_danielib.driveForDistance(-10, 700, 18);
+    // align with inside stack cup
+    c_danielib.driveForDistance(-10, 700, 16);
     c_danielib.async().driveForDistance(2.7, 300);
 
-
-
     // pick up stack
-    delay(300);
+    delay(150);
     cone.move(127);
     clasp_pos();
     delay(400);
 
-    // lift and move to goal
+    // lift up
     c_lemlib.cancelAllMotions();
-    setLiftTo(37);
+    setLiftTo(38);
     score_pos();
+
+    // move to goal
     c_lemlib.turnToHeading(0, 400);
     c_lemlib.moveToPoint(-1_tiles, -45, 900, {.forwards = false});
-    delay(800);
+    delay(900);
 
     // lower, score, lift off
     setLiftTo(5);
@@ -745,39 +744,34 @@ void auton_4pin_3stack_elims_mir() {
     delay(200);
 
 
+
     /* ---------------------------------------------------------------------------------------------- */
     /*                                      PART 3: OUTSIDE STACK                                     */
     /* ---------------------------------------------------------------------------------------------- */
 
-
-    
     // wiggle around goal to outside yellow stack (COULD BE BETTER)
-    c_lemlib.turnToHeading(90, 150);
-    c_lemlib.moveToPoint(-5, -2.1_tiles, 1000, {.minSpeed = 50, .earlyExitRange = 5});
-    c_lemlib.turnToHeading(150, 300);
+    c_danielib.driveForDistance(16, 500);
+    // c_lemlib.moveToPoint(0, -2.1_tiles, 1000, {.minSpeed = 30, .earlyExitRange = 5});
+    c_lemlib.turnToHeading(55, 300);
     stack_pos();
     intake.move(-127);
     cone.move(127);
-    c_lemlib.moveToPoint(-18, -1.5_tiles, 1000, {.forwards = false, .minSpeed = 50, .earlyExitRange = 9.5});
-    c_lemlib.turnToHeading(90, 200);
-    c_lemlib.moveToPoint(-35, -1.5_tiles, 1000, {.forwards = false, .minSpeed = 50, .earlyExitRange = 8});
-    c_lemlib.turnToHeading(180-125, 250);
-    c_lemlib.moveToPoint(-43.5, -43, 1500, {.forwards = false, .maxSpeed = 90, .minSpeed = 20, .earlyExitRange = 6.5});
+    c_lemlib.moveToPoint(-42.5, -43, 1500, {.forwards = false, .maxSpeed = 90, .minSpeed = 20, .earlyExitRange = 6.5});
     c_lemlib.waitUntilDone();
 
     // align with stack cup
-    c_danielib.driveForDistance(-10, 700, 18);
+    c_danielib.driveForDistance(-10, 700, 16);
     c_danielib.async().driveForDistance(2.7, 300);
 
     // pick up stack
-    delay(200);
+    delay(150);
     cone.move(127);
     clasp_pos();
     delay(400);
 
     // lift up
     c_lemlib.cancelAllMotions();
-    setLiftTo(38);
+    setLiftTo(45);
     score_pos();
 
     // back up to left alliance goal
