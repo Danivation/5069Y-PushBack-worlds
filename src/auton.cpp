@@ -713,7 +713,7 @@ void auton_4pin_3stack_elims_mir() {
     cone.move(127);
 
     // move to inside stack backwards
-    c_lemlib.moveToPoint(-23, -27, 1500, {.forwards = false, .maxSpeed = 90, .minSpeed = 20, .earlyExitRange = 7.5});
+    c_lemlib.moveToPoint(-22, -26.3, 1500, {.forwards = false, .maxSpeed = 90, .minSpeed = 20, .earlyExitRange = 7.5});
     c_lemlib.waitUntilDone();
 
     // align with inside stack cup
@@ -756,7 +756,7 @@ void auton_4pin_3stack_elims_mir() {
     stack_pos();
     intake.move(-127);
     cone.move(127);
-    c_lemlib.moveToPoint(-42.5, -43, 1500, {.forwards = false, .maxSpeed = 90, .minSpeed = 20, .earlyExitRange = 6.5});
+    c_lemlib.moveToPoint(-42.8, -43.5, 1500, {.forwards = false, .maxSpeed = 90, .minSpeed = 20, .earlyExitRange = 6.5});
     c_lemlib.waitUntilDone();
 
     // align with stack cup
@@ -771,7 +771,7 @@ void auton_4pin_3stack_elims_mir() {
 
     // lift up
     c_lemlib.cancelAllMotions();
-    setLiftTo(45);
+    setLiftTo(47);
     score_pos();
 
     // back up to left alliance goal
@@ -781,10 +781,19 @@ void auton_4pin_3stack_elims_mir() {
     
     // lower stack, score, lift off alliance
     setLiftTo(5);
-    delay(250);
+    delay(350);
     cone.move(-127);
-    setLiftTo(60);
+    setLiftTo(55);
     delay(200);
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                    PART 4: MATCH LOAD SETUP                                    */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    c_lemlib.moveToPoint(-2_tiles, -2_tiles, 1000, {.minSpeed = 20, .earlyExitRange = 4});
+    c_lemlib.turnToHeading(45, 500);
+    intake_pin_pos();
+    c_lemlib.waitUntilDone();
 }
 
 
