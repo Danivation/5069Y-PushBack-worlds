@@ -71,18 +71,6 @@ void fast_drop(int liftPos) {
     setLiftTo(liftPos);
 }
 
-
-
-/* ---------------------------------------------------------------------------------------------- */
-/*                              MATCH LOAD POSITION - LIFT AND WRIST                              */
-/* ---------------------------------------------------------------------------------------------- */
-
-void matchload_pos() {
-    inPinPosition = false;
-    setLiftTo(17.5);
-    setWristTo(120);
-}
-
 /* ---------------------------------------------------------------------------------------------- */
 /*                                    INTAKE CUP DETECTION TASK                                   */
 /* ---------------------------------------------------------------------------------------------- */
@@ -136,6 +124,16 @@ void intake_cup_pos() {
     setWristTo(32);
     setLiftTo(16.5);
     inPinPosition = false;
+}
+
+/* ---------------------------------------------------------------------------------------------- */
+/*                              MATCH LOAD POSITION - LIFT AND WRIST                              */
+/* ---------------------------------------------------------------------------------------------- */
+
+void matchload_pos() {
+    inPinPosition = false;
+    setLiftTo(17.5);
+    setWristTo(125);
 }
 
 /* ---------------------------------------------------------------------------------------------- */
@@ -1446,106 +1444,113 @@ void auton_skills() {
     setLiftTo(55);
     delay(200);
 
-    // /* ---------------------------------------------------------------------------------------------- */
-    // /*                                 PART 3: MATCH LOAD ALLIANCE 3X                                 */
-    // /* ---------------------------------------------------------------------------------------------- */
-
-    // // lift off
-    // setLiftTo(36);
-    // delay(150);
-
-    // // macro move to the loader area
-    // c_lemlib.moveToPoint(2.51_tiles, -1.8_tiles, 1500);
-    // c_lemlib.turnToHeading(0, 400);
-    // matchload_pos();
-    // intake.brake();
-    // cone.brake();
-    // c_lemlib.waitUntilDone();
-    // lemlibDistReset({&right_beam});
-    // delay(10);
-    // c_lemlib.moveToPoint(61, -62, 2500, {.forwards = false, .maxSpeed = 60});
-    // c_lemlib.waitUntilDone();
-    // cone.move(127);
-
-    // // into the loader down
-    // setLiftTo(0);
-    // delay(500);
-    // setLiftTo(10);
-
-    // // move back to the goal
-    // c_lemlib.moveToPoint(2.5_tiles, -2.05_tiles, 1500, {.minSpeed = 25, .earlyExitRange = 5});
-    // c_lemlib.turnToHeading(86, 300);
-    // setLiftTo(36);
-    // c_lemlib.moveToPoint(28, -51, 1000, {.forwards = false});
-
-    // c_lemlib.waitUntilDone();
-    // lemlibDistReset({&right_beam});
-    // delay(10);
-    
-    // // drop to score
-    // setLiftTo(5);
-    // delay(300);
-    // cone.move(-127);
-    // setLiftTo(45);
-    // delay(200);
-
-
-    // // PIN 2
-
-
-
-    
-    // // lift off
-    // setLiftTo(42);
-    // delay(150);
-
-    // // macro move to the loader area
-    // c_lemlib.moveToPoint(2.51_tiles, -1.8_tiles, 1500);
-    // c_lemlib.turnToHeading(0, 400);
-    // matchload_pos();
-    // intake.brake();
-    // cone.brake();
-    // c_lemlib.waitUntilDone();
-    // lemlibDistReset({&right_beam});
-    // delay(10);
-    // c_lemlib.moveToPoint(61, -62, 2500, {.forwards = false, .maxSpeed = 60});
-    // c_lemlib.waitUntilDone();
-    // cone.move(127);
-
-    // // into the loader down
-    // setLiftTo(0);
-    // delay(500);
-    // setLiftTo(10);
-
-    // // move back to the goal
-    // c_lemlib.moveToPoint(2.5_tiles, -2.05_tiles, 1500, {.minSpeed = 25, .earlyExitRange = 5});
-    // c_lemlib.turnToHeading(86, 350);
-    // setLiftTo(42);
-    // c_lemlib.moveToPoint(28, -51, 1000, {.forwards = false});
-
-    // c_lemlib.waitUntilDone();
-    // lemlibDistReset({&right_beam});
-    // delay(10);
-    
-    // // drop to score
-    // setLiftTo(5);
-    // delay(300);
-    // cone.move(-127);
-    // setLiftTo(45);
-    // delay(200);
-
-
-
     /* ---------------------------------------------------------------------------------------------- */
-    /*                                              PARK                                              */
+    /*                                 PART 4: MATCH LOAD ALLIANCE 3X                                 */
     /* ---------------------------------------------------------------------------------------------- */
 
+    // macro move to the loader area
+    c_lemlib.moveToPoint(2.51_tiles, -1.8_tiles, 1500);
+    c_lemlib.turnToHeading(0, 400);
+    matchload_pos();
+    intake.brake();
+    cone.brake();
+    c_lemlib.waitUntilDone();
+    lemlibDistReset({&right_beam});
+    delay(10);
+    c_lemlib.moveToPoint(61, -62, 2500, {.forwards = false, .maxSpeed = 60});
+    c_lemlib.waitUntilDone();
+    cone.move(127);
 
-    c_lemlib.moveToPoint(2.2_tiles, -2_tiles, 1500);
-    c_lemlib.turnToHeading(135, 300);
-    c_lemlib.moveToPoint(0.5_tiles, -0.5_tiles, 2000, {.forwards = false});
+    // into the loader down
+    setLiftTo(0);
+    delay(500);
+    setLiftTo(10);
+
+    // move back to the goal
+    c_lemlib.moveToPoint(2.5_tiles, -2.05_tiles, 1500, {.minSpeed = 25, .earlyExitRange = 5});
+    c_lemlib.turnToHeading(86, 300);
+    setLiftTo(36);
+    c_lemlib.moveToPoint(28, -51, 1000, {.forwards = false});
 
     c_lemlib.waitUntilDone();
+    lemlibDistReset({&right_beam});
+    delay(10);
+    
+    // drop to score
+    setLiftTo(5);
+    delay(300);
+    cone.move(-127);
+    setLiftTo(45);
+    delay(200);
+
+
+    // PIN 2
+
+
+
+    
+    // lift off
+    setLiftTo(42);
+    delay(150);
+
+    // macro move to the loader area
+    c_lemlib.moveToPoint(2.51_tiles, -1.8_tiles, 1500);
+    c_lemlib.turnToHeading(0, 400);
+    matchload_pos();
+    intake.brake();
+    cone.brake();
+    c_lemlib.waitUntilDone();
+    lemlibDistReset({&right_beam});
+    delay(10);
+    c_lemlib.moveToPoint(61, -62, 2500, {.forwards = false, .maxSpeed = 60});
+    c_lemlib.waitUntilDone();
+    cone.move(127);
+
+    // into the loader down
+    setLiftTo(0);
+    delay(500);
+    setLiftTo(10);
+
+    // move back to the goal
+    c_lemlib.moveToPoint(2.5_tiles, -2.05_tiles, 1500, {.minSpeed = 25, .earlyExitRange = 5});
+    c_lemlib.turnToHeading(86, 350);
+    setLiftTo(42);
+    c_lemlib.moveToPoint(28, -51, 1000, {.forwards = false});
+
+    c_lemlib.waitUntilDone();
+    lemlibDistReset({&right_beam});
+    delay(10);
+    
+    // drop to score
+    setLiftTo(5);
+    delay(300);
+    cone.move(-127);
+    setLiftTo(45);
+    delay(200);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // /* ---------------------------------------------------------------------------------------------- */
+    // /*                                              PARK                                              */
+    // /* ---------------------------------------------------------------------------------------------- */
+
+
+    // c_lemlib.moveToPoint(2.2_tiles, -2_tiles, 1500);
+    // c_lemlib.turnToHeading(135, 300);
+    // c_lemlib.moveToPoint(0.5_tiles, -0.5_tiles, 2000, {.forwards = false});
+
+    // c_lemlib.waitUntilDone();
 
 }
 
