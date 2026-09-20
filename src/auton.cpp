@@ -537,20 +537,26 @@ void auton_one_stack_flower_farpin_mir() {
     c_lemlib.waitUntilDone();
 
     // drive slow to intake cup
-    c_lemlib.moveToPoint(0.2, -23.6, 1000, {.maxSpeed = 50});
+    c_lemlib.moveToPoint(0.2, -23.6, 600, {.maxSpeed = 50});
     inPinPosition = false;
     delay(10);
 
     // lift pin to unjam, intake cup, wait for cup
     setLiftTo(30);
     setWristTo(36);
+    intake.brake();
     delay(100);
     intake_cup_pos();
-    delay(1150);
+    delay(50);
+    intake.move(127);
+    // delay(1100);
+    c_lemlib.waitUntilDone();
 
     // back up to right neutral goal
-    c_lemlib.turnToHeading(15, 100);
-    c_lemlib.turnToHeading(-20, 100);
+    c_lemlib.turnToHeading(15, 150);
+    c_lemlib.turnToHeading(-20, 150);
+    c_lemlib.waitUntilDone();
+    delay(200);
     c_lemlib.moveToPoint(20, -44, 1400, {.forwards = false, .maxSpeed = 100});
     delay(175);
 
@@ -575,17 +581,17 @@ void auton_one_stack_flower_farpin_mir() {
     /* ---------------------------------------------------------------------------------------------- */
 
     // move off neutral goal towards flower
-    c_lemlib.moveToPoint(7, -1.15_tiles, 1500, {.minSpeed = 20, .earlyExitRange = 6});
+    c_lemlib.moveToPoint(7, -1_tiles, 1500, {.minSpeed = 20, .earlyExitRange = 4});
     delay(250);
     intake.move(127);
     cone.move(127);
     setLiftTo(15);
 
     // turn to intake flower pin head on, wait for pin
-    c_lemlib.turnToHeading(90, 500);
+    c_lemlib.turnToHeading(88, 450);
     c_lemlib.waitUntilDone();
     intake_pin_pos();
-    c_lemlib.moveToPoint(13.5, -24.5, 1500);
+    c_lemlib.moveToPoint(13.5, -23.8, 1500);
     c_lemlib.waitUntilDone();
     delay(200);
 
@@ -627,24 +633,24 @@ void auton_one_stack_flower_farpin_mir() {
     c_lemlib.moveToPoint(-5, -1.9_tiles, 1000, {.minSpeed = 50, .earlyExitRange = 5});
     c_lemlib.turnToHeading(30, 300);
     stack_pos();
-    intake.brake();
+    intake.move(-127);
     cone.move(127);
     c_lemlib.moveToPoint(-18, -2.5_tiles, 1000, {.forwards = false, .minSpeed = 50, .earlyExitRange = 9.5});
     c_lemlib.turnToHeading(90, 200);
     c_lemlib.moveToPoint(-35, -2.5_tiles, 1000, {.forwards = false, .minSpeed = 50, .earlyExitRange = 8});
     c_lemlib.turnToHeading(120, 200);
-    c_lemlib.moveToPoint(-43.5, -52, 1500, {.forwards = false, .maxSpeed = 90, .minSpeed = 20, .earlyExitRange = 6.5});
+    c_lemlib.moveToPoint(-44, -53.5, 1500, {.forwards = false, .maxSpeed = 90, .minSpeed = 20, .earlyExitRange = 6.5});
     c_lemlib.waitUntilDone();
 
     // align with stack cup
-    c_danielib.driveForDistance(-10, 650, 15);
+    c_danielib.driveForDistance(-10, 650, 18);
     c_danielib.async().driveForDistance(2.7, 300);
 
     // pick up stack
-    delay(150);
+    delay(200);
     cone.move(127);
     clasp_pos();
-    delay(300);
+    delay(400);
 
     // lift up
     c_lemlib.cancelAllMotions();
