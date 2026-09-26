@@ -17,6 +17,7 @@
 #define MATCHLOAD_MACRO         DIGITAL_DOWN
 #define INTAKE_MACRO            DIGITAL_B
 #define SCORING_MACRO           DIGITAL_Y
+#define OUTTAKE_MACRO           DIGITAL_RIGHT
 
 #define WRIST_UP_MANUAL         DIGITAL_UP
 #define WRIST_DOWN_MANUAL       DIGITAL_LEFT
@@ -143,19 +144,35 @@ void IntakeControl() {
                 cone.move(127);
                 if (getLiftPosition() < 28) intake.move(127);
                 else intake.brake();
-            }
-            else if (master.get_digital(OUTTAKE)) {
-                intake.move(-127);
-                cone.move(-127);
-            }
-            else {
+
+                
+                waitUntilCondition(!master.get_digital(INTAKE));
                 intake.brake();
                 cone.brake();
+            }
+            else if (master.get_digital(OUTTAKE)) {
+                cone.move(-127);
+                if (getLiftPosition() < 28) intake.move(-127);
+                else intake.brake();
+
+                waitUntilCondition(!master.get_digital(OUTTAKE));
+                intake.brake();
+                cone.brake();
+            }
+            else if (master.get_digital(OUTTAKE_MACRO)) {
+                intake.move(-127);
+
+                waitUntilCondition(!master.get_digital(OUTTAKE_MACRO));
+                intake.brake();
             }
         }
         delay(10);
     }
 }
+
+
+bool readyForSecondPress = false;
+bool inMatchLoadHoldPosition = false;
 
 void WristControl() {
     bool inPinPosition = false;
@@ -173,7 +190,7 @@ void WristControl() {
                         if (pin_dist.get_distance() < 150) {
                             inPinPosition = false;
                             setWristTo(40);
-                            setLiftTo(16.5);
+                            setLiftTo(14.6);
                         }
                     }
                 }
@@ -189,14 +206,33 @@ void WristControl() {
         if (master.get_digital_new_press(MATCHLOAD_MACRO)) {
 
             // MATCH LOAD POSITION
-            inPinPosition = false;
-            setLiftTo(17.3);
-            setWristTo(120);
+            if (!readyForSecondPress) {
+                inPinPosition = false;
+                inMatchLoadHoldPosition = false;
+                readyForSecondPress = true;
+                cone.brake();
+                setLiftTo(14.9);
+                setWristTo(128.5);
+
+            } else {
+                // MATCH LOAD MACRO DOWN
+                inPinPosition = false;
+                cone.move(127);
+                setLiftTo(-1.5);
+                setWristTo(119);
+                delay(500);
+                setLiftTo(9.5);
+                setWristTo(135);
+                readyForSecondPress = false;
+                inMatchLoadHoldPosition = true;
+            }
 
         } else if (master.get_digital_new_press(INTAKE_MACRO)) {
 
             // PIN LOADING POSITION
-            setLiftTo(15.6);
+            readyForSecondPress = false;
+            inMatchLoadHoldPosition = false;
+            setLiftTo(13.1);
             setWristTo(-4);
             int startTime = pros::millis();
             waitUntilCondition((getWristPosition() > -140 && getWristPosition() < -125 && getLiftPosition() > 5 && getLiftPosition() < 25) || pros::millis() + 500 > startTime);
@@ -205,11 +241,15 @@ void WristControl() {
         } else if (master.get_digital_new_press(SCORING_MACRO)) {
 
             // SCORING (VERTICAL)
+            readyForSecondPress = false;
             inPinPosition = false;
-            setWristTo(120);
+            inMatchLoadHoldPosition = false;
+            setWristTo(121);
 
         } else if (master.get_digital(WRIST_UP_MANUAL)) {
             inPinPosition = false;
+            readyForSecondPress = false;
+            inMatchLoadHoldPosition = false;
             wrist_has_pid_control = false;
             delay(10);
             wrist.move(50);
@@ -219,6 +259,8 @@ void WristControl() {
             // wrist_has_pid_control = true;
         } else if (master.get_digital(WRIST_DOWN_MANUAL)) {
             inPinPosition = false;
+            readyForSecondPress = false;
+            inMatchLoadHoldPosition = false;
             wrist_has_pid_control = false;
             delay(10);
             wrist.move(-50);
@@ -237,12 +279,13 @@ void LiftControl() {
     while (true) {
         if (master.get_digital(LIFT_UP)) {
             lift_has_pid_control = false;
+            if (inMatchLoadHoldPosition) setWristTo(121);
             delay(10);
             lift.move(100);
             waitUntilCondition(!master.get_digital(LIFT_UP));
             lift.brake();
-            // setLiftTo(getLiftPosition());
-            // lift_has_pid_control = true;
+            inMatchLoadHoldPosition = false;
+            readyForSecondPress = false;
         }
         else if (master.get_digital(LIFT_DOWN)) {
             lift_has_pid_control = false;
@@ -250,8 +293,8 @@ void LiftControl() {
             lift.move(-60);
             waitUntilCondition(!master.get_digital(LIFT_DOWN));
             lift.brake();
-            // setLiftTo(getLiftPosition());
-            // lift_has_pid_control = true;
+            inMatchLoadHoldPosition = false;
+            readyForSecondPress = false;
         }
         else {
             // lift.brake();
