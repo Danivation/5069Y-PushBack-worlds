@@ -47,8 +47,8 @@ void hold_stack() {
 
 void load() {
     cone.brake();
-    setLiftTo(14.9);
-    setWristTo(128.5);
+    setLiftTo(14.7);
+    setWristTo(127);
 }
 
 void grab() {
