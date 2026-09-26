@@ -40,7 +40,12 @@ void intake_cup() {
 }
 
 void hold_stack() {
-    if (getLiftPosition() < 22) setLiftTo(30);
+    // if stack is in intake
+    if (getLiftPosition() < 22 && getWristPosition() < 90) setLiftTo(30);
+    hold_vertical();
+}
+
+void hold_vertical() {
     setWristTo(121);
 }
 
@@ -315,7 +320,7 @@ void LiftControl() {
     while (true) {
         if (master.get_digital(LIFT_UP)) {
             lift_has_pid_control = false;
-            if (getLiftPosition() < 22) hold_stack();
+            if (getLiftPosition() < 22) hold_vertical();
             delay(10);
             lift.move(127);
             waitUntilCondition(!master.get_digital(LIFT_UP));

@@ -5,7 +5,7 @@
 
 void intake_pin();
 void intake_cup();
-void intake_flip();
+void hold_vertical();
 void hold_stack();
 void load();
 void grab();
