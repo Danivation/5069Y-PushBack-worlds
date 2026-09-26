@@ -1,5 +1,3 @@
-#include "driver.hpp"
-#include "danielib/exit.hpp"
 #include "main.h"
 
 /* ---------------------------------------------------------------------------------------------- */
@@ -23,8 +21,6 @@
 #define SCORING_MACRO           DIGITAL_Y
 #define OUTTAKE_MACRO           DIGITAL_RIGHT
 
-
-
 /* ---------------------------------------------------------------------------------------------- */
 /*                                          MACRO TUNINGS                                         */
 /* ---------------------------------------------------------------------------------------------- */
@@ -39,14 +35,14 @@ void intake_cup() {
     setLiftTo(17.7);
 }
 
-void hold_stack() {
-    // if stack is in intake
-    if (getLiftPosition() < 22 && getWristPosition() < 90) setLiftTo(30);
-    hold_vertical();
+void hold_vertical() {
+    setWristTo(115);
 }
 
-void hold_vertical() {
-    setWristTo(121);
+void hold_stack() {
+    hold_vertical();
+    // if stack is in intake OR just came from match loader
+    if (getLiftPosition() < 22) setLiftTo(30);
 }
 
 void load() {
@@ -65,55 +61,75 @@ void grab() {
 }
 
 void score() {
-
+    cone.move(127);
+    hold_vertical();
+    setLiftTo(0);
+    delay(500);
+    cone.move(-127);
 }
 
-void a0() {
+// ALLIANCE GOAL HEIGHTS
 
+void a0() {
+    // hold_vertical();
+    // setLiftTo(17);
 }
 
 void a1() {
-
+    hold_vertical();
+    setLiftTo(17);
 }
 
 void a2() {
-
+    hold_vertical();
+    setLiftTo(17);
 }
 
 void a3() {
-
+    hold_vertical();
+    setLiftTo(17);
 }
 
 void a4() {
-
+    hold_vertical();
+    setLiftTo(17);
 }
 
 void a5() {
-
+    hold_vertical();
+    setLiftTo(17);
 }
 
-void n0() {
+// NEUTRAL GOAL HEIGHTS
 
+void n0() {
+    setWristTo(126);
+    setLiftTo(20);
 }
 
 void n1() {
-
+    hold_vertical();
+    setLiftTo(20+15);
 }
 
 void n2() {
-
+    hold_vertical();
+    setLiftTo(20+15+15);
 }
 
 void n3() {
-
+    hold_vertical();
+    setLiftTo(20+15+15+15);
 }
 
 void n4() {
-
+    hold_vertical();
+    setLiftTo(20+15+15+15+15);
 }
 
 void n5() {
-
+    hold_vertical();
+    setLiftTo(20+15+15+15+15+15);
 }
 
 
@@ -141,7 +157,7 @@ bool inMatchLoadHoldPosition = false;
 
 
 /* ---------------------------------------------------------------------------------------------- */
-/*                               WRIST CONTROL / WRIST + LIFT MACROS                              */
+/*                                       LIFT + WRIST MACROS                                      */
 /* ---------------------------------------------------------------------------------------------- */
 
 
@@ -176,7 +192,7 @@ void WristControl() {
     }};
 
     /* ---------------------------------------------------------------------------------------------- */
-    /*                                       WRIST + LIFT MACROS                                      */
+    /*                                             MACROS                                             */
     /* ---------------------------------------------------------------------------------------------- */
 
     while (true) {
@@ -269,6 +285,50 @@ void WristControl() {
 
 
 /* ---------------------------------------------------------------------------------------------- */
+/*                                          LIFT CONTROL                                          */
+/* ---------------------------------------------------------------------------------------------- */
+
+
+
+void LiftControl() {
+    while (true) {
+        if (master.get_digital(LIFT_UP)) {
+            lift_has_pid_control = false;
+            if (getLiftPosition() < 22) hold_vertical();
+
+
+            delay(10);
+            lift.move(127);
+
+
+            waitUntilCondition(!master.get_digital(LIFT_UP));
+            lift.brake();
+            inMatchLoadHoldPosition = false;
+            readyForSecondPress = false;
+        }
+        else if (master.get_digital(LIFT_DOWN)) {
+            lift_has_pid_control = false;
+
+
+            delay(10);
+            lift.move(-90);
+
+
+            waitUntilCondition(!master.get_digital(LIFT_DOWN));
+            lift.brake();
+            inMatchLoadHoldPosition = false;
+            readyForSecondPress = false;
+        }
+        else {
+            // lift.brake();
+        }
+        delay(10);
+    }
+}
+
+
+
+/* ---------------------------------------------------------------------------------------------- */
 /*                                         INTAKE CONTROL                                         */
 /* ---------------------------------------------------------------------------------------------- */
 
@@ -303,42 +363,6 @@ void IntakeControl() {
                 waitUntilCondition(!master.get_digital(OUTTAKE_MACRO));
                 intake.brake();
             }
-        }
-        delay(10);
-    }
-}
-
-
-
-/* ---------------------------------------------------------------------------------------------- */
-/*                                          LIFT CONTROL                                          */
-/* ---------------------------------------------------------------------------------------------- */
-
-
-
-void LiftControl() {
-    while (true) {
-        if (master.get_digital(LIFT_UP)) {
-            lift_has_pid_control = false;
-            if (getLiftPosition() < 22) hold_vertical();
-            delay(10);
-            lift.move(127);
-            waitUntilCondition(!master.get_digital(LIFT_UP));
-            lift.brake();
-            inMatchLoadHoldPosition = false;
-            readyForSecondPress = false;
-        }
-        else if (master.get_digital(LIFT_DOWN)) {
-            lift_has_pid_control = false;
-            delay(10);
-            lift.move(-127);
-            waitUntilCondition(!master.get_digital(LIFT_DOWN));
-            lift.brake();
-            inMatchLoadHoldPosition = false;
-            readyForSecondPress = false;
-        }
-        else {
-            // lift.brake();
         }
         delay(10);
     }

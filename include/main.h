@@ -19,6 +19,7 @@
 #include "api.h" // IWYU pragma: keep
 #include "lemlib/api.hpp" // IWYU pragma: keep
 #include "danielib/danielib.hpp" // IWYU pragma: keep
+#include "danielib/exit.hpp" // IWYU pragma: keep
 
 #ifdef __cplusplus
 #include <math.h> // IWYU pragma: keep
