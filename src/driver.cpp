@@ -253,7 +253,7 @@ void WristControl() {
             inMatchLoadHoldPosition = false;
             wrist_has_pid_control = false;
             delay(10);
-            wrist.move(50);
+            wrist.move(60);
             waitUntilCondition(!master.get_digital(WRIST_UP_MANUAL));
             wrist.brake();
             // setWristTo(getWristPosition());
@@ -264,7 +264,7 @@ void WristControl() {
             inMatchLoadHoldPosition = false;
             wrist_has_pid_control = false;
             delay(10);
-            wrist.move(-50);
+            wrist.move(-60);
             waitUntilCondition(!master.get_digital(WRIST_DOWN_MANUAL));
             wrist.brake();
             // setWristTo(getWristPosition());
@@ -282,7 +282,7 @@ void LiftControl() {
             lift_has_pid_control = false;
             if (inMatchLoadHoldPosition) setWristTo(121);
             delay(10);
-            lift.move(100);
+            lift.move(127);
             waitUntilCondition(!master.get_digital(LIFT_UP));
             lift.brake();
             inMatchLoadHoldPosition = false;
@@ -291,7 +291,7 @@ void LiftControl() {
         else if (master.get_digital(LIFT_DOWN)) {
             lift_has_pid_control = false;
             delay(10);
-            lift.move(-60);
+            lift.move(-100);
             waitUntilCondition(!master.get_digital(LIFT_DOWN));
             lift.brake();
             inMatchLoadHoldPosition = false;
