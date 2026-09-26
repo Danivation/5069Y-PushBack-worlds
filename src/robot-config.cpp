@@ -52,9 +52,9 @@ pros::adi::Pneumatics loader('G', false);
 /* ---------------------------------------------------------------------------------------------- */
 
 // DR6B LIFT PID
-danielib::PID liftPID(5.9, 0.12, 55, 4, 0, 0, 0);
+danielib::PID liftPID(6.4, 0.15, 55, 5, 0, 0, 0);
 // WRIST PID
-danielib::PID wristPID(3.4, 0.04, 0, 6, 0, 0, 0);
+danielib::PID wristPID(2.9, 0.05, 10, 5, 0, 0, 0);
 
 
 
