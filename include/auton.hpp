@@ -3,6 +3,7 @@
 
 extern pros::Color WrongColor;
 
+void auton_test();
 void auton_none();
 
 void auton_flower_3pin_mir();

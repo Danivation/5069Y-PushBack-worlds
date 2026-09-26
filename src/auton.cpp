@@ -174,19 +174,17 @@ void clasp_pos() {
 /* ---------------------------------------------------------------------------------------------- */
 
 
-
 void auton_test() {
-    c_danielib.setPose(0, -2_tiles, 90);
-    c_lemlib.setPose(0, -2_tiles, 90);
+    c_danielib.setPose(0, 0, 0);
+    c_lemlib.setPose(0, 0, 0);
 
-    fast_drop_prime(neutral);
-    delay(2000);
-    c_lemlib.moveToPoint(-1_tiles, -2_tiles, 1500, {.forwards = false, .minSpeed = 15, .earlyExitRange = 9.5});
-    c_lemlib.waitUntilDone();
-    fast_drop(40);
-    c_danielib.driveForDistance(24, 1500);
-    c_danielib.waitUntilDone();
+    load();
+    c_danielib.driveForDistance(-20, 1000);
+    grab();
+    c_danielib.driveForDistance(20, 1000);
+    hold_stack();
 }
+
 
 
 void auton_wesley_stacks_mir() {

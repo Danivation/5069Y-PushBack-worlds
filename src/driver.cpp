@@ -71,33 +71,33 @@ void score() {
 // ALLIANCE GOAL HEIGHTS
 
 void a0() {
-    // hold_vertical();
-    // setLiftTo(17);
+    hold_vertical();
+    setLiftTo(16);
 }
 
 void a1() {
     hold_vertical();
-    setLiftTo(17);
+    setLiftTo(16+15);
 }
 
 void a2() {
     hold_vertical();
-    setLiftTo(17);
+    setLiftTo(16+15+15);
 }
 
 void a3() {
     hold_vertical();
-    setLiftTo(17);
+    setLiftTo(16+15+15+15);
 }
 
 void a4() {
     hold_vertical();
-    setLiftTo(17);
+    setLiftTo(16+15+15+15+15);
 }
 
 void a5() {
     hold_vertical();
-    setLiftTo(17);
+    setLiftTo(16+15+15+15+15+15);
 }
 
 // NEUTRAL GOAL HEIGHTS
@@ -145,13 +145,6 @@ void n5() {
 
 
 
-std::atomic<bool> driving = true;
-std::atomic<bool> intake_control = true;
-std::atomic<bool> wrist_control = true;
-std::atomic<bool> lift_has_pid_control = false;
-std::atomic<bool> wrist_has_pid_control = false;
-bool readyForSecondPress = false;
-bool inMatchLoadHoldPosition = false;
 
 
 
@@ -160,6 +153,13 @@ bool inMatchLoadHoldPosition = false;
 /*                                       LIFT + WRIST MACROS                                      */
 /* ---------------------------------------------------------------------------------------------- */
 
+std::atomic<bool> driving = true;
+std::atomic<bool> intake_control = true;
+std::atomic<bool> wrist_control = true;
+std::atomic<bool> lift_has_pid_control = false;
+std::atomic<bool> wrist_has_pid_control = false;
+bool readyForSecondPress = false;
+bool inMatchLoadHoldPosition = false;
 
 void WristControl() {
     bool inPinPosition = false;
