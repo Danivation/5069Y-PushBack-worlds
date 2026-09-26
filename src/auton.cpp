@@ -83,21 +83,19 @@ void cup_task() {
             // first distance check
             if (inPinPosition && pin_dist.get_distance() < 150) {
 
-            // delay 300 for pin
-            delay(300);
+            // delay 200 for pin
+            delay(200);
 
             // second distance check
             if (pin_dist.get_distance() < 150) {
 
-            // delay 50 to make sure its still there
-            delay(50);
+            // delay 100, check again
+            delay(100);
 
             // third distance check
             if (pin_dist.get_distance() < 150) {
                 inPinPosition = false;
-                setLiftTo(16.5);
-                if (isCupOrPinOnly) setWristTo(32);
-                else setWristTo(18);
+                intake_cup();
             }
             }
             }

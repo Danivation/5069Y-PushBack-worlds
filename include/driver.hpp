@@ -1,6 +1,31 @@
 #pragma once
 #include "pros/rtos.hpp"
 
+
+
+void intake_pin();
+void intake_cup();
+void intake_flip();
+void hold_stack();
+void load();
+void grab();
+void score();
+void a0();
+void a1();
+void a2();
+void a3();
+void a4();
+void a5();
+void n0();
+void n1();
+void n2();
+void n3();
+void n4();
+void n5();
+
+
+
+
 void DrivetrainControl();
 void IntakeControl();
 void LiftControl();

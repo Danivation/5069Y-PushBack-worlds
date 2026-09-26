@@ -1,3 +1,4 @@
+#include "driver.hpp"
 #include "danielib/exit.hpp"
 #include "main.h"
 
@@ -14,25 +15,337 @@
 #define LIFT_UP                 DIGITAL_L1
 #define LIFT_DOWN               DIGITAL_L2
 
+#define WRIST_UP_MANUAL         DIGITAL_UP
+#define WRIST_DOWN_MANUAL       DIGITAL_LEFT
+
 #define MATCHLOAD_MACRO         DIGITAL_DOWN
 #define INTAKE_MACRO            DIGITAL_B
 #define SCORING_MACRO           DIGITAL_Y
 #define OUTTAKE_MACRO           DIGITAL_RIGHT
 
-#define WRIST_UP_MANUAL         DIGITAL_UP
-#define WRIST_DOWN_MANUAL       DIGITAL_LEFT
 
-pros::Task* liftPIDTask = nullptr;
-pros::Task* wristPIDTask = nullptr;
 
-float liftCurrentTarget = 0;
-float wristCurrentTarget = 0;
+/* ---------------------------------------------------------------------------------------------- */
+/*                                          MACRO TUNINGS                                         */
+/* ---------------------------------------------------------------------------------------------- */
+
+void intake_pin() {
+    setLiftTo(17.1);
+    setWristTo(-10.5);
+}
+
+void intake_cup() {
+    setWristTo(30);
+    setLiftTo(17.7);
+}
+
+void hold_stack() {
+    if (getLiftPosition() < 22) setLiftTo(30);
+    setWristTo(121);
+}
+
+void load() {
+    cone.brake();
+    setLiftTo(14.9);
+    setWristTo(128.5);
+}
+
+void grab() {
+    cone.move(127);
+    setLiftTo(-1.5);
+    setWristTo(119);
+    delay(500);
+    setLiftTo(9.5);
+    setWristTo(135);
+}
+
+void score() {
+
+}
+
+void a0() {
+
+}
+
+void a1() {
+
+}
+
+void a2() {
+
+}
+
+void a3() {
+
+}
+
+void a4() {
+
+}
+
+void a5() {
+
+}
+
+void n0() {
+
+}
+
+void n1() {
+
+}
+
+void n2() {
+
+}
+
+void n3() {
+
+}
+
+void n4() {
+
+}
+
+void n5() {
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 std::atomic<bool> driving = true;
 std::atomic<bool> intake_control = true;
 std::atomic<bool> wrist_control = true;
 std::atomic<bool> lift_has_pid_control = false;
 std::atomic<bool> wrist_has_pid_control = false;
+bool readyForSecondPress = false;
+bool inMatchLoadHoldPosition = false;
+
+
+
+
+/* ---------------------------------------------------------------------------------------------- */
+/*                               WRIST CONTROL / WRIST + LIFT MACROS                              */
+/* ---------------------------------------------------------------------------------------------- */
+
+
+void WristControl() {
+    bool inPinPosition = false;
+
+    // CHECK FOR INTAKE POSITION FIRST
+    pros::Task driverCupTask {[&] {
+        while (true) {
+            
+            // first distance check
+            if (inPinPosition && pin_dist.get_distance() < 150) {
+
+            // delay 200 for pin
+            delay(200);
+
+            // second distance check
+            if (pin_dist.get_distance() < 150) {
+
+            // delay 100, check again
+            delay(100);
+
+            // third distance check
+            if (pin_dist.get_distance() < 150) {
+                inPinPosition = false;
+                intake_cup();
+            }
+            }
+            }
+        delay(10);
+        }
+    }};
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                       WRIST + LIFT MACROS                                      */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    while (true) {
+
+        // MATCHLOAD POSITIONS
+        if (master.get_digital_new_press(MATCHLOAD_MACRO)) {
+
+            if (!readyForSecondPress) {
+                // LOAD HEIGHT
+                inPinPosition = false;
+                cone.brake();
+                load();
+
+                inMatchLoadHoldPosition = false;
+                readyForSecondPress = true;
+
+            } 
+            else {
+                // LOAD DOWN
+                inPinPosition = false;
+                grab();
+
+                readyForSecondPress = false;
+                inMatchLoadHoldPosition = true;
+            }
+
+        } 
+        // INTAKE PIN POSITION
+        else if (master.get_digital_new_press(INTAKE_MACRO)) {
+
+            readyForSecondPress = false;
+            inMatchLoadHoldPosition = false;
+            intake_pin();
+
+            inPinPosition = true;
+
+        } 
+        // HOLD STACK VERTICAL POSITION
+        else if (master.get_digital_new_press(SCORING_MACRO)) {
+
+            readyForSecondPress = false;
+            inPinPosition = false;
+            inMatchLoadHoldPosition = false;
+
+            hold_stack();
+
+        } 
+
+        /* ---------------------------------------------------------------------------------------------- */
+        /*                                      MANUAL WRIST CONTROL                                      */
+        /* ---------------------------------------------------------------------------------------------- */
+
+        // MANUAL WRIST UP
+        else if (master.get_digital(WRIST_UP_MANUAL)) {
+            inPinPosition = false;
+            readyForSecondPress = false;
+            inMatchLoadHoldPosition = false;
+            wrist_has_pid_control = false;
+
+
+            delay(10);
+            wrist.move(60);
+
+
+            waitUntilCondition(!master.get_digital(WRIST_UP_MANUAL));
+            wrist.brake();
+        } 
+        // MANUAL WRIST DOWN
+        else if (master.get_digital(WRIST_DOWN_MANUAL)) {
+            inPinPosition = false;
+            readyForSecondPress = false;
+            inMatchLoadHoldPosition = false;
+            wrist_has_pid_control = false;
+
+
+            delay(10);
+            wrist.move(-60);
+
+
+            waitUntilCondition(!master.get_digital(WRIST_DOWN_MANUAL));
+            wrist.brake();
+        } 
+        else {
+            // wrist.brake();
+        }
+        delay(10);
+    }
+}
+
+
+
+/* ---------------------------------------------------------------------------------------------- */
+/*                                         INTAKE CONTROL                                         */
+/* ---------------------------------------------------------------------------------------------- */
+
+
+
+void IntakeControl() {
+    while (true) {
+        if (intake_control) {
+            if (master.get_digital(INTAKE)) {
+                cone.move(127);
+                if (getLiftPosition() < 30) intake.move(127);
+                else intake.brake();
+
+                
+                waitUntilCondition(!master.get_digital(INTAKE));
+                intake.brake();
+                cone.brake();
+            }
+            else if (master.get_digital(OUTTAKE)) {
+                cone.move(-127);
+                if (getLiftPosition() < 30) intake.move(-127);
+                else intake.brake();
+
+
+                waitUntilCondition(!master.get_digital(OUTTAKE));
+                intake.brake();
+                cone.brake();
+            }
+            else if (master.get_digital(OUTTAKE_MACRO)) {
+                intake.move(-127);
+
+                waitUntilCondition(!master.get_digital(OUTTAKE_MACRO));
+                intake.brake();
+            }
+        }
+        delay(10);
+    }
+}
+
+
+
+/* ---------------------------------------------------------------------------------------------- */
+/*                                          LIFT CONTROL                                          */
+/* ---------------------------------------------------------------------------------------------- */
+
+
+
+void LiftControl() {
+    while (true) {
+        if (master.get_digital(LIFT_UP)) {
+            lift_has_pid_control = false;
+            if (getLiftPosition() < 22) hold_stack();
+            delay(10);
+            lift.move(127);
+            waitUntilCondition(!master.get_digital(LIFT_UP));
+            lift.brake();
+            inMatchLoadHoldPosition = false;
+            readyForSecondPress = false;
+        }
+        else if (master.get_digital(LIFT_DOWN)) {
+            lift_has_pid_control = false;
+            delay(10);
+            lift.move(-127);
+            waitUntilCondition(!master.get_digital(LIFT_DOWN));
+            lift.brake();
+            inMatchLoadHoldPosition = false;
+            readyForSecondPress = false;
+        }
+        else {
+            // lift.brake();
+        }
+        delay(10);
+    }
+}
+
+
+
+/* ---------------------------------------------------------------------------------------------- */
+/*                                       DRIVETRAIN CONTROL                                       */
+/* ---------------------------------------------------------------------------------------------- */
+
+
 
 void DrivetrainControl() {
     float throttle;
@@ -48,19 +361,39 @@ void DrivetrainControl() {
     }
 }
 
+
+
+
+
+
 /* ---------------------------------------------------------------------------------------------- */
-/*                                        LIFT CONTROL PIDS                                       */
+/*                                         LIFT/WRIST PIDS                                        */
 /* ---------------------------------------------------------------------------------------------- */
 
+
+pros::Task* liftPIDTask = nullptr;
+pros::Task* wristPIDTask = nullptr;
+float liftCurrentTarget = 0;
+float wristCurrentTarget = 0;
 float getLiftPosition() {
     return (float)(lift_rot.get_position())/100.0f;
 }
-
 float getWristPosition() {
     return (float)(wrist_rot.get_position())/300.0f;
 }
+void setLiftTo(float target) {
+    lift_has_pid_control = true;
+    liftCurrentTarget = target;
+}
+void setWristTo(float target) {
+    wrist_has_pid_control = true;
+    wristCurrentTarget = target;
+}
+
+
 
 void startLiftWristPIDS() {
+
     liftPIDTask = new pros::Task {[&] {
         const int startTime = pros::millis();
         danielib::ExitCondition liftExit(liftPID.exitRange, liftPID.exitTime);
@@ -89,6 +422,8 @@ void startLiftWristPIDS() {
         lift.brake();
     }};
 
+
+
     wristPIDTask = new pros::Task {[&] {
         const int startTime = pros::millis();
         danielib::ExitCondition wristExit(wristPID.exitRange, wristPID.exitTime);
@@ -116,190 +451,4 @@ void startLiftWristPIDS() {
 
         wrist.brake();
     }};
-}
-
-void setLiftTo(float target) {
-    lift_has_pid_control = true;
-    liftCurrentTarget = target;
-}
-
-void setWristTo(float target) {
-    wrist_has_pid_control = true;
-    wristCurrentTarget = target;
-}
-
-
-
-
-/* ---------------------------------------------------------------------------------------------- */
-/*                                    INTAKE AND WRIST CONTROLS                                   */
-/* ---------------------------------------------------------------------------------------------- */
-
-
-
-void IntakeControl() {
-    while (true) {
-        if (intake_control) {
-            if (master.get_digital(INTAKE)) {
-                cone.move(127);
-                if (getLiftPosition() < 28) intake.move(127);
-                else intake.brake();
-
-                
-                waitUntilCondition(!master.get_digital(INTAKE));
-                intake.brake();
-                cone.brake();
-            }
-            else if (master.get_digital(OUTTAKE)) {
-                cone.move(-127);
-                if (getLiftPosition() < 28) intake.move(-127);
-                else intake.brake();
-
-                waitUntilCondition(!master.get_digital(OUTTAKE));
-                intake.brake();
-                cone.brake();
-            }
-            else if (master.get_digital(OUTTAKE_MACRO)) {
-                intake.move(-127);
-
-                waitUntilCondition(!master.get_digital(OUTTAKE_MACRO));
-                intake.brake();
-            }
-        }
-        delay(10);
-    }
-}
-
-
-bool readyForSecondPress = false;
-bool inMatchLoadHoldPosition = false;
-
-void WristControl() {
-    bool inPinPosition = false;
-
-    // CHECK FOR INTAKE POSITION FIRST
-    pros::Task cupIntakeTask {[&] {
-        while (true) {
-            if (inPinPosition) {
-                if (pin_dist.get_distance() < 150) {
-                    // wait 300 ms to make sure the pins still there
-                    delay(200);
-                    if (pin_dist.get_distance() < 150) {
-                        // wait 50 ms to double check
-                        delay(100);
-                        if (pin_dist.get_distance() < 150) {
-                            inPinPosition = false;
-                            setWristTo(30);
-                            setLiftTo(17.7);
-                        }
-                    }
-                }
-            }
-            delay(10);
-        }
-    }};
-
-
-    while (true) {
-
-        // MAIN BUTTON LOGIC
-        if (master.get_digital_new_press(MATCHLOAD_MACRO)) {
-
-            // MATCH LOAD POSITION
-            if (!readyForSecondPress) {
-                inPinPosition = false;
-                inMatchLoadHoldPosition = false;
-                readyForSecondPress = true;
-                cone.brake();
-                setLiftTo(14.9);
-                setWristTo(128.5);
-
-            } else {
-                // MATCH LOAD MACRO DOWN
-                inPinPosition = false;
-                cone.move(127);
-                setLiftTo(-1.5);
-                setWristTo(119);
-                delay(500);
-                setLiftTo(9.5);
-                setWristTo(135);
-                readyForSecondPress = false;
-                inMatchLoadHoldPosition = true;
-            }
-
-        } else if (master.get_digital_new_press(INTAKE_MACRO)) {
-
-            // PIN LOADING POSITION
-            readyForSecondPress = false;
-            inMatchLoadHoldPosition = false;
-            setLiftTo(17.1);
-            setWristTo(-10.5);
-            int startTime = pros::millis();
-            waitUntilCondition((getWristPosition() > -140 && getWristPosition() < -125 && getLiftPosition() > 5 && getLiftPosition() < 25) || pros::millis() + 500 > startTime);
-            inPinPosition = true;
-
-        } else if (master.get_digital_new_press(SCORING_MACRO)) {
-
-            // SCORING (VERTICAL)
-            readyForSecondPress = false;
-            inPinPosition = false;
-            inMatchLoadHoldPosition = false;
-            setWristTo(121);
-            if (getLiftPosition() < 22) setLiftTo(31);
-
-        } else if (master.get_digital(WRIST_UP_MANUAL)) {
-            inPinPosition = false;
-            readyForSecondPress = false;
-            inMatchLoadHoldPosition = false;
-            wrist_has_pid_control = false;
-            delay(10);
-            wrist.move(60);
-            waitUntilCondition(!master.get_digital(WRIST_UP_MANUAL));
-            wrist.brake();
-            // setWristTo(getWristPosition());
-            // wrist_has_pid_control = true;
-        } else if (master.get_digital(WRIST_DOWN_MANUAL)) {
-            inPinPosition = false;
-            readyForSecondPress = false;
-            inMatchLoadHoldPosition = false;
-            wrist_has_pid_control = false;
-            delay(10);
-            wrist.move(-60);
-            waitUntilCondition(!master.get_digital(WRIST_DOWN_MANUAL));
-            wrist.brake();
-            // setWristTo(getWristPosition());
-            // wrist_has_pid_control = true;
-        } else {
-            // wrist.brake();
-        }
-        delay(10);
-    }
-}
-
-void LiftControl() {
-    while (true) {
-        if (master.get_digital(LIFT_UP)) {
-            lift_has_pid_control = false;
-            if (inMatchLoadHoldPosition) setWristTo(121);
-            delay(10);
-            lift.move(127);
-            waitUntilCondition(!master.get_digital(LIFT_UP));
-            lift.brake();
-            inMatchLoadHoldPosition = false;
-            readyForSecondPress = false;
-        }
-        else if (master.get_digital(LIFT_DOWN)) {
-            lift_has_pid_control = false;
-            delay(10);
-            lift.move(-100);
-            waitUntilCondition(!master.get_digital(LIFT_DOWN));
-            lift.brake();
-            inMatchLoadHoldPosition = false;
-            readyForSecondPress = false;
-        }
-        else {
-            // lift.brake();
-        }
-        delay(10);
-    }
 }
