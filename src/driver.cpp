@@ -50,6 +50,12 @@ void flipOut() {
     holdStack();
 }
 
+void hover() {
+    cone.brake();
+    setLiftTo(17);
+    setWristTo(122);
+}
+
 void load() {
     cone.brake();
     setLiftTo(15.1);
@@ -58,9 +64,9 @@ void load() {
 
 void grab() {
     cone.move(127);
-    setLiftTo(-2);
-    setWristTo(115);
-    delay(500);
+    setWristTo(120);
+    setLiftTo(-5);
+    delay(600);
     setLiftTo(9.5);
     setWristTo(135);
 }
@@ -71,72 +77,74 @@ void score() {
     delay(500);
     cone.move(-127);
     holdVertical();
-    setLiftTo(getLiftPosition() + 15);
-    delay(300);
+    setLiftTo(getLiftPosition() + 20);
+    delay(400);
 }
 
 // ALLIANCE GOAL HEIGHTS
+float allianceBase = 19;
 
 void a0() {
-    setWristTo(93);
-    setLiftTo(16);
+    setWristTo(96);
+    setLiftTo(allianceBase);
 }
 
 void a1() {
     holdVertical();
-    setLiftTo(16+15);
+    setLiftTo(allianceBase+15);
 }
 
 void a2() {
     holdVertical();
-    setLiftTo(16+15+15);
+    setLiftTo(allianceBase+15+15);
 }
 
 void a3() {
     holdVertical();
-    setLiftTo(16+15+15+15);
+    setLiftTo(allianceBase+15+15+15);
 }
 
 void a4() {
     holdVertical();
-    setLiftTo(16+15+15+15+15);
+    setLiftTo(allianceBase+15+15+15+15);
 }
 
 void a5() {
     holdVertical();
-    setLiftTo(16+15+15+15+15+15);
+    setLiftTo(allianceBase+15+15+15+15+15);
 }
 
 // NEUTRAL GOAL HEIGHTS
+float neutralBase = 22;
 
 void n0() {
     setWristTo(126);
-    setLiftTo(20);
+    setLiftTo(neutralBase);
 }
 
 void n1() {
     holdVertical();
-    setLiftTo(20+15);
+    setLiftTo(neutralBase+15);
 }
 
 void n2() {
     holdVertical();
-    setLiftTo(20+15+15);
+    setLiftTo(neutralBase+15+15);
 }
 
 void n3() {
     holdVertical();
-    setLiftTo(20+15+15+15);
+    setLiftTo(neutralBase+15+15+15);
 }
 
 void n4() {
     holdVertical();
-    setLiftTo(20+15+15+15+15);
+    setLiftTo(neutralBase+15+15+15+15);
 }
 
 void n5() {
     holdVertical();
-    setLiftTo(20+15+15+15+15+15);
+    setLiftTo(neutralBase+15+15+15+15+15);
 }
 
 

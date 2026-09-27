@@ -66,34 +66,34 @@ void auton_test() {
     intake.brake();
     c_lemlib.moveToPoint(3, -2_tiles, 500);
     c_lemlib.turnToHeading(-135, 400);
-    load();
-    c_lemlib.moveToPoint(18, -30, 2000, {.forwards = false, .maxSpeed = 80, .minSpeed = 15, .earlyExitRange = 3});
+    hover();
+    c_lemlib.moveToPoint(18.5, -30, 2000, {.forwards = false, .maxSpeed = 80, .minSpeed = 15, .earlyExitRange = 3});
     c_lemlib.waitUntilDone();
-    c_danielib.driveForDistance(-8, 800, 15);
+    c_danielib.driveForDistance(-10, 1000, 15);
     c_danielib.driveForDistance(2, 300);
     grab();
 
     // score it
     a1();
     c_lemlib.turnToHeading(0, 350);
-    c_lemlib.moveToPoint(23, -44, 1500, {.forwards = false});
+    c_lemlib.moveToPoint(23, -43, 1000, {.forwards = false});
     c_lemlib.waitUntilDone();
     score();
 
     // grab outside stack
     c_lemlib.moveToPoint(24, -28, 500);
     c_lemlib.turnToHeading(-50, 400);
-    load();
-    c_lemlib.moveToPoint(42, -42, 2000, {.forwards = false, .maxSpeed = 80, .minSpeed = 15, .earlyExitRange = 3});
+    hover();
+    c_lemlib.moveToPoint(40, -40, 2000, {.forwards = false, .maxSpeed = 80, .minSpeed = 15, .earlyExitRange = 3});
     c_lemlib.waitUntilDone();
-    c_danielib.driveForDistance(-8, 800, 15);
+    c_danielib.driveForDistance(-10, 1000, 15);
     c_danielib.driveForDistance(2, 300);
     grab();
 
     // score it
-    a1();
+    a2();
     c_lemlib.turnToHeading(90, 350);
-    c_lemlib.moveToPoint(23, -44, 1500, {.forwards = false});
+    c_lemlib.moveToPoint(29, -47, 1000, {.forwards = false});
     c_lemlib.waitUntilDone();
     score();
 

@@ -8,6 +8,7 @@ void intakeCup();
 void holdVertical();
 void holdStack();
 void flipOut();
+void hover();
 void load();
 void grab();
 void score();
