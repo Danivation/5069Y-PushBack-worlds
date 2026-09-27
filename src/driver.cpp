@@ -52,8 +52,8 @@ void flipOut() {
 
 void load() {
     cone.brake();
-    setLiftTo(14.7);
-    setWristTo(127);
+    setLiftTo(15.1);
+    setWristTo(128.5);
 }
 
 void grab() {
@@ -78,7 +78,7 @@ void score() {
 // ALLIANCE GOAL HEIGHTS
 
 void a0() {
-    setWristTo(80);
+    setWristTo(93);
     setLiftTo(16);
 }
 
