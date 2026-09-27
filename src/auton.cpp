@@ -48,8 +48,33 @@ void auton_test() {
     // move to alliance
     c_lemlib.moveToPoint(-8, -2_tiles, 500);
     c_lemlib.turnToHeading(-110, 300);
-    c_lemlib.moveToPoint(19, -49, 1500, {.forwards = false});
+    c_lemlib.moveToPoint(19, -47.5, 1200, {.forwards = false});
+    delay(300);
     flipOut();
+    delay(300);
+    a0();
+    c_lemlib.waitUntilDone();
+
+    // score alliance goal
+    score();
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                      PART 2: YELLOW STACKS                                     */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // grab inside stack
+    c_lemlib.moveToPoint(5, -2_tiles, 450);
+    c_lemlib.turnToHeading(-140, 200);
+    load();
+    c_lemlib.moveToPoint(24, -24, 2000, {.forwards = false, .maxSpeed = 80, .minSpeed = 30, .earlyExitRange = 12});
+    c_lemlib.waitUntilDone();
+    c_danielib.driveForDistance(-8, 1000, 20);
+    grab();
+
+
+
+
+    delay(1000);
 
 
 

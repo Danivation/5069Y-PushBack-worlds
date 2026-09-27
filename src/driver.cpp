@@ -1,3 +1,4 @@
+#include "driver.hpp"
 #include "main.h"
 
 /* ---------------------------------------------------------------------------------------------- */
@@ -39,14 +40,14 @@ void holdVertical() {
     setWristTo(115);
 }
 
-void flipOut() {
-    holdStack();
-}
-
 void holdStack() {
     holdVertical();
     // if stack is in intake OR just came from match loader
     if (getLiftPosition() < 22) setLiftTo(30);
+}
+
+void flipOut() {
+    holdStack();
 }
 
 void load() {
@@ -57,8 +58,8 @@ void load() {
 
 void grab() {
     cone.move(127);
-    setLiftTo(-1.5);
-    setWristTo(119);
+    setLiftTo(-2);
+    setWristTo(115);
     delay(500);
     setLiftTo(9.5);
     setWristTo(135);
@@ -66,16 +67,18 @@ void grab() {
 
 void score() {
     cone.move(127);
-    holdVertical();
     setLiftTo(0);
     delay(500);
     cone.move(-127);
+    holdVertical();
+    setLiftTo(getLiftPosition() + 15);
+    delay(300);
 }
 
 // ALLIANCE GOAL HEIGHTS
 
 void a0() {
-    holdVertical();
+    setWristTo(80);
     setLiftTo(16);
 }
 
