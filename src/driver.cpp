@@ -25,22 +25,26 @@
 /*                                          MACRO TUNINGS                                         */
 /* ---------------------------------------------------------------------------------------------- */
 
-void intake_pin() {
+void intakePin() {
     setLiftTo(17.1);
     setWristTo(-10.5);
 }
 
-void intake_cup() {
+void intakeCup() {
     setWristTo(30);
     setLiftTo(17.7);
 }
 
-void hold_vertical() {
+void holdVertical() {
     setWristTo(115);
 }
 
-void hold_stack() {
-    hold_vertical();
+void flipOut() {
+    holdStack();
+}
+
+void holdStack() {
+    holdVertical();
     // if stack is in intake OR just came from match loader
     if (getLiftPosition() < 22) setLiftTo(30);
 }
@@ -62,7 +66,7 @@ void grab() {
 
 void score() {
     cone.move(127);
-    hold_vertical();
+    holdVertical();
     setLiftTo(0);
     delay(500);
     cone.move(-127);
@@ -71,32 +75,32 @@ void score() {
 // ALLIANCE GOAL HEIGHTS
 
 void a0() {
-    hold_vertical();
+    holdVertical();
     setLiftTo(16);
 }
 
 void a1() {
-    hold_vertical();
+    holdVertical();
     setLiftTo(16+15);
 }
 
 void a2() {
-    hold_vertical();
+    holdVertical();
     setLiftTo(16+15+15);
 }
 
 void a3() {
-    hold_vertical();
+    holdVertical();
     setLiftTo(16+15+15+15);
 }
 
 void a4() {
-    hold_vertical();
+    holdVertical();
     setLiftTo(16+15+15+15+15);
 }
 
 void a5() {
-    hold_vertical();
+    holdVertical();
     setLiftTo(16+15+15+15+15+15);
 }
 
@@ -108,27 +112,27 @@ void n0() {
 }
 
 void n1() {
-    hold_vertical();
+    holdVertical();
     setLiftTo(20+15);
 }
 
 void n2() {
-    hold_vertical();
+    holdVertical();
     setLiftTo(20+15+15);
 }
 
 void n3() {
-    hold_vertical();
+    holdVertical();
     setLiftTo(20+15+15+15);
 }
 
 void n4() {
-    hold_vertical();
+    holdVertical();
     setLiftTo(20+15+15+15+15);
 }
 
 void n5() {
-    hold_vertical();
+    holdVertical();
     setLiftTo(20+15+15+15+15+15);
 }
 
@@ -150,7 +154,7 @@ void n5() {
 /*                                    INTAKE CUP DETECTION TASK                                   */
 /* ---------------------------------------------------------------------------------------------- */
 
-void cup_task() {
+void cupTask() {
     // CHECK FOR INTAKE POSITION FIRST
     pros::Task autoCupTask {[&] {
         while (true) {
@@ -170,7 +174,7 @@ void cup_task() {
             // third distance check
             if (pin_dist.get_distance() < 150) {
                 inPinPosition = false;
-                intake_cup();
+                intakeCup();
             }
             }
             }
@@ -194,7 +198,7 @@ bool inMatchLoadHoldPosition = false;
 bool inPinPosition = false;
 
 void WristControl() {
-    cup_task();
+    cupTask();
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                             MACROS                                             */
@@ -230,7 +234,7 @@ void WristControl() {
 
             readyForSecondPress = false;
             inMatchLoadHoldPosition = false;
-            intake_pin();
+            intakePin();
 
             inPinPosition = true;
 
@@ -242,7 +246,7 @@ void WristControl() {
             inPinPosition = false;
             inMatchLoadHoldPosition = false;
 
-            hold_stack();
+            holdStack();
 
         } 
 
@@ -299,7 +303,7 @@ void LiftControl() {
     while (true) {
         if (master.get_digital(LIFT_UP)) {
             lift_has_pid_control = false;
-            if (getLiftPosition() < 22) hold_vertical();
+            if (getLiftPosition() < 22) holdVertical();
 
 
             delay(10);

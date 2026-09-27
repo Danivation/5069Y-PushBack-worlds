@@ -14,14 +14,45 @@ using namespace pros;
 
 
 void auton_test() {
-    c_danielib.setPose(0, 0, 0);
-    c_lemlib.setPose(0, 0, 0);
+    c_danielib.setPose(-6.7, -61.5, 0);
+    c_lemlib.setPose(-6.7, -61.5, 0);
 
-    load();
-    c_danielib.driveForDistance(-20, 1000);
-    grab();
-    c_danielib.driveForDistance(20, 1000);
-    hold_stack();
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                      PART 0: DOUBLE TOGGLE                                     */
+    /* ---------------------------------------------------------------------------------------------- */
+    
+    // double toggle - drive out and lift
+    setLiftTo(65);
+    c_danielib.async().driveForDistance(10, 800, 120);
+    delay(300);
+    setLiftTo(0);
+    delay(300);
+    c_danielib.stopMovement();
+
+    // double toggle - drive back
+    c_danielib.async().driveForDistance(-24, 800, 100);
+    delay(100);
+    intakePin();
+    c_danielib.waitUntilDone();
+
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                    PART 1: ALLIANCE GOAL PIN                                   */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // intake preload into cone
+    intake.move(127);
+    cone.move(127);
+
+    // move to alliance
+    c_lemlib.moveToPoint(-8, -2_tiles, 500);
+    c_lemlib.turnToHeading(-110, 300);
+    c_lemlib.moveToPoint(19, -49, 1500, {.forwards = false});
+    flipOut();
+
+
+
 }
 
 
@@ -185,7 +216,7 @@ void auton_wesley_stacks_mir() {
     delay(100);
     intake.move(127);
     cone.move(127);
-    cup_task();
+    cupTask();
     c_lemlib.turnToHeading(60, 350);
     inPinPosition = false;
     delay(10);
@@ -338,7 +369,7 @@ void auton_one_stack_flower_mir() {
     delay(180);
     intake.move(127);
     cone.move(127);
-    cup_task();
+    cupTask();
     c_lemlib.waitUntilDone();
     c_lemlib.moveToPoint(0.2, -23.6, 1000, {.maxSpeed = 50});
     inPinPosition = false;
@@ -491,7 +522,7 @@ void auton_flower_3pin_mir() {
     delay(150);
     intake.move(127);
     cone.move(127);
-    cup_task();
+    cupTask();
     c_lemlib.waitUntilDone();
 
     // drive slow to intake cup
@@ -627,7 +658,7 @@ void auton_4pin_3stack_elims() {
     cone.move(127);
     c_lemlib.waitUntilDone();
     // delay(300);
-    cup_task();
+    cupTask();
     c_lemlib.turnToHeading(-50, 300);
     inPinPosition = false;
     delay(10);
@@ -796,7 +827,7 @@ void auton_4pin_3stack_elims_mir() {
     cone.move(127);
     c_lemlib.waitUntilDone();
     // delay(300);
-    cup_task();
+    cupTask();
     c_lemlib.turnToHeading(50, 300);
     inPinPosition = false;
     delay(10);
@@ -965,7 +996,7 @@ void auton_one_stack_elims() {
     delay(150);
     intake.move(127);
     cone.move(127);
-    cup_task();
+    cupTask();
     c_lemlib.waitUntilDone();
 
     // drive slow to intake cup
@@ -1124,7 +1155,7 @@ void auton_one_stack_flower() {
     delay(180);
     intake.move(127);
     cone.move(127);
-    cup_task();
+    cupTask();
     c_lemlib.waitUntilDone();
     c_lemlib.moveToPoint(-0.2, -23.6, 1000, {.maxSpeed = 50});
     inPinPosition = false;

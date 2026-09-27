@@ -3,10 +3,11 @@
 
 
 
-void intake_pin();
-void intake_cup();
-void hold_vertical();
-void hold_stack();
+void intakePin();
+void intakeCup();
+void holdVertical();
+void holdStack();
+void flipOut();
 void load();
 void grab();
 void score();
@@ -25,7 +26,7 @@ void n5();
 
 
 
-void cup_task();
+void cupTask();
 
 
 void DrivetrainControl();

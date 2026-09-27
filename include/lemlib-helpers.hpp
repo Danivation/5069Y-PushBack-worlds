@@ -2,6 +2,12 @@
 #include "danielib/danielib.hpp" // IWYU pragma: keep
 #include "pros/imu.hpp" // IWYU pragma: keep
 #include <cmath> // IWYU pragma: keep
+#include "pros/optical.hpp"
+
+
+
+pros::Color get_color(pros::Optical* sensor);
+bool waitUntilColor(pros::Optical* sensor, pros::Color color, int stopTime);
 
 /**
     * @brief Resets the pose based on distance sensors
