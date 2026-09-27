@@ -11,3 +11,5 @@ float DeadBand(float input, float width) {
 float ToVolt(float percent) {
     return (percent*12.0/100.0);
 }
+
+

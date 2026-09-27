@@ -146,26 +146,13 @@ void n5() {
 
 
 
-
-
-
 /* ---------------------------------------------------------------------------------------------- */
-/*                                       LIFT + WRIST MACROS                                      */
+/*                                    INTAKE CUP DETECTION TASK                                   */
 /* ---------------------------------------------------------------------------------------------- */
 
-std::atomic<bool> driving = true;
-std::atomic<bool> intake_control = true;
-std::atomic<bool> wrist_control = true;
-std::atomic<bool> lift_has_pid_control = false;
-std::atomic<bool> wrist_has_pid_control = false;
-bool readyForSecondPress = false;
-bool inMatchLoadHoldPosition = false;
-
-void WristControl() {
-    bool inPinPosition = false;
-
+void cup_task() {
     // CHECK FOR INTAKE POSITION FIRST
-    pros::Task driverCupTask {[&] {
+    pros::Task autoCupTask {[&] {
         while (true) {
             
             // first distance check
@@ -190,6 +177,24 @@ void WristControl() {
         delay(10);
         }
     }};
+}
+
+
+/* ---------------------------------------------------------------------------------------------- */
+/*                                       LIFT + WRIST MACROS                                      */
+/* ---------------------------------------------------------------------------------------------- */
+
+std::atomic<bool> driving = true;
+std::atomic<bool> intake_control = true;
+std::atomic<bool> wrist_control = true;
+std::atomic<bool> lift_has_pid_control = false;
+std::atomic<bool> wrist_has_pid_control = false;
+bool readyForSecondPress = false;
+bool inMatchLoadHoldPosition = false;
+bool inPinPosition = false;
+
+void WristControl() {
+    cup_task();
 
     /* ---------------------------------------------------------------------------------------------- */
     /*                                             MACROS                                             */

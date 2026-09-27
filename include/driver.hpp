@@ -25,6 +25,8 @@ void n5();
 
 
 
+void cup_task();
+
 
 void DrivetrainControl();
 void IntakeControl();
@@ -44,3 +46,5 @@ extern pros::Task* wristPIDTask;
 
 extern std::atomic<bool> lift_has_pid_control;
 extern std::atomic<bool> wrist_has_pid_control;
+
+extern bool inPinPosition;

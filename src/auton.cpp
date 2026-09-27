@@ -5,104 +5,91 @@
 #include "main.h"
 using namespace pros;
 
+
+
+
 /* ---------------------------------------------------------------------------------------------- */
-/*                                             HELPERS                                            */
+/*                                             AUTONS                                             */
 /* ---------------------------------------------------------------------------------------------- */
 
-pros::Color get_color(pros::Optical* sensor) {
-    // only return a color if a block is detected
-    if ((int)sensor->get_proximity() <= 60) {
-        return pros::Color::black;
-    }
 
-    float hue = sensor->get_hue();
-    // sort hue into colors
-    if (hue < 30 || hue > 330) {        // 330–360, 0–30
-        return pros::Color::red;
-    } else if (hue < 90) {              // 30–90
-        return pros::Color::yellow;
-    } else if (hue < 150) {             // 90–150
-        return pros::Color::green;
-    } else if (hue < 270) {             // 150–270
-        return pros::Color::blue;
-    } else {                            // 270–330
-        return pros::Color::white;
-    }
-}
-// returns true if exited due to color
-bool waitUntilColor(pros::Optical* sensor, pros::Color color, int stopTime) {
-    waitUntilFunction([&]{
-        if (millis() >= stopTime) {
-            return true;
-        } else if (get_color(sensor) == color) {
-            // wait 25 ms before checking again
-            delay(25);
-            if (get_color(sensor) == color) {
-                return true;
-            }
-        }
-        return false;
-    });
-    if (millis() >= stopTime) return false;
-    else return true;
+void auton_test() {
+    c_danielib.setPose(0, 0, 0);
+    c_lemlib.setPose(0, 0, 0);
+
+    load();
+    c_danielib.driveForDistance(-20, 1000);
+    grab();
+    c_danielib.driveForDistance(20, 1000);
+    hold_stack();
 }
 
 
 
-/* ---------------------------------------------------------------------------------------------- */
-/*                                         FAST DROP STUFF                                        */
-/* ---------------------------------------------------------------------------------------------- */
 
-bool inPinPosition = false;
-bool isCupOrPinOnly = true;
-enum GoalType {alliance, neutral, center};
-void fast_drop_prime(GoalType goalType) {
-    cone.move(127);
-    setWristTo(150);
-    if (goalType == alliance) {
-        setLiftTo(21.8);
-    } else if (goalType == neutral) {
-        setLiftTo(26.2);
-    }
-}
-void fast_drop(int liftPos) {
-    cone.move(-127);
-    setWristTo(120);
-    setLiftTo(liftPos);
-}
 
-/* ---------------------------------------------------------------------------------------------- */
-/*                                    INTAKE CUP DETECTION TASK                                   */
-/* ---------------------------------------------------------------------------------------------- */
 
-void cup_task() {
-    // CHECK FOR INTAKE POSITION FIRST
-    pros::Task autoCupTask {[&] {
-        while (true) {
-            
-            // first distance check
-            if (inPinPosition && pin_dist.get_distance() < 150) {
 
-            // delay 200 for pin
-            delay(200);
 
-            // second distance check
-            if (pin_dist.get_distance() < 150) {
 
-            // delay 100, check again
-            delay(100);
 
-            // third distance check
-            if (pin_dist.get_distance() < 150) {
-                inPinPosition = false;
-                intake_cup();
-            }
-            }
-            }
-        delay(10);
-        }
-    }};
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* ---------------------------------------------------------------------------------------------- */
 /*                                     MANUAL INTAKE POSITIONS                                    */
@@ -166,26 +153,6 @@ void clasp_pos() {
     delay(50);
     setLiftTo(0);
 }
-
-
-
-/* ---------------------------------------------------------------------------------------------- */
-/*                                             AUTONS                                             */
-/* ---------------------------------------------------------------------------------------------- */
-
-
-void auton_test() {
-    c_danielib.setPose(0, 0, 0);
-    c_lemlib.setPose(0, 0, 0);
-
-    load();
-    c_danielib.driveForDistance(-20, 1000);
-    grab();
-    c_danielib.driveForDistance(20, 1000);
-    hold_stack();
-}
-
-
 
 void auton_wesley_stacks_mir() {
     
