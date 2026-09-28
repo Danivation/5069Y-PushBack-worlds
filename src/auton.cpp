@@ -14,6 +14,19 @@ using namespace pros;
 
 
 void auton_test() {
+    c_danielib.setPose(0, 0, 0);
+    c_lemlib.setPose(0, 0, 0);
+
+    // c_lemlib.moveToPoint(12, 33, 2000);
+    c_lemlib.turnToHeading(90, 1000);
+
+    c_lemlib.waitUntilDone();
+
+}
+
+
+
+void auton_skills() {
     c_danielib.setPose(-6.7, -61.5, 0);
     c_lemlib.setPose(-6.7, -61.5, 0);
 
@@ -164,7 +177,7 @@ void auton_test() {
 
 
     // scoring sequence
-    c_lemlib.moveToPoint(2.25_tiles, -2_tiles, 1500);
+    c_lemlib.moveToPoint(2.3_tiles, -2_tiles, 1500);
     delay(100);
     a1();
     c_lemlib.waitUntilDone();
@@ -192,7 +205,7 @@ void auton_test() {
 
 
     // scoring sequence
-    c_lemlib.moveToPoint(2.25_tiles, -2_tiles, 1500);
+    c_lemlib.moveToPoint(2.3_tiles, -2_tiles, 1500);
     delay(100);
     a2();
     c_lemlib.waitUntilDone();
