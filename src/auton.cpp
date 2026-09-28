@@ -46,9 +46,9 @@ void auton_test() {
     cone.move(127);
 
     // move to alliance
-    c_lemlib.moveToPoint(-8, -2.1_tiles, 500);
-    c_lemlib.turnToHeading(-95, 400);
-    c_lemlib.moveToPoint(17, -47.5, 1000, {.forwards = false});
+    c_lemlib.moveToPoint(-7, -2_tiles, 600);
+    c_lemlib.turnToHeading(-90, 400);
+    c_lemlib.moveToPoint(17, -2_tiles, 1000, {.forwards = false});
     delay(300);
     flipOut();
     delay(300);
@@ -56,48 +56,90 @@ void auton_test() {
     c_lemlib.waitUntilDone();
 
     // score alliance goal
-    score();
+    cone.move(127);
+    setLiftTo(0);
+    delay(500);
+    setWristTo(80);
+    delay(200);
+    cone.move(-127);
+    holdVertical();
+    setLiftTo(getLiftPosition() + 20);
+    delay(400);
+
 
     /* ---------------------------------------------------------------------------------------------- */
-    /*                                      PART 2: YELLOW STACKS                                     */
+    /*                                      PART 2: INSIDE YELLOW                                     */
     /* ---------------------------------------------------------------------------------------------- */
 
-    // grab inside stack
+    // FIRST STACK
     intake.brake();
     c_lemlib.moveToPoint(3, -2_tiles, 500);
     c_lemlib.turnToHeading(-135, 400);
     hover();
-    c_lemlib.moveToPoint(18.5, -30, 2000, {.forwards = false, .maxSpeed = 80, .minSpeed = 15, .earlyExitRange = 3});
+
+    // stack position
+    c_lemlib.moveToPoint(19, -30, 2000, {.forwards = false, .maxSpeed = 80, .minSpeed = 15, .earlyExitRange = 3});
     c_lemlib.waitUntilDone();
     c_danielib.driveForDistance(-10, 1000, 15);
-    c_danielib.driveForDistance(2, 300);
+    c_danielib.driveForDistance(2.3, 300);
     grab();
 
     // score it
     a1();
-    c_lemlib.turnToHeading(0, 350);
-    c_lemlib.moveToPoint(23, -43, 1000, {.forwards = false});
+    c_lemlib.turnToHeading(0, 400);
+    c_lemlib.moveToPoint(24, -43, 1000, {.forwards = false});
     c_lemlib.waitUntilDone();
     score();
 
-    // grab outside stack
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                     PART 3: OUTSIDE YELLOW                                     */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // SECOND STACK
     c_lemlib.moveToPoint(24, -28, 500);
     c_lemlib.turnToHeading(-50, 400);
     hover();
-    c_lemlib.moveToPoint(40, -40, 2000, {.forwards = false, .maxSpeed = 80, .minSpeed = 15, .earlyExitRange = 3});
+
+    // stack position
+    c_lemlib.moveToPoint(40, -40.5, 2000, {.forwards = false, .maxSpeed = 80, .minSpeed = 15, .earlyExitRange = 3});
     c_lemlib.waitUntilDone();
     c_danielib.driveForDistance(-10, 1000, 15);
-    c_danielib.driveForDistance(2, 300);
+    c_danielib.driveForDistance(2.3, 300);
     grab();
 
     // score it
     a2();
-    c_lemlib.turnToHeading(90, 350);
-    c_lemlib.moveToPoint(29, -47, 1000, {.forwards = false});
+    c_lemlib.turnToHeading(90, 400);
+    c_lemlib.moveToPoint(29, -48, 1000, {.forwards = false});
     c_lemlib.waitUntilDone();
     score();
 
 
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                    PART 3: MATCHLOAD REPEAT                                    */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // matchload sequence
+    c_lemlib.moveToPoint(2.5_tiles, -1.9_tiles, 1500);
+    delay(300);
+    load();
+    c_lemlib.turnToHeading(0, 450);
+    c_lemlib.waitUntilDone();
+    lemlibDistReset({&right_beam});
+    c_lemlib.moveToPoint(2.5_tiles, -2.8_tiles, 1500, {.forwards = false, .maxSpeed = 50});
+    c_lemlib.waitUntilDone();
+    grab();
+
+
+    // scoring sequence
+    c_lemlib.moveToPoint(2.5_tiles, -2_tiles, 1000, {.minSpeed = 20, .earlyExitRange = 3});
+    delay(100);
+    a3();
+    c_lemlib.turnToHeading(85, 300);
+    c_lemlib.moveToPoint(29, -48, 1000, {.forwards = false});
+    c_lemlib.waitUntilDone();
+    score();
 
 
 
