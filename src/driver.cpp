@@ -26,6 +26,16 @@
 /*                                          MACRO TUNINGS                                         */
 /* ---------------------------------------------------------------------------------------------- */
 
+
+std::atomic<bool> driving = true;
+std::atomic<bool> intake_control = true;
+std::atomic<bool> wrist_control = true;
+std::atomic<bool> lift_has_pid_control = false;
+std::atomic<bool> wrist_has_pid_control = false;
+bool readyForSecondPress = false;
+bool inMatchLoadHoldPosition = false;
+bool inPinPosition = false;
+
 void intakePin() {
     setLiftTo(17.1);
     setWristTo(-10.5);
@@ -37,7 +47,7 @@ void intakeCup() {
 }
 
 void holdVertical() {
-    setWristTo(115);
+    setWristTo(117);
 }
 
 void holdStack() {
@@ -70,17 +80,19 @@ void load() {
     // setWristTo(126);
 
     // flat wrist load
-    setLiftTo(16.9);
-    setWristTo(123);
+    setLiftTo(17.2);
+    setWristTo(119);
 }
 
 void grab() {
+    intake_control = false;
     cone.move(127);
     setWristTo(122);
     setLiftTo(-10);
     delay(600);
     setLiftTo(9.5);
     setWristTo(137);
+    intake_control = true;
 }
 
 void score() {
@@ -211,15 +223,6 @@ void cupTask() {
 /*                                       LIFT + WRIST MACROS                                      */
 /* ---------------------------------------------------------------------------------------------- */
 
-std::atomic<bool> driving = true;
-std::atomic<bool> intake_control = true;
-std::atomic<bool> wrist_control = true;
-std::atomic<bool> lift_has_pid_control = false;
-std::atomic<bool> wrist_has_pid_control = false;
-bool readyForSecondPress = false;
-bool inMatchLoadHoldPosition = false;
-bool inPinPosition = false;
-
 void WristControl() {
     cupTask();
 
@@ -269,7 +272,7 @@ void WristControl() {
             inPinPosition = false;
             inMatchLoadHoldPosition = false;
 
-            holdStack();
+            holdVertical();
 
         } 
 
@@ -375,9 +378,9 @@ void IntakeControl() {
                 else intake.brake();
 
                 
-                waitUntilCondition(!master.get_digital(INTAKE));
-                intake.brake();
-                cone.brake();
+                // waitUntilCondition(!master.get_digital(INTAKE) || getLiftPosition() < 30);
+                // intake.brake();
+                // cone.brake();
             }
             else if (master.get_digital(OUTTAKE)) {
                 cone.move(-127);
@@ -385,15 +388,18 @@ void IntakeControl() {
                 else intake.brake();
 
 
-                waitUntilCondition(!master.get_digital(OUTTAKE));
-                intake.brake();
-                cone.brake();
+                // waitUntilCondition(!master.get_digital(OUTTAKE));
+                // intake.brake();
+                // cone.brake();
             }
             else if (master.get_digital(OUTTAKE_MACRO)) {
                 intake.move(-127);
 
-                waitUntilCondition(!master.get_digital(OUTTAKE_MACRO));
+                // waitUntilCondition(!master.get_digital(OUTTAKE_MACRO));
+                // intake.brake();
+            } else {
                 intake.brake();
+                cone.brake();
             }
         }
         delay(10);
