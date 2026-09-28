@@ -54,7 +54,7 @@ void auton_test() {
     flipOut();
     delay(300);
     a0();
-    c_lemlib.waitUntilDone();
+    delay(350);
 
     // score alliance goal
     cone.move(127);
@@ -78,12 +78,13 @@ void auton_test() {
     // c_lemlib.turnToHeading(-140, 400);
     c_lemlib.turnToPoint(1_tiles, -1_tiles, 500, {.forwards = false});
     hover();
+    cone.move(127);
 
     // stack point
-    c_lemlib.moveToPoint(1_tiles, -1_tiles, 2000, {.forwards = false, .maxSpeed = 80, .minSpeed = 15, .earlyExitRange = 12});
+    c_lemlib.moveToPoint(1_tiles, -1_tiles, 2000, {.forwards = false, .maxSpeed = 75, .minSpeed = 15, .earlyExitRange = 14});
     c_lemlib.waitUntilDone();
-    c_danielib.driveForDistance(-12, 500, 15);
-    c_danielib.async().driveForDistance(2.3, 200);
+    c_danielib.driveForDistance(-12, 750, 15);
+    c_danielib.async().driveForDistance(3, 250);
     delay(100);
     grab();
     c_danielib.waitUntilDone();
@@ -96,28 +97,33 @@ void auton_test() {
     score();
 
 
-    // /* ---------------------------------------------------------------------------------------------- */
-    // /*                                     PART 3: OUTSIDE YELLOW                                     */
-    // /* ---------------------------------------------------------------------------------------------- */
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                     PART 3: OUTSIDE YELLOW                                     */
+    /* ---------------------------------------------------------------------------------------------- */
 
-    // // SECOND STACK
-    // c_lemlib.moveToPoint(24, -26, 500);
-    // c_lemlib.turnToHeading(-56, 400);
-    // hover();
+    
+    // SECOND STACK
+    intake.brake();
+    c_lemlib.moveToPoint(24, -26, 500);
+    c_lemlib.turnToPoint(2_tiles, -2_tiles, 500, {.forwards = false});
+    hover();
+    cone.move(127);
 
-    // // stack point
-    // c_lemlib.moveToPoint(40, -39, 2000, {.forwards = false, .maxSpeed = 80, .minSpeed = 15, .earlyExitRange = 3});
-    // c_lemlib.waitUntilDone();
-    // c_danielib.driveForDistance(-10, 1000, 15);
-    // c_danielib.driveForDistance(2.3, 300);
-    // grab();
+    // stack point
+    c_lemlib.moveToPoint(2_tiles, -2_tiles, 2000, {.forwards = false, .maxSpeed = 75, .minSpeed = 15, .earlyExitRange = 14});
+    c_lemlib.waitUntilDone();
+    c_danielib.driveForDistance(-12, 750, 15);
+    c_danielib.async().driveForDistance(3, 250);
+    delay(100);
+    grab();
+    c_danielib.waitUntilDone();
 
-    // // score it
-    // a2();
-    // c_lemlib.turnToHeading(90, 400);
-    // c_lemlib.moveToPoint(29, -48, 1000, {.forwards = false});
-    // c_lemlib.waitUntilDone();
-    // score();
+    // score it
+    a2();
+    c_lemlib.turnToHeading(90, 400);
+    c_lemlib.moveToPoint(29, -48, 1000, {.forwards = false});
+    delay(900);
+    score();
 
 
     // /* ---------------------------------------------------------------------------------------------- */

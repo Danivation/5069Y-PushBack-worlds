@@ -54,12 +54,12 @@ void hover() {
     cone.brake();
 
     // flat wrist
-    setLiftTo(18.4);
-    setWristTo(122);
+    setLiftTo(19);
+    setWristTo(120);
 
     // // wrist pointed up
-    // setLiftTo(15.1);
-    // setWristTo(128.5);
+    // setLiftTo(15.5);
+    // setWristTo(126);
 }
 
 void load() {
@@ -76,16 +76,16 @@ void load() {
 
 void grab() {
     cone.move(127);
-    setWristTo(120);
-    setLiftTo(-5);
+    setWristTo(122);
+    setLiftTo(-10);
     delay(600);
     setLiftTo(9.5);
-    setWristTo(135);
+    setWristTo(137);
 }
 
 void score() {
     cone.move(127);
-    setLiftTo(0);
+    setLiftTo(-10);
     delay(500);
     cone.move(-127);
     holdVertical();
@@ -98,7 +98,7 @@ float allianceBase = 19;
 
 void a0() {
     setWristTo(145);
-    setLiftTo(allianceBase);
+    setLiftTo(16);
 }
 
 void a1() {
