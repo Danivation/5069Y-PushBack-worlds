@@ -54,7 +54,7 @@ void hover() {
     cone.brake();
 
     // flat wrist
-    setLiftTo(19);
+    setLiftTo(21);
     setWristTo(120);
 
     // // wrist pointed up
