@@ -53,7 +53,7 @@ void auton_test() {
     flipOut();
     delay(300);
     a0();
-    delay(450);
+    delay(200);
 
     // score alliance goal
     intake.brake();
@@ -81,7 +81,7 @@ void auton_test() {
     cone.move(127);
 
     // stack point
-    c_lemlib.moveToPoint(23, -22.6, 2000, {.forwards = false, .maxSpeed = 75, .minSpeed = 15, .earlyExitRange = 10});
+    c_lemlib.moveToPoint(23, -22.6, 2000, {.forwards = false, .maxSpeed = 75, .minSpeed = 15, .earlyExitRange = 13});
     c_lemlib.waitUntilDone();
     c_danielib.driveForDistance(-12, 1000, 15);
     c_danielib.async().driveForDistance(3, 300);
@@ -93,9 +93,9 @@ void auton_test() {
     a1();
     setWristTo(107);
     c_lemlib.turnToHeading(0, 400);
-    c_lemlib.moveToPoint(24, -42, 1200, {.forwards = false, .minSpeed = 40, .earlyExitRange = 4});
+    c_lemlib.moveToPoint(24, -42, 1200, {.forwards = false, .minSpeed = 25, .earlyExitRange = 2});
     c_lemlib.waitUntilDone();
-    c_danielib.async().driveForDistance(-10, 1000, 30);
+    c_danielib.async().driveForDistance(-10, 1000, 25);
     delay(200);
     score();
     c_danielib.stopMovement();
@@ -114,7 +114,7 @@ void auton_test() {
     cone.move(127);
 
     // stack point
-    c_lemlib.moveToPoint(48, -48, 2000, {.forwards = false, .maxSpeed = 75, .minSpeed = 15, .earlyExitRange = 10});
+    c_lemlib.moveToPoint(48, -48, 2000, {.forwards = false, .maxSpeed = 75, .minSpeed = 15, .earlyExitRange = 13});
     c_lemlib.waitUntilDone();
     c_danielib.driveForDistance(-12, 750, 15);
     c_danielib.async().driveForDistance(3, 300);
@@ -125,17 +125,12 @@ void auton_test() {
     // score it
     a2();
     c_lemlib.turnToHeading(90, 400);
-    c_lemlib.moveToPoint(30, -48, 1200, {.forwards = false, .minSpeed = 40, .earlyExitRange = 4});
+    c_lemlib.moveToPoint(30, -48, 1200, {.forwards = false, .minSpeed = 25, .earlyExitRange = 2});
     c_lemlib.waitUntilDone();
-    c_danielib.async().driveForDistance(-10, 1000, 30);
+    c_danielib.async().driveForDistance(-10, 1000, 25);
     delay(200);
     score();
     c_danielib.stopMovement();
-
-
-
-
-
 
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -151,7 +146,7 @@ void auton_test() {
     c_lemlib.waitUntilDone();
     c_danielib.turnToHeading(0, 600);
     lemlibDistReset({&right_beam});
-    c_lemlib.moveToPoint(2.49_tiles, -2.8_tiles, 2000, {.forwards = false, .maxSpeed = 90, .minSpeed = 20, .earlyExitRange = 10});
+    c_lemlib.moveToPoint(2.49_tiles, -2.7_tiles, 2000, {.forwards = false, .maxSpeed = 90, .minSpeed = 20, .earlyExitRange = 8});
     c_lemlib.moveToPoint(2.49_tiles, -2.8_tiles, 800, {.forwards = false, .maxSpeed = 30});
     c_lemlib.waitUntilDone();
     lemlibDistReset({&back_beam});
