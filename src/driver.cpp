@@ -52,16 +52,26 @@ void flipOut() {
 
 void hover() {
     cone.brake();
+
+    // flat wrist
     setLiftTo(18.4);
     setWristTo(122);
+
+    // // wrist pointed up
+    // setLiftTo(15.1);
+    // setWristTo(128.5);
 }
 
 void load() {
     cone.brake();
-    // setLiftTo(15.1);
-    // setWristTo(128.5);
-    setLiftTo(16.6);
-    setWristTo(125);
+
+    // wrist pointed up
+    setLiftTo(15.3);
+    setWristTo(126);
+
+    // // flat wrist load
+    // setLiftTo(16.6);
+    // setWristTo(125);
 }
 
 void grab() {
@@ -87,7 +97,7 @@ void score() {
 float allianceBase = 19;
 
 void a0() {
-    setWristTo(113);
+    setWristTo(145);
     setLiftTo(allianceBase);
 }
 
