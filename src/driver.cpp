@@ -87,7 +87,7 @@ void score() {
 float allianceBase = 19;
 
 void a0() {
-    setWristTo(105);
+    setWristTo(113);
     setLiftTo(allianceBase);
 }
 
