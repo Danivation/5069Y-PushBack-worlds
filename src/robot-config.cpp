@@ -65,7 +65,7 @@ lemlib::ControllerSettings lateral_controller(6.1, 0, 8, 0, 1, 120, 2.5, 350, 0)
 lemlib::ControllerSettings angular_controller(10.5, 0.1, 17, 2, 1, 90, 2.5, 300, 0);
 
 // DANIELIB ANGULAR PID - tuned for normal turns
-danielib::PID angularPID(3.76, 0.15, 16.5, 5, 1.5, 130, 0);
+danielib::PID angularPID(4.95, 0.15, 16.5, 5, 1.5, 130, 0);
 danielib::PID swingAngularPID(6.6, 0.2, 32, 4, 2, 180, 0);
 
 // DANIELIB LINEAR PID - tuned for straight drives

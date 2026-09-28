@@ -77,24 +77,28 @@ void auton_test() {
     c_lemlib.moveToPoint(3, -2_tiles, 500);
     // c_lemlib.turnToHeading(-140, 400);
     c_lemlib.turnToPoint(1_tiles, -1_tiles, 500, {.forwards = false});
-    load();
+    hover();
     cone.move(127);
 
     // stack point
-    c_lemlib.moveToPoint(1_tiles, -1_tiles, 2000, {.forwards = false, .maxSpeed = 75, .minSpeed = 15, .earlyExitRange = 13});
+    c_lemlib.moveToPoint(23, -22.6, 2000, {.forwards = false, .maxSpeed = 75, .minSpeed = 15, .earlyExitRange = 10});
     c_lemlib.waitUntilDone();
     c_danielib.driveForDistance(-12, 1000, 15);
-    c_danielib.async().driveForDistance(3, 250);
-    delay(150);
-    grab();
+    c_danielib.async().driveForDistance(3, 300);
+    delay(200);
+    grabFlat();
     c_danielib.waitUntilDone();
-
+    
     // score it
     a1();
-    c_lemlib.turnToHeading(0, 350);
-    c_lemlib.moveToPoint(24, -43, 1000, {.forwards = false});
-    delay(850);
+    setWristTo(107);
+    c_lemlib.turnToHeading(0, 400);
+    c_lemlib.moveToPoint(24, -42, 1200, {.forwards = false, .minSpeed = 40, .earlyExitRange = 4});
+    c_lemlib.waitUntilDone();
+    c_danielib.async().driveForDistance(-10, 1000, 30);
+    delay(200);
     score();
+    c_danielib.stopMovement();
 
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -106,24 +110,27 @@ void auton_test() {
     intake.brake();
     c_lemlib.moveToPoint(24, -26, 500);
     c_lemlib.turnToPoint(2_tiles, -2_tiles, 500, {.forwards = false});
-    load();
+    hover();
     cone.move(127);
 
     // stack point
-    c_lemlib.moveToPoint(2_tiles, -2_tiles, 2000, {.forwards = false, .maxSpeed = 75, .minSpeed = 15, .earlyExitRange = 13});
+    c_lemlib.moveToPoint(48, -48, 2000, {.forwards = false, .maxSpeed = 75, .minSpeed = 15, .earlyExitRange = 10});
     c_lemlib.waitUntilDone();
     c_danielib.driveForDistance(-12, 750, 15);
-    c_danielib.async().driveForDistance(3, 250);
-    delay(150);
-    grab();
+    c_danielib.async().driveForDistance(3, 300);
+    delay(200);
+    grabFlat();
     c_danielib.waitUntilDone();
 
     // score it
     a2();
     c_lemlib.turnToHeading(90, 400);
-    c_lemlib.moveToPoint(29, -48, 1000, {.forwards = false});
-    delay(900);
+    c_lemlib.moveToPoint(30, -48, 1200, {.forwards = false, .minSpeed = 40, .earlyExitRange = 4});
+    c_lemlib.waitUntilDone();
+    c_danielib.async().driveForDistance(-10, 1000, 30);
+    delay(200);
     score();
+    c_danielib.stopMovement();
 
 
 
@@ -138,13 +145,14 @@ void auton_test() {
 
     // matchload sequence
     c_lemlib.turnToHeading(90, 200);
-    c_lemlib.moveToPoint(2.5_tiles, -2_tiles, 1500);
+    c_lemlib.moveToPoint(2.52_tiles, -2_tiles, 2000);
     delay(200);
     load();
     c_lemlib.waitUntilDone();
     c_danielib.turnToHeading(0, 600);
     lemlibDistReset({&right_beam});
-    c_lemlib.moveToPoint(2.49_tiles, -2.8_tiles, 1500, {.forwards = false, .maxSpeed = 50});
+    c_lemlib.moveToPoint(2.49_tiles, -2.8_tiles, 2000, {.forwards = false, .maxSpeed = 90, .minSpeed = 20, .earlyExitRange = 10});
+    c_lemlib.moveToPoint(2.49_tiles, -2.8_tiles, 800, {.forwards = false, .maxSpeed = 30});
     c_lemlib.waitUntilDone();
     lemlibDistReset({&back_beam});
     c_danielib.driveForDistance(1, 150);
@@ -152,50 +160,82 @@ void auton_test() {
 
 
     // scoring sequence
-    c_lemlib.moveToPoint(2.4_tiles, -1.85_tiles, 1500, {.minSpeed = 15, .earlyExitRange = 0});
+    c_lemlib.moveToPoint(2.4_tiles, -2_tiles, 1500, {.minSpeed = 15, .earlyExitRange = 2});
     delay(100);
     a3();
-    c_danielib.turnToHeading(90, 600);
-    c_lemlib.moveToPoint(26, -47, 2300, {.forwards = false, .maxSpeed = 100});
-    delay(2000);
-    score();
-
-
-    /* ---------------------------------------------------------------------------------------------- */
-    /*                                    PART 3: MATCHLOAD REPEAT                                    */
-    /* ---------------------------------------------------------------------------------------------- */
-
-
-    // matchload sequence
-    c_lemlib.turnToHeading(90, 200);
-    c_lemlib.moveToPoint(2.5_tiles, -2_tiles, 1500);
+    c_lemlib.turnToHeading(90, 480);
+    c_lemlib.moveToPoint(30, -48, 1200, {.forwards = false, .minSpeed = 40, .earlyExitRange = 4});
+    c_lemlib.waitUntilDone();
+    c_danielib.async().driveForDistance(-10, 1000, 30);
     delay(200);
-    load();
-    c_lemlib.waitUntilDone();
-    c_danielib.turnToHeading(0, 600);
-    lemlibDistReset({&right_beam});
-    c_lemlib.moveToPoint(2.49_tiles, -2.8_tiles, 1500, {.forwards = false, .maxSpeed = 50});
-    c_lemlib.waitUntilDone();
-    lemlibDistReset({&right_beam, &back_beam});
-    c_danielib.driveForDistance(1, 150);
-    grab();
-
-
-    // scoring sequence
-    c_lemlib.moveToPoint(2.4_tiles, -1.85_tiles, 1500, {.minSpeed = 15, .earlyExitRange = 0});
-    delay(100);
-    a4();
-    c_danielib.turnToHeading(90, 600);
-    c_lemlib.moveToPoint(26, -47, 2300, {.forwards = false, .maxSpeed = 100});
-    delay(2000);
     score();
+    c_danielib.stopMovement();
+
+
+    // /* ---------------------------------------------------------------------------------------------- */
+    // /*                                    PART 3: MATCHLOAD REPEAT                                    */
+    // /* ---------------------------------------------------------------------------------------------- */
+
+
+    // // matchload sequence
+    // c_lemlib.turnToHeading(90, 200);
+    // c_lemlib.moveToPoint(2.52_tiles, -2_tiles, 1500);
+    // delay(200);
+    // load();
+    // c_lemlib.waitUntilDone();
+    // c_danielib.turnToHeading(0, 600);
+    // lemlibDistReset({&right_beam});
+    // c_lemlib.moveToPoint(2.49_tiles, -2.8_tiles, 1500, {.forwards = false, .maxSpeed = 50});
+    // c_lemlib.waitUntilDone();
+    // lemlibDistReset({&right_beam, &back_beam});
+    // c_danielib.driveForDistance(1, 150);
+    // grab();
+
+
+    // // scoring sequence
+    // c_lemlib.moveToPoint(2.4_tiles, -1.85_tiles, 1500, {.minSpeed = 15, .earlyExitRange = 0});
+    // delay(100);
+    // a4();
+    // c_danielib.turnToHeading(90, 600);
+    // c_lemlib.moveToPoint(26, -47, 2300, {.forwards = false, .maxSpeed = 100});
+    // delay(2000);
+    // score();
+    
+    
+    // /* ---------------------------------------------------------------------------------------------- */
+    // /*                                    PART 3: MATCHLOAD REPEAT                                    */
+    // /* ---------------------------------------------------------------------------------------------- */
+
+
+    // // matchload sequence
+    // c_lemlib.turnToHeading(90, 200);
+    // c_lemlib.moveToPoint(2.52_tiles, -2_tiles, 1500);
+    // delay(200);
+    // load();
+    // c_lemlib.waitUntilDone();
+    // c_danielib.turnToHeading(0, 600);
+    // lemlibDistReset({&right_beam});
+    // c_lemlib.moveToPoint(2.49_tiles, -2.8_tiles, 1500, {.forwards = false, .maxSpeed = 50});
+    // c_lemlib.waitUntilDone();
+    // lemlibDistReset({&right_beam, &back_beam});
+    // c_danielib.driveForDistance(1, 150);
+    // grab();
+
+
+    // // scoring sequence
+    // c_lemlib.moveToPoint(2.4_tiles, -1.85_tiles, 1500, {.minSpeed = 15, .earlyExitRange = 0});
+    // delay(100);
+    // a5();
+    // c_danielib.turnToHeading(90, 600);
+    // c_lemlib.moveToPoint(26, -47, 2300, {.forwards = false, .maxSpeed = 100});
+    // delay(2000);
+    // score();
     
 
 
 
 
     c_lemlib.waitUntilDone();
-    delay(1000);
 }
 
 
