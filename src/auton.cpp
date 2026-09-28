@@ -12,20 +12,7 @@ using namespace pros;
 /*                                             AUTONS                                             */
 /* ---------------------------------------------------------------------------------------------- */
 
-
 void auton_test() {
-    c_danielib.setPose(0, 0, 0);
-    c_lemlib.setPose(0, 0, 0);
-
-    c_lemlib.moveToPoint(18, 28, 3000);
-
-    c_lemlib.waitUntilDone();
-
-}
-
-
-
-void auton_skills() {
     c_danielib.setPose(-6.7, -61.5, 0);
     c_lemlib.setPose(-6.7, -61.5, 0);
 
