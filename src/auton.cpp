@@ -77,15 +77,15 @@ void auton_test() {
     c_lemlib.moveToPoint(3, -2_tiles, 500);
     // c_lemlib.turnToHeading(-140, 400);
     c_lemlib.turnToPoint(1_tiles, -1_tiles, 500, {.forwards = false});
-    hover();
+    load();
     cone.move(127);
 
     // stack point
-    c_lemlib.moveToPoint(1_tiles, -1_tiles, 2000, {.forwards = false, .maxSpeed = 75, .minSpeed = 15, .earlyExitRange = 14});
+    c_lemlib.moveToPoint(1_tiles, -1_tiles, 2000, {.forwards = false, .maxSpeed = 75, .minSpeed = 15, .earlyExitRange = 13});
     c_lemlib.waitUntilDone();
-    c_danielib.driveForDistance(-12, 750, 15);
+    c_danielib.driveForDistance(-12, 1000, 15);
     c_danielib.async().driveForDistance(3, 250);
-    delay(100);
+    delay(150);
     grab();
     c_danielib.waitUntilDone();
 
@@ -106,15 +106,15 @@ void auton_test() {
     intake.brake();
     c_lemlib.moveToPoint(24, -26, 500);
     c_lemlib.turnToPoint(2_tiles, -2_tiles, 500, {.forwards = false});
-    hover();
+    load();
     cone.move(127);
 
     // stack point
-    c_lemlib.moveToPoint(2_tiles, -2_tiles, 2000, {.forwards = false, .maxSpeed = 75, .minSpeed = 15, .earlyExitRange = 14});
+    c_lemlib.moveToPoint(2_tiles, -2_tiles, 2000, {.forwards = false, .maxSpeed = 75, .minSpeed = 15, .earlyExitRange = 13});
     c_lemlib.waitUntilDone();
     c_danielib.driveForDistance(-12, 750, 15);
     c_danielib.async().driveForDistance(3, 250);
-    delay(100);
+    delay(150);
     grab();
     c_danielib.waitUntilDone();
 
