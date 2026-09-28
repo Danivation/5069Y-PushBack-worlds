@@ -17,8 +17,8 @@ void auton_test() {
     c_danielib.setPose(0, 0, 0);
     c_lemlib.setPose(0, 0, 0);
 
-    // c_lemlib.moveToPoint(12, 33, 2000);
-    c_lemlib.turnToHeading(55, 1000);
+    c_lemlib.moveToPoint(12, 33, 3000);
+    // c_lemlib.turnToHeading(55, 1000);
 
     c_lemlib.waitUntilDone();
 
