@@ -99,6 +99,7 @@ void lemlibDistReset(std::initializer_list<danielib::Beam*> beams, float xChange
     if (changeX < xChange && changeY < yChange && std::abs(newX) < 80 && std::abs(newY) < 80) {
         c_lemlib.setPose({newX, newY, startPose.theta});
     }
+    pros::delay(15);
 }
 
 
