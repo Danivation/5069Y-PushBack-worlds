@@ -89,8 +89,8 @@ void score() {
     delay(500);
     cone.move(-127);
     holdVertical();
-    setLiftTo(getLiftPosition() + 20);
-    delay(400);
+    setLiftTo(getLiftPosition() + 25);
+    delay(500);
 }
 
 // ALLIANCE GOAL HEIGHTS
