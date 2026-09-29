@@ -47,11 +47,11 @@ void intakeCup() {
 }
 
 void holdVertical() {
-    setWristTo(120);
+    setWristTo(121.5);
 }
 
 void holdFlat() {
-    setWristTo(115);
+    setWristTo(117);
 }
 
 void holdStack() {
@@ -85,18 +85,18 @@ void load() {
 
     // flat wrist load
     setLiftTo(19.85);
-    setWristTo(115);
+    setWristTo(117);
 }
 
 void grabFlat() {
     intake_control = false;
     cone.move(127);
-    setWristTo(105);
+    setWristTo(110);
     delay(50);
     setLiftTo(-10);
     delay(500);
     setLiftTo(10);
-    setWristTo(137);
+    setWristTo(140);
     delay(100);
     intake_control = true;
 }
