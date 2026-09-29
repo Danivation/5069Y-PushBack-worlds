@@ -48,7 +48,7 @@ void lemlibDistReset(std::initializer_list<danielib::Beam*> beams, float xChange
         // Normalize angle to [0, 2π)
         float normalizedAngle = d_reduce_radians(beamAngle);
 
-        float tolerance = d_toRadians(10);
+        float tolerance = d_toRadians(15);
 
         // Check if beam is aligned with east/west walls (pointing near 0° or 180°)
         bool pointingEast = (normalizedAngle < tolerance) || (normalizedAngle > 2 * M_PI - tolerance);

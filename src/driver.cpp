@@ -51,7 +51,7 @@ void holdVertical() {
 }
 
 void holdFlat() {
-    setWristTo(117);
+    setWristTo(115);
 }
 
 void holdStack() {
@@ -122,7 +122,7 @@ void score() {
 }
 
 // ALLIANCE GOAL HEIGHTS
-float allianceBase = 19;
+float allianceBase = 20;
 
 void a0() {
     setWristTo(145);
@@ -130,27 +130,27 @@ void a0() {
 }
 
 void a1() {
-    holdFlat();
+    setWristTo(115);
     setLiftTo(allianceBase+15);
 }
 
 void a2() {
-    holdFlat();
+    setWristTo(117);
     setLiftTo(allianceBase+15+15);
 }
 
 void a3() {
-    holdFlat();
+    setWristTo(119);
     setLiftTo(allianceBase+15+15+15);
 }
 
 void a4() {
-    holdFlat();
+    setWristTo(120);
     setLiftTo(allianceBase+15+15+15+15);
 }
 
 void a5() {
-    holdFlat();
+    setWristTo(120);
     setLiftTo(allianceBase+15+15+15+15+15);
 }
 
