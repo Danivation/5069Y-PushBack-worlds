@@ -84,8 +84,8 @@ void load() {
     // setWristTo(126);
 
     // flat wrist load
-    setLiftTo(20.2);
-    setWristTo(119);
+    setLiftTo(20.1);
+    setWristTo(118);
 }
 
 void grabFlat() {

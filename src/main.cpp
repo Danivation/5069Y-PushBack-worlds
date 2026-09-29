@@ -27,7 +27,7 @@ void run_auton(int index) {
         auton_test();
     }
 
-    if (index == 1) auton_one_stack_elims();
+    // else if (index == 1) auton_one_stack_elims();
 
 
 }
@@ -36,7 +36,7 @@ std::pair<std::string, std::string> get_auton_name(int index) {
     if (index == 0) return {"None", ""};
  
     // left sides
-    else if (index == 1)    return {"one stack elims", "Far"};
+    // else if (index == 1)    return {"one stack elims", "Far"};
 
     else return {"Invalid auto", ""};
 }
