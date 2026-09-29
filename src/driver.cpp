@@ -91,7 +91,8 @@ void load() {
 void grabFlat() {
     intake_control = false;
     cone.move(127);
-    setWristTo(110);
+    setWristTo(105);
+    delay(50);
     setLiftTo(-10);
     delay(500);
     setLiftTo(10);
