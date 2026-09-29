@@ -26,6 +26,11 @@ void n2();
 void n3();
 void n4();
 void n5();
+void c0();
+void c1();
+void c2();
+void c3();
+void c4();
 
 
 

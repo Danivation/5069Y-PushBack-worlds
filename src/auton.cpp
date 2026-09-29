@@ -229,7 +229,6 @@ void auton_test() {
     c_lemlib.moveToPoint(24, -44.5, 1200, {.forwards = false, .minSpeed = 30, .earlyExitRange = 2.5});
     c_lemlib.waitUntilDone();
     c_danielib.async().driveForDistance(-10, 1000, 30);
-    delay(150);
     
     // lower stack, score, lift off alliance
     score();
@@ -265,7 +264,6 @@ void auton_test() {
     c_lemlib.moveToPoint(27, -48, 1200, {.forwards = false, .minSpeed = 30, .earlyExitRange = 2.5});
     c_lemlib.waitUntilDone();
     c_danielib.async().driveForDistance(-10, 1000, 30);
-    delay(150);
     
     // lower stack, score, lift off alliance
     score();
@@ -273,7 +271,7 @@ void auton_test() {
 
 
     /* ---------------------------------------------------------------------------------------------- */
-    /*                                   MATCLOAD 1: SETUP + BACK IN                                  */
+    /*                              MATCHLOAD 1: SETUP + BACK INTO LOADER                             */
     /* ---------------------------------------------------------------------------------------------- */
 
 
@@ -293,7 +291,7 @@ void auton_test() {
 
 
     /* ---------------------------------------------------------------------------------------------- */
-    /*                                    MATCLOAD 1: SCORE ON GOAL                                   */
+    /*                                   MATCHLOAD 1: SCORE ON GOAL                                   */
     /* ---------------------------------------------------------------------------------------------- */
 
 
@@ -309,6 +307,85 @@ void auton_test() {
     // lower stack, score, lift off alliance
     score();
     c_danielib.stopMovement();
+
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                              MATCHLOAD 2: SETUP + BACK INTO LOADER                             */
+    /* ---------------------------------------------------------------------------------------------- */
+
+
+    // set up and line up
+    c_lemlib.moveToPoint(2.45_tiles, -1.8_tiles, 1500, {.minSpeed = 20, .earlyExitRange = 3.5});
+    c_lemlib.turnToHeading(0, 500);
+    load();
+    c_lemlib.waitUntilDone();
+
+    // back into loader slow
+    c_lemlib.moveToPoint(58.8, -62, 2000, {.forwards = false, .maxSpeed = 90, .minSpeed = 30, .earlyExitRange = 3});
+    c_lemlib.moveToPoint(58.8, -70, 500, {.forwards = false, .maxSpeed = 25});
+    c_lemlib.waitUntilDone();
+    lemlibDistReset({&back_beam, &right_beam});
+    c_danielib.driveForDistance(1.5, 150);
+    grabFlat();
+
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                   MATCHLOAD 2: SCORE ON GOAL                                   */
+    /* ---------------------------------------------------------------------------------------------- */
+
+
+    // return to goal
+    a4();
+    c_lemlib.moveToPoint(2.5_tiles, -2.1_tiles, 1500, {.minSpeed = 20, .earlyExitRange = 4});
+    c_lemlib.turnToHeading(87, 400);
+    c_lemlib.moveToPoint(27, -2_tiles, 1500, {.forwards = false, .minSpeed = 25, .earlyExitRange = 3});
+    c_lemlib.waitUntilDone();
+    c_danielib.async().driveForDistance(-10, 1000, 20);
+    delay(150);
+    
+    // lower stack, score, lift off alliance
+    score();
+    c_danielib.stopMovement();
+
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                              MATCHLOAD 3: SETUP + BACK INTO LOADER                             */
+    /* ---------------------------------------------------------------------------------------------- */
+
+
+    // set up and line up
+    c_lemlib.moveToPoint(2.45_tiles, -1.8_tiles, 1500, {.minSpeed = 20, .earlyExitRange = 3.5});
+    c_lemlib.turnToHeading(0, 500);
+    load();
+    c_lemlib.waitUntilDone();
+
+    // back into loader slow
+    c_lemlib.moveToPoint(58.8, -62, 2000, {.forwards = false, .maxSpeed = 90, .minSpeed = 30, .earlyExitRange = 3});
+    c_lemlib.moveToPoint(58.8, -70, 500, {.forwards = false, .maxSpeed = 25});
+    c_lemlib.waitUntilDone();
+    lemlibDistReset({&back_beam, &right_beam});
+    c_danielib.driveForDistance(1.5, 150);
+    grabFlat();
+
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                   MATCHLOAD 3: SCORE ON GOAL                                   */
+    /* ---------------------------------------------------------------------------------------------- */
+
+
+    // return to goal
+    a4();
+    c_lemlib.moveToPoint(2.5_tiles, -2.1_tiles, 1500, {.minSpeed = 20, .earlyExitRange = 4});
+    c_lemlib.turnToHeading(87, 400);
+    c_lemlib.moveToPoint(27, -2_tiles, 1500, {.forwards = false, .minSpeed = 25, .earlyExitRange = 3});
+    c_lemlib.waitUntilDone();
+    c_danielib.async().driveForDistance(-10, 1000, 20);
+    delay(150);
+    
+    // lower stack, score, lift off alliance
+    score();
+    c_danielib.stopMovement();
+
 }
 
 

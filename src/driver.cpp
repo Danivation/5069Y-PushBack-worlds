@@ -155,38 +155,65 @@ void a5() {
 }
 
 // NEUTRAL GOAL HEIGHTS
-float neutralBase = 22;
+float neutralBase = 24;
 
 void n0() {
-    setWristTo(126);
+    setWristTo(125);
     setLiftTo(neutralBase);
 }
 
 void n1() {
-    holdFlat();
+    setWristTo(115);
     setLiftTo(neutralBase+15);
 }
 
 void n2() {
-    holdFlat();
+    setWristTo(117);
     setLiftTo(neutralBase+15+15);
 }
 
 void n3() {
-    holdFlat();
+    setWristTo(119);
     setLiftTo(neutralBase+15+15+15);
 }
 
 void n4() {
-    holdFlat();
+    setWristTo(120);
     setLiftTo(neutralBase+15+15+15+15);
 }
 
 void n5() {
-    holdFlat();
+    setWristTo(120);
     setLiftTo(neutralBase+15+15+15+15+15);
 }
 
+// CENTER GOAL HEIGHTS
+float centerBase = 28;
+
+void c0() {
+    setWristTo(125);
+    setLiftTo(centerBase);
+}
+
+void c1() {
+    setWristTo(117);
+    setLiftTo(centerBase+15);
+}
+
+void c2() {
+    setWristTo(119);
+    setLiftTo(centerBase+15+15);
+}
+
+void c3() {
+    setWristTo(120);
+    setLiftTo(centerBase+15+15+15);
+}
+
+void c4() {
+    setWristTo(120);
+    setLiftTo(centerBase+15+15+15+15);
+}
 
 
 
