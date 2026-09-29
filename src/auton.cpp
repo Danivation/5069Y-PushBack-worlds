@@ -226,7 +226,7 @@ void auton_test() {
 
     // move to goal
     c_lemlib.turnToHeading(-7, 400);
-    c_lemlib.moveToPoint(24, -41, 1200, {.forwards = false, .minSpeed = 30, .earlyExitRange = 4});
+    c_lemlib.moveToPoint(24, -44, 1200, {.forwards = false, .minSpeed = 30, .earlyExitRange = 4});
     c_lemlib.waitUntilDone();
     c_danielib.async().driveForDistance(-10, 1000, 30);
     delay(200);
@@ -262,7 +262,7 @@ void auton_test() {
 
     // back up to left alliance goal
     c_lemlib.turnToHeading(80, 400);
-    c_lemlib.moveToPoint(31, -48, 1200, {.forwards = false, .minSpeed = 30, .earlyExitRange = 4});
+    c_lemlib.moveToPoint(28, -48, 1200, {.forwards = false, .minSpeed = 30, .earlyExitRange = 4});
     c_lemlib.waitUntilDone();
     c_danielib.async().driveForDistance(-10, 1000, 30);
     delay(200);
@@ -278,14 +278,14 @@ void auton_test() {
 
 
     // set up and line up
-    c_lemlib.moveToPoint(2.45_tiles, -1.8_tiles, 1500, {.minSpeed = 20, .earlyExitRange = 3});
+    c_lemlib.moveToPoint(2.45_tiles, -1.4_tiles, 1500, {.minSpeed = 20, .earlyExitRange = 4});
     load();
     c_lemlib.waitUntilDone();
-    c_danielib.turnToHeading(0, 650);
+    c_lemlib.turnToHeading(0, 400);
 
     // back into loader slow
-    c_lemlib.moveToPoint(60.1, -62, 2000, {.forwards = false, .maxSpeed = 90, .minSpeed = 30, .earlyExitRange = 5});
-    c_lemlib.moveToPoint(60.1, -70, 500, {.forwards = false, .maxSpeed = 25});
+    c_lemlib.moveToPoint(60.1, -61, 2000, {.forwards = false, .maxSpeed = 90, .minSpeed = 30, .earlyExitRange = 5});
+    c_lemlib.moveToPoint(60.1, -70, 600, {.forwards = false, .maxSpeed = 30});
     c_lemlib.waitUntilDone();
     lemlibDistReset({&back_beam, &right_beam});
     c_danielib.driveForDistance(1.5, 150);
@@ -298,11 +298,11 @@ void auton_test() {
 
 
     // return to goal
-    c_lemlib.moveToPoint(2.5_tiles, -2.1_tiles, 1500, {.minSpeed = 20, .earlyExitRange = 4});
+    c_lemlib.moveToPoint(2.3_tiles, -2.15_tiles, 1500, {.minSpeed = 20, .earlyExitRange = 4});
     delay(200);
     a3();
     c_lemlib.turnToHeading(80, 400);
-    c_lemlib.moveToPoint(31, -2_tiles, 1500, {.forwards = false, .minSpeed = 25, .earlyExitRange = 4});
+    c_lemlib.moveToPoint(28, -49, 1500, {.forwards = false, .minSpeed = 25, .earlyExitRange = 4});
     c_lemlib.waitUntilDone();
     c_danielib.async().driveForDistance(-10, 1000, 20);
     delay(200);
@@ -318,14 +318,14 @@ void auton_test() {
 
 
     // set up and line up
-    c_lemlib.moveToPoint(2.42_tiles, -1.8_tiles, 1500, {.minSpeed = 20, .earlyExitRange = 3});
+    c_lemlib.moveToPoint(2.45_tiles, -1.4_tiles, 1500, {.minSpeed = 20, .earlyExitRange = 4});
     load();
     c_lemlib.waitUntilDone();
-    c_danielib.turnToHeading(-3, 650);
+    c_lemlib.turnToHeading(0, 400);
 
     // back into loader slow
-    c_lemlib.moveToPoint(59.5, -62, 2000, {.forwards = false, .maxSpeed = 90, .minSpeed = 30, .earlyExitRange = 5});
-    c_lemlib.moveToPoint(59.5, -70, 500, {.forwards = false, .maxSpeed = 25});
+    c_lemlib.moveToPoint(59.5, -61, 2000, {.forwards = false, .maxSpeed = 90, .minSpeed = 30, .earlyExitRange = 5});
+    c_lemlib.moveToPoint(59.5, -70, 600, {.forwards = false, .maxSpeed = 30});
     c_lemlib.waitUntilDone();
     lemlibDistReset({&back_beam, &right_beam});
     c_danielib.driveForDistance(1.5, 150);
@@ -338,11 +338,11 @@ void auton_test() {
 
 
     // return to goal
-    c_lemlib.moveToPoint(2.5_tiles, -2.2_tiles, 1500, {.minSpeed = 20, .earlyExitRange = 4});
+    c_lemlib.moveToPoint(2.3_tiles, -2.15_tiles, 1500, {.minSpeed = 20, .earlyExitRange = 4});
     delay(200);
     a4();
     c_lemlib.turnToHeading(80, 400);
-    c_lemlib.moveToPoint(31, -51, 1500, {.forwards = false, .minSpeed = 25, .earlyExitRange = 4});
+    c_lemlib.moveToPoint(28, -51, 1500, {.forwards = false, .minSpeed = 25, .earlyExitRange = 4});
     c_lemlib.waitUntilDone();
     c_danielib.async().driveForDistance(-10, 1000, 20);
     delay(200);
@@ -351,21 +351,20 @@ void auton_test() {
     score();
     c_danielib.stopMovement();
 
-
     /* ---------------------------------------------------------------------------------------------- */
     /*                              MATCHLOAD 3: SETUP + BACK INTO LOADER                             */
     /* ---------------------------------------------------------------------------------------------- */
 
 
     // set up and line up
-    c_lemlib.moveToPoint(2.42_tiles, -1.8_tiles, 1500, {.minSpeed = 20, .earlyExitRange = 3});
+    c_lemlib.moveToPoint(2.45_tiles, -1.4_tiles, 1500, {.minSpeed = 20, .earlyExitRange = 4});
     load();
     c_lemlib.waitUntilDone();
-    c_danielib.turnToHeading(-3, 650);
+    c_lemlib.turnToHeading(0, 400);
 
     // back into loader slow
-    c_lemlib.moveToPoint(59.5, -62, 2000, {.forwards = false, .maxSpeed = 90, .minSpeed = 30, .earlyExitRange = 5});
-    c_lemlib.moveToPoint(59.5, -70, 500, {.forwards = false, .maxSpeed = 25});
+    c_lemlib.moveToPoint(59.5, -61, 2000, {.forwards = false, .maxSpeed = 90, .minSpeed = 30, .earlyExitRange = 5});
+    c_lemlib.moveToPoint(59.5, -70, 600, {.forwards = false, .maxSpeed = 30});
     c_lemlib.waitUntilDone();
     lemlibDistReset({&back_beam, &right_beam});
     c_danielib.driveForDistance(1.5, 150);
@@ -378,11 +377,11 @@ void auton_test() {
 
 
     // return to goal
-    c_lemlib.moveToPoint(2.5_tiles, -2.2_tiles, 1500, {.minSpeed = 20, .earlyExitRange = 4});
+    c_lemlib.moveToPoint(2.3_tiles, -2.15_tiles, 1500, {.minSpeed = 20, .earlyExitRange = 4});
     delay(200);
     a5();
     c_lemlib.turnToHeading(80, 400);
-    c_lemlib.moveToPoint(31, -51, 1500, {.forwards = false, .minSpeed = 25, .earlyExitRange = 4});
+    c_lemlib.moveToPoint(28, -51, 1500, {.forwards = false, .minSpeed = 25, .earlyExitRange = 4});
     c_lemlib.waitUntilDone();
     c_danielib.async().driveForDistance(-10, 1000, 20);
     delay(200);

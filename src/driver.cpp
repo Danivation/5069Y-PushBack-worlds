@@ -84,7 +84,7 @@ void load() {
     // setWristTo(126);
 
     // flat wrist load
-    setLiftTo(19.85);
+    setLiftTo(20.3);
     setWristTo(117);
 }
 
@@ -95,7 +95,7 @@ void grabFlat() {
     delay(50);
     setLiftTo(-10);
     delay(500);
-    setLiftTo(10);
+    setLiftTo(15);
     setWristTo(140);
     delay(100);
     intake_control = true;
@@ -113,9 +113,11 @@ void grab() {
 }
 
 void score() {
+    lift_has_pid_control = false;
     cone.move(127);
-    setLiftTo(-10);
-    delay(500);
+    lift.move(-80);
+    delay(600);
+    lift_has_pid_control = true;
     cone.move(-127);
     holdVertical();
     setLiftTo(getLiftPosition() + 25);
