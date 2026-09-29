@@ -84,8 +84,8 @@ void load() {
     // setWristTo(126);
 
     // flat wrist load
-    setLiftTo(20.1);
-    setWristTo(118);
+    setLiftTo(19.85);
+    setWristTo(115);
 }
 
 void grabFlat() {
@@ -146,12 +146,12 @@ void a3() {
 }
 
 void a4() {
-    setWristTo(120);
+    setWristTo(121);
     setLiftTo(allianceBase+15+15+15+15);
 }
 
 void a5() {
-    setWristTo(120);
+    setWristTo(123);
     setLiftTo(allianceBase+15+15+15+15+15);
 }
 
@@ -179,12 +179,12 @@ void n3() {
 }
 
 void n4() {
-    setWristTo(120);
+    setWristTo(121);
     setLiftTo(neutralBase+15+15+15+15);
 }
 
 void n5() {
-    setWristTo(120);
+    setWristTo(123);
     setLiftTo(neutralBase+15+15+15+15+15);
 }
 
@@ -207,12 +207,12 @@ void c2() {
 }
 
 void c3() {
-    setWristTo(120);
+    setWristTo(121);
     setLiftTo(centerBase+15+15+15);
 }
 
 void c4() {
-    setWristTo(120);
+    setWristTo(123);
     setLiftTo(centerBase+15+15+15+15);
 }
 
