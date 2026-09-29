@@ -50,8 +50,8 @@ void holdVertical() {
     setWristTo(120);
 }
 
-void holdIn() {
-    setWristTo(117.5);
+void holdFlat() {
+    setWristTo(117);
 }
 
 void holdStack() {
@@ -68,8 +68,8 @@ void hover() {
     cone.brake();
 
     // flat wrist
-    setLiftTo(23);
-    setWristTo(115);
+    setLiftTo(24);
+    setWristTo(119);
 
     // // wrist pointed up
     // setLiftTo(15.5);
@@ -91,11 +91,12 @@ void load() {
 void grabFlat() {
     intake_control = false;
     cone.move(127);
-    holdVertical();
+    setWristTo(110);
     setLiftTo(-10);
-    delay(700);
-    setLiftTo(9.5);
+    delay(500);
+    setLiftTo(10);
     setWristTo(137);
+    delay(100);
     intake_control = true;
 }
 
@@ -129,27 +130,27 @@ void a0() {
 }
 
 void a1() {
-    holdIn();
+    holdFlat();
     setLiftTo(allianceBase+15);
 }
 
 void a2() {
-    holdIn();
+    holdFlat();
     setLiftTo(allianceBase+15+15);
 }
 
 void a3() {
-    holdIn();
+    holdFlat();
     setLiftTo(allianceBase+15+15+15);
 }
 
 void a4() {
-    holdIn();
+    holdFlat();
     setLiftTo(allianceBase+15+15+15+15);
 }
 
 void a5() {
-    holdIn();
+    holdFlat();
     setLiftTo(allianceBase+15+15+15+15+15);
 }
 
@@ -162,27 +163,27 @@ void n0() {
 }
 
 void n1() {
-    holdIn();
+    holdFlat();
     setLiftTo(neutralBase+15);
 }
 
 void n2() {
-    holdIn();
+    holdFlat();
     setLiftTo(neutralBase+15+15);
 }
 
 void n3() {
-    holdIn();
+    holdFlat();
     setLiftTo(neutralBase+15+15+15);
 }
 
 void n4() {
-    holdIn();
+    holdFlat();
     setLiftTo(neutralBase+15+15+15+15);
 }
 
 void n5() {
-    holdIn();
+    holdFlat();
     setLiftTo(neutralBase+15+15+15+15+15);
 }
 

@@ -7,7 +7,7 @@ void intakePin();
 void intakeCup();
 void holdVertical();
 void holdStack();
-void holdIn();
+void holdFlat();
 void flipOut();
 void hover();
 void load();
