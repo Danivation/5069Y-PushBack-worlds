@@ -35,6 +35,7 @@ std::atomic<bool> wrist_has_pid_control = false;
 bool readyForSecondPress = false;
 bool inMatchLoadHoldPosition = false;
 bool inPinPosition = false;
+bool inScoringPosition = false;
 
 void intakePin() {
     setLiftTo(17.1);
@@ -84,7 +85,7 @@ void load() {
     // setWristTo(126);
 
     // flat wrist load
-    setLiftTo(20.3);
+    setLiftTo(20.0);
     setWristTo(117);
 }
 
@@ -95,7 +96,9 @@ void grabFlat() {
     delay(50);
     setLiftTo(-10);
     delay(500);
-    setLiftTo(15);
+    setLiftTo(getLiftPosition());
+    lift_has_pid_control = false;
+    // setLiftTo(15);
     setWristTo(140);
     delay(100);
     intake_control = true;
@@ -104,11 +107,12 @@ void grabFlat() {
 void grab() {
     intake_control = false;
     cone.move(127);
-    setWristTo(122);
+    setWristTo(110);
+    delay(50);
     setLiftTo(-10);
     delay(600);
     setLiftTo(9.5);
-    setWristTo(137);
+    setWristTo(136);
     intake_control = true;
 }
 
@@ -280,6 +284,7 @@ void WristControl() {
 
         // MATCHLOAD POSITIONS
         if (master.get_digital_new_press(MATCHLOAD_MACRO)) {
+            inScoringPosition = false;
 
             if (!readyForSecondPress) {
                 // LOAD HEIGHT
@@ -294,7 +299,7 @@ void WristControl() {
             else {
                 // LOAD DOWN
                 inPinPosition = false;
-                grab();
+                grabFlat();
 
                 readyForSecondPress = false;
                 inMatchLoadHoldPosition = true;
@@ -306,6 +311,7 @@ void WristControl() {
 
             readyForSecondPress = false;
             inMatchLoadHoldPosition = false;
+            inScoringPosition = false;
             intakePin();
 
             inPinPosition = true;
@@ -317,6 +323,7 @@ void WristControl() {
             readyForSecondPress = false;
             inPinPosition = false;
             inMatchLoadHoldPosition = false;
+            inScoringPosition = true;
 
             holdVertical();
 
@@ -332,6 +339,7 @@ void WristControl() {
             readyForSecondPress = false;
             inMatchLoadHoldPosition = false;
             wrist_has_pid_control = false;
+            inScoringPosition = false;
 
 
             delay(10);
@@ -347,6 +355,7 @@ void WristControl() {
             readyForSecondPress = false;
             inMatchLoadHoldPosition = false;
             wrist_has_pid_control = false;
+            inScoringPosition = false;
 
 
             delay(10);
@@ -375,10 +384,10 @@ void LiftControl() {
     while (true) {
         if (master.get_digital(LIFT_UP)) {
             lift_has_pid_control = false;
-            if (getLiftPosition() < 22) holdVertical();
-
-
             delay(10);
+
+
+            if (getLiftPosition() < 22) holdVertical();
             lift.move(127);
 
 
@@ -389,9 +398,9 @@ void LiftControl() {
         }
         else if (master.get_digital(LIFT_DOWN)) {
             lift_has_pid_control = false;
-
-
             delay(10);
+
+
             lift.move(-90);
 
 
