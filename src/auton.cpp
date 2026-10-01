@@ -138,9 +138,143 @@ void auton_test1() {
 }
 
 
-
-
 void auton_test() {
+    c_danielib.setPose(6.7, -62.2, 0);
+    c_lemlib.setPose(6.7, -62.2, 0);
+
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                      PART 0: DOUBLE TOGGLE                                     */
+    /* ---------------------------------------------------------------------------------------------- */
+
+
+    // double toggle - drive out and lift
+    setLiftTo(65);
+    c_danielib.async().driveForDistance(10, 800, 120);
+    delay(300);
+    setLiftTo(0);
+    delay(300);
+    c_danielib.stopMovement();
+
+    // double toggle - drive back
+    c_danielib.async().driveForDistance(-24, 800, 100);
+    delay(100);
+    intakePin();
+    c_danielib.waitUntilDone();
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                     PART 1: KNOCK OVER CUP                                     */
+    /* ---------------------------------------------------------------------------------------------- */
+
+
+    // knock over and intake
+    c_lemlib.moveToPoint(1, -28, 1500, {.minSpeed = 10, .earlyExitRange = 10});
+    delay(180);
+    intake.move(127);
+    cone.move(127);
+    cupTask();
+    c_lemlib.waitUntilDone();
+    c_lemlib.moveToPoint(0.2, -23.6, 1000, {.maxSpeed = 50});
+    inPinPosition = false;
+    delay(10);
+    setLiftTo(20);
+    delay(100);
+    intakeCup();
+    delay(1150);
+
+    //  back up to goal
+    c_lemlib.moveToPoint(20, -44, 1400, {.forwards = false, .maxSpeed = 100});
+    delay(175);
+
+    // grouping
+    setWristTo(20);
+    delay(200);
+    n1();
+
+    // c_lemlib.waitUntilDone();
+
+    // SCIRE DOWN ON NEUTRAL
+    score();
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                   PART 2: FLOWER TO ALLIANCE                                   */
+    /* ---------------------------------------------------------------------------------------------- */
+
+
+    // move OFF NEUTRAL and TO FLOWER
+    c_lemlib.moveToPoint(7, -1.2_tiles, 1500, {.minSpeed = 20, .earlyExitRange = 6});
+    delay(250);
+    intake.move(127);
+    cone.move(127);
+    setLiftTo(15);
+    c_lemlib.turnToHeading(90, 330);
+    c_lemlib.waitUntilDone();
+    intakePin();
+    c_lemlib.moveToPoint(14.1, -24.8, 1500);
+
+    c_lemlib.waitUntilDone();
+
+    delay(200);
+
+    // back up back up!!
+    c_lemlib.moveToPoint(-20, -45, 1500, {.forwards = false});
+    delay(300);
+    flipOut();
+    delay(300);
+    a0();
+
+    // score alliance goal
+    intake.brake();
+    cone.move(127);
+    setLiftTo(0);
+    delay(500);
+    setWristTo(80);
+    delay(200);
+    cone.move(-127);
+    holdVertical();
+    setLiftTo(getLiftPosition() + 20);
+    delay(400);
+    intake.brake();
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                      PART 3: YELLOW STACK                                      */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    // lift off
+
+    // MOVE TO SHARED STACK!!
+    c_lemlib.moveToPoint(-5, -1.7_tiles, 1000, {.minSpeed = 20, .earlyExitRange = 4});
+    c_lemlib.turnToHeading(130, 400);
+    hover();
+    c_lemlib.moveToPoint(-22.5, -26.5, 1500, {.forwards = false, .maxSpeed = 70, .minSpeed = 15, .earlyExitRange = 10});
+
+    intake.brake();
+    cone.move(127);
+    c_lemlib.waitUntilDone();
+    c_danielib.driveForDistance(-10, 600, 12);
+    c_danielib.async().driveForDistance(3, 400);
+
+    // pick up stack
+    grabFlat();
+
+    // lift up
+    c_lemlib.cancelAllMotions();
+    a1();
+
+    // score
+    c_lemlib.turnToHeading(0, 400);
+    c_lemlib.moveToPoint(-1_tiles, -45, 900, {.forwards = false});
+
+    // c_lemlib.waitUntilDone();
+    delay(800);
+    
+    score();
+
+
+}
+
+
+void auton_skills_working() {
     c_danielib.setPose(-6.7, -62.2, 0);
     c_lemlib.setPose(-6.7, -62.2, 0);
 
