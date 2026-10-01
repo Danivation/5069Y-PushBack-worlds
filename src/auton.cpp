@@ -174,7 +174,7 @@ void auton_test() {
     cone.move(127);
     cupTask();
     c_lemlib.waitUntilDone();
-    c_lemlib.moveToPoint(0.2, -23.6, 1000, {.maxSpeed = 50});
+    c_lemlib.moveToPoint(0.2, -20, 1000, {.maxSpeed = 60});
     inPinPosition = false;
     delay(10);
     setLiftTo(20);
@@ -182,8 +182,8 @@ void auton_test() {
     intakeCup();
     delay(1150);
 
-    //  back up to goal
-    c_lemlib.moveToPoint(20, -44, 1400, {.forwards = false, .maxSpeed = 100});
+    // back up to goal
+    c_lemlib.moveToPoint(23, -45, 1400, {.forwards = false, .maxSpeed = 100});
     delay(175);
 
     // grouping
@@ -191,7 +191,7 @@ void auton_test() {
     delay(200);
     n1();
 
-    // c_lemlib.waitUntilDone();
+    c_lemlib.waitUntilDone();
 
     // SCIRE DOWN ON NEUTRAL
     score();
@@ -202,26 +202,24 @@ void auton_test() {
 
 
     // move OFF NEUTRAL and TO FLOWER
-    c_lemlib.moveToPoint(7, -1.2_tiles, 1500, {.minSpeed = 20, .earlyExitRange = 6});
+    c_lemlib.moveToPoint(5, -28, 1500, {.minSpeed = 20, .earlyExitRange = 4});
     delay(250);
     intake.move(127);
     cone.move(127);
-    setLiftTo(15);
-    c_lemlib.turnToHeading(90, 330);
+    setLiftTo(18);
+    c_lemlib.turnToHeading(90, 500);
     c_lemlib.waitUntilDone();
     intakePin();
-    c_lemlib.moveToPoint(14.1, -24.8, 1500);
 
-    c_lemlib.waitUntilDone();
-
-    delay(200);
+    // flower pt
+    c_lemlib.moveToPoint(14.3, -24, 1000);
+    delay(1200);
 
     // back up back up!!
-    c_lemlib.moveToPoint(-20, -45, 1500, {.forwards = false});
-    delay(300);
-    flipOut();
-    delay(300);
+    c_lemlib.moveToPoint(-20, -48, 1500, {.forwards = false});
+    delay(700);
     a0();
+    delay(100);
 
     // score alliance goal
     intake.brake();
@@ -240,30 +238,30 @@ void auton_test() {
     /*                                      PART 3: YELLOW STACK                                      */
     /* ---------------------------------------------------------------------------------------------- */
 
-    // lift off
 
-    // MOVE TO SHARED STACK!!
-    c_lemlib.moveToPoint(-5, -1.7_tiles, 1000, {.minSpeed = 20, .earlyExitRange = 4});
-    c_lemlib.turnToHeading(130, 400);
+    // setup inside stack movement
+    c_lemlib.moveToPoint(-5, -42, 1200, {.minSpeed = 50, .earlyExitRange = 3});
+    c_lemlib.turnToHeading(110, 400);
     hover();
-    c_lemlib.moveToPoint(-22.5, -26.5, 1500, {.forwards = false, .maxSpeed = 70, .minSpeed = 15, .earlyExitRange = 10});
 
-    intake.brake();
-    cone.move(127);
+    // move to inside stack backwards
+    c_lemlib.moveToPoint(-22, -26.5, 1500, {.forwards = false, .maxSpeed = 90, .minSpeed = 20, .earlyExitRange = 8});
     c_lemlib.waitUntilDone();
-    c_danielib.driveForDistance(-10, 600, 12);
-    c_danielib.async().driveForDistance(3, 400);
+
+    // align with inside stack cup
+    c_danielib.driveForDistance(-10, 650, 16);
+    c_danielib.async().driveForDistance(3.5, 300);
 
     // pick up stack
+    delay(150);
     grabFlat();
 
     // lift up
-    c_lemlib.cancelAllMotions();
     a1();
 
     // score
     c_lemlib.turnToHeading(0, 400);
-    c_lemlib.moveToPoint(-1_tiles, -45, 900, {.forwards = false});
+    c_lemlib.moveToPoint(-21.5, -45, 900, {.forwards = false});
 
     // c_lemlib.waitUntilDone();
     delay(800);

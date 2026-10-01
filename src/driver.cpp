@@ -119,7 +119,7 @@ void grab() {
 void score() {
     lift_has_pid_control = false;
     cone.move(127);
-    lift.move(-80);
+    lift.move(-65);
     delay(600);
     lift_has_pid_control = true;
     cone.move(-127);
@@ -170,7 +170,7 @@ void n0() {
 }
 
 void n1() {
-    setWristTo(115);
+    setWristTo(112);
     setLiftTo(neutralBase+15);
 }
 
