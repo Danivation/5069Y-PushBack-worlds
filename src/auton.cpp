@@ -160,6 +160,7 @@ void auton_intake_4pin_far() {
     c_danielib.async().driveForDistance(-24, 800, 100);
     delay(100);
     intakePin();
+    cupTask();
     c_danielib.waitUntilDone();
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -170,15 +171,14 @@ void auton_intake_4pin_far() {
     // knock over and intake
     c_lemlib.moveToPoint(0.5, -28, 1500, {.minSpeed = 10, .earlyExitRange = 10});
     delay(180);
+    inPinPosition = true;
     intake.move(127);
     cone.move(127);
     c_lemlib.waitUntilDone();
     c_lemlib.moveToPoint(0, -22.5, 1000, {.maxSpeed = 55});
-    inPinPosition = false;
     delay(10);
     setLiftTo(20);
     intake.brake();
-    intakeCup();
     delay(100);
     intake.move(127);
     delay(500);
@@ -187,14 +187,15 @@ void auton_intake_4pin_far() {
     c_lemlib.turnToHeading(-20, 100);
     c_lemlib.turnToHeading(20, 100);
     c_lemlib.turnToHeading(-20, 100);
-    c_lemlib.turnToHeading(20, 100);
+    inPinPosition = false;
+    // c_lemlib.turnToHeading(20, 100);
 
     // back up to goal
     c_lemlib.moveToPoint(23, -45, 1400, {.forwards = false, .maxSpeed = 100});
     delay(350);
 
     // grouping
-    setWristTo(5);
+    setWristTo(0);
     delay(320);
     n1();
 
@@ -213,13 +214,14 @@ void auton_intake_4pin_far() {
     delay(250);
     intake.move(127);
     cone.move(127);
-    setLiftTo(18);
+    setLiftTo(22);
+    setWristTo(-11);
     c_lemlib.turnToHeading(90, 500);
     c_lemlib.waitUntilDone();
     intakePin();
 
     // flower pt
-    c_lemlib.moveToPoint(14, -24, 1000);
+    c_lemlib.moveToPoint(14.8, -24, 1000);
     delay(1000);
     c_lemlib.turnToHeading(115, 100);
     c_lemlib.turnToHeading(75, 100);
