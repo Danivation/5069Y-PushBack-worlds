@@ -27,7 +27,11 @@ void run_auton(int index) {
         auton_test();
     }
 
-    // else if (index == 1) auton_one_stack_elims();
+    // else if (index == 1) auton_intake_4pin_close();
+    else if (index == 2) auton_intake_4pin_far();
+
+    else if (index == 3) auton_4pin_3stack_close();
+    // else if (index == 4) auton_4pin_3stack_far();
 
 
 }
@@ -36,7 +40,11 @@ std::pair<std::string, std::string> get_auton_name(int index) {
     if (index == 0) return {"None", ""};
  
     // left sides
-    // else if (index == 1)    return {"one stack elims", "Far"};
+    // else if (index == 1)    return {"4 pin intake", "Close"};
+    else if (index == 2)    return {"4 pin intake", "Far"};
+
+    else if (index == 3)    return {"4 pin 3 stack", "Close"};
+    // else if (index == 4)    return {"4 pin 3 stack", "Far"};
 
     else return {"Invalid auto", ""};
 }
