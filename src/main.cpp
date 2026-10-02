@@ -24,14 +24,14 @@ float testAutonDuration = 0;
 void run_auton(int index) {
     // default auto to run when no auto is selected, also runs in test mode
     if (index == 0) {
-        auton_test();
+        auton_skills();
     }
 
     // else if (index == 1) auton_intake_4pin_close();
     else if (index == 2) auton_intake_4pin_far();
 
     else if (index == 3) auton_4pin_3stack_close();
-    // else if (index == 4) auton_4pin_3stack_far();
+    else if (index == 4) auton_4pin_3stack_far();
 
 
 }
@@ -297,6 +297,9 @@ void opcontrol() {
     master.clear();
 
     // SETUP MOTORS
+    c_lemlib.cancelAllMotions();
+    c_danielib.stopAllMovements();
+    delay(15);
 
     left_mg.set_brake_mode_all(MotorBrake::coast);
     right_mg.set_brake_mode_all(MotorBrake::coast);
@@ -305,15 +308,21 @@ void opcontrol() {
     intake.set_brake_mode(MotorBrake::brake);
     cone.set_brake_mode(MotorBrake::brake);
 
+    left_mg.brake();
+    right_mg.brake();
+    intake.brake();
+    lift.brake();
+    cone.brake();
+
     setWristTo(getWristPosition());
     setLiftTo(getLiftPosition());
-
+    delay(10);
 
     pros::Task d_pids                   (startLiftWristPIDS);
-    pros::Task d_drivetrain_control     (DrivetrainControl);
     pros::Task d_intake_control         (IntakeControl);
     pros::Task d_wrist_control          (WristControl);
     pros::Task d_lift_control           (LiftControl);
+    pros::Task d_drivetrain_control     (DrivetrainControl);
 
     printing = false;
     pros::lcd::shutdown();
