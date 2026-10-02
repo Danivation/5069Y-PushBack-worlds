@@ -168,27 +168,34 @@ void auton_test() {
 
 
     // knock over and intake
-    c_lemlib.moveToPoint(1, -28, 1500, {.minSpeed = 10, .earlyExitRange = 10});
+    c_lemlib.moveToPoint(0.5, -28, 1500, {.minSpeed = 10, .earlyExitRange = 10});
     delay(180);
     intake.move(127);
     cone.move(127);
-    cupTask();
     c_lemlib.waitUntilDone();
-    c_lemlib.moveToPoint(0.2, -20, 1000, {.maxSpeed = 60});
+    c_lemlib.moveToPoint(0, -22, 1000, {.maxSpeed = 60});
     inPinPosition = false;
     delay(10);
     setLiftTo(20);
-    delay(100);
+    intake.brake();
     intakeCup();
-    delay(1150);
+    delay(100);
+    intake.move(127);
+    delay(500);
+    c_lemlib.cancelMotion();
+    c_lemlib.turnToHeading(20, 100);
+    c_lemlib.turnToHeading(-20, 100);
+    c_lemlib.turnToHeading(20, 100);
+    c_lemlib.turnToHeading(-20, 100);
+    c_lemlib.turnToHeading(20, 100);
 
     // back up to goal
     c_lemlib.moveToPoint(23, -45, 1400, {.forwards = false, .maxSpeed = 100});
-    delay(175);
+    delay(250);
 
     // grouping
     setWristTo(20);
-    delay(200);
+    delay(300);
     n1();
 
     c_lemlib.waitUntilDone();
@@ -212,17 +219,19 @@ void auton_test() {
     intakePin();
 
     // flower pt
-    c_lemlib.moveToPoint(14.3, -24, 1000);
-    delay(1200);
+    c_lemlib.moveToPoint(16, -24, 1000);
+    delay(1000);
+    c_lemlib.turnToHeading(115, 100);
+    c_lemlib.turnToHeading(75, 100);
 
     // back up back up!!
-    c_lemlib.moveToPoint(-20, -48, 1500, {.forwards = false});
+    c_lemlib.moveToPoint(-22, -48, 1500, {.forwards = false});
     delay(700);
     a0();
-    delay(100);
+    delay(200);
 
     // score alliance goal
-    intake.brake();
+    intake.move(-127);
     cone.move(127);
     setLiftTo(0);
     delay(500);
@@ -240,12 +249,12 @@ void auton_test() {
 
 
     // setup inside stack movement
-    c_lemlib.moveToPoint(-5, -42, 1200, {.minSpeed = 50, .earlyExitRange = 3});
-    c_lemlib.turnToHeading(110, 400);
+    c_lemlib.moveToPoint(-3, -36, 1200, {.minSpeed = 20, .earlyExitRange = 5.5});
+    c_lemlib.turnToHeading(125, 400);
     hover();
 
     // move to inside stack backwards
-    c_lemlib.moveToPoint(-22, -26.5, 1500, {.forwards = false, .maxSpeed = 90, .minSpeed = 20, .earlyExitRange = 8});
+    c_lemlib.moveToPoint(-19.5, -26, 1500, {.forwards = false, .maxSpeed = 90, .minSpeed = 20, .earlyExitRange = 6});
     c_lemlib.waitUntilDone();
 
     // align with inside stack cup
@@ -261,10 +270,10 @@ void auton_test() {
 
     // score
     c_lemlib.turnToHeading(0, 400);
-    c_lemlib.moveToPoint(-21.5, -45, 900, {.forwards = false});
+    c_lemlib.moveToPoint(-22, -45, 1300, {.forwards = false});
 
     // c_lemlib.waitUntilDone();
-    delay(800);
+    delay(900);
     
     score();
 

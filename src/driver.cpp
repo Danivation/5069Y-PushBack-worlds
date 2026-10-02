@@ -38,13 +38,13 @@ bool inPinPosition = false;
 bool inScoringPosition = false;
 
 void intakePin() {
-    setLiftTo(17.1);
-    setWristTo(-10.5);
+    setLiftTo(17.3);
+    setWristTo(-11);
 }
 
 void intakeCup() {
-    setWristTo(30);
-    setLiftTo(17.7);
+    setWristTo(32);
+    setLiftTo(18.5);
 }
 
 void holdVertical() {
@@ -95,7 +95,7 @@ void grabFlat() {
     setWristTo(110);
     delay(50);
     setLiftTo(-10);
-    delay(500);
+    delay(400);
     setLiftTo(getLiftPosition());
     lift_has_pid_control = false;
     // setLiftTo(15);
@@ -120,12 +120,12 @@ void score() {
     lift_has_pid_control = false;
     cone.move(127);
     lift.move(-65);
-    delay(600);
+    delay(400);
     lift_has_pid_control = true;
     cone.move(-127);
     holdVertical();
     setLiftTo(getLiftPosition() + 25);
-    delay(500);
+    delay(300);
 }
 
 // ALLIANCE GOAL HEIGHTS
@@ -170,7 +170,7 @@ void n0() {
 }
 
 void n1() {
-    setWristTo(112);
+    setWristTo(115);
     setLiftTo(neutralBase+15);
 }
 
