@@ -69,7 +69,7 @@ void hover() {
     cone.brake();
 
     // flat wrist
-    setLiftTo(24);
+    setLiftTo(23);
     setWristTo(119);
 
     // // wrist pointed up
@@ -99,7 +99,7 @@ void grabFlat() {
     setLiftTo(getLiftPosition());
     lift_has_pid_control = false;
     // setLiftTo(15);
-    setWristTo(140);
+    setWristTo(88);
     delay(100);
     intake_control = true;
 }
