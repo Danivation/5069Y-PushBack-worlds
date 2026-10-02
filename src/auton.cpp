@@ -305,6 +305,7 @@ void auton_intake_4pin_outside_far() {
     c_danielib.async().driveForDistance(-24, 800, 100);
     delay(100);
     intakePin();
+    cupTask();
     c_danielib.waitUntilDone();
 
     /* ---------------------------------------------------------------------------------------------- */
@@ -315,15 +316,14 @@ void auton_intake_4pin_outside_far() {
     // knock over and intake
     c_lemlib.moveToPoint(0.5, -28, 1500, {.minSpeed = 10, .earlyExitRange = 10});
     delay(180);
+    inPinPosition = true;
     intake.move(127);
     cone.move(127);
     c_lemlib.waitUntilDone();
     c_lemlib.moveToPoint(0, -22.5, 1000, {.maxSpeed = 55});
-    inPinPosition = false;
     delay(10);
     setLiftTo(20);
     intake.brake();
-    intakeCup();
     delay(100);
     intake.move(127);
     delay(500);
@@ -332,6 +332,7 @@ void auton_intake_4pin_outside_far() {
     c_lemlib.turnToHeading(-20, 100);
     c_lemlib.turnToHeading(20, 100);
     c_lemlib.turnToHeading(-20, 100);
+    inPinPosition = false;
     // c_lemlib.turnToHeading(20, 100);
 
     // back up to goal
@@ -365,17 +366,17 @@ void auton_intake_4pin_outside_far() {
     intakePin();
 
     // flower pt
-    c_lemlib.moveToPoint(14, -24, 1000);
+    c_lemlib.moveToPoint(14.8, -24, 1000);
     delay(1000);
     c_lemlib.turnToHeading(115, 100);
     c_lemlib.turnToHeading(75, 100);
 
     // back up back up!!
-    c_lemlib.moveToPoint(-20, -41, 1500, {.forwards = false, .minSpeed = 50, .earlyExitRange = 5});
+    c_lemlib.moveToPoint(-20, -42.5, 1500, {.forwards = false, .minSpeed = 60, .earlyExitRange = 5});
     delay(800);
     a0();
-    c_lemlib.swingToHeading(0, DriveSide::RIGHT, 400);
-    delay(300);
+    c_lemlib.swingToHeading(-10, DriveSide::RIGHT, 400);
+    delay(50);
 
     // score alliance goal
     intake.move(-127);
@@ -395,11 +396,12 @@ void auton_intake_4pin_outside_far() {
     /* ---------------------------------------------------------------------------------------------- */
 
 
-    c_danielib.driveForDistance(12, 200);
-    // c_lemlib.moveToPoint(24, -24, 1500, {.minSpeed = 25, .earlyExitRange = 6});
-    c_lemlib.turnToHeading(60, 350);
+    // c_danielib.driveForDistance(12, 200);
+    c_lemlib.turnToHeading(-20, 120);
+    c_lemlib.moveToPoint(-28, -36, 300, {.minSpeed = 50, .earlyExitRange = 4});
+    c_lemlib.turnToHeading(70, 350);
     hover();
-    c_lemlib.moveToPoint(-44.3, -43.8, 1500, {.forwards = false, .maxSpeed = 105, .minSpeed = 20, .earlyExitRange = 7});
+    c_lemlib.moveToPoint(-44.3, -45.1, 1500, {.forwards = false, .maxSpeed = 105, .minSpeed = 20, .earlyExitRange = 7});
     c_lemlib.waitUntilDone();
 
     // align with stack cup

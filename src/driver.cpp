@@ -44,7 +44,7 @@ void intakePin() {
 
 void intakeCup() {
     setWristTo(32);
-    setLiftTo(18.5);
+    setLiftTo(19.2);
 }
 
 void holdVertical() {
