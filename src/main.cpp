@@ -24,14 +24,17 @@ float testAutonDuration = 0;
 void run_auton(int index) {
     // default auto to run when no auto is selected, also runs in test mode
     if (index == 0) {
-        auton_skills();
+        auton_intake_4pin_outside_far();
     }
 
     // else if (index == 1) auton_intake_4pin_close();
     else if (index == 2) auton_intake_4pin_far();
 
-    else if (index == 3) auton_4pin_3stack_close();
-    else if (index == 4) auton_4pin_3stack_far();
+    // else if (index == 3) auton_intake_4pin_outside_close();
+    else if (index == 4) auton_intake_4pin_outside_far();
+
+    else if (index == 5) auton_4pin_3stack_close();
+    else if (index == 6) auton_4pin_3stack_far();
 
 
 }
@@ -43,8 +46,11 @@ std::pair<std::string, std::string> get_auton_name(int index) {
     // else if (index == 1)    return {"4 pin intake", "Close"};
     else if (index == 2)    return {"4 pin intake", "Far"};
 
-    else if (index == 3)    return {"4 pin 3 stack", "Close"};
-    // else if (index == 4)    return {"4 pin 3 stack", "Far"};
+    // else if (index == 3)    return {"4 pin intake outside", "Close"};
+    else if (index == 4)    return {"4 pin intake outside", "Far"};
+
+    else if (index == 5)    return {"4 pin 3 stack", "Close"};
+    else if (index == 6)    return {"4 pin 3 stack", "Far"};
 
     else return {"Invalid auto", ""};
 }
