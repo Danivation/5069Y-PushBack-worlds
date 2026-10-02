@@ -38,8 +38,8 @@ bool inPinPosition = false;
 bool inScoringPosition = false;
 
 void intakePin() {
-    setLiftTo(17.3);
     setWristTo(-11);
+    setLiftTo(17.3);
 }
 
 void intakeCup() {
@@ -110,7 +110,7 @@ void grab() {
     setWristTo(110);
     delay(50);
     setLiftTo(-10);
-    delay(600);
+    delay(550);
     setLiftTo(9.5);
     setWristTo(136);
     intake_control = true;
@@ -119,8 +119,8 @@ void grab() {
 void score() {
     lift_has_pid_control = false;
     cone.move(127);
-    lift.move(-65);
-    delay(400);
+    lift.move(-55);
+    delay(550);
     lift_has_pid_control = true;
     cone.move(-127);
     holdVertical();
@@ -142,17 +142,17 @@ void a1() {
 }
 
 void a2() {
-    setWristTo(117);
+    setWristTo(119);
     setLiftTo(allianceBase+15+15);
 }
 
 void a3() {
-    setWristTo(119);
+    setWristTo(121);
     setLiftTo(allianceBase+15+15+15);
 }
 
 void a4() {
-    setWristTo(121);
+    setWristTo(123);
     setLiftTo(allianceBase+15+15+15+15);
 }
 
@@ -299,7 +299,7 @@ void WristControl() {
             else {
                 // LOAD DOWN
                 inPinPosition = false;
-                grabFlat();
+                grab();
 
                 readyForSecondPress = false;
                 inMatchLoadHoldPosition = true;
