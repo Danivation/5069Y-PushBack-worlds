@@ -24,7 +24,7 @@ float testAutonDuration = 0;
 void run_auton(int index) {
     // default auto to run when no auto is selected, also runs in test mode
     if (index == 0) {
-        auton_4pin_3stack_far();
+        auton_4pin_3stack_close();
     }
 
     // else if (index == 1) auton_intake_4pin_close();
@@ -279,18 +279,18 @@ void autonomous() {
     pros::Task a_pids (startLiftWristPIDS);
     // pros::Task a_log (logger);
 
-    run_auton(auton_index);
+    // run_auton(auton_index);
 
-    // if (competition::is_connected()) {
-    //     run_auton(auton_index);
-    // } else {
-    //     int startTime = millis();
-    //     run_auton(auton_index);
-    //     int endTime = millis();
-    //     left_mg.brake();
-    //     right_mg.brake();
-    //     testAutonDuration = (float)(endTime - startTime)/(1000.0f);
-    // }
+    if (competition::is_connected()) {
+        run_auton(auton_index);
+    } else {
+        int startTime = millis();
+        run_auton(auton_index);
+        int endTime = millis();
+        left_mg.brake();
+        right_mg.brake();
+        testAutonDuration = (float)(endTime - startTime)/(1000.0f);
+    }
     // comp_started = true;
     // a_log.remove();
 

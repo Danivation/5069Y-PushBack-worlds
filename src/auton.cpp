@@ -575,6 +575,13 @@ void auton_4pin_3stack_close() {
     score();
     c_danielib.stopMovement();
     intake.brake();
+
+    /* ---------------------------------------------------------------------------------------------- */
+    /*                                           MATCLOADER                                           */
+    /* ---------------------------------------------------------------------------------------------- */
+
+    c_lemlib.moveToPoint(2.3_tiles, -2_tiles, 1500, {.minSpeed = 20, .earlyExitRange = 6});
+    c_lemlib.turnToHeading(0, 500);
 }
 
 void auton_4pin_3stack_far() {
