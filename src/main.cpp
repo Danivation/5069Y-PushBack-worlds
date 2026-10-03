@@ -24,7 +24,7 @@ float testAutonDuration = 0;
 void run_auton(int index) {
     // default auto to run when no auto is selected, also runs in test mode
     if (index == 0) {
-        auton_4pin_3stack_close();
+        auton_wesley_stacks_close();
     }
 
     // else if (index == 1) auton_intake_4pin_close();
@@ -67,7 +67,7 @@ void calibrate_all() {
     c_danielib.startTracking();
     c_lemlib.setPose(0, 0, 0);
     c_danielib.setPose(0, 0);
-    delay(500);
+    // delay(500);
     master.rumble(".");
 }
 
@@ -246,7 +246,7 @@ void initialize() {
     cone.set_brake_mode(MotorBrake::brake);
 
     // skills things
-    // calibrate_all();
+    calibrate_all();
     // autonomous();
 
     // pros::Task selector(auton_selector);
@@ -306,7 +306,7 @@ void opcontrol() {
     int matchStartTime = millis();
     // comp_started = true;
     // selecting = false;
-    // master.rumble("..");
+    master.rumble("...");
     // master.clear();
     
     // CANCEL MOTIONS
@@ -332,7 +332,7 @@ void opcontrol() {
     // setLiftTo(10);
     // delay(10);
 
-    if (competition::is_connected() && !competition::is_autonomous() &&  !competition::is_disabled()) {
+    if (competition::is_connected() && !competition::is_autonomous() && !competition::is_disabled()) {
 
         pros::Task d_pids                   (startLiftWristPIDS);
         pros::Task d_intake_control         (IntakeControl);

@@ -17,6 +17,8 @@ void auton_intake_4pin_outside_far();
 void auton_4pin_3stack_close();
 void auton_4pin_3stack_far();
 
+void auton_wesley_stacks_close();
+
 
 
 void auton_skills();
