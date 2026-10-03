@@ -7,7 +7,7 @@
 /* ---------------------------------------------------------------------------------------------- */
 
 const bool skillsSlow = false;
-const bool autoForDriver = false;
+const bool autoForDriver = true;
 
 pros::Color WrongColor = Color::blue;
 bool comp_started = false;
@@ -246,7 +246,7 @@ void initialize() {
     cone.set_brake_mode(MotorBrake::brake);
 
     // skills things
-    // calibrate_all();
+    calibrate_all();
     // autonomous();
 
     pros::Task selector(auton_selector);
@@ -301,12 +301,29 @@ void opcontrol() {
     selecting = false;
     master.rumble("..");
     master.clear();
+    
+    if (autoForDriver) {
+        left_mg.set_brake_mode_all(MotorBrake::brake);
+        right_mg.set_brake_mode_all(MotorBrake::brake);
+        
+        pros::Task a_pids (startLiftWristPIDS);
+        pros::Task skills(auton_skills);
 
-    // SETUP MOTORS
+        waitUntilCondition(master.get_digital(DIGITAL_UP) && master.get_digital(DIGITAL_X));
+        waitUntilCondition(!master.get_digital(DIGITAL_UP) && !master.get_digital(DIGITAL_X));
+
+        // a_pids.remove();
+        skills.remove();
+        comp_started = true;
+    }
+
+    
+    // CANCEL MOTIONS
     c_lemlib.cancelAllMotions();
     c_danielib.stopAllMovements();
     delay(15);
 
+    // SETUP BRAKE MODES
     left_mg.set_brake_mode_all(MotorBrake::coast);
     right_mg.set_brake_mode_all(MotorBrake::coast);
     lift.set_brake_mode_all(MotorBrake::hold);
@@ -324,7 +341,7 @@ void opcontrol() {
     setLiftTo(getLiftPosition());
     delay(10);
 
-    pros::Task d_pids                   (startLiftWristPIDS);
+    // pros::Task d_pids                   (startLiftWristPIDS);
     pros::Task d_intake_control         (IntakeControl);
     pros::Task d_wrist_control          (WristControl);
     pros::Task d_lift_control           (LiftControl);

@@ -37,7 +37,7 @@ bool inMatchLoadHoldPosition = false;
 bool inPinPosition = false;
 bool inScoringPosition = false;
 
-float liftOffset = 5;
+float liftOffset = -0.4;
 
 void intakePin() {
     setWristTo(-11);
@@ -60,7 +60,7 @@ void holdFlat() {
 void holdStack() {
     holdVertical();
     // if stack is in intake OR just came from match loader
-    if (getLiftPosition() < 22) setLiftTo(30+liftOffset);
+    if (getLiftPosition() < 22+liftOffset) setLiftTo(30+liftOffset);
 }
 
 void flipOut() {
@@ -87,7 +87,7 @@ void load() {
     // setWristTo(126);
 
     // flat wrist load
-    setLiftTo(20.0+liftOffset);
+    setLiftTo(20.3+liftOffset);
     setWristTo(117);
 }
 
@@ -112,7 +112,9 @@ void grab() {
     setWristTo(110);
     delay(50);
     setLiftTo(-10+liftOffset);
-    delay(550);
+    delay(300);
+    setWristTo(125);
+    delay(200);
     setLiftTo(9.5+liftOffset);
     setWristTo(136);
     intake_control = true;
@@ -389,7 +391,7 @@ void LiftControl() {
             delay(10);
 
 
-            if (getLiftPosition() < 22) holdVertical();
+            if (getLiftPosition() < 22+liftOffset) holdVertical();
             lift.move(127);
 
 
