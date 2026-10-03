@@ -7,7 +7,7 @@
 /* ---------------------------------------------------------------------------------------------- */
 
 const bool skillsSlow = false;
-const bool autoForDriver = true;
+const bool autoForDriver = false;
 
 pros::Color WrongColor = Color::blue;
 bool comp_started = false;
@@ -24,7 +24,7 @@ float testAutonDuration = 0;
 void run_auton(int index) {
     // default auto to run when no auto is selected, also runs in test mode
     if (index == 0) {
-        auton_skills();
+        auton_4pin_3stack_far();
     }
 
     // else if (index == 1) auton_intake_4pin_close();
@@ -246,11 +246,12 @@ void initialize() {
     cone.set_brake_mode(MotorBrake::brake);
 
     // skills things
-    calibrate_all();
+    // calibrate_all();
     // autonomous();
 
-    pros::Task selector(auton_selector);
-    pros::Task bypass(wait_for_bypass);
+    // pros::Task selector(auton_selector);
+    // pros::Task printer (print_info);
+    // if (!competition::is_connected()) { pros::Task bypass(wait_for_bypass); } else comp_started = true;  
 }
 
 void competition_initialize() {
@@ -258,6 +259,7 @@ void competition_initialize() {
     comp_started = true;
     printing = true;
     selecting = false;
+
 
     pros::lcd::print(0, "Calibrating...");
     calibrate_all();
@@ -269,59 +271,48 @@ void autonomous() {
     
     left_mg.set_brake_mode_all(MotorBrake::brake);
     right_mg.set_brake_mode_all(MotorBrake::brake);
-    master.clear();
-    optical_top.set_led_pwm(100);
-    printing = true;
-    pros::Task printer (print_info);
+    // master.clear();
+    // optical_top.set_led_pwm(100);
+    // selecting = false;
+    // printing = true;
+    // pros::Task printer (print_info);
     pros::Task a_pids (startLiftWristPIDS);
-    pros::Task a_log (logger);
+    // pros::Task a_log (logger);
 
-    if (competition::is_connected()) {
-        run_auton(auton_index);
-    } else {
-        int startTime = millis();
-        run_auton(auton_index);
-        int endTime = millis();
-        left_mg.brake();
-        right_mg.brake();
-        testAutonDuration = (float)(endTime - startTime)/(1000.0f);
-    }
-    comp_started = true;
-    a_log.remove();
+    run_auton(auton_index);
+
+    // if (competition::is_connected()) {
+    //     run_auton(auton_index);
+    // } else {
+    //     int startTime = millis();
+    //     run_auton(auton_index);
+    //     int endTime = millis();
+    //     left_mg.brake();
+    //     right_mg.brake();
+    //     testAutonDuration = (float)(endTime - startTime)/(1000.0f);
+    // }
+    // comp_started = true;
+    // a_log.remove();
+
+    // auton_4pin_3stack_far();
 }
 
 void opcontrol() {
     printf("driver start \n");
 
     // wait for comp start or bypass
-    waitUntilCondition(comp_started);
+    // waitUntilCondition(comp_started);
     printf("driver enable \n");
     int matchStartTime = millis();
-    comp_started = true;
-    selecting = false;
-    master.rumble("..");
-    master.clear();
-    
-    if (autoForDriver) {
-        left_mg.set_brake_mode_all(MotorBrake::brake);
-        right_mg.set_brake_mode_all(MotorBrake::brake);
-        
-        pros::Task a_pids (startLiftWristPIDS);
-        pros::Task skills(auton_skills);
-
-        waitUntilCondition(master.get_digital(DIGITAL_UP) && master.get_digital(DIGITAL_X));
-        waitUntilCondition(!master.get_digital(DIGITAL_UP) && !master.get_digital(DIGITAL_X));
-
-        // a_pids.remove();
-        skills.remove();
-        comp_started = true;
-    }
-
+    // comp_started = true;
+    // selecting = false;
+    // master.rumble("..");
+    // master.clear();
     
     // CANCEL MOTIONS
-    c_lemlib.cancelAllMotions();
-    c_danielib.stopAllMovements();
-    delay(15);
+    // c_lemlib.cancelAllMotions();
+    // c_danielib.stopAllMovements();
+    // delay(15);
 
     // SETUP BRAKE MODES
     left_mg.set_brake_mode_all(MotorBrake::coast);
@@ -331,31 +322,38 @@ void opcontrol() {
     intake.set_brake_mode(MotorBrake::brake);
     cone.set_brake_mode(MotorBrake::brake);
 
-    left_mg.brake();
-    right_mg.brake();
-    intake.brake();
-    lift.brake();
-    cone.brake();
+    // left_mg.brake();
+    // right_mg.brake();
+    // intake.brake();
+    // lift.brake();
+    // cone.brake();
 
-    setWristTo(getWristPosition());
-    setLiftTo(getLiftPosition());
-    delay(10);
+    // setWristTo(30);
+    // setLiftTo(10);
+    // delay(10);
 
-    // pros::Task d_pids                   (startLiftWristPIDS);
-    pros::Task d_intake_control         (IntakeControl);
-    pros::Task d_wrist_control          (WristControl);
-    pros::Task d_lift_control           (LiftControl);
-    pros::Task d_drivetrain_control     (DrivetrainControl);
+    if (competition::is_connected() && !competition::is_autonomous() &&  !competition::is_disabled()) {
 
-    printing = false;
-    pros::lcd::shutdown();
-    delay(100);
-    pros::lcd::initialize();
-    delay(100);
-    printing = true;
-    pros::Task printer(print_info);
+        pros::Task d_pids                   (startLiftWristPIDS);
+        pros::Task d_intake_control         (IntakeControl);
+        pros::Task d_wrist_control          (WristControl);
+        pros::Task d_lift_control           (LiftControl);
+        pros::Task d_drivetrain_control     (DrivetrainControl);
+    }
+    
+    // setWristTo(30);
+    // setLiftTo(10);
+    // delay(10);
 
-    while (true) { pros::delay(50); }
+    // printing = false;
+    // pros::lcd::shutdown();
+    // delay(100);
+    // pros::lcd::initialize();
+    // delay(100);
+    // printing = true;
+    // pros::Task printer(print_info);
+
+    while (true) { pros::delay(100); }
 }
 
 void disabled() {

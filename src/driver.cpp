@@ -37,7 +37,7 @@ bool inMatchLoadHoldPosition = false;
 bool inPinPosition = false;
 bool inScoringPosition = false;
 
-float liftOffset = 1.0;
+float liftOffset = 0.5;
 
 void intakePin() {
     setWristTo(-11);
@@ -71,7 +71,7 @@ void hover() {
     cone.brake();
 
     // flat wrist
-    setLiftTo(23.3+liftOffset);
+    setLiftTo(23.0+liftOffset);
     setWristTo(119);
 
     // // wrist pointed up
@@ -477,7 +477,7 @@ void DrivetrainControl() {
     float throttle;
     float turn;
     while (true) {
-        if (driving) {
+        if (true) {
             throttle = DeadBand(THROTTLE_AXIS, 2);
             turn = DeadBand(TURN_AXIS, 2);
             left_mg.move(throttle + turn);
@@ -499,8 +499,8 @@ void DrivetrainControl() {
 
 pros::Task* liftPIDTask = nullptr;
 pros::Task* wristPIDTask = nullptr;
-float liftCurrentTarget = 0;
-float wristCurrentTarget = 0;
+float liftCurrentTarget = 15;
+float wristCurrentTarget = 40;
 float getLiftPosition() {
     return (float)(lift_rot.get_position())/100.0f;
 }
@@ -519,7 +519,15 @@ void setWristTo(float target) {
 
 
 void startLiftWristPIDS() {
-
+    if (liftPIDTask != nullptr) {
+    liftPIDTask->remove();
+    liftPIDTask = nullptr;
+    }
+    if (wristPIDTask != nullptr) {
+    wristPIDTask->remove();
+    wristPIDTask = nullptr;
+    }
+    
     liftPIDTask = new pros::Task {[&] {
         const int startTime = pros::millis();
         danielib::ExitCondition liftExit(liftPID.exitRange, liftPID.exitTime);
