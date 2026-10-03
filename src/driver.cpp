@@ -37,7 +37,7 @@ bool inMatchLoadHoldPosition = false;
 bool inPinPosition = false;
 bool inScoringPosition = false;
 
-float liftOffset = 1.2;
+float liftOffset = 5;
 
 void intakePin() {
     setWristTo(-11);
@@ -71,7 +71,7 @@ void hover() {
     cone.brake();
 
     // flat wrist
-    setLiftTo(23.0+liftOffset);
+    setLiftTo(23.3+liftOffset);
     setWristTo(119);
 
     // // wrist pointed up
