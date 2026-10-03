@@ -37,7 +37,7 @@ bool inMatchLoadHoldPosition = false;
 bool inPinPosition = false;
 bool inScoringPosition = false;
 
-float liftOffset = -0.4;
+float liftOffset = 1.0;
 
 void intakePin() {
     setWristTo(-11);
