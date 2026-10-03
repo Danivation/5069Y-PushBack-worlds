@@ -37,14 +37,16 @@ bool inMatchLoadHoldPosition = false;
 bool inPinPosition = false;
 bool inScoringPosition = false;
 
+float liftOffset = 1.2;
+
 void intakePin() {
     setWristTo(-11);
-    setLiftTo(17.3);
+    setLiftTo(17.3+liftOffset);
 }
 
 void intakeCup() {
     setWristTo(32);
-    setLiftTo(19.2);
+    setLiftTo(19.2+liftOffset);
 }
 
 void holdVertical() {
@@ -58,7 +60,7 @@ void holdFlat() {
 void holdStack() {
     holdVertical();
     // if stack is in intake OR just came from match loader
-    if (getLiftPosition() < 22) setLiftTo(30);
+    if (getLiftPosition() < 22) setLiftTo(30+liftOffset);
 }
 
 void flipOut() {
@@ -69,7 +71,7 @@ void hover() {
     cone.brake();
 
     // flat wrist
-    setLiftTo(23.5);
+    setLiftTo(23.0+liftOffset);
     setWristTo(119);
 
     // // wrist pointed up
@@ -85,7 +87,7 @@ void load() {
     // setWristTo(126);
 
     // flat wrist load
-    setLiftTo(20.2);
+    setLiftTo(20.0+liftOffset);
     setWristTo(117);
 }
 
@@ -94,7 +96,7 @@ void grabFlat() {
     cone.move(127);
     setWristTo(110);
     delay(50);
-    setLiftTo(-10);
+    setLiftTo(-10+liftOffset);
     delay(400);
     setLiftTo(getLiftPosition());
     lift_has_pid_control = false;
@@ -109,9 +111,9 @@ void grab() {
     cone.move(127);
     setWristTo(110);
     delay(50);
-    setLiftTo(-10);
+    setLiftTo(-10+liftOffset);
     delay(550);
-    setLiftTo(9.5);
+    setLiftTo(9.5+liftOffset);
     setWristTo(136);
     intake_control = true;
 }
@@ -129,7 +131,7 @@ void score() {
 }
 
 // ALLIANCE GOAL HEIGHTS
-float allianceBase = 20;
+float allianceBase = 20+liftOffset;
 
 void a0() {
     setWristTo(145);
@@ -162,7 +164,7 @@ void a5() {
 }
 
 // NEUTRAL GOAL HEIGHTS
-float neutralBase = 24;
+float neutralBase = 24+liftOffset;
 
 void n0() {
     setWristTo(125);
@@ -195,7 +197,7 @@ void n5() {
 }
 
 // CENTER GOAL HEIGHTS
-float centerBase = 28;
+float centerBase = 28+liftOffset;
 
 void c0() {
     setWristTo(125);
