@@ -582,7 +582,6 @@ void auton_wesley_stacks_close() {
     c_lemlib.turnToHeading(0, 350);
     c_lemlib.moveToPoint(24, -45, 1500, {.forwards = false});
     a4();
-    delay(1000);
     
     // lower stack, score, lift off alliance
     score();
