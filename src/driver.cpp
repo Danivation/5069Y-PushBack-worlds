@@ -50,7 +50,7 @@ void intakeCup() {
 }
 
 void holdVertical() {
-    setWristTo(121.5);
+    setWristTo(119);
 }
 
 void holdFlat() {
