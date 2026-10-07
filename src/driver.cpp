@@ -37,16 +37,16 @@ bool inMatchLoadHoldPosition = false;
 bool inPinPosition = false;
 bool inScoringPosition = false;
 
-float liftOffset = -0.4;
+float liftOffset = -4;
 
 void intakePin() {
-    setWristTo(-11);
+    setWristTo(-18);
     setLiftTo(17.3+liftOffset);
 }
 
 void intakeCup() {
-    setWristTo(32);
-    setLiftTo(19.2+liftOffset);
+    setWristTo(21);
+    setLiftTo(17.8+liftOffset);
 }
 
 void holdVertical() {
@@ -87,7 +87,7 @@ void load() {
     // setWristTo(126);
 
     // flat wrist load
-    setLiftTo(20.3+liftOffset);
+    setLiftTo(19.5+liftOffset);
     setWristTo(117);
 }
 
